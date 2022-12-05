@@ -6,6 +6,7 @@ use Membergate\DependencyInjection\Container;
 use Membergate\DependencyInjection\ContainerConfigurationInterface;
 use Membergate\EventManagement\EventManager;
 use Membergate\Subscriber\FormSubmissionSubscriber;
+use Membergate\Subscriber\ShortcodeSubscriber;
 use Membergate\Subscriber\TestSubscriber;
 
 class EventManagementConfiguration implements ContainerConfigurationInterface {
@@ -19,6 +20,7 @@ class EventManagementConfiguration implements ContainerConfigurationInterface {
 				//add Subscriber classes	
 				new TestSubscriber(),
 				new FormSubmissionSubscriber($container['form_handler']),
+				new ShortcodeSubscriber($container['plugin_path']),
 			];
 			return $subscribers;
 		});
