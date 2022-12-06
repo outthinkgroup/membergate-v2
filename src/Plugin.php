@@ -27,6 +27,14 @@ class Plugin {
 		$this->loaded = false;
 	}
 
+	public function get_plugin_path(){
+		return $this->container['plugin_path'];	
+	}
+
+	public function get_plugin_url(){
+		return $this->container['plugin_url'];	
+	}
+
 	public function load(){
 		if ($this->loaded){
 			return;	

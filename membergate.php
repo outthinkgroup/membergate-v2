@@ -13,6 +13,11 @@
  *
  */
 
+// this is used for asset loading for vite
+require_once  dirname(__FILE__) . "/env.php";		
+define('IS_DEVELOPMENT', APP_ENV==='development');
+
+
 require_once dirname(__FILE__) . '/src/Autoloader.php';
 \Membergate\Autoloader::register();
 
