@@ -12,23 +12,23 @@
 	export let optionLabelKey: undefined | string = undefined;
 
 	let useOptionGroups = false;
-	$: options, (()=>{
-			if ( optionGroupKey && optionLabelKey ) {
-				useOptionGroups = true;
-				console.log({optionsbefore:options})
-				options = Object.keys(options).reduce((optionGroups, key) => {
-					const option = options[key];
-					if (!Object.hasOwn(optionGroups, option[optionGroupKey])) {
-						optionGroups[option[optionGroupKey]] = [];
-					}
-					optionGroups[option[optionGroupKey]][key] = option[optionLabelKey]
+	
+	if ( optionGroupKey && optionLabelKey ) {
+		useOptionGroups = true;
+		console.log({optionsbefore:options})
+		options = Object.keys(options).reduce((optionGroups, key) => {
+			const option = options[key];
+			if (!Object.hasOwn(optionGroups, option[optionGroupKey])) {
+				optionGroups[option[optionGroupKey]] = [];
+			}
+			optionGroups[option[optionGroupKey]][key] = option[optionLabelKey]
 
-					return optionGroups;
-				}, {});
-				
-				console.log({optionsAfter:options})
-		}
-	})()
+			return optionGroups;
+		}, {});
+		
+		console.log({optionsAfter:options})
+}
+
 	
 	$: value, dispatch("inputChange", { value });
 </script>
@@ -39,10 +39,7 @@
 		class="min-w-[200px] w-full max-w-full bg-slate-50 py-2 px-3 font-medium text-cyan-900 border-slate-200 focus:border-cyan-400"
 		{id}
 		{name}
-		on:change={(e) => {
-		console.log({event:e})
-			value = selectValue(e);
-		}}
+		bind:value={value}
 	>
 		{#if defaultOption}
 			<option value="" selected={!value}>{defaultOption}</option>
