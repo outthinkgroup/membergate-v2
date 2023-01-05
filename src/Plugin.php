@@ -5,6 +5,8 @@ namespace Membergate;
 use Membergate\DependencyInjection\Container; 
 use Membergate\Configuration\EventManagementConfiguration;
 use Membergate\Configuration\FormHandlerConfiguration;
+use Membergate\Configuration\ProvidersConfiguration;
+use Membergate\Configuration\SettingsConfiguration;
 
 class Plugin {
 
@@ -35,6 +37,10 @@ class Plugin {
 		return $this->container['plugin_url'];	
 	}
 
+	public function get_container($key){
+		return $this->container[$key];
+	}
+
 	public function load(){
 		if ($this->loaded){
 			return;	
@@ -42,7 +48,9 @@ class Plugin {
 
 		$this->container->configure([
 			EventManagementConfiguration::class,
+			SettingsConfiguration::class,
 			FormHandlerConfiguration::class,
+			ProvidersConfiguration::class,			
 		]);	
 
 		foreach($this->container['subscribers'] as $subber){

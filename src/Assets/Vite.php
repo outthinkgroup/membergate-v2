@@ -9,6 +9,7 @@ class Vite {
         return $membergate->get_plugin_url() . '/assets/dist/';
     }
 
+
     public static function useVite(string $script = 'assets/main.ts') {
 		error_log("inside of useVite");
         self::jsPreloadImports($script);

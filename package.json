@@ -4,8 +4,8 @@
 	"main": "index.js",
 	"author": "josh kennedy <josh@outthinkgroup.com>",
 	"license": "MIT",
-	"type":"module",
-	"scripts":{
+	"type": "module",
+	"scripts": {
 		"dev": "yarn env:dev && export APP_ENV=development && vite",
 		"env:dev": "sed -i '' 's/production/development/g' env.php;",
 		"build": "yarn env:build && vite build",
@@ -15,12 +15,15 @@
 	"devDependencies": {
 		"@sveltejs/vite-plugin-svelte": "^1.0.9",
 		"@tsconfig/svelte": "^3.0.0",
+		"autoprefixer": "^10.4.13",
+		"postcss": "^8.4.19",
+		"postcss-nested": "^6.0.0",
+		"prettier": "^2.8.0",
+		"prettier-plugin-svelte": "^2.8.1",
 		"svelte": "^3.52.0",
-		"svelte-carousel-flickity": "^2.0.2",
 		"svelte-check": "^2.9.2",
-		"svelte-drag-and-drop-actions": "^1.0.0",
-		"svelte-drag-drop-touch": "^0.1.9",
 		"svelte-preprocess": "^4.10.7",
+		"tailwindcss": "^3.2.4",
 		"tslib": "^2.4.0",
 		"typescript": "^4.8.4",
 		"vite": "^3.1.8"

@@ -5,9 +5,11 @@ namespace Membergate\Configuration;
 use Membergate\DependencyInjection\Container;
 use Membergate\DependencyInjection\ContainerConfigurationInterface;
 use Membergate\EventManagement\EventManager;
+use Membergate\Subscriber\AdminPageAJaxSubscriber;
 use Membergate\Subscriber\AdminSubscriber;
 use Membergate\Subscriber\AssetSubscriber;
 use Membergate\Subscriber\FormSubmissionSubscriber;
+use Membergate\Subscriber\ServerRenderSettingsSubscriber;
 use Membergate\Subscriber\ShortcodeSubscriber;
 use Membergate\Subscriber\TestSubscriber;
 
@@ -20,11 +22,12 @@ class EventManagementConfiguration implements ContainerConfigurationInterface {
 		$container['subscribers'] = $container->service(function(Container $container){
 			$subscribers = [
 				//add Subscriber classes	
-				new TestSubscriber(),
 				new FormSubmissionSubscriber($container['form_handler']),
 				new ShortcodeSubscriber($container['plugin_path']),
 				new AssetSubscriber(),
 				new AdminSubscriber($container['plugin_path']),
+				new AdminPageAJaxSubscriber($container['settings.list_provider'],$container['list_providers']),
+				new ServerRenderSettingsSubscriber($container['settings.list_provider'], $container['settings.account']),
 			];
 			return $subscribers;
 		});

@@ -13,7 +13,7 @@ class AdminSubscriber implements SubscriberInterface {
 
 	public static function get_subscribed_events():array{
 		return [
-			'admin_menu' => 'register_admin_pages'
+			'admin_menu' => 'register_admin_pages',
 		];	
 	}
 
