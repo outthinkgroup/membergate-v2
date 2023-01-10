@@ -10,7 +10,7 @@ class ProvidersConfiguration implements ContainerConfigurationInterface {
 	public function modify(Container $container){
 		$container['list_providers'] = $container->service(function(Container $container){
 			return [
-				'mailchimp' => MailchimpProvider::class,	
+				MailchimpProvider::provider_name => MailchimpProvider::class,	
 			];	
 		});
 	

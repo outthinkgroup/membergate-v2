@@ -13,8 +13,7 @@ class AccountSettings{
 			return $this->is_setup;
 	}
 
-	public function set_is_setup($condition){
-		$this->is_setup = $condition;	
-		update_option('wizard_complete', $condition);
+	public static function set_is_setup($condition){
+		update_option(self::WIZARD_COMPLETE_KEY, $condition);
 	}
 }

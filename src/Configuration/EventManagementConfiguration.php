@@ -11,7 +11,6 @@ use Membergate\Subscriber\AssetSubscriber;
 use Membergate\Subscriber\FormSubmissionSubscriber;
 use Membergate\Subscriber\ServerRenderSettingsSubscriber;
 use Membergate\Subscriber\ShortcodeSubscriber;
-use Membergate\Subscriber\TestSubscriber;
 
 class EventManagementConfiguration implements ContainerConfigurationInterface {
 	public function modify(Container $container){
@@ -27,7 +26,7 @@ class EventManagementConfiguration implements ContainerConfigurationInterface {
 				new AssetSubscriber(),
 				new AdminSubscriber($container['plugin_path']),
 				new AdminPageAJaxSubscriber($container['settings.list_provider'],$container['list_providers']),
-				new ServerRenderSettingsSubscriber($container['settings.list_provider'], $container['settings.account']),
+				new ServerRenderSettingsSubscriber($container['settings.list_provider'], $container['list_providers'], $container['settings.account']),
 			];
 			return $subscribers;
 		});

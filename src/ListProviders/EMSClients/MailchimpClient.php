@@ -119,6 +119,7 @@ class MailChimpClient {
      * @return  array|false   Assoc array of API response, decoded from JSON
      */
     public function get($method, $args = [], $timeout = 10) {
+				error_log("making network request");
         return $this->makeRequest('get', $method, $args, $timeout);
     }
 

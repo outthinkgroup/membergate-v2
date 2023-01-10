@@ -3,6 +3,7 @@
 namespace Membergate\Settings;
 
 class ListProviderSettings {
+	const KEY = "general_list_provider_info";
 	private $api_key;
 	private $provider;
 	private $list_config;
@@ -20,7 +21,7 @@ class ListProviderSettings {
 	}
 
 	private function get_info() {
-		return get_option('general_list_provider_info', [
+		return get_option(self::KEY, [
 			'api_key'=>null,
 			'provider'=>null,
 			'list_config'=>[],
@@ -32,7 +33,7 @@ class ListProviderSettings {
 		$api_key = isset($api_key) ? $api_key : $this->api_key;
 		$list_config = isset($list_config) ? $list_config : $this->$list_config;
 
-		return update_option('general_list_provider_info', [
+		return update_option(self::KEY, [
 			'api_key'=>isset($api_key) ? $api_key : $this->api_key,
 			'provider'=>isset($provider) ? $provider : $this->provider,
 			'list_config'=>isset($list_config) ? $list_config : $this->list_config,
@@ -48,7 +49,15 @@ class ListProviderSettings {
 	}
 
 	public function get_list_config(){
-		return $this->list_config;	
+		return $this->list_config;
+	}
+
+	public function get_provider_lists(){
+
+	}
+
+	public function get_provider_groups(){
+			
 	}
 
 	public function set_api_key($api_key){

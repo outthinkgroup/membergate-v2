@@ -1,0 +1,12 @@
+{
+    "name": "joshkennedy/membergate",
+    "authors": [
+        {
+            "name": "josh kennedy",
+            "email": "josh@outthinkgroup.com"
+        }
+    ],
+    "require": {
+        "myclabs/php-enum": "^1.8"
+    }
+}

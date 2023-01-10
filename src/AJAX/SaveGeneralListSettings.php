@@ -2,6 +2,7 @@
 
 namespace Membergate\AJAX;
 
+use Membergate\Settings\AccountSettings;
 use Membergate\Settings\ListProviderSettings;
 
 class SaveGeneralListSettings implements AjaxInterface {
@@ -37,6 +38,9 @@ class SaveGeneralListSettings implements AjaxInterface {
 			$api_key,
 			$list_config,
 		);		
+		AccountSettings::set_is_setup(1);
+		echo json_encode(['data'=> 1, 'errors'=>[]]);		
+		exit;
 	}
 }
 

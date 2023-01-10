@@ -14,6 +14,8 @@
  */
 
 // this is used for asset loading for vite
+require __DIR__ . '/vendor/autoload.php';
+
 require_once  dirname(__FILE__) . "/env.php";		
 define('IS_DEVELOPMENT', APP_ENV==='development');
 require_once "utils.php";

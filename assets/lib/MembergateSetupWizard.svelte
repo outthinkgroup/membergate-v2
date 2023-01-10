@@ -2,6 +2,7 @@
 	import getLists from "../api/getLists";
 	import getGroups from "../api/getGroups";
 	import saveSettings from "../api/saveSettings";
+	import { completedSetup } from "../store"
 	import LabelInput from "./form/LabelInput.svelte";
 	import LabelSelect from "./form/LabelSelect.svelte";
 
@@ -59,6 +60,14 @@
 			list: selectedList,
 			group: selectedGroup,
 		});
+
+		if(res.errors.length){
+			console.log({errors:res.errors})
+			return
+		}
+
+		completedSetup.set(true)
+
 	}
 </script>
 

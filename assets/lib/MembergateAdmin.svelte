@@ -1,11 +1,11 @@
 <script lang="ts">
   import MembergateSetupWizard from "./MembergateSetupWizard.svelte";
 	import MembergateSettings from "./MembergateSettings.svelte";
+	import {completedSetup} from "../store"
 
-	let completedSetup = window.membergate.completedSetup
 </script>
 
-{#if !completedSetup }
+{#if !$completedSetup }
 	<MembergateSetupWizard/>
 {:else}
 	<MembergateSettings />
