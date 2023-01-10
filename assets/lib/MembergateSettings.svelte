@@ -1,18 +1,19 @@
 <script lang="ts">
-    import saveSettings from "../api/saveSettings";
+	import saveSettings from "../api/saveSettings";
 
 	import LabelInput from "./form/LabelInput.svelte";
 	import LabelSelect from "./form/LabelSelect.svelte";
+
+	import {groupsForSelectList, listsForSelectList} from "../store";
+
 	let { providers, settings } = window.membergate;
 	let {
 		apiKey,
 		providerName,
-		group: selectedGroup,
-		list: selectedList,
+		groupId: selectedGroup,
+		listId: selectedList,
 	} = settings;
 
-	let lists = [selectedList];
-	let groups = [selectedGroup];
 </script>
 
 <h2 class="text-3xl mb-10">Your Settings</h2>
@@ -35,14 +36,20 @@
 		<LabelSelect
 			name="lists"
 			value={selectedList}
-			options={lists}
+			on:inputChange={(e) => (selectedList = e.detail.value)}
+			options={$listsForSelectList}
 			label="choose a list"
 		/>
 		<LabelSelect
 			name="lists"
+			on:inputChange={(e) => (selectedGroup = e.detail.value)}
 			value={selectedGroup}
-			options={lists}
+			options={$groupsForSelectList}
 			label="choose a group"
+			optionGroupKey="parentGroupName"
+			optionLabelKey="name"
+			defaultOption="select a group"
+
 		/>
 		<div>
 			<button

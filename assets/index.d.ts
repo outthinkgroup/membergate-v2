@@ -8,8 +8,10 @@ declare global {
 			settings:{
 				providerName?:string,
 				apiKey?: string,
-				list?:string,
-				group?:string,
+				listId?:string,
+				groupId?:string,
+				lists?:any[],
+				groups:any[],
 			}
     };
   }

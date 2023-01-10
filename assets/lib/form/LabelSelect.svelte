@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import { selectValue } from "../../utils/formUtils";
 	const dispatch = createEventDispatcher();
 	export let name = "";
 	export let id = name ? name : "";

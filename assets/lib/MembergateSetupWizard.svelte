@@ -2,7 +2,7 @@
 	import getLists from "../api/getLists";
 	import getGroups from "../api/getGroups";
 	import saveSettings from "../api/saveSettings";
-	import { completedSetup } from "../store"
+	import { completedSetup, groups, groupsForSelectList, lists, listsForSelectList } from "../store"
 	import LabelInput from "./form/LabelInput.svelte";
 	import LabelSelect from "./form/LabelSelect.svelte";
 
@@ -12,11 +12,10 @@
 	let apiKey = window.membergate.settings.apiKey;
 	let providerName = window.membergate.settings.providerName;
 	//step two
-	let lists: Record<string, string>;
-	let selectedList = window.membergate.settings.list;
+	let selectedList = window.membergate.settings.listId;
 	//step 3
-	let groups = {};
-	let selectedGroup = window.membergate.settings.group;
+		
+	let selectedGroup = window.membergate.settings.groupId;
 
 	async function completeStepOne() {
 		const res = await getLists(apiKey, providerName);
@@ -25,13 +24,7 @@
 			console.log(res.errors);
 		}
 		if (res.data.lists && res.data.lists.length) {
-			lists = res.data.lists?.reduce(
-				(lists: Record<string, string>, list: Record<string, any>) => {
-					lists[list.id] = list.name;
-					return lists;
-				},
-				{}
-			);
+			lists.set(res.data.lists)
 			currentStep = 2;
 		}
 	}
@@ -44,10 +37,7 @@
 
 		if (res.data && res.data.length) {
 		console.log({groupsBefore:res.data})
-			groups = res.data?.reduce((groups,group)=>{
-				groups[group.id] = group
-				return groups	
-			},{});
+			groups.set(res.data)
 		}
 
 		currentStep = 3;
@@ -121,7 +111,7 @@
 				<LabelSelect
 					name="lists"
 					value={selectedList}
-					options={lists}
+					options={$listsForSelectList}
 					defaultOption="select a list"
 					on:inputChange={(e) => (selectedList = e.detail.value)}
 					label="choose a list"
@@ -146,7 +136,7 @@
 					name="groups"
 					value={selectedGroup}
 					on:inputChange={(e) => (selectedGroup = e.detail.value)}
-					options={groups}
+					options={$groupsForSelectList}
 					optionGroupKey="parentGroupName"
 					optionLabelKey="name"
 					defaultOption="select a group"

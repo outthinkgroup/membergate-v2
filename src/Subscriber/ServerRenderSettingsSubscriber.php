@@ -44,7 +44,7 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 					providerName: "<?= $provider_name; ?>",
 					listId: "<?= $list_id; ?>",
 					groupId: "<?= $group_id; ?>",
-					lists: <?= json_encode($lists); ?>, 
+					lists: <?= json_encode($lists['lists']); ?>, 
 					groups: <?= json_encode($groups); ?>,
 				}
 			}
