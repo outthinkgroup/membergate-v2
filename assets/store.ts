@@ -17,8 +17,18 @@ export const listsForSelectList = derived(lists, ($lists)=>{
 
 export const groupsForSelectList = derived(groups,($groups)=>{
 	return $groups.reduce((groups,group)=>{
-		groups[group.id] = group
-		return groups	
+		if(!Object.hasOwn(groups, group.parentGroupName)){
+			groups[group.parentGroupName]	= [];
+		}
+		groups[group.parentGroupName].push({id:group.id, name:group.name})
+		return groups
 	},{});
-	
 });
+
+export const provider = writable(window.membergate.settings.providerName)
+export const apikey = writable(window.membergate.settings.apiKey)
+export const selectedList = writable(window.membergate.settings.listId);
+export const selectedGroup = writable(window.membergate.settings.groupId);
+
+
+

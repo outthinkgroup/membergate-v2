@@ -1,0 +1,58 @@
+<script lang="ts">
+	import LabelSelect from "./LabelSelect.svelte";
+	import {updateList} from "../../utils/formUtils"
+	import getLists from "../../api/getLists";
+	import {apikey, selectedList, listsForSelectList, lists, provider} from "../../store"
+
+	let isLoadng = false
+	
+	async function fetchAndSetLists(apikey:string, provider:string){
+		const res = await getLists(apikey, provider)
+		if (res.errors.length) {
+			console.log(res.errors);
+		}
+		if (res.data.lists && res.data.lists.length) {
+			lists.set(res.data.lists);
+		}
+	}
+
+	// Refectch options when dependency changes
+	provider.subscribe( async function(provider){
+		//dont when initially set
+		if(provider === window.membergate.settings.providerName) return;
+
+		window.membergate.settings.providerName = null //only needed for stopping running on initial set
+		if(!provider.length) {
+			lists.set([])
+		}
+		isLoadng = true
+		await fetchAndSetLists($apikey, provider)
+		isLoadng = false
+	});
+	apikey.subscribe( async function(apikey){
+		//dont when initially set
+		if(apikey === window.membergate.settings.apiKey) return;
+		window.membergate.settings.apiKey = null //only needed for stopping running on initial set
+		if(!apikey.length) {
+			lists.set([])
+		}
+		isLoadng = true
+		await fetchAndSetLists(apikey, $provider)
+		isLoadng = false
+		
+	});
+
+</script>
+
+<LabelSelect
+	name="lists"
+	value={$selectedList}
+	options={$listsForSelectList}
+	defaultOption="select a list"
+	on:inputChange={(e) => (updateList(e.detail.value))}
+	label="choose a list"
+/>
+{#if isLoadng}
+	loading...
+{/if}
+

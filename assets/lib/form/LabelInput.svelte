@@ -6,10 +6,13 @@
   export let id = name ? name : "";
   export let label = "";
   export let value = "";
+	export let event = "change"
+
+	
   $: value,
-    dispatch("inputChange", {
-      value,
-    });
+		event == "change" && dispatch("inputChange", {
+				value,
+			});
 </script>
 
 <label for={id} class="flex flex-col gap-3">
@@ -21,6 +24,11 @@
       //@ts-ignore
       value = e.target.value;
     }}
+		on:blur={()=>{
+			if(event == "blur"){
+				dispatch("inputChange", {value})
+			}
+		}}
     {name}
     class="min-w-[200px] bg-slate-50 py-2 px-3 font-medium text-cyan-900 border-slate-200 focus:border-cyan-400"
   />

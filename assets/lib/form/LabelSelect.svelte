@@ -7,28 +7,8 @@
 	export let value = "";
 	export let options = {};
 	export let defaultOption: undefined | string = undefined;
-	export let optionGroupKey: undefined | string = undefined;
-	export let optionLabelKey: undefined | string = undefined;
+	export let useOptionGroups = false;
 
-	let useOptionGroups = false;
-	
-	if ( optionGroupKey && optionLabelKey ) {
-		useOptionGroups = true;
-		console.log({optionsbefore:options})
-		options = Object.keys(options).reduce((optionGroups, key) => {
-			const option = options[key];
-			if (!Object.hasOwn(optionGroups, option[optionGroupKey])) {
-				optionGroups[option[optionGroupKey]] = [];
-			}
-			optionGroups[option[optionGroupKey]][key] = option[optionLabelKey]
-
-			return optionGroups;
-		}, {});
-		
-		console.log({optionsAfter:options})
-}
-
-	
 	$: value, dispatch("inputChange", { value });
 </script>
 
@@ -47,9 +27,9 @@
 		{#if useOptionGroups}
 			{#each Object.keys(options) as optionGroupName}
 				<optgroup label={optionGroupName}>
-					{#each Object.keys(options[optionGroupName]) as optionId}
-						<option selected={optionId == value} value={optionId}
-							>{options[optionGroupName][optionId]}
+					{#each options[optionGroupName] as option}
+						<option selected={option.id == value} value={option.id}
+							>{option.name}
 						</option>
 					{/each}
 				</optgroup>

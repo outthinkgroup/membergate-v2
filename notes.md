@@ -4,10 +4,19 @@
 
 ### List Providers
 - [x] Finish List / Group Cache
-- [ ] bug with Settings list and group dropdown not being set?
+- [x] bug with Settings list and group dropdown not being set?
 - [ ] only request from frontend new lists and groups if a dependency changes (api_key / list_id)
-
+	- Create Inputs for each field that can invalidate others
+		- [ ] ProviderSelect
+		- [ ] ApiKeyInput
+		- [ ] ListsSelect
+		- [ ] GroupsSelect
+	- Subscribe to values that directly inpact the options (dependencies)
+		- refetch inputs options when dependency change
 ### Admin UI
+- [ ] Add loading indicators
+- [ ] add "congrats" message after setup is complete
+	- with instructions on where to update those settings
 - [ ] Add tabs to admin settings
 	- [ ] tab for general list provider
 	- [ ] tab for setting up a general sign up page
