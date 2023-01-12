@@ -7,15 +7,18 @@ use Membergate\AJAX\CompleteSetup;
 use Membergate\AJAX\FetchGroupsFromProvider;
 use Membergate\AJAX\FetchListsFromProvider;
 use Membergate\AJAX\SaveGeneralListSettings;
+use Membergate\AJAX\SaveProtectedPostTypes;
 use Membergate\EventManagement\SubscriberInterface;
 
 class AdminPageAJaxSubscriber implements SubscriberInterface {
 	public $list_provider_settings;
 	public $providers_list;
+	public $post_type_settings;
 
-	public function __construct($list_provider_settings, $providers){
+	public function __construct($list_provider_settings, $providers, $post_type_settings){
 		$this->list_provider_settings = $list_provider_settings;	
 		$this->providers_list = $providers;
+		$this->post_type_settings = $post_type_settings;
 	}
 
 	public static function get_subscribed_events():array{
@@ -31,6 +34,7 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
 			FetchListsFromProvider::ACTION => FetchListsFromProvider::class,
 			FetchGroupsFromProvider::ACTION => FetchGroupsFromProvider::class,
 			CompleteSetup::ACTION => CompleteSetup::class,
+			SaveProtectedPostTypes::ACTION => SaveProtectedPostTypes::class,
 		];
 		if( !isset( $_POST['mg_action'] ) ){
 			error_log("no action set");	
@@ -40,7 +44,16 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
 			error_log("no endpoint was found for: " . $_POST["mg_action"]);
 			exit;
 		}
-		$handlerClass = new $endpoint($this->list_provider_settings, $this->providers_list);
+		$containers = [
+			'list_settings'=>$this->list_provider_settings,
+			'providers'=>$this->providers_list,
+			'post_type_settings'=>$this->post_type_settings,
+		];
+		$handlerClass = new $endpoint();
+		$requires = array_map(function($dep) use($containers){
+			return $containers[$dep];
+		}, $handlerClass->dependencies);
+		$handlerClass->set_dependencies(...$requires);
 		$handlerClass->handle();
 	}
 

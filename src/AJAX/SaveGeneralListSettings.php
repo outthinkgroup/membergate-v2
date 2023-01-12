@@ -8,9 +8,14 @@ class SaveGeneralListSettings implements AjaxInterface {
 	const ACTION = "save_general_settings";
 	private ListProviderSettings $list_settings;
 
-	public function __construct($list_settings){
+	public $dependencies = ['list_settings'];
+	public function __construct(){
+		// $this->list_settings = $list_settings;	
+	}
+	public function set_dependencies($list_settings){
 		$this->list_settings = $list_settings;	
 	}
+
 	public function get_name():string{
 		return self::class;
 	}

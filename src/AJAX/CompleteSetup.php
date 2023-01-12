@@ -6,9 +6,13 @@ use Membergate\Settings\AccountSettings;
 class CompleteSetup implements AjaxInterface {
 		
 	const ACTION = "complete_setup";
+	public $dependencies = [];
 	public function get_action(): string{
 		return self::ACTION;	
 	}	
+	public function set_dependencies(...$deps){
+		
+	}
 
 	public function get_name(): string{
 		return self::class;	

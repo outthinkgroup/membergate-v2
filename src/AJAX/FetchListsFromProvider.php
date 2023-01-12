@@ -6,10 +6,15 @@ use Membergate\Settings\ListProviderSettings;
 
 class FetchListsFromProvider implements AjaxInterface {
 	const ACTION = "get_lists";
+	public $dependencies = ['list_settings', 'providers'];
 	private ListProviderSettings $list_settings;
 	private $providers;
 
-	public function __construct($list_settings, $providers){
+	public function __construct(){
+		// $this->list_settings = $list_settings;	
+		// $this->providers = $providers;
+	}
+	public function set_dependencies($list_settings, $providers){
 		$this->list_settings = $list_settings;	
 		$this->providers = $providers;
 	}
