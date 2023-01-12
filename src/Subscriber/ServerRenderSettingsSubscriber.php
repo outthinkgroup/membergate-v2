@@ -40,12 +40,14 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 				providers: {"mailchimp":"Mailchimp", "convertkit": "ConvertKit"},
 				completedSetup: "<?=$this->account_settings->get_is_setup();?>",
 				settings: {
-					apiKey: "<?= $api_key; ?>",
-					providerName: "<?= $provider_name; ?>",
-					listId: "<?= $list_id; ?>",
-					groupId: "<?= $group_id; ?>",
-					lists: <?= json_encode($lists['lists']); ?>, 
-					groups: <?= json_encode($groups); ?>,
+					emailService:{
+						apiKey: "<?= $api_key; ?>",
+						providerName: "<?= $provider_name; ?>",
+						listId: "<?= $list_id; ?>",
+						groupId: "<?= $group_id; ?>",
+						lists: <?= json_encode($lists['lists']); ?>, 
+						groups: <?= json_encode($groups); ?>,
+					},
 				}
 			}
 		</script>

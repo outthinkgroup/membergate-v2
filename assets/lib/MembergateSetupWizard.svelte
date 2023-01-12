@@ -19,34 +19,14 @@
 	import EmsGroupSelect from "./form/EMSGroupSelect.svelte";
 	import { updateApiKey, updateList, updateProvider } from "../utils/formUtils";
 
-	let currentStep = 1;
-	//Step one
 	const providersList = window.membergate.providers;
-	//step two
 
-	async function completeStepOne() {
-		const res = await getLists($apikey, $provider);
-		console.log("running completeStepOne");
-		if (res.errors.length) {
-			console.log(res.errors);
-		}
-		if (res.data.lists && res.data.lists.length) {
-			lists.set(res.data.lists);
+	let currentStep = 1;
+	function completeStepOne() {
 			currentStep = 2;
-		}
 	}
 
-	async function completeStepTwo() {
-		const res = await getGroups(selectedList);
-		if (res.errors.length) {
-			console.log(res.errors);
-		}
-
-		if (res.data && res.data.length) {
-			console.log({ groupsBefore: res.data });
-			groups.set(res.data);
-		}
-
+	function completeStepTwo() {
 		currentStep = 3;
 	}
 

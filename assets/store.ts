@@ -1,9 +1,9 @@
-import { derived, writable } from 'svelte/store';
+import { derived, readable, writable } from 'svelte/store';
 
 export const completedSetup = writable(window.membergate.completedSetup)
 
-export const groups = writable(window.membergate.settings.groups)
-export const lists = writable(window.membergate.settings.lists)
+export const groups = writable(window.membergate.settings.emailService.groups)
+export const lists = writable(window.membergate.settings.emailService.lists)
 
 export const listsForSelectList = derived(lists, ($lists)=>{
 	return $lists.reduce(
@@ -25,10 +25,10 @@ export const groupsForSelectList = derived(groups,($groups)=>{
 	},{});
 });
 
-export const provider = writable(window.membergate.settings.providerName)
-export const apikey = writable(window.membergate.settings.apiKey)
-export const selectedList = writable(window.membergate.settings.listId);
-export const selectedGroup = writable(window.membergate.settings.groupId);
+export const provider = writable(window.membergate.settings.emailService.providerName)
+export const apikey = writable(window.membergate.settings.emailService.apiKey)
+export const selectedList = writable(window.membergate.settings.emailService.listId);
+export const selectedGroup = writable(window.membergate.settings.emailService.groupId);
 
 
-
+export const postTypes = readable(window.membergate.settings.postTypes)

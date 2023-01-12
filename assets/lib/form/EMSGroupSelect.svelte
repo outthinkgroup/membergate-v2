@@ -9,7 +9,6 @@
 		groupsForSelectList,
 		groups,
 		selectedList,
-		lists,
 		provider,
 	} from "../../store";
 
@@ -31,8 +30,8 @@
 	// Refectch options when dependency changes
 	provider.subscribe(async function (provider) {
 		//dont when initially set
-		if (provider === window.membergate.settings.providerName) return;
-		window.membergate.settings.providerName = null //only needed for stopping running on initial set
+		if (provider === window.membergate.settings.emailService.providerName) return;
+		window.membergate.settings.emailService.providerName = null //only needed for stopping running on initial set
 		if (!provider.length || !$listsForSelectList.length) {
 			groups.set([]);
 			return
@@ -45,8 +44,8 @@
 	});
 	apikey.subscribe(async function (apikey) {
 		//dont when initially set
-		if (apikey === window.membergate.settings.apiKey) return;
-		window.membergate.settings.apiKey = null //only needed for stopping running on initial set
+		if (apikey === window.membergate.settings.emailService.apiKey) return;
+		window.membergate.settings.emailService.apiKey = null //only needed for stopping running on initial set
 		if (!apikey.length ) {
 			groups.set([]);
 			return;
@@ -57,10 +56,10 @@
 	});
 	selectedList.subscribe(async function (selectedList) {
 		//dont when initially set
-		if (selectedList === window.membergate.settings.listId){
+		if (selectedList === window.membergate.settings.emailService.listId){
 			return;
 		} 
-		window.membergate.settings.listId = null //only needed for stopping running on initial set
+		window.membergate.settings.emailService.listId = null //only needed for stopping running on initial set
 		if (!selectedList.length ) {
 			groups.set([]);
 			return;

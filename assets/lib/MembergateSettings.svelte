@@ -1,44 +1,68 @@
 <script lang="ts">
-	import saveSettings from "../api/saveSettings";
-
-	import LabelInput from "./form/LabelInput.svelte";
-	import LabelSelect from "./form/LabelSelect.svelte";
-	import EmsListSelect from "./form/EMSListSelect.svelte";
-	import EmsGroupSelect from "./form/EMSGroupSelect.svelte";
-
-	import {apikey, selectedList, selectedGroup, provider, groupsForSelectList, listsForSelectList} from "../store";
-    import { updateProvider } from "../utils/formUtils";
-
-	let { providers } = window.membergate;
-
+	import { locations, currentLocation } from "../locationStore";
+	import DisplaySettingsForm from "./DisplaySettings/DisplaySettingsForm.svelte";
+	import EmailServiceSettingsForm from "./EmailServiceSettings/EmailServiceSettingsForm.svelte";
+	import LoginAndRegisterSettingsForm from "./LoginAndRegisterSettings/LoginAndRegisterSettingsForm.svelte";
+	import ProtectectedPostTypeSettingsForm from "./ProtectedPostTypesSettings/ProtectedPostTypesSettingsForm.svelte";
+	console.log({ locations });
+	$:isCurrentLocation = function isCurrentLocation(location:string){
+		return $currentLocation == location
+	}
 </script>
 
 <h2 class="text-3xl mb-10">Your Settings</h2>
-<form class="shadow bg-white p-6" on:submit|preventDefault={()=>saveSettings({providerName:$provider,
-apiKey:$apikey,group:$selectedGroup, list:$selectedList })}>
-	<div class="flex flex-col gap-3">
-		<LabelSelect
-			value={$provider}
-			on:inputChange={(e) => (updateProvider( e.detail.value))}
-			options={providers}
-			label="Select a Email Marketing Service"
-			name="providerName"
-		/>
-		<LabelInput
-			on:inputChange={(e) => (apikey.set( e.detail.value))}
-			value={$apikey}
-			name="api-key"
-			type="password"
-			label="Your Api Key"
-		/>
-		<EmsListSelect/>
-		<EmsGroupSelect/>
-		<div>
-			<button
-				class="px-4 py-2 rounded bg-cyan-600 text-white font-medium tracking-wide"
-			>
-				Save
-			</button>
-		</div>
-	</div>
-</form>
+<div>
+	<header class="bg-gray-200 overflow-hidden rounded-t-md border-b-gray-200 border-b shadow">
+		<ul class="flex h-14 gap-[1px] ">
+			<li class="w-full flex-1 m-0">
+				<button
+					class={ `w-full bg-white h-full hover:bg-gray-100 font-bold
+					${isCurrentLocation(locations.protectePostTypeSettings.slug) ?
+					"text-cyan-600 font-extrabold" :""}` }	
+					on:click={() =>
+						currentLocation.navigate(locations.protectePostTypeSettings.slug)}
+				>
+					{ locations.protectePostTypeSettings.tab }
+				</button>
+			</li>
+			<li class="w-full flex-1 m-0">
+				<button
+					class={ `w-full bg-white h-full hover:bg-gray-100 font-bold ${isCurrentLocation(locations.formSettings.slug) ?
+					"text-cyan-600 font-extrabold" :""}` }	
+					on:click={() =>
+						currentLocation.navigate(locations.formSettings.slug)}
+				>
+				{locations.formSettings.tab}
+				</button>
+			</li>
+			<li class="w-full flex-1 m-0">
+				<button
+					class={ `w-full bg-white h-full hover:bg-gray-100 font-bold
+					${isCurrentLocation(locations.displayBlockedContent.slug) ?
+					"text-cyan-600 font-extrabold" :""}` }	
+					on:click={() =>
+						currentLocation.navigate(locations.displayBlockedContent.slug)}
+				>
+					{ locations.displayBlockedContent.tab }
+				</button>
+			</li>
+			<li class="w-full flex-1 m-0">
+				<button
+					class={ `w-full bg-white h-full hover:bg-gray-100 font-bold
+					${isCurrentLocation(locations.emailServiceSettings.slug) ?
+					"text-cyan-600 font-extrabold" :""}` }	
+					on:click={() =>{
+						currentLocation.navigate(locations.emailServiceSettings.slug)
+					}}
+						
+				>
+					{locations.emailServiceSettings.tab}
+				</button>
+			</li>
+		</ul>
+	</header>
+	<ProtectectedPostTypeSettingsForm />
+	<DisplaySettingsForm />
+	<LoginAndRegisterSettingsForm />
+	<EmailServiceSettingsForm />
+</div>
