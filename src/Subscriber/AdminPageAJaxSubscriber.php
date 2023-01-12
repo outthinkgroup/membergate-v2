@@ -3,6 +3,7 @@
 
 namespace Membergate\Subscriber;
 
+use Membergate\AJAX\CompleteSetup;
 use Membergate\AJAX\FetchGroupsFromProvider;
 use Membergate\AJAX\FetchListsFromProvider;
 use Membergate\AJAX\SaveGeneralListSettings;
@@ -29,6 +30,7 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
 			SaveGeneralListSettings::ACTION => SaveGeneralListSettings::class,
 			FetchListsFromProvider::ACTION => FetchListsFromProvider::class,
 			FetchGroupsFromProvider::ACTION => FetchGroupsFromProvider::class,
+			CompleteSetup::ACTION => CompleteSetup::class,
 		];
 		if( !isset( $_POST['mg_action'] ) ){
 			error_log("no action set");	

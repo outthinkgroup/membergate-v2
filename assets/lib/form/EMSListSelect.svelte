@@ -3,16 +3,17 @@
 	import {updateList} from "../../utils/formUtils"
 	import getLists from "../../api/getLists";
 	import {apikey, selectedList, listsForSelectList, lists, provider} from "../../store"
+	import saveSettings from "../../api/saveSettings";
 
 	let isLoadng = false
 	
 	async function fetchAndSetLists(apikey:string, provider:string){
-		const res = await getLists(apikey, provider)
-		if (res.errors.length) {
-			console.log(res.errors);
+		const listData = await getLists()
+		if (listData.errors.length) {
+			console.log(listData.errors);
 		}
-		if (res.data.lists && res.data.lists.length) {
-			lists.set(res.data.lists);
+		if (listData.data.lists && listData.data.lists.length) {
+			lists.set(listData.data.lists);
 		}
 	}
 

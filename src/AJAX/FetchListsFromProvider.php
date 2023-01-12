@@ -23,17 +23,10 @@ class FetchListsFromProvider implements AjaxInterface {
 	}	
 
 	public function handle(){
-		if(!isset($_POST['apiKey'])) {
-			echo json_encode(['data'=>[],'errors'=>["No Api Key Given"]]);
-			exit;
-		} else {
+		if(isset($_POST['apiKey'])) {
 			$this->list_settings->set_api_key($_POST["apiKey"]);
-		}
-
-		if(!isset($_POST['providerName'])) {
-			echo json_encode(['data'=>[],'errors'=>["No Provider Selected"]]);
-			exit;
-		} else {
+		} 
+		if(isset($_POST['providerName'])) {
 			$this->list_settings->set_provider($_POST['providerName']);
 		}
 

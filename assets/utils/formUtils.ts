@@ -10,10 +10,10 @@ export function updateProvider(value){
 	provider.subscribe((val)=>oldVal = val)
 
 	if(value !== oldVal){
-		provider.set(value)
+		provider.save(value)
 		// apikey.set("") // this is too inconvienient if this happens on accident
-		selectedGroup.set("")
-		selectedList.set("")
+		selectedGroup.clear()
+		selectedList.clear()
 	}
 }
 
@@ -22,9 +22,9 @@ export function updateApiKey(value){
 	apikey.subscribe((val)=> oldKey = val)
 
 	if(oldKey !== value){
-		apikey.set(value)
-		selectedGroup.set("")
-		selectedList.set("")
+		apikey.save(value)
+		selectedGroup.clear()
+		selectedList.clear()
 	}
 }
 	
@@ -33,8 +33,8 @@ export function updateList(value){
 	selectedList.subscribe((val)=> oldList = val)
 
 	if(oldList !== value){
-		selectedList.set(value)
-		selectedGroup.set("")
+		selectedList.save(value)
+		selectedGroup.clear()
 	}
 }
 export function updateGroup(value){
@@ -42,6 +42,6 @@ export function updateGroup(value){
 	selectedGroup.subscribe((val)=> oldGroup = val)
 
 	if(oldGroup !== value){
-		selectedGroup.set(value)
+		selectedGroup.save(value)
 	}
 }

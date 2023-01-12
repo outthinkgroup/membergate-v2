@@ -12,7 +12,7 @@
 		selectedGroup,
 		provider,
 	} from "../../store";
-	import { updateProvider } from "../../utils/formUtils";
+	import { updateApiKey, updateProvider } from "../../utils/formUtils";
 
 	let { providers } = window.membergate;
 </script>
@@ -38,7 +38,8 @@
 				name="providerName"
 			/>
 			<LabelInput
-				on:inputChange={(e) => apikey.set(e.detail.value)}
+				on:inputChange={(e) => updateApiKey(e.detail.value)}
+				event="blur"
 				value={$apikey}
 				name="api-key"
 				type="password"

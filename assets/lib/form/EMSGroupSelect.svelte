@@ -15,7 +15,7 @@
 	let isLoadng = false;
 
 	async function fetchAndSetGroups(listId:string) {
-		const res = await getGroups(listId);
+		const res = await getGroups();
 		if (res.errors.length) {
 			console.log(res.errors);
 			return;
@@ -60,7 +60,7 @@
 			return;
 		} 
 		window.membergate.settings.emailService.listId = null //only needed for stopping running on initial set
-		if (!selectedList.length ) {
+		if (!selectedList?.length ) {
 			groups.set([]);
 			return;
 		}

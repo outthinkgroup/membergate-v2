@@ -29,9 +29,9 @@ class FetchGroupsFromProvider implements AjaxInterface {
 			echo json_encode(['data'=>[],'errors'=>["groups are not supported by $provider_key"]]);
 			exit;
 		}
-		$list_id = isset( $_POST['list'] ) ? $_POST['list'] : null;
+		$list_id = check_and_return($this->list_settings->get_list_config()['list']);
 		if(!$list_id){
-			echo json_encode(['data'=>[],'errors'=>["Requires a list id to be set"]]);
+			echo json_encode(['data'=>[],'errors'=>["No List Id is set yet"]]);
 			exit;
 		}
 		$client = new $client($this->list_settings->get_api_key());

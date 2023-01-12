@@ -2,42 +2,47 @@
 	import getLists from "../api/getLists";
 	import getGroups from "../api/getGroups";
 	import saveSettings from "../api/saveSettings";
+  import completeWizard from "../api/completeWizard";
 	import {
 		completedSetup,
 		groups,
-		groupsForSelectList,
 		lists,
-		listsForSelectList,
 		apikey,
 		provider,
-		selectedGroup,
 		selectedList,
 	} from "../store";
 	import LabelInput from "./form/LabelInput.svelte";
 	import LabelSelect from "./form/LabelSelect.svelte";
 	import EmsListSelect from "./form/EMSListSelect.svelte";
 	import EmsGroupSelect from "./form/EMSGroupSelect.svelte";
-	import { updateApiKey, updateList, updateProvider } from "../utils/formUtils";
+	import { updateApiKey, updateProvider } from "../utils/formUtils";
 
 	const providersList = window.membergate.providers;
 
 	let currentStep = 1;
-	function completeStepOne() {
+	async function completeStepOne() {
+			const res = await saveSettings({providerName:$provider, apiKey:$apikey});
+			const listData = await getLists();
+			if(listData?.data?.lists){
+				lists.set(listData.data.lists)
+			}
+			
+			console.log({res1:res})
 			currentStep = 2;
 	}
 
-	function completeStepTwo() {
+	async function completeStepTwo() {
+		const res = await saveSettings({list:$selectedList})
+		const groupData = await getGroups()
+
+		if(groupData?.data){
+			groups.set(groupData.data)
+		}
 		currentStep = 3;
 	}
 
 	async function completeSetup() {
-		const res = await saveSettings({
-			apiKey: $apikey,
-			providerName: $provider,
-			list: $selectedList,
-			group: $selectedGroup,
-		});
-
+		const res = await completeWizard();
 		if (res.errors.length) {
 			console.log({ errors: res.errors });
 			return;
