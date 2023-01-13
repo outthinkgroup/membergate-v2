@@ -26,6 +26,7 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 
 		$lists = "";
 		$groups = "";
+		debug($provider_name);
 		if($provider_name && $api_key){
 			$provider = new $this->list_providers[$provider_name]($api_key);
 			$lists = $provider->get_lists();
@@ -45,8 +46,13 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 						providerName: "<?= $provider_name; ?>",
 						listId: "<?= $list_id; ?>",
 						groupId: "<?= $group_id; ?>",
+						<?php if(is_array($lists) && isset($lists['lists'])){ ?>
 						lists: <?= json_encode($lists['lists']); ?>, 
+						<?php } ?>
+
+						<?php if(is_array($groups)){ ?>
 						groups: <?= json_encode($groups); ?>,
+						<?php } ?>
 					},
 				}
 			}

@@ -29,9 +29,12 @@ class ListProviderSettings {
 	}
 
 	public function set_info($provider=null, $api_key=null, $list_config=null){
+		debug([$provider, $api_key, $list_config]);
 		$provider = isset($provider) ? $provider : $this->provider;
 		$api_key = isset($api_key) ? $api_key : $this->api_key;
-		$list_config = isset($list_config) ? $list_config : $this->$list_config;
+		$list_config = [];
+		$list_config['list'] = isset($list_config['list']) ? $list_config['list'] : $this->list_config['list'];
+		$list_config['group'] = isset($list_config['group']) ? $list_config['group'] : $this->list_config['group'];
 
 		return update_option(self::KEY, [
 			'api_key'=>isset($api_key) ? $api_key : $this->api_key,

@@ -3,8 +3,8 @@ import saveSettings from './api/saveSettings';
 
 export const completedSetup = writable(window.membergate.completedSetup)
 
-export const groups = writable(window.membergate.settings.emailService.groups)
-export const lists = writable(window.membergate.settings.emailService.lists)
+export const groups = writable(window.membergate.settings.emailService.groups ?? [])
+export const lists = writable(window.membergate.settings.emailService.lists ?? [])
 
 export const listsForSelectList = derived(lists, ($lists)=> {
 	return $lists.reduce(
