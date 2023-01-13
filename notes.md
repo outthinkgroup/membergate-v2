@@ -11,6 +11,11 @@
 		- [x] GroupsSelect
 	- Subscribe to values that directly inpact the options (dependencies)
 		- refetch inputs options when dependency change
+- [ ] Add MailProvider Specific Form Settings for each provider in the Svelte app.
+	- [ ] break up the store.
+	- [ ] build component for each provider
+	- [ ] add section foreach provider in server rendered settings
+
 ### Admin UI
 - [ ] Add loading indicators
 - [ ] Build Error message system for admin

@@ -21,7 +21,7 @@
 
 	let currentStep = 1;
 	async function completeStepOne() {
-			const res = await saveSettings({providerName:$provider, apiKey:$apikey});
+			const res = await saveSettings({providerName:$provider, apikey:$apikey});
 			const listData = await getLists();
 			if(listData?.data?.lists){
 				lists.set(listData.data.lists)
@@ -32,7 +32,7 @@
 	}
 
 	async function completeStepTwo() {
-		const res = await saveSettings({list:$selectedList})
+		const res = await saveSettings({list_id:$selectedList})
 		const groupData = await getGroups()
 
 		if(groupData?.data){

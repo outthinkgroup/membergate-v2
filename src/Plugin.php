@@ -48,9 +48,9 @@ class Plugin {
 
 		$this->container->configure([
 			EventManagementConfiguration::class,
+			ProvidersConfiguration::class,			
 			SettingsConfiguration::class,
 			FormHandlerConfiguration::class,
-			ProvidersConfiguration::class,			
 		]);	
 
 		foreach($this->container['subscribers'] as $subber){

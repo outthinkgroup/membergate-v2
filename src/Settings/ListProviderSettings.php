@@ -3,83 +3,27 @@
 namespace Membergate\Settings;
 
 class ListProviderSettings {
-	const KEY = "general_list_provider_info";
-	private $api_key;
+	const PROVIDER_NAME = "membergate_provider";
 	private $provider;
-	private $list_config;
+	private $provider_list;
 
 	public $post_type_list_settings;
 
-	public function __construct(){
-		//Im not sure if this is a good idea.
-		// $this->post_type_list_settings = new PostTypeListProviderSettings();
-
-		$info = $this->get_info();	
-		$this->api_key = $info['api_key'];
-		$this->provider = $info['provider'];
-		$this->list_config = $info['list_config'];
+	public function __construct($provider_list){
+		$this->provider_list = $provider_list;
+		$this->provider = get_option(self::PROVIDER_NAME, "mailchimp");
 	}
 
-	private function get_info() {
-		return get_option(self::KEY, [
-			'api_key'=>null,
-			'provider'=>null,
-			'list_config'=>[],
-		]);	
+	public function get_provider_settings_class() {
+		return $this->provider_list[$this->get_provider()]['settings'];	
 	}
 
-	public function set_info($provider=null, $api_key=null, $list_config=null){
-		debug([$provider, $api_key, $list_config]);
-		$provider = isset($provider) ? $provider : $this->provider;
-		$api_key = isset($api_key) ? $api_key : $this->api_key;
-		$list_config = [];
-		$list_config['list'] = isset($list_config['list']) ? $list_config['list'] : $this->list_config['list'];
-		$list_config['group'] = isset($list_config['group']) ? $list_config['group'] : $this->list_config['group'];
-
-		return update_option(self::KEY, [
-			'api_key'=>isset($api_key) ? $api_key : $this->api_key,
-			'provider'=>isset($provider) ? $provider : $this->provider,
-			'list_config'=>isset($list_config) ? $list_config : $this->list_config,
-		]);	
-	}
-
-	public function get_api_key(){
-		return $this->api_key;	
+	public function set_provider(string $provider_name){
+		update_option(self::PROVIDER_NAME, $provider_name);
 	}
 
 	public function get_provider(){
 		return $this->provider;	
-	}
-
-	public function get_list_config(){
-		return $this->list_config;
-	}
-
-	public function get_provider_lists(){
-
-	}
-
-	public function get_provider_groups(){
-			
-	}
-
-	public function set_api_key($api_key){
-		$this->api_key = $api_key;	
-		$this->save();
-	}
-
-	public function set_provider($provider){
-		$this->provider = $provider;	
-		$this->save();
-	}
-
-	public function set_list_config($list_config){
-		$this->list_config = $list_config;	
-		$this->save();
-	}
-
-	public function save(){
-		$this->set_info();	
 	}
 
 }

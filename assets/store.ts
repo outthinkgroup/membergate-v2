@@ -51,7 +51,7 @@ function createApikeyStore(){
 		subscribe,
 		clear:()=>set(null),
 		save:async (updatedApikey:string)=>{
-			const res = await saveSettings({apiKey:updatedApikey})	
+			const res = await saveSettings({apikey:updatedApikey})	
 			if (res.errors.length){
 				console.log({updatedApikeyError:res.errors})
 				return;
@@ -69,7 +69,7 @@ function createSelectedListStore(){
 		subscribe,
 		clear:()=>set(null),
 		save:async (updatedListId:string)=>{
-			const res = await saveSettings({list:updatedListId})	
+			const res = await saveSettings({list_id:updatedListId})	
 			if (res.errors.length){
 				console.log({updatedListIdError:res.errors})
 				return;
@@ -87,7 +87,7 @@ function createSelectedGroupStore(){
 		subscribe,
 		clear:()=>set(null),
 		save:async (updatedGroupId:string)=>{
-			const res = await saveSettings({group:updatedGroupId})	
+			const res = await saveSettings({group_id:updatedGroupId})	
 			if (res.errors.length){
 				console.log({updatedGroupIdError:res.errors})
 				return;

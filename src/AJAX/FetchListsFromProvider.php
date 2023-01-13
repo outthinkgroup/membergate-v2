@@ -28,22 +28,30 @@ class FetchListsFromProvider implements AjaxInterface {
 	}	
 
 	public function handle(){
-		if(isset($_POST['apiKey'])) {
-			$this->list_settings->set_api_key($_POST["apiKey"]);
-		} 
-		if(isset($_POST['providerName'])) {
-			$this->list_settings->set_provider($_POST['providerName']);
-		}
+		// I think this route should just care about fetching lists
+		// if(isset($_POST['apiKey'])) {
+		// 	$this->list_settings->set_api_key($_POST["apiKey"]);
+		// } 
+		// if(isset($_POST['providerName'])) {
+		// 	$this->list_settings->set_provider($_POST['providerName']);
+		// }
 
 		$provider_key = $this->list_settings->get_provider();
-		$provider = $this->providers[$provider_key];
+		$provider = $this->providers[$provider_key]['client'];
+		$provider_settings =  $this->providers[$provider_key]['settings'];
 
 		if (! in_array("has_lists", $provider::capabilities()) ){
 			echo json_encode(['data'=>[],'errors'=>["lists are not supported by $provider_key"]]);
 			exit;
 		}
 
-		$provider = new $provider($this->list_settings->get_api_key());
+		$provider_settings = new $provider_settings();
+		$apikey = $provider_settings->get_setting('apikey');
+		if($apikey->has_error()){
+			echo json_encode(['data'=>[],'errors'=>["Could not load apikey"]]);
+			exit;
+		}
+		$provider = new $provider($apikey->value);
 		$results = $provider->get_lists();
 
 		if (! is_array($results) ){

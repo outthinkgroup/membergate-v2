@@ -3,9 +3,10 @@
 namespace Membergate\Subscriber;
 
 use Membergate\EventManagement\SubscriberInterface;
+use Membergate\Settings\ListProviderSettings;
 
 class ServerRenderSettingsSubscriber implements SubscriberInterface {
-	private $list_provider_settings;
+	private ListProviderSettings $list_provider_settings;
 	private $list_providers;
 	public function __construct($list_provider_settings, $list_providers, $account_settings){
 		$this->list_provider_settings = $list_provider_settings;
@@ -19,16 +20,27 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 	}
 
 	public function add_global_vars(){
-		$api_key = check_and_return( $this->list_provider_settings->get_api_key() );
-		$provider_name = check_and_return( $this->list_provider_settings->get_provider() );
-		$list_id = check_and_return($this->list_provider_settings->get_list_config()['list']);
-		$group_id = check_and_return($this->list_provider_settings->get_list_config()['group']);
+		$provider_settings_class = $this->list_provider_settings->get_provider_settings_class();
+		$provider_settings_class = new $provider_settings_class();
+		$settings = $provider_settings_class->get_settings();
+		if( $settings->has_error() ){
+			$api_key = "";
+			$provider_name="";
+			$list_id = "";
+			$group_id = "";
+		} else{
+			$settings = $settings->value;
+			$api_key = $settings['apikey'] ? $settings['apikey'] : "";
+			$provider_name = $this->list_provider_settings->get_provider();
+			$list_id = $settings['list_id'] ? $settings['list_id'] : "";
+			$group_id = $settings['group_id'] ? $settings['group_id'] : "";
+		}
 
 		$lists = "";
 		$groups = "";
 		debug($provider_name);
 		if($provider_name && $api_key){
-			$provider = new $this->list_providers[$provider_name]($api_key);
+			$provider = new $this->list_providers[$provider_name]['client']($api_key);
 			$lists = $provider->get_lists();
 			if($list_id){
 				$groups = $provider->get_groups($list_id);
@@ -46,13 +58,8 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 						providerName: "<?= $provider_name; ?>",
 						listId: "<?= $list_id; ?>",
 						groupId: "<?= $group_id; ?>",
-						<?php if(is_array($lists) && isset($lists['lists'])){ ?>
-						lists: <?= json_encode($lists['lists']); ?>, 
-						<?php } ?>
-
-						<?php if(is_array($groups)){ ?>
-						groups: <?= json_encode($groups); ?>,
-						<?php } ?>
+						lists: <?= isset($lists['lists']) && is_array($lists['lists']) ? json_encode($lists['lists']) : []; ?>, 
+						groups: <?= is_array($groups) ? json_encode($groups) : []; ?>,
 					},
 				}
 			}

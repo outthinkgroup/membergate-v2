@@ -23,30 +23,17 @@ class SaveGeneralListSettings implements AjaxInterface {
 	}	
 
 	public function handle(){
-		$settings =  [];
-		$provider = isset($_POST['providerName']) ? sanitize_text_field($_POST['providerName']) : null;
-		$api_key = isset($_POST['apiKey']) ? sanitize_text_field($_POST['apiKey']) : null;
-
-		if($provider){
-			$settings[] = $provider;
+		if(isset($_POST['providerName'])) {
+			$this->list_settings->set_provider($_POST['providerName']);
 		}
-		if($api_key){
-			$settings[] = $api_key;
+		$provider_class = $this->list_settings->get_provider_settings_class();
+		$provider_class = new $provider_class();
+		$result = $provider_class->update_settings($_POST);
+		if($result->has_error()){
+			echo json_encode(['data'=> 0, 'errors'=>$result->errors]);		
+			exit;
 		}
-
-		$list_config = [];
-		$list = isset($_POST['list']) ?  sanitize_text_field($_POST['list']) : null;
-		$group = isset($_POST['group']) ?  sanitize_text_field($_POST['group']) : null;
-
-		if($list){
-			$list_config['list'] = $list;
-		}
-		if($group){
-			$list_config['group'] = $group;
-		}
-		$settings[] = $list_config;
-		$this->list_settings->set_info(...$settings);		
-		echo json_encode(['data'=> 1, 'errors'=>[]]);		
+		echo json_encode(['data'=> $result->data, 'errors'=>[]]);		
 		exit;
 	}
 }

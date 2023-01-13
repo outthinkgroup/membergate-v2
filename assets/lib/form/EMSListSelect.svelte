@@ -3,7 +3,6 @@
 	import {updateList} from "../../utils/formUtils"
 	import getLists from "../../api/getLists";
 	import {apikey, selectedList, listsForSelectList, lists, provider} from "../../store"
-	import saveSettings from "../../api/saveSettings";
 
 	let isLoadng = false
 	

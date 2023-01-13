@@ -11,7 +11,7 @@ use Membergate\Settings\PostTypeSettings;
 class SettingsConfiguration implements ContainerConfigurationInterface {
 	public function modify(Container $container){
 		$container['settings.list_provider'] = $container->service(function (Container $container){
-			return new ListProviderSettings();
+			return new ListProviderSettings($container['list_providers']);
 		});
 		$container['settings.account'] = $container->service(function (Container $container){
 			return new AccountSettings();
