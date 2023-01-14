@@ -24,9 +24,9 @@
 		on:submit|preventDefault={() =>
 			saveSettings({
 				providerName: $provider,
-				apiKey: $apikey,
-				group: $selectedGroup,
-				list: $selectedList,
+				apikey: $apikey,
+				group_id: $selectedGroup,
+				list_id: $selectedList,
 			})}
 	>
 		<div class="flex flex-col gap-3">

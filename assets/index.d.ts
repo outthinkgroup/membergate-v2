@@ -14,11 +14,7 @@ declare global {
 					lists?: any[];
 					groups: any[];
 				};
-				postTypes: {
-					name: string;
-					isProtected: boolean;
-					slug: string;
-				}[];
+				postTypes: Record<string,{name:string, slug:string, protected:boolean}>;
 				forms: Record<string, any>;
 				blockedContent: Record<string, any>;
 			};

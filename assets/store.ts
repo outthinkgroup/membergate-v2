@@ -1,4 +1,5 @@
 import { derived, readable, writable } from 'svelte/store';
+import savePostTypes from './api/savePostTypes';
 import saveSettings from './api/saveSettings';
 
 export const completedSetup = writable(window.membergate.completedSetup)
@@ -99,6 +100,19 @@ function createSelectedGroupStore(){
 
 export const selectedGroup = createSelectedGroupStore()
 
-
-
-export const postTypes = readable(window.membergate.settings.postTypes)
+function createPostTypeStore(){
+	const {subscribe, update} = writable(window.membergate.settings.postTypes)
+	return {
+		subscribe,
+		async save(slug:string, isProtected:boolean){
+			let p:Record<string, {name:string, slug:string; protected:boolean}>
+			update((postTypes)=>{
+				postTypes[slug].protected = isProtected;
+				return postTypes
+			})
+			const res = await savePostTypes(slug, isProtected)
+			return res
+		}
+	}	
+}
+export const postTypes = createPostTypeStore();
