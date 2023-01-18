@@ -1,5 +1,4 @@
 <?php
-
 namespace Membergate\ListProviders\EMSClients;
 
 class MailChimpClient {

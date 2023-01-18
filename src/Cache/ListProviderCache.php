@@ -1,8 +1,6 @@
 <?php
 namespace Membergate\Cache;
-
 use Membergate\Common\Time;
-use Membergate\Settings\ListProviderSettings;
 
 class ListProviderCache {
 	private string $provider;

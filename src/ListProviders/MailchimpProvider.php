@@ -1,5 +1,5 @@
 <?php
-
+// TODO: 
 namespace Membergate\ListProviders;
 
 use Membergate\Cache\ListProviderCache;
@@ -142,10 +142,22 @@ class MailchimpProvider implements ListProvidersInterface
 		return $resp;
 	}
 
-	public function add_subscriber($list_id, $email_address, $info): PossibleError
+	public function add_subscriber($email_address, $settings): PossibleError
 	{
-		//TODO:	
-		return new PossibleError(null);
+		$list_id = $settings['list_id'];
+		$hash = $this->client->subscriberHash($email_address);
+		$groups = [$settings['group_id'] => true];
+
+		$res = $this->client->put("/lists/$list_id/members/$hash",[
+			'status_if_new'=>'subscribed',
+			'email_address'=>$email_address,
+			'interests' => $groups,
+		]);
+		if (!$this->client->success() ) {
+			debug($this->client->getLastError());
+			return new PossibleError(null, $this->client->getLastError());
+		}
+		return new PossibleError($res);
 	}
 
 	public function get_user($list_id, $email_address): PossibleError
@@ -154,9 +166,11 @@ class MailchimpProvider implements ListProvidersInterface
 		$res = $this->client->get("lists/$list_id/members/$hash");
 		if (!$this->client->success() ) {
 			$response = $this->client->getLastResponse();
-			if ( $response['status'] == 404 ){
+			if ( $response['headers']['http_code'] == 404 ){
 				return new PossibleError(false);
 			}
+
+			debug(["error here", $response ]);
 			return new PossibleError(null, $this->client->getLastError());
 		}
 		return new PossibleError($res);
@@ -170,7 +184,7 @@ class MailchimpProvider implements ListProvidersInterface
 		}
 		$resp = $possible_error->value;
 		if ($resp == false) {
-			return $possible_error;
+			return new PossibleError(false);	
 		}
 		if($resp['status'] == 'subscribed'){
 			return new PossibleError(true);

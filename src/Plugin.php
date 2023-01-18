@@ -1,5 +1,4 @@
 <?php
-
 namespace Membergate;
 
 use Membergate\DependencyInjection\Container; 

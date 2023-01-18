@@ -12,7 +12,6 @@
  * @package			membergate
  *
  */
-
 // this is used for asset loading for vite
 require __DIR__ . '/vendor/autoload.php';
 
