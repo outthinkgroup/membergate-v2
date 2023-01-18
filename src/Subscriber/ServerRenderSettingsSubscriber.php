@@ -50,7 +50,7 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 		}
 
 		$post_types = $this->post_type_settings->get_all();
-
+		debug($post_types);
 		?>	
 		<script>
 			window.membergate = {

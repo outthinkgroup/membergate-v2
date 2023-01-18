@@ -28,13 +28,6 @@ class FetchListsFromProvider implements AjaxInterface {
 	}	
 
 	public function handle(){
-		// I think this route should just care about fetching lists
-		// if(isset($_POST['apiKey'])) {
-		// 	$this->list_settings->set_api_key($_POST["apiKey"]);
-		// } 
-		// if(isset($_POST['providerName'])) {
-		// 	$this->list_settings->set_provider($_POST['providerName']);
-		// }
 
 		$provider_key = $this->list_settings->get_provider();
 		$provider = $this->providers[$provider_key]['client'];

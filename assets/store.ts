@@ -101,13 +101,15 @@ function createSelectedGroupStore(){
 export const selectedGroup = createSelectedGroupStore()
 
 function createPostTypeStore(){
+	console.log({postTypes:window.membergate.settings.postTypes})
 	const {subscribe, update} = writable(window.membergate.settings.postTypes)
 	return {
 		subscribe,
 		async save(slug:string, isProtected:boolean){
 			let p:Record<string, {name:string, slug:string; protected:boolean}>
 			update((postTypes)=>{
-				postTypes[slug].protected = isProtected;
+				const value: "true"|"false" = isProtected ? "true" : "false";
+				postTypes[slug].protected = value
 				return postTypes
 			})
 			const res = await savePostTypes(slug, isProtected)

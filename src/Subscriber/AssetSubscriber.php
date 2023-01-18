@@ -12,6 +12,7 @@ class AssetSubscriber implements SubscriberInterface {
 		return [
 			'admin_enqueue_scripts'=>'enqueue_admin_assets',
 			'script_loader_tag' => ['use_esm_modules',10,3],
+			'wp_enqueue_scripts' => 'enqueue_form_syles',
 		];
 	}
 
@@ -22,6 +23,9 @@ class AssetSubscriber implements SubscriberInterface {
 		}
 	}
 
+	public function enqueue_form_syles(){
+		Vite::useVite("assets/forms.ts");	
+	}
 
 	public function use_esm_modules($tag, $handle, $src){
 		if (false !== stripos($handle, 'sage')) {

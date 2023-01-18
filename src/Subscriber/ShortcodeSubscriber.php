@@ -16,6 +16,7 @@ class ShortcodeSubscriber implements SubscriberInterface {
 			'init'=>'load_shortcodes',	
 		];
 	}
+
 	public function load_shortcodes(){
 		$shortcodes = [
 			'mg_signup_form'=> SignupShortcode::class,

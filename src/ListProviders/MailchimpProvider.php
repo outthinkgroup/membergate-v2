@@ -9,7 +9,7 @@ use Membergate\ListProviders\EMSClients\MailChimpClient;
 class MailchimpProvider implements ListProvidersInterface
 {
 	private $api_key;
-	private $client;
+	private MailChimpClient $client;
 	private $cache;
 	const provider_name = "mailchimp";
 
@@ -32,10 +32,10 @@ class MailchimpProvider implements ListProvidersInterface
 
 	public function get_lists()
 	{
-		return $this->cache->get_lists($this->api_key, function(){
+		return $this->cache->get_lists($this->api_key, function () {
 			$resp = $this->fetch_lists();
 			debug($resp);
-			if ($resp->has_error()){
+			if ($resp->has_error()) {
 				return "";
 			}
 			return $resp->value;
@@ -43,11 +43,11 @@ class MailchimpProvider implements ListProvidersInterface
 	}
 	public function get_groups($list_id)
 	{
-		return $this->cache->get_groups($list_id, function($list_id) {
+		return $this->cache->get_groups($list_id, function ($list_id) {
 			$resp = $this->fetch_all_groups($list_id);
 
 			debug($resp);
-			if ($resp->has_error()){
+			if ($resp->has_error()) {
 				return null;
 			}
 			return $resp->value;
@@ -57,7 +57,7 @@ class MailchimpProvider implements ListProvidersInterface
 	public function fetch_lists(): PossibleError
 	{
 		$resp = new PossibleError();
-		$lists = $this->client->get('lists',[],200);
+		$lists = $this->client->get('lists', [], 200);
 		if (!$this->client->success()) {
 			//TODO: handle error better
 			error_log(print_r([$this->client->getLastResponse(), $this->client->getLastRequest()], true));
@@ -85,7 +85,6 @@ class MailchimpProvider implements ListProvidersInterface
 			if ($children_resp->has_error()) {
 				if ($resp->has_error()) {
 					$resp->error[] = $children_resp->error;
-
 				}
 			}
 
@@ -143,13 +142,39 @@ class MailchimpProvider implements ListProvidersInterface
 		return $resp;
 	}
 
-	public function add_subscriber($email_address, $info)
+	public function add_subscriber($list_id, $email_address, $info): PossibleError
 	{
 		//TODO:	
+		return new PossibleError(null);
 	}
 
-	public function get_user($email_address): array
+	public function get_user($list_id, $email_address): PossibleError
 	{
-		return [];
+		$hash = $this->client->subscriberHash($email_address);
+		$res = $this->client->get("lists/$list_id/members/$hash");
+		if (!$this->client->success() ) {
+			$response = $this->client->getLastResponse();
+			if ( $response['status'] == 404 ){
+				return new PossibleError(false);
+			}
+			return new PossibleError(null, $this->client->getLastError());
+		}
+		return new PossibleError($res);
+	}
+
+	public function is_user_subscribed($list_id, $email_address): PossibleError
+	{
+		$possible_error = $this->get_user($list_id, $email_address);
+		if ($possible_error->has_error()) {
+			return $possible_error;
+		}
+		$resp = $possible_error->value;
+		if ($resp == false) {
+			return $possible_error;
+		}
+		if($resp['status'] == 'subscribed'){
+			return new PossibleError(true);
+		}
+		return new PossibleError(false);	
 	}
 }

@@ -14,7 +14,11 @@ export default defineConfig({
     manifest: true,
     outDir: path.resolve(__dirname, "assets/dist"),
     rollupOptions: {
-      input: "assets/main.ts",
+			input:{
+				forms: "assets/forms.ts",
+				main: "assets/main.ts",
+			},
+
     },
   },
   server: {

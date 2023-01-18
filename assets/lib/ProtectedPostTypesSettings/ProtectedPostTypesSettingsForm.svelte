@@ -18,11 +18,11 @@
 <div class="shadow bg-white p-6" >
 
 	<h3 class="text-xl font-medium text-cyan-600 mb-6">Protected Content Settings</h3>
-	<div>
+	<div class="flex flex-col gap-2">
 		{#each Object.keys($postTypes) as ptype}
-			<div>
+			<div class="">
 				<label for={ptype}>
-					<input type="checkbox" checked={$postTypes[ptype].protected} class="" on:change={(e)=>updatePostType(e,ptype)}>
+					<input type="checkbox" checked={$postTypes[ptype].protected == "true"} class="" on:change={(e)=>updatePostType(e,ptype)}>
 					<span>{$postTypes[ptype].name}</span>
 				</label>
 			</div>

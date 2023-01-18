@@ -16,7 +16,7 @@ class PostTypeSettings {
 
 	public function save($post_types){
 		$this->post_types = $post_types;
-		update_option(self::POST_TYPE_KEY, $post_types);
+		$res = update_option(self::POST_TYPE_KEY, $post_types);
 		return $post_types;	
 	}
 
