@@ -27,6 +27,7 @@ class MailchimpProvider implements ListProvidersInterface
 			"has_groups",
 			"has_lists",
 			"has_tags",
+			"has_merge_fields",
 		];
 	}
 
@@ -41,6 +42,7 @@ class MailchimpProvider implements ListProvidersInterface
 			return $resp->value;
 		});
 	}
+
 	public function get_groups($list_id)
 	{
 		return $this->cache->get_groups($list_id, function ($list_id) {
@@ -142,7 +144,7 @@ class MailchimpProvider implements ListProvidersInterface
 		return $resp;
 	}
 
-	public function add_subscriber($email_address, $settings): PossibleError
+	public function add_subscriber($email_address, $settings, $submission=null): PossibleError
 	{
 		$list_id = $settings['list_id'];
 		$hash = $this->client->subscriberHash($email_address);

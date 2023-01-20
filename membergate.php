@@ -26,3 +26,4 @@ global $membergate;
 $membergate = new \Membergate\Plugin(__FILE__);
 add_action('after_setup_theme', [ $membergate, 'load']);
 
+require_once "pluggable.php";

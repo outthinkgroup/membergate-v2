@@ -7,8 +7,10 @@ use Membergate\Settings\PostTypeSettings;
 
 class RedirectToProtectSubscriber implements SubscriberInterface {
 	private $post_type_settings;
-	public function __construct(PostTypeSettings $post_type_settings ){
+	private $form_renderer;
+	public function __construct(PostTypeSettings $post_type_settings, $form_renderer ){
 		$this->post_type_settings = $post_type_settings;
+		$this->form_renderer = $form_renderer;
 	}
 
 	public static function get_subscribed_events():array{
@@ -38,8 +40,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 
 		$use_page_redirect = apply_filters("use_page_redirect", false, $current_post_type);
 		if($use_page_redirect){
-			global $membergate; 
-			include $membergate->get_plugin_path() . "templates/register_form_page.php";
+			$this->form_renderer->include_form("signup_form");
 			exit;
 		}
 	}
@@ -63,10 +64,8 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 
 		error_log("the_content is getting called");
 		// returning subscribe form
-		global $membergate;
-		ob_start();
-		include $membergate->get_plugin_path() . "templates/signup_form.php";
-		return ob_get_clean();
+		$this->form_renderer->include_form("signup_form");
+		exit;
 	}
 
 }

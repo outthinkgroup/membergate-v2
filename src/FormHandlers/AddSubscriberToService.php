@@ -30,11 +30,12 @@ class AddSubscriberToService implements FormHandlerInterface{
 			$this->list_client = new $this->list_client($apikey->value);
 		}
 	}
+
 	public function execute_action($submission){
 		if(!$this->setup) return;
 
-		$name = isset( $_POST['user_name'] ) ? $_POST['user_name'] : null;
-		$email = isset( $_POST['email'] ) ? $_POST['email'] : null;
+		$name = isset( $submission['user_name'] ) ? $submission['user_name'] : null;
+		$email = isset( $submission['email'] ) ? $submission['email'] : null;
 		if(is_null($name) || is_null($email)) return; //TODO: Error Reporting show USER 
 
 		$cookie = new MemberCookie();
@@ -45,7 +46,7 @@ class AddSubscriberToService implements FormHandlerInterface{
 			return;	//TODO: Error Reporting show ADMIN
 		}
 
-		$subbed_res = $this->list_client->add_subscriber($email, $settings->value);
+		$subbed_res = $this->list_client->add_subscriber($email, $settings->value, $submission);
 		if($subbed_res->has_error()){
 			//TODO: Error Reporting show USER
 			debug(["add_subscriber"=>$subbed_res->error]);

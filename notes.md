@@ -1,5 +1,21 @@
 # Membergate
 
+## MVP
+- [x] Create Class for forms
+	- [ ] Change form rendering class from singleton to a Configuration class
+	- [ ] Add to all subscribers rendering forms
+- [ ] split form from additional markup (title, description)
+- [ ] Create shortcode for just form with option of adding title and description
+- [ ] Create Page Options for form
+- [ ] Options for designating redirect page
+- [ ] Options for setting overriding content or redirect
+- [ ] Options for form title and description
+- [ ] Options for Modal on link clicks
+- [ ] Create Modal Markup
+- [ ] Make Modal work
+- [ ] Error Reporting show USER
+- [ ] Build Meta Box
+
 ## Admin Settings
 
 ### List Providers
@@ -15,6 +31,7 @@
 	- [ ] break up the store.
 	- [ ] build component for each provider
 	- [ ] add section foreach provider in server rendered settings
+	- [ ] Add merge fields if client supports it
 
 ### Admin UI
 - [ ] Add loading indicators
@@ -53,6 +70,10 @@
 - [ ] Build Setting for Modal
 - [ ] Build Signup form
 - [ ] Build Gutenburg block for inline protected content
+
+## Merge Fields
+- Any fields submitted will be checked against merge field settings if it exists
+- will use it if it does.
 
 - [x] Test mailchimp integration 
 	 - getting lists

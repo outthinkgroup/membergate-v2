@@ -4,6 +4,7 @@ namespace Membergate;
 use Membergate\DependencyInjection\Container; 
 use Membergate\Configuration\EventManagementConfiguration;
 use Membergate\Configuration\FormHandlerConfiguration;
+use Membergate\Configuration\MembergateFormConfiguration;
 use Membergate\Configuration\ProvidersConfiguration;
 use Membergate\Configuration\SettingsConfiguration;
 
@@ -50,8 +51,9 @@ class Plugin {
 			ProvidersConfiguration::class,			
 			SettingsConfiguration::class,
 			FormHandlerConfiguration::class,
+			MembergateFormConfiguration::class,
 		]);	
-
+		error_log($this->get_plugin_path());
 		foreach($this->container['subscribers'] as $subber){
 			$this->container['event_manager']->add_subscriber($subber);	
 		}

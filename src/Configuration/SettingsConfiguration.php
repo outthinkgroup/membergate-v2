@@ -6,6 +6,7 @@ use Membergate\DependencyInjection\Container;
 use Membergate\DependencyInjection\ContainerConfigurationInterface;
 use Membergate\Settings\ListProviderSettings;
 use Membergate\Settings\AccountSettings;
+use Membergate\Settings\FormSettings;
 use Membergate\Settings\PostTypeSettings;
 
 class SettingsConfiguration implements ContainerConfigurationInterface {
@@ -18,6 +19,10 @@ class SettingsConfiguration implements ContainerConfigurationInterface {
 		});
 		$container['settings.post_types'] = $container->service(function(Container $container){
 			return new PostTypeSettings();
+		});
+		$container['settings.forms'] = $container->service(function(Container $container){
+			$settings = new FormSettings();
+			return $settings;
 		});
 	}
 }
