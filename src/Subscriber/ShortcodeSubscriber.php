@@ -2,13 +2,15 @@
 
 namespace Membergate\Subscriber;
 
+use Membergate\DependencyInjection\Container;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Shortcode\ShortcodeInterface;
 use Membergate\Shortcode\SignupShortcode;
 
 class ShortcodeSubscriber implements SubscriberInterface {
-	public function __construct($path){
-		$this->path = $path;	
+	private Container $container;
+	public function __construct(Container $container){
+		$this->container = $container;	
 	}
 
 	public static function get_subscribed_events(): array{
@@ -23,18 +25,18 @@ class ShortcodeSubscriber implements SubscriberInterface {
 		];
 
 		foreach($shortcodes as $name=>$shortcode_class){
-			$shortcode = new $shortcode_class($this->path, 'templates');
+			$container = $this->container;
+			$dep_keys = $shortcode_class::get_dependencies();
+			$deps = [];
+			foreach ($dep_keys as $dkey){
+				$deps[$dkey]=$container[$dkey];
+			}
+			$shortcode = new $shortcode_class($deps);
 			if($shortcode instanceof ShortcodeInterface){
-				$template_path = $shortcode->get_template_path();
 				$args = $shortcode->get_default_args();	
-
-				add_shortcode($name, function($atts) use($template_path, $args,$name) {
+				add_shortcode($name, function($atts) use($shortcode, $args,$name) {
 					$atts = shortcode_atts($args,$atts, $name);
-					ob_start();
-					include $template_path;
-					$template = ob_get_clean();
-					unset($atts);
-					return $template;
+					return $shortcode->run($atts);
 				});
 			}
 		}

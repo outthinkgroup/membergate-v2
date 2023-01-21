@@ -4,8 +4,8 @@
 - [x] Create Class for forms
 	- [x] Change form rendering class from singleton to a Configuration class
 	- [x] Add to all subscribers rendering forms
-- [ ] split form from additional markup (title, description)
-- [ ] Create shortcode for just form with option of adding title and description
+- [x] split form from additional markup (title, description)
+- [x] Create shortcode for just form with option of adding title and description
 - [ ] Create Page Options for form
 - [ ] Options for designating redirect page
 - [ ] Options for setting overriding content or redirect

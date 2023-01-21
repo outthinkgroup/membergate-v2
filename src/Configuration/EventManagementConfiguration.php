@@ -23,7 +23,7 @@ class EventManagementConfiguration implements ContainerConfigurationInterface {
 			$subscribers = [
 				//add Subscriber classes	
 				new FormSubmissionSubscriber($container['form_handler']),
-				new ShortcodeSubscriber($container['plugin_path']),
+				new ShortcodeSubscriber($container),
 				new AssetSubscriber(),
 				new AdminSubscriber($container['plugin_path']),
 				new AdminPageAJaxSubscriber($container['settings.list_provider'],$container['list_providers'], $container['settings.post_types']),

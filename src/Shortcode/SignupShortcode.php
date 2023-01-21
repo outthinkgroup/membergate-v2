@@ -2,19 +2,50 @@
 
 namespace Membergate\Shortcode;
 
+use Membergate\Configuration\MembergateFormConfiguration;
+
 class SignupShortcode implements ShortcodeInterface {
-	private $template_dir_path;
-	private $template_name = "signup_form";
-	
-	public function __construct($base_path,$template_dir){
-		$this->template_dir_path = $base_path . '/' . $template_dir;
+	private MembergateFormConfiguration $form_renderer;	
+	public function __construct($deps){
+		['form_renderer'=>$form_renderer] = $deps;
+		$this->form_renderer = $form_renderer;
+	}
+	public static function get_dependencies(): array {
+		return ['form_renderer'];
 	}
 
-	public function get_template_path(): string{
-		return $this->template_dir_path . '/' . $this->template_name . '.php';	
+	public function run($atts): string{
+		$form = "";
+
+		if($atts['title'] != false){
+			if(is_bool($atts['title'])){
+				$form .= "<h3>{$this->form_renderer->get_form_title()}</h3>";
+			} elseif(is_string($atts['title'])){
+				$form .= "<h3>{$atts['title']}</h3>";
+			}
+		}
+
+		if($atts['details'] != false){
+			if(is_bool($atts['details'])){
+				$form .= "<p>{$this->form_renderer->get_form_details()}</p>";
+			}elseif(is_string($atts['details'])){
+				$form .= "<p>{$atts['details']}</p>";
+			}
+		}
+
+		$form .= $this->form_renderer->return_form("signup_form");
+
+		if($atts['title'] != false || $atts['details'] != false){
+			$form = $this->form_renderer->wrap_in_wrapper($form);
+		}	
+
+		return $form;
 	}
 
 	public function get_default_args(): array{
-		return [];	
+		return [
+			'title'=> true,
+			'details' => true,
+		];	
 	}
 }

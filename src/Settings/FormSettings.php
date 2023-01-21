@@ -10,7 +10,7 @@ class FormSettings {
 		$this->settings = get_option(self::FORM_KEY, [
 			'form_button_label'=> 'Get Access',
 			'form_title'=> 'This Content is for Subscribers only',
-			'form_instructions'=> 'Please fill in the form below to get access to this content.',
+			'form_details'=> 'Please fill in the form below to get access to this content.',
 		]);
 	}
 	public function get_all(){

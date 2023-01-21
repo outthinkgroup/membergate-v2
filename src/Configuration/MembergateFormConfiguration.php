@@ -24,7 +24,6 @@ class MembergateFormConfiguration implements ContainerConfigurationInterface {
 
 	public function get_form_title(){
 		global $post;
-
 		$title = $this->form_settings->get_setting('form_title');
 		if($title->has_error()){
 			$title = 'Get Access';
@@ -39,16 +38,16 @@ class MembergateFormConfiguration implements ContainerConfigurationInterface {
 		return $title;
 	}
 
-	public function get_form_instructions(){
+	public function get_form_details(){
 		global $post;
 
-		$instructions = $this->form_settings->get_setting('form_instructions');
+		$instructions = $this->form_settings->get_setting('form_details');
 		if($instructions->has_error()){
 			$instructions = 'Fill out the form below to get access';
 		} else{
 			$instructions = $instructions->value;
 		}
-		$instructions = apply_filters("membergate_form_instructions", $instructions, $post);
+		$instructions = apply_filters("membergate_form_details", $instructions, $post);
 		return $instructions;
 	}
 
@@ -86,15 +85,19 @@ class MembergateFormConfiguration implements ContainerConfigurationInterface {
 		return ob_get_clean();
 	}
 
+	public function wrap_in_wrapper(string $s){
+			$markup = "<div class='membergate-wrapper'>";
+			$markup .= $s;
+			$markup .= "</div>";
+			return $markup;
+	}
+
 	public function return_full_form_markup($form_slug){
 		$details = $this->return_form_details($form_slug);
 		$form = $this->return_form($form_slug);
-		$markup = "<div class='membergate-wrapper'>";
-		$markup .= $details;
-		$markup .= $form;
-		$markup .= "</div>";
+		$markup = $details . $form;
 
-		return $markup;
+		return $this->wrap_in_wrapper($markup);
 	}
 	public function include_full_form_markup($form_slug){
 		echo $this->return_full_form_markup($form_slug);
