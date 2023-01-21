@@ -2,8 +2,8 @@
 
 ## MVP
 - [x] Create Class for forms
-	- [ ] Change form rendering class from singleton to a Configuration class
-	- [ ] Add to all subscribers rendering forms
+	- [x] Change form rendering class from singleton to a Configuration class
+	- [x] Add to all subscribers rendering forms
 - [ ] split form from additional markup (title, description)
 - [ ] Create shortcode for just form with option of adding title and description
 - [ ] Create Page Options for form

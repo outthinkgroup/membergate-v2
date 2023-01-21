@@ -66,11 +66,37 @@ class MembergateFormConfiguration implements ContainerConfigurationInterface {
 		return $label;
 	}
 
-	public function include_form($form_slug, $include_content = true){
-		include $this->template_path . $form_slug . ".php";
+	public function include_form($form_slug){
+		echo $this->return_form($form_slug);
 	}
 	
 	public function return_form($form_slug){
-		// TODO:
+		ob_start();
+		include $this->template_path . $form_slug . ".php";
+		return ob_get_clean();
+	}
+
+	public function include_form_details($form_slug){
+		echo $this->return_form_details($form_slug);
+	}
+	
+	public function return_form_details($form_slug){
+		ob_start();
+		include $this->template_path . $form_slug . "_details.php";
+		return ob_get_clean();
+	}
+
+	public function return_full_form_markup($form_slug){
+		$details = $this->return_form_details($form_slug);
+		$form = $this->return_form($form_slug);
+		$markup = "<div class='membergate-wrapper'>";
+		$markup .= $details;
+		$markup .= $form;
+		$markup .= "</div>";
+
+		return $markup;
+	}
+	public function include_full_form_markup($form_slug){
+		echo $this->return_full_form_markup($form_slug);
 	}
 }

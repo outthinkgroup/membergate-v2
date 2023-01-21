@@ -64,7 +64,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 
 		error_log("the_content is getting called");
 		// returning subscribe form
-		$this->form_renderer->include_form("signup_form");
+		$this->form_renderer->include_full_form_markup("signup_form");
 		exit;
 	}
 

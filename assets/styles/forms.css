@@ -1,17 +1,34 @@
-.membergate-signup form{
-	max-width:900px;
+.membergate-wrapper{
+	background:#00000009;
+	padding:30px;
+	border-radius:5px;
+	border:1px solid currentColor;
+}
+.membergate-signup-form{
 	display:flex;
 	flex-direction:column;
 	gap:20px;
+	max-width:900px;
+
+}
+.membergate-signup-form .main-inputs{
+	width:100%;
+	display:flex;
+	flex-direction:column;
+	
+	gap:20px;
 }
 @media(min-width:763px){
-	.membergate-signup form{
+	.membergate-signup-form .main-inputs{
 		flex-direction:row;
-		align-items:flex-end;
+		align-items:flex-start;
 	}
 }
+.membergate-signup-form label{
+	width:100%;
+}
 /* style form inputs */
-.membergate-signup :is(input[type="email"],input[type="text"], select) {
+.membergate-signup-form :is(input[type="email"],input[type="text"], select) {
 	width:100%;
 	height:100%;
 	padding:10px;
@@ -20,7 +37,7 @@
 	border-radius:5px;
 }
 
-select {
+.membergate-signup-form select {
 	height:auto;
 	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23333333' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
 	background-position: right 0.5rem center;
@@ -33,7 +50,8 @@ select {
 	-webkit-appearance: none;
 }
 
-.membergate-signup button[name="membergate_form"] {
-	/* white-space:nowrap; */
+.membergate-signup-form button[name="membergate_form"] {
+	white-space:nowrap;
 	flex-shrink:0;
+	max-width:200px;
 }
