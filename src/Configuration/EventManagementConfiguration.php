@@ -9,6 +9,8 @@ use Membergate\Subscriber\AdminPageAJaxSubscriber;
 use Membergate\Subscriber\AdminSubscriber;
 use Membergate\Subscriber\AssetSubscriber;
 use Membergate\Subscriber\FormSubmissionSubscriber;
+use Membergate\Subscriber\LoadAdditionalPostTypesSubscriber;
+use Membergate\Subscriber\ProtectPostMetaBoxSubscriber;
 use Membergate\Subscriber\RedirectToProtectSubscriber;
 use Membergate\Subscriber\ServerRenderSettingsSubscriber;
 use Membergate\Subscriber\ShortcodeSubscriber;
@@ -29,6 +31,8 @@ class EventManagementConfiguration implements ContainerConfigurationInterface {
 				new AdminPageAJaxSubscriber($container['settings.list_provider'],$container['list_providers'], $container['settings.post_types'],$container['settings.forms'],$container['settings.protected_content']),
 				new RedirectToProtectSubscriber($container['settings.post_types'], $container['form_renderer'] ),
 				new ServerRenderSettingsSubscriber($container['settings.list_provider'], $container['list_providers'], $container['settings.account'], $container['settings.post_types'], $container['settings.forms'], $container['settings.protected_content']),
+				new ProtectPostMetaBoxSubscriber($container['settings.post_types']),
+				new LoadAdditionalPostTypesSubscriber($container['settings.post_types']),
 			];
 			return $subscribers;
 		});

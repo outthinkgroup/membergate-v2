@@ -42,8 +42,8 @@
             defaultOption={"select a page"}
           />
         {/if}
-        <div class="">
-          <legend>
+        <div class="mb-1">
+          <legend class="text-md font-bold text-slate-700 mb-2">
             Should a modal show when a non subscriber clicks a link to protected
             content?
           </legend>

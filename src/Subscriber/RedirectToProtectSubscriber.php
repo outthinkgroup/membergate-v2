@@ -23,22 +23,16 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 
 	public function protect_protected_types_template(){
 		if( is_user_logged_in() ) return;
-		$current_post_type = get_post_type();
-		$post_type_info = $this->post_type_settings->get_type($current_post_type);
-		if($post_type_info->has_error()){
-			//just going to bail if we get an error
-			//better to show the content than not
-			return;
-		}
-		$post_type_info = $post_type_info->value;
-		if($post_type_info['protected'] != "true") return;
+		global $post;
+		$is_protected = $this->post_type_settings->is_post_protected($post->ID);
+		if(!$is_protected) return; 
 
 		$cookie_handler = new MemberCookie();
 		if($cookie_handler->user_has_cookie()){
 			return; 
 		}
 
-		$use_page_redirect = apply_filters("use_page_redirect", false, $current_post_type);
+		$use_page_redirect = apply_filters("use_page_redirect", false, $post);
 		if($use_page_redirect){
 			$this->form_renderer->include_form("signup_form");
 			exit;
@@ -46,16 +40,10 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 	}
 
 	public function protect_protected_types_content($content){
+		global $post;
 		if( is_user_logged_in() ) return $content;
-		$current_post_type = get_post_type();
-		$post_type_info = $this->post_type_settings->get_type($current_post_type);
-		if($post_type_info->has_error()){
-			//just going to bail if we get an error
-			//better to show the content than not
-			return $content;
-		}
-		$post_type_info = $post_type_info->value;
-		if($post_type_info['protected'] != "true") return $content;
+		$is_protected = $this->post_type_settings->is_post_protected($post->ID);
+		if(!$is_protected) return $content;
 
 		$cookie_handler = new MemberCookie();
 		if($cookie_handler->user_has_cookie()){
