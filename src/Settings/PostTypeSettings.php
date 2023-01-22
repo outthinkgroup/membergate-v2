@@ -28,7 +28,6 @@ class PostTypeSettings {
 
 	public function get_type($type): PossibleError {
 		if(!is_string($type))	return new PossibleError(null, "Not a valid post type slug: $type");
-
 		if(!key_exists($type, $this->post_types)){
 			return new PossibleError(null, "Not a valid post type slug: $type");
 		}	
@@ -37,26 +36,21 @@ class PostTypeSettings {
 
 	public function is_post_protected($post_id){
 		// first check if post has meta	
-		$post_meta = get_post_meta($post_id, self::POST_META_KEY,true);
-		debug("postmeta is " . $post_meta);
+		$post_meta = get_post_meta($post_id, self::POST_META_KEY, true);
 		if( $post_meta === "false" || $post_meta === "true" ){
-			debug("postmeta is " . $post_meta);
 			return $post_meta === "true" ? true : false;
 		}
 		// if not check default post type settings
 		$ptype = get_post_type($post_id);
-		debug("post type key = $ptype");
 		$default = $this->get_type($ptype);
 		if ($default->has_error()){
 			return false;
 		}
 
-		debug("default postmeta is " . $default->value["protected"] ? "true" : "false");
 		return $default->value['protected'];
 	}
 	public function set_post_protected_meta($post_id,$value){
 		$res = update_post_meta($post_id, self::POST_META_KEY, isset($value) ? "true" : "false");
-		debug("updated $post_id was $res");
 	}
 
 	private function ensure_contains_all_post_types(){

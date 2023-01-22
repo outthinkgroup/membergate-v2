@@ -54,7 +54,6 @@ class FetchGroupsFromProvider implements AjaxInterface {
 
 		$client = new $client($apikey->value);
 		$results = $client->get_groups($list_id->value);
-		debug($results);
 		if (! is_array($results) ){
 			echo json_encode(['data'=>[],'errors'=>["Unexpected Data recieved "]]);
 		}

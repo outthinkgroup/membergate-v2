@@ -3,40 +3,38 @@
 namespace Membergate\Assets;
 
 class Vite {
-    public static function base_path() {
-		global $membergate;
+  public static function base_path() {
+    global $membergate;
 
-        return $membergate->get_plugin_url() . '/assets/dist/';
-    }
+    return $membergate->get_plugin_url() . '/assets/dist/';
+  }
 
+  public static function useVite(string $script = 'assets/main.ts') {
+    self::jsPreloadImports($script);
+    self::cssTag($script);
+    self::register($script);
+  }
 
-    public static function useVite(string $script = 'assets/main.ts') {
-		error_log("inside of useVite");
-        self::jsPreloadImports($script);
-        self::cssTag($script);
-        self::register($script);
-    }
-
-    public static function register($entry) {
-        $url = IS_DEVELOPMENT
+  public static function register($entry) {
+    $url = IS_DEVELOPMENT
       ? 'http://localhost:1234/' . $entry
       : self::assetUrl($entry);
 
-        if (! $url) {
-            return '';
-        }
-
-        wp_register_script("module/sage/$entry", $url, false, true );
-        wp_enqueue_script("module/sage/$entry");
+    if (! $url) {
+      return '';
     }
 
-    private static function jsPreloadImports($entry) {
-        if (IS_DEVELOPMENT) {
-            add_action('wp_head', function () {
-                echo '<script type="module">
-        RefreshRuntime.injectIntoGlobalHook(window)
-        window.$RefreshReg$ = () => {}
-        window.$RefreshSig$ = () => (type) => type
+    wp_register_script("module/sage/$entry", $url, false, true );
+    wp_enqueue_script("module/sage/$entry");
+  }
+
+  private static function jsPreloadImports($entry) {
+    if (IS_DEVELOPMENT) {
+      add_action('wp_head', function () {
+        echo '<script type="module">
+          RefreshRuntime.injectIntoGlobalHook(window)
+          window.$RefreshReg$ = () => {}
+          window.$RefreshSig$ = () => (type) => type
         </script>';
             });
 
@@ -71,18 +69,17 @@ class Vite {
     // Helpers to locate files
 
     private static function getManifest(): array {
-		global $membergate;
-        $content = file_get_contents($membergate->get_plugin_path() . 'assets/dist/manifest.json');
-		error_log($content);
-        return json_decode($content, true);
+      global $membergate;
+      $content = file_get_contents($membergate->get_plugin_path() . 'assets/dist/manifest.json');
+      return json_decode($content, true);
     }
 
     private static function assetUrl(string $entry): string {
         $manifest = self::getManifest();
 
         return isset($manifest[$entry])
-			? self::base_path() . $manifest[$entry]['file']
-			: self::base_path() . $entry;
+      ? self::base_path() . $manifest[$entry]['file']
+      : self::base_path() . $entry;
     }
 
     private static function getPublicURLBase() {

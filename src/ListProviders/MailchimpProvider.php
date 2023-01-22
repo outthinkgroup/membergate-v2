@@ -16,7 +16,6 @@ class MailchimpProvider implements ListProvidersInterface
 	public function __construct($api_key)
 	{
 		$this->api_key = $api_key;
-		error_log($this->api_key);
 		$this->client = new MailChimpClient($this->api_key);
 		$this->cache = new ListProviderCache(self::provider_name);
 	}
@@ -35,7 +34,6 @@ class MailchimpProvider implements ListProvidersInterface
 	{
 		return $this->cache->get_lists($this->api_key, function () {
 			$resp = $this->fetch_lists();
-			debug($resp);
 			if ($resp->has_error()) {
 				return "";
 			}
@@ -48,7 +46,6 @@ class MailchimpProvider implements ListProvidersInterface
 		return $this->cache->get_groups($list_id, function ($list_id) {
 			$resp = $this->fetch_all_groups($list_id);
 
-			debug($resp);
 			if ($resp->has_error()) {
 				return null;
 			}
@@ -172,7 +169,6 @@ class MailchimpProvider implements ListProvidersInterface
 				return new PossibleError(false);
 			}
 
-			debug(["error here", $response ]);
 			return new PossibleError(null, $this->client->getLastError());
 		}
 		return new PossibleError($res);

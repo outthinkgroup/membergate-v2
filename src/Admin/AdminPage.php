@@ -26,13 +26,11 @@ class AdminPage {
 	} 
 
 	public function render_page(){
-		error_log("running AdminPage\-\>render_page");
 		$this->render_template('admin_settings');	
 	}
 
 	public function render_template($template){
 		$template_path = $this->template_path . '/' . $template . '.php';	
-		error_log($template_path);
 		if (!is_readable($template_path)){
 			error_log("$template_path is not readable");
 			return;

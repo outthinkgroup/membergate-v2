@@ -21,7 +21,6 @@ class FormSubmissionSubscriber implements SubscriberInterface {
 	}
 
 	public function listen_for_submissions(){
-		debug($_POST);
 		if( isset ($_POST[$this->post_var]) ){
 			$this->form_handlers[$_POST[$this->post_var]]->execute_action($_POST);
 		}

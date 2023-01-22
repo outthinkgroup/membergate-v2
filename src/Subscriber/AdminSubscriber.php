@@ -18,7 +18,6 @@ class AdminSubscriber implements SubscriberInterface {
 	}
 
 	public function register_admin_pages(){
-		error_log("calling AdminSubscriber->register_admin_pages");
 		$admin_page = new AdminPage($this->plugin_path . '/templates');	
 		add_menu_page(
 			$admin_page->get_page_title(),

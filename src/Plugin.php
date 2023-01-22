@@ -53,7 +53,6 @@ class Plugin {
 			FormHandlerConfiguration::class,
 			MembergateFormConfiguration::class,
 		]);	
-		error_log($this->get_plugin_path());
 		foreach($this->container['subscribers'] as $subber){
 			$this->container['event_manager']->add_subscriber($subber);	
 		}
