@@ -12,7 +12,7 @@
 	$: value, dispatch("inputChange", { value });
 </script>
 
-<label for={id} class="flex flex-col gap-3">
+<label for={id} class="flex flex-col gap-3 w-full">
 	<span class="text-md font-bold text-slate-700">{label}</span>
 	<select
 		class="min-w-[200px] w-full max-w-full bg-slate-50 py-2 px-3 font-medium text-cyan-900 border-slate-200 focus:border-cyan-400"

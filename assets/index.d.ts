@@ -4,6 +4,7 @@ declare global {
 		membergate: {
 			url: string;
 			providers: Record<string, string>[];
+			pageList:Record<number,string>;
 			completedSetup: boolean;
 			settings: {
 				emailService:{
@@ -15,7 +16,7 @@ declare global {
 					groups: any[];
 				};
 				postTypes: Record<string,{name:string, slug:string, protected:"true"|"false"|false}>;
-				forms: Record<string, any>;
+				formSettings: Record<string, string>;
 				blockedContent: Record<string, any>;
 			};
 		};

@@ -41,14 +41,14 @@ class MembergateFormConfiguration implements ContainerConfigurationInterface {
 	public function get_form_details(){
 		global $post;
 
-		$instructions = $this->form_settings->get_setting('form_details');
-		if($instructions->has_error()){
-			$instructions = 'Fill out the form below to get access';
+		$details = $this->form_settings->get_setting('form_details');
+		if($details->has_error()){
+			$details = 'Fill out the form below to get access';
 		} else{
-			$instructions = $instructions->value;
+			$details = $details->value;
 		}
-		$instructions = apply_filters("membergate_form_details", $instructions, $post);
-		return $instructions;
+		$details = apply_filters("membergate_form_details", $details, $post);
+		return $details;
 	}
 
 	public function get_button_label(){

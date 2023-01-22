@@ -8,6 +8,7 @@ use Membergate\Settings\ListProviderSettings;
 use Membergate\Settings\AccountSettings;
 use Membergate\Settings\FormSettings;
 use Membergate\Settings\PostTypeSettings;
+use Membergate\Settings\ProtectedConentSettings;
 
 class SettingsConfiguration implements ContainerConfigurationInterface {
 	public function modify(Container $container){
@@ -22,6 +23,10 @@ class SettingsConfiguration implements ContainerConfigurationInterface {
 		});
 		$container['settings.forms'] = $container->service(function(Container $container){
 			$settings = new FormSettings();
+			return $settings;
+		});
+		$container['settings.protected_content'] = $container->service(function(Container $container){
+			$settings = new ProtectedConentSettings();
 			return $settings;
 		});
 	}

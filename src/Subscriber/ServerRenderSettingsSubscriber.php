@@ -9,12 +9,17 @@ use Membergate\Settings\PostTypeSettings;
 class ServerRenderSettingsSubscriber implements SubscriberInterface {
 	private ListProviderSettings $list_provider_settings;
 	private PostTypeSettings $post_type_settings;
+	private $account_settings;
 	private $list_providers;
-	public function __construct($list_provider_settings, $list_providers, $account_settings, $post_type_settings){
+	private $form_settings;
+	private $protect_content_settings;
+	public function __construct($list_provider_settings, $list_providers, $account_settings, $post_type_settings, $form_settings, $protect_content_settings){
 		$this->list_provider_settings = $list_provider_settings;
+		$this->protect_content_settings = $protect_content_settings;
 		$this->list_providers = $list_providers;
 		$this->account_settings = $account_settings;
 		$this->post_type_settings = $post_type_settings;
+		$this->form_settings = $form_settings;
 	}
 	public static function get_subscribed_events(): array{
 		return [
@@ -49,13 +54,24 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 			}	
 		}
 
+		$pages = get_posts([
+			'post_type'	=> "page",
+			'posts_per_page' => -1,
+		]);
+		$page_list = array_reduce($pages, function($list, $page){
+			$list[$page->ID] = $page->post_title;
+			return $list;
+		},[]);
+
 		$post_types = $this->post_type_settings->get_all();
-		debug($post_types);
+		$form_settings = $this->form_settings->get_all();
+		$blocked_content = $this->protect_content_settings->get_all();
 		?>	
 		<script>
 			window.membergate = {
 				url:"<?php echo admin_url('admin-ajax.php'); ?>",
 				providers: {"mailchimp":"Mailchimp", "convertkit": "ConvertKit"},
+				pageList: <?= json_encode($page_list); ?>,
 				completedSetup: "<?=$this->account_settings->get_is_setup();?>",
 				settings: {
 					emailService:{
@@ -66,7 +82,9 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 						lists: <?= isset($lists['lists']) && is_array($lists['lists']) ? json_encode($lists['lists']) : []; ?>, 
 						groups: <?= is_array($groups) ? json_encode($groups) : []; ?>,
 					},
-					postTypes:<?= json_encode($post_types); ?>
+					postTypes:<?= json_encode($post_types); ?>,
+					formSettings:<?= json_encode($form_settings); ?>,
+					blockedContent:<?= json_encode($blocked_content);?>,
 				},
 			}
 		</script>

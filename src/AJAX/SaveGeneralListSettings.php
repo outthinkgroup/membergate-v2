@@ -5,7 +5,7 @@ namespace Membergate\AJAX;
 use Membergate\Settings\ListProviderSettings;
 
 class SaveGeneralListSettings implements AjaxInterface {
-	const ACTION = "save_general_settings";
+	const ACTION = "save_list_settings";
 	public $dependencies = ['list_settings'];
 
 	private ListProviderSettings $list_settings;

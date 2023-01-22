@@ -6,7 +6,9 @@ namespace Membergate\Subscriber;
 use Membergate\AJAX\CompleteSetup;
 use Membergate\AJAX\FetchGroupsFromProvider;
 use Membergate\AJAX\FetchListsFromProvider;
+use Membergate\AJAX\SaveDisplayProtectedContent;
 use Membergate\AJAX\SaveGeneralListSettings;
+use Membergate\AJAX\SaveMembergateFormSettings;
 use Membergate\AJAX\SaveProtectedPostTypes;
 use Membergate\EventManagement\SubscriberInterface;
 
@@ -14,11 +16,15 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
 	public $list_provider_settings;
 	public $providers_list;
 	public $post_type_settings;
+	public $form_settings;
+	public $protected_content_settings;
 
-	public function __construct($list_provider_settings, $providers, $post_type_settings){
+	public function __construct($list_provider_settings, $providers, $post_type_settings, $form_settings,$protected_content_settings){
 		$this->list_provider_settings = $list_provider_settings;	
 		$this->providers_list = $providers;
 		$this->post_type_settings = $post_type_settings;
+		$this->form_settings = $form_settings;
+		$this->protected_content_settings = $protected_content_settings;
 	}
 
 	public static function get_subscribed_events():array{
@@ -35,6 +41,8 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
 			FetchGroupsFromProvider::ACTION => FetchGroupsFromProvider::class,
 			CompleteSetup::ACTION => CompleteSetup::class,
 			SaveProtectedPostTypes::ACTION => SaveProtectedPostTypes::class,
+			SaveMembergateFormSettings::ACTION => SaveMembergateFormSettings::class,
+			SaveDisplayProtectedContent::ACTION => SaveDisplayProtectedContent::class,
 		];
 		if( !isset( $_POST['mg_action'] ) ){
 			error_log("no action set");	
@@ -48,6 +56,8 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
 			'list_settings'=>$this->list_provider_settings,
 			'providers'=>$this->providers_list,
 			'post_type_settings'=>$this->post_type_settings,
+			'settings.forms'=>$this->form_settings,	
+			'settings.protected_content'=>$this->protected_content_settings,	
 		];
 		$handlerClass = new $endpoint();
 		$requires = array_map(function($dep) use($containers){
