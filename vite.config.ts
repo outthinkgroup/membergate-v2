@@ -15,7 +15,7 @@ export default defineConfig({
     outDir: path.resolve(__dirname, "assets/dist"),
     rollupOptions: {
 			input:{
-				forms: "assets/forms.ts",
+				frontend: "assets/frontend.ts",
 				main: "assets/main.ts",
 			},
 

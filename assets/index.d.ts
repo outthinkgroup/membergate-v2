@@ -20,5 +20,8 @@ declare global {
 				blockedContent: Record<string, any>;
 			};
 		};
+		publicMembergate:{
+			url: string;
+		}
 	}
 }

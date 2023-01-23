@@ -54,6 +54,10 @@ class AddSubscriberToService implements FormHandlerInterface{
 		}
 		
 		$cookie->set_member_cookie();
+		if(!empty($_POST['redirect_to'])){
+			wp_redirect($_POST['redirect_to']);
+			exit;
+		}
 		wp_redirect(site_url($_SERVER['REQUEST_URI']));
 		exit;
 	}

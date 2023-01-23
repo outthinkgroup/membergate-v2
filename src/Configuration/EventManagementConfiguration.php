@@ -5,6 +5,7 @@ namespace Membergate\Configuration;
 use Membergate\DependencyInjection\Container;
 use Membergate\DependencyInjection\ContainerConfigurationInterface;
 use Membergate\EventManagement\EventManager;
+use Membergate\Subscriber\AddModalTemplateSubscriber;
 use Membergate\Subscriber\AdminPageAJaxSubscriber;
 use Membergate\Subscriber\AdminSubscriber;
 use Membergate\Subscriber\AssetSubscriber;
@@ -33,6 +34,7 @@ class EventManagementConfiguration implements ContainerConfigurationInterface {
 				new ServerRenderSettingsSubscriber($container['settings.list_provider'], $container['list_providers'], $container['settings.account'], $container['settings.post_types'], $container['settings.forms'], $container['settings.protected_content']),
 				new ProtectPostMetaBoxSubscriber($container['settings.post_types']),
 				new LoadAdditionalPostTypesSubscriber($container['settings.post_types']),
+				new AddModalTemplateSubscriber($container['form_renderer'], $container['settings.protected_content'], $container['settings.post_types']),
 			];
 			return $subscribers;
 		});

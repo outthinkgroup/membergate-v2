@@ -11,4 +11,5 @@
 	</div>
 	<?php do_action("membergate_signup_form_additional_fields"); ?>
 	<button name="membergate_form" value="add_subscriber_to_service"><?= $this->get_button_label(); ?></button>
+	<input type="hidden" data-replace-value="linkHref" name="redirect_to" value="<?= $redirect_to; ?>" />
 </form>

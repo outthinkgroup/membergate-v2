@@ -6,15 +6,19 @@
 	- [x] Add to all subscribers rendering forms
 - [x] split form from additional markup (title, description)
 - [x] Create shortcode for just form with option of adding title and description
-- [ ] Create Page Options for form
-- [ ] Options for designating redirect page
-- [ ] Options for setting overriding content or redirect
-- [ ] Options for form title and description
-- [ ] Options for Modal on link clicks
+- [x] Create Page Options for form
+- [x] Options for designating redirect page
+- [x] Options for setting overriding content or redirect
+- [x] Options for form title and description
+- [x] Options for Modal on link clicks
 - [ ] Create Modal Markup
 - [ ] Make Modal work
 - [ ] Error Reporting show USER
-- [ ] Build Meta Box
+- [x] Build Meta Box
+
+- [ ] Update all ajax calls from form input to use json
+	- `json_decode(file_get_contents("php://input"));` works
+		-	Not sure why it didnt before
 
 ## Admin Settings
 
@@ -51,24 +55,24 @@
 	- [ ] implement Ajax Class
 
 ## Blocking Content
-- [ ] implement Protected Post types
+- [x] implement Protected Post types
 	- using the protected items settings
 - [ ] implement Beaverbuilder Post Gallery Module ( seperate plugin )
 
 ### How to protect content
 
-- [ ] Build Settings in Admin to set protected content
-	- [ ] post type list
-	- [ ] enable individual optin toggle?
-- [ ] Build meta box to signal this post is protected
+- [x] Build Settings in Admin to set protected content
+	- [x] post type list
+	- [x] enable individual optin toggle?
+- [x] Build meta box to signal this post is protected
 
 ### How show signup form
 
-- [ ] Build settings for choice of
-	- [ ] Redirect to login page
-	- [ ] Template Redirect - this option is seo friendly due to we can still output seo meta tags in header;
+- [x] Build settings for choice of
+	- [x] Redirect to login page
+	- [x] Template Redirect - this option is seo friendly due to we can still output seo meta tags in header;
 - [ ] Build Setting for Modal
-- [ ] Build Signup form
+- [x] Build Signup form
 - [ ] Build Gutenburg block for inline protected content
 
 ## Merge Fields

@@ -26,19 +26,29 @@ class ProtectPostMetaBoxSubscriber implements SubscriberInterface{
 		$this->post_type_settings->set_post_protected_meta($post_id, $_POST['membergate_should_protect_post']);
 	}
 	public function display_metabox($post){
-		$is_protected = $this->post_type_settings->is_post_protected($post->ID);
+		$protect_status = $this->get_post_protect_status($post->ID);
+		debug($protect_status);
 		?>
 		<div class="membergate-protect-metabox-wrapper">
 			<label for="membergate_should_protect_post">
-				<input 
-					type="checkbox" 
-					name="membergate_should_protect_post" 
-					id="membergate_should_protect_post" 
-					<?= $is_protected ? "checked" : "" ?>
-				/>
-				<span>protect post</span>
+				<span>Protected Post Setting</span>
+
+				<select name="membergate_should_protect_post" id="membergate_should_protect_post">
+					<option value="default" <?= "default" === $protect_status ? "selected" : ""; ?>>Post Type Default</option>
+					<option value="always"	<?= "always" === $protect_status  ? "selected" : ""; ?>>Always Protect</option>
+					<option value="never"		<?= "never" === $protect_status   ? "selected" : ""; ?>>Never Protect</option>
+				</select>
 			</label>
 		</div>	
 		<?php
+	}
+
+	public function get_post_protect_status($id){
+		$pmeta = get_post_meta($id,$this->post_type_settings::POST_META_KEY,true);	
+		if($pmeta == "always" || $pmeta == "never"){
+			return $pmeta;
+		}else{
+			return "default";
+		}
 	}
 }

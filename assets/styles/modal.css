@@ -1,0 +1,32 @@
+.membergate-modal__layer{
+	position:fixed;
+	z-index:100;
+	inset:0;
+	width:100%;
+	height:100%;
+
+	display:grid;
+	place-content:center;
+	background:#00000033;
+}
+
+.membergate-modal__modal{
+	background:white;
+	border-radius:5px;
+	box-shadow:0 0 20px #00000033;
+	max-width:min(90%,700px);
+	margin-inline:auto;
+}
+.membergate-modal__modal header{
+	padding:20px 30px;
+	display:flex;
+	align-items:center;
+	border-bottom:1px solid #ccc;
+}
+.membergate-modal__modal header h2{
+	font-size:1.2rem;
+}
+.membergate-modal__modal .membergate-wrapper{
+	border:none;
+	background:none;
+}

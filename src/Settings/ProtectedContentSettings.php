@@ -3,7 +3,7 @@ namespace Membergate\Settings;
 
 use Membergate\Common\PossibleError;
 
-class ProtectedConentSettings {
+class ProtectedContentSettings {
 	const PROTECTED_CONTENT_KEY = "membergate_protected_content_settings";
 	private $settings;
 	public function __construct(){

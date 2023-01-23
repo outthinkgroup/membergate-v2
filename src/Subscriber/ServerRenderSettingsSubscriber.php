@@ -24,6 +24,7 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 	public static function get_subscribed_events(): array{
 		return [
 			'admin_head'=>'add_global_vars',
+			'wp_head'=>'add_public_vars',
 		];
 	}
 
@@ -89,6 +90,16 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 			}
 		</script>
 		<?php
+	}
+
+	public function add_public_vars(){
+	?>
+	<script>
+		window.publicMembergate = {
+			url:"<?php echo admin_url('admin-ajax.php'); ?>",
+		}
+	</script>
+	<?php
 	}
 }
 

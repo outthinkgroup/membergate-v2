@@ -126,7 +126,8 @@ class MailchimpProvider implements ListProvidersInterface
 		$resp = new PossibleError();
 		$interests = $this->client->get("/lists/$list_id/interest-categories/$cat_group_id/interests");
 		$groups = [];
-		if (!array_key_exists('interests', $interests) || !is_array($interests['interests'])) {
+		
+		if (!is_array($interests) || !array_key_exists('interests', $interests) || !is_array($interests['interests'])) {
 			$resp->error = $this->client->getLastError();
 			return $resp;
 		}

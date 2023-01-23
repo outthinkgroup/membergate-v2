@@ -18,7 +18,13 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 		return [
 			'template_redirect'=> 'protect_protected_types_template',
 			'the_content' => 'protect_protected_types_content',
+			'the_excerpt'=>'remove_protect_content_for_archive',
 		];
+	}
+
+	public function remove_protect_content_for_archive($excerpt){
+		remove_filter('the_content', [$this, 'protect_protected_types_content']);
+		return $excerpt;
 	}
 
 	public function protect_protected_types_template(){
@@ -51,8 +57,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 		}
 
 		// returning subscribe form
-		$this->form_renderer->include_full_form_markup("signup_form");
-		exit;
+		return $this->form_renderer->include_full_form_markup("signup_form");
 	}
 
 }

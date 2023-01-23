@@ -14,14 +14,19 @@ class PostTypeSettings {
 
 	public function add_addtional_post_types(){
 		$this->post_types = $this->ensure_contains_all_post_types();
+		$this->save();
 	}
 
 	public function get_all(){
 		return $this->post_types;	
 	}
 
-	public function save($post_types){
-		$this->post_types = $post_types;
+	public function save($post_types=null){
+		if($post_types){
+			$this->post_types = $post_types;
+		}else{
+			$post_types = $this->post_types;
+		}
 		$res = update_option(self::POST_TYPE_KEY, $post_types);
 		return $post_types;	
 	}
@@ -37,20 +42,21 @@ class PostTypeSettings {
 	public function is_post_protected($post_id){
 		// first check if post has meta	
 		$post_meta = get_post_meta($post_id, self::POST_META_KEY, true);
-		if( $post_meta === "false" || $post_meta === "true" ){
-			return $post_meta === "true" ? true : false;
+		if( $post_meta === "always" || $post_meta === "never" ){
+			return $post_meta === "always" ? true : false;
 		}
 		// if not check default post type settings
 		$ptype = get_post_type($post_id);
 		$default = $this->get_type($ptype);
 		if ($default->has_error()){
+			debug($default);
 			return false;
 		}
 
 		return $default->value['protected'];
 	}
 	public function set_post_protected_meta($post_id,$value){
-		$res = update_post_meta($post_id, self::POST_META_KEY, isset($value) ? "true" : "false");
+		$res = update_post_meta($post_id, self::POST_META_KEY,$value); 
 	}
 
 	private function ensure_contains_all_post_types(){

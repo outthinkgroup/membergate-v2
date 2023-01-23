@@ -24,7 +24,7 @@ class AssetSubscriber implements SubscriberInterface {
 	}
 
 	public function enqueue_form_syles(){
-		Vite::useVite("assets/forms.ts");	
+		Vite::useVite("assets/frontend.ts");	
 	}
 
 	public function use_esm_modules($tag, $handle, $src){

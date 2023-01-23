@@ -23,8 +23,8 @@ class Vite {
     if (! $url) {
       return '';
     }
-
-    wp_register_script("module/sage/$entry", $url, false, true );
+    $in_footer = IS_DEVELOPMENT ? true : false; // Vite needs it to be in footer for dev
+    wp_register_script("module/sage/$entry", $url, false, $in_footer );
     wp_enqueue_script("module/sage/$entry");
   }
 
