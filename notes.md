@@ -11,10 +11,16 @@
 - [x] Options for setting overriding content or redirect
 - [x] Options for form title and description
 - [x] Options for Modal on link clicks
-- [ ] Create Modal Markup
-- [ ] Make Modal work
+- [x] Create Modal Markup
+- [x] Make Modal work
 - [ ] Error Reporting show USER
 - [x] Build Meta Box
+
+- [ ] Create a shortcode Tab
+- [ ] Provide a way to only login not register
+	-	This should go on form settings
+	- Need to add method to EMSProvider interface for just get_subscriber 
+		-	Just returns bool
 
 - [ ] Update all ajax calls from form input to use json
 	- `json_decode(file_get_contents("php://input"));` works
@@ -42,16 +48,16 @@
 - [ ] Build Error message system for admin
 - [ ] add "congrats" message after setup is complete
 	- with instructions on where to update those settings
-- [ ] Add tabs to admin settings
+- [x] Add tabs to admin settings
 	- [ ] tab for general list provider
-	- [ ] tab for setting up a general sign up page
-		- [ ] section or option for setting up modal
+	- [x] tab for setting up a general sign up page
+		- [x] section or option for setting up modal
 	- [ ] tab for getting shortcodes
-	- [ ] tab for setting up protected items
-		- [ ] post types
-		- [ ] specific urls
+	- [x] tab for setting up protected items
+		- [x] post types
+		- [x] specific urls
 - [ ] for each tab above
-	- [ ] implement a Configuration settings class
+	- [x] implement a Configuration settings class
 	- [ ] implement Ajax Class
 
 ## Blocking Content
@@ -71,9 +77,9 @@
 - [x] Build settings for choice of
 	- [x] Redirect to login page
 	- [x] Template Redirect - this option is seo friendly due to we can still output seo meta tags in header;
-- [ ] Build Setting for Modal
+- [x] Build Setting for Modal
 - [x] Build Signup form
-- [ ] Build Gutenburg block for inline protected content
+- [x] Build Gutenburg block for inline protected content
 
 ## Merge Fields
 - Any fields submitted will be checked against merge field settings if it exists
