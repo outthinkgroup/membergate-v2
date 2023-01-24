@@ -37,7 +37,6 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
 	}
 	
 	public function mark_protected_with_queryparm($url){
-		error_log($url);
 		if(is_admin())return;
 		if(!$this->can_use_modal()) return $url;
 

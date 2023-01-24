@@ -80,7 +80,8 @@ class MembergateFormConfiguration implements ContainerConfigurationInterface
 	public function return_form($form_slug)
 	{
 		global $post;
-		$redirect_to = apply_filters("membergate_redirect_to_form_value","", $post);
+		$redirect_to = isset($_GET['redirect_to']) ? $_GET['redirect_to'] : "";
+		$redirect_to = apply_filters("membergate_redirect_to_form_value",$redirect_to, $post);
 		ob_start();
 		include $this->template_path . $form_slug . ".php";
 		return ob_get_clean();

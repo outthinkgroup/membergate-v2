@@ -41,7 +41,9 @@ class PostTypeSettings {
 
 	public function is_post_protected($post_id){
 		// first check if post has meta	
+
 		$post_meta = get_post_meta($post_id, self::POST_META_KEY, true);
+		debug([$post_id=>$post_meta]);
 		if( $post_meta === "always" || $post_meta === "never" ){
 			return $post_meta === "always" ? true : false;
 		}
