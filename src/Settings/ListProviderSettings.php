@@ -24,6 +24,7 @@ class ListProviderSettings {
 
 	public function get_provider(){
 		return $this->provider;	
+		// return "mailchimp";
 	}
 
 }

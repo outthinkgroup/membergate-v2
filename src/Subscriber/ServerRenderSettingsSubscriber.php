@@ -71,7 +71,7 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 		<script>
 			window.membergate = {
 				url:"<?php echo admin_url('admin-ajax.php'); ?>",
-				providers: {"mailchimp":"Mailchimp", "convertkit": "ConvertKit"},
+				providers: {"mailchimp":"Mailchimp"},
 				pageList: <?= json_encode($page_list); ?>,
 				completedSetup: "<?=$this->account_settings->get_is_setup();?>",
 				settings: {
@@ -80,8 +80,8 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 						providerName: "<?= $provider_name; ?>",
 						listId: "<?= $list_id; ?>",
 						groupId: "<?= $group_id; ?>",
-						lists: <?= isset($lists['lists']) && is_array($lists['lists']) ? json_encode($lists['lists']) : []; ?>, 
-						groups: <?= is_array($groups) ? json_encode($groups) : []; ?>,
+						lists: <?= isset($lists['lists']) && is_array($lists['lists']) ? json_encode($lists['lists']) : "[]"; ?>, 
+						groups: <?= is_array($groups) ? json_encode($groups) : "[]"; ?>,
 					},
 					postTypes:<?= json_encode($post_types); ?>,
 					formSettings:<?= json_encode($form_settings); ?>,

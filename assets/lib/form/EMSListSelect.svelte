@@ -24,6 +24,7 @@
 		window.membergate.settings.emailService.providerName = null //only needed for stopping running on initial set
 		if(!provider.length) {
 			lists.set([])
+			return;
 		}
 		isLoadng = true
 		await fetchAndSetLists($apikey, provider)
@@ -35,6 +36,7 @@
 		window.membergate.settings.emailService.apiKey = null //only needed for stopping running on initial set
 		if(!apikey.length) {
 			lists.set([])
+			return;
 		}
 		isLoadng = true
 		await fetchAndSetLists(apikey, $provider)

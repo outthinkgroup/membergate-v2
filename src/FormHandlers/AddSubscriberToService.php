@@ -27,7 +27,11 @@ class AddSubscriberToService implements FormHandlerInterface{
 		}
 		if($this->setup){
 			$this->list_id = $list_id->value;
-			$this->list_client = new $this->list_client($apikey->value);
+			try{
+				$this->list_client = new $this->list_client($apikey->value);
+			}catch(\Exception $error){
+				$this->list_client = null;
+			}
 		}
 	}
 
@@ -45,7 +49,7 @@ class AddSubscriberToService implements FormHandlerInterface{
 			debug(["get_settings"=>$settings->error]);
 			return;	//TODO: Error Reporting show ADMIN
 		}
-
+		if(!$this->list_client) return;
 		$subbed_res = $this->list_client->add_subscriber($email, $settings->value, $submission);
 		if($subbed_res->has_error()){
 			//TODO: Error Reporting show USER
