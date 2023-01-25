@@ -11,7 +11,7 @@
 		provider,
 		selectedList,
 	} from "../store";
-	import LabelInput from "./form/LabelInput.svelte";
+	import ApiKeyInput from "./form/ApiKeyInput.svelte";
 	import LabelSelect from "./form/LabelSelect.svelte";
 	import EmsListSelect from "./form/EMSListSelect.svelte";
 	import EmsGroupSelect from "./form/EMSGroupSelect.svelte";
@@ -71,14 +71,7 @@
 					label="Select a Email Marketing Service"
 					name="providerName"
 				/>
-				<LabelInput
-					on:inputChange={(e) => updateApiKey(e.detail.value)}
-					event="blur"
-					value={$apikey}
-					name="api-key"
-					type="password"
-					label="Your Api Key"
-				/>
+				<ApiKeyInput/>
 				<div>
 					<button
 						class="px-4 py-2 rounded bg-cyan-600 text-white font-medium tracking-wide"

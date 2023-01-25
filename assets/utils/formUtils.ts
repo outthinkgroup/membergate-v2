@@ -17,15 +17,17 @@ export function updateProvider(value){
 	}
 }
 
-export function updateApiKey(value){
+export async function updateApiKey(value){
 	let oldKey;
 	apikey.subscribe((val)=> oldKey = val)
 
 	if(oldKey !== value){
-		apikey.save(value)
+		await apikey.save(value)
 		selectedGroup.clear()
 		selectedList.clear()
 	}
+
+	return 1;
 }
 	
 export function updateList(value){

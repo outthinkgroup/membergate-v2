@@ -13,6 +13,7 @@
 		provider,
 	} from "../../store";
 	import { updateApiKey, updateProvider } from "../../utils/formUtils";
+    import ApiKeyInput from "../form/ApiKeyInput.svelte";
 
 	let { providers } = window.membergate;
 </script>
@@ -37,14 +38,7 @@
 				label="Select a Email Marketing Service"
 				name="providerName"
 			/>
-			<LabelInput
-				on:inputChange={(e) => updateApiKey(e.detail.value)}
-				event="blur"
-				value={$apikey}
-				name="api-key"
-				type="password"
-				label="Your Api Key"
-			/>
+			<ApiKeyInput />
 			<EmsListSelect />
 			<EmsGroupSelect />
 			<div>
