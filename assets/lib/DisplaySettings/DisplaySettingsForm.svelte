@@ -1,20 +1,26 @@
 <script lang="ts">
   import { currentLocation, locations } from "../../locationStore";
   import { blockedContent, pageList } from "../../store";
+    import FormHeader from "../form/FormHeader.svelte";
   import LabelSelect from "../form/LabelSelect.svelte";
+  let isLoading = false
+  let unSavedChanges = false
 </script>
 
 {#if $currentLocation == locations.displayBlockedContent.slug}
   <div class="shadow bg-white p-6">
-    <h3 class="text-xl font-medium text-cyan-600 mb-2">
+    <FormHeader { isLoading } { unSavedChanges }>
       Blocked Content Display Settings
-    </h3>
+    </FormHeader>
     <p class="mb-4">
       When and how should non members be shown the sign up form.
     </p>
     <form
-      on:submit|preventDefault={() => {
-        blockedContent.save();
+      on:submit|preventDefault={async () => {
+        isLoading = true
+        await blockedContent.save();
+        isLoading = false
+        unSavedChanges=false
       }}
     >
       <div class="flex flex-col gap-3 items-start">
@@ -24,6 +30,7 @@
           value={"override_content"}
           on:inputChange={(e) => {
             blockedContent.updateSetting("protect_method", e.detail.value);
+            unSavedChanges = true
           }}
           options={{
             override_content: "Replace the content with the signup form",
@@ -37,6 +44,7 @@
             value={$blockedContent.redirect_page}
             on:inputChange={(e) => {
               blockedContent.updateSetting("redirect_page", e.detail.value);
+              unSavedChanges = true
             }}
             options={pageList}
             defaultOption={"select a page"}
@@ -59,6 +67,7 @@
                   //@ts-ignore
                   e.target.checked ? "true" : "false"
                 );
+                unSavedChanges = true
               }}
             />
             <span>Yes, show a modal.</span>

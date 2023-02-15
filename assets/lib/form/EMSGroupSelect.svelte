@@ -21,8 +21,7 @@
 			isLoading,
 		});
 
-
-	async function fetchAndSetGroups(listId:string) {
+	async function fetchAndSetGroups(listId: string) {
 		const res = await getGroups();
 		if (res.errors.length) {
 			console.log(res.errors);
@@ -30,7 +29,7 @@
 		}
 
 		if (res.data && res.data.length) {
-		console.log({data:res.data})
+			console.log({ data: res.data });
 			groups.set(res.data);
 		}
 	}
@@ -38,13 +37,14 @@
 	// Refectch options when dependency changes
 	provider.subscribe(async function (provider) {
 		//dont when initially set
-		if (provider === window.membergate.settings.emailService.providerName) return;
-		window.membergate.settings.emailService.providerName = null //only needed for stopping running on initial set
+		if (provider === window.membergate.settings.emailService.providerName)
+			return;
+		window.membergate.settings.emailService.providerName = null; //only needed for stopping running on initial set
 		if (!provider.length || !$listsForSelectList.length) {
 			groups.set([]);
-			return
+			return;
 		}
-		if($selectedList.length){
+		if ($selectedList.length) {
 			isLoading = true;
 			await fetchAndSetGroups($selectedList);
 			isLoading = false;
@@ -53,8 +53,8 @@
 	apikey.subscribe(async function (apikey) {
 		//dont when initially set
 		if (apikey === window.membergate.settings.emailService.apiKey) return;
-		window.membergate.settings.emailService.apiKey = null //only needed for stopping running on initial set
-		if (!apikey.length ) {
+		window.membergate.settings.emailService.apiKey = null; //only needed for stopping running on initial set
+		if (!apikey.length) {
 			groups.set([]);
 			return;
 		}
@@ -64,11 +64,11 @@
 	});
 	selectedList.subscribe(async function (selectedList) {
 		//dont when initially set
-		if (selectedList === window.membergate.settings.emailService.listId){
+		if (selectedList === window.membergate.settings.emailService.listId) {
 			return;
-		} 
-		window.membergate.settings.emailService.listId = null //only needed for stopping running on initial set
-		if (!selectedList?.length ) {
+		}
+		window.membergate.settings.emailService.listId = null; //only needed for stopping running on initial set
+		if (!selectedList?.length) {
 			groups.set([]);
 			return;
 		}
