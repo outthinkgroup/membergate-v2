@@ -1,10 +1,17 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte";
+	const dispatch = createEventDispatcher();
+
 	import LabelSelect from "./LabelSelect.svelte";
 	import {updateList} from "../../utils/formUtils"
 	import getLists from "../../api/getLists";
 	import {apikey, selectedList, listsForSelectList, lists, provider} from "../../store"
 
-	let isLoadng = false
+	let isLoading = false
+	$: isLoading,
+		dispatch("loadingStateChange", {
+			isLoading,
+		});
 	
 	async function fetchAndSetLists(apikey:string, provider:string){
 		const listData = await getLists()
@@ -26,9 +33,9 @@
 			lists.set([])
 			return;
 		}
-		isLoadng = true
+		isLoading = true
 		await fetchAndSetLists($apikey, provider)
-		isLoadng = false
+		isLoading = false
 	});
 	apikey.subscribe( async function(apikey){
 		//dont when initially set
@@ -38,9 +45,9 @@
 			lists.set([])
 			return;
 		}
-		isLoadng = true
+		isLoading = true
 		await fetchAndSetLists(apikey, $provider)
-		isLoadng = false
+		isLoading = false
 		
 	});
 
@@ -54,7 +61,7 @@
 	on:inputChange={(e) => (updateList(e.detail.value))}
 	label="choose a list"
 />
-{#if isLoadng}
+{#if isLoading}
 	loading...
 {/if}
 

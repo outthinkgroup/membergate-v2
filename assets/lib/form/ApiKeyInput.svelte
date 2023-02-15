@@ -1,10 +1,18 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte";
 	import { updateApiKey } from "../../utils/formUtils";
 	import {apikey} from "../../store";
 	import LabelInput from "./LabelInput.svelte";
-import LoadingCircle from "../LoadingCircle.svelte";
-	let inputError
+	import LoadingCircle from "../LoadingCircle.svelte";
+
+	const dispatch = createEventDispatcher();
+
+	let inputError:string
 	let isLoading = false
+
+	$: isLoading, dispatch("loadingStateChange", {
+		isLoading,
+	})
 
 	async function validateAndSetApiKey(e:{detail:{value:string}}){
 		const newKey = e.detail.value	

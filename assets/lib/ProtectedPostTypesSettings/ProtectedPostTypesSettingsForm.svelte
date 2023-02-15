@@ -1,23 +1,27 @@
 <script lang="ts">
 	import { currentLocation } from "../../locationStore";
 	import { postTypes } from "../../store";
+    import FormHeader from "../form/FormHeader.svelte";
+	let isLoading = false;
 
 	type Checkbox = Event & {
 		currentTarget: EventTarget & HTMLInputElement;
 		target: EventTarget & HTMLInputElement & { checked: boolean };
 	};
 
-	function updatePostType(e: Event, ptype: keyof typeof $postTypes) {
+	async function updatePostType(e: Event, ptype: keyof typeof $postTypes) {
 		const event = e as Checkbox;
-		postTypes.save(ptype, event.target.checked);
+		isLoading = true;
+		await postTypes.save(ptype, event.target.checked);
+		isLoading = false;
 	}
 </script>
 
 {#if $currentLocation == "protected-posttype-settings"}
 	<div class="shadow bg-white p-6">
-		<h3 class="text-xl font-medium text-cyan-600 mb-2">
+		<FormHeader { isLoading }>
 			Protected Content Settings
-		</h3>
+		</FormHeader>
 		<p class="mb-4">Choose which post types by default will be protected</p>
 		<div class="flex flex-col gap-2">
 			{#each Object.keys($postTypes) as ptype}
@@ -29,7 +33,9 @@
 							class=""
 							on:change={(e) => updatePostType(e, ptype)}
 						/>
-						<span class="text-md font-bold text-slate-700">{$postTypes[ptype].name}</span>
+						<span class="text-md font-bold text-slate-700"
+							>{$postTypes[ptype].name}</span
+						>
 					</label>
 				</div>
 			{/each}

@@ -4,13 +4,13 @@ export function selectValue(e:Event){
 	return [...e.target.childNodes].find(el=>el.selected).value
 }
 
-export function updateProvider(value){
+export async function updateProvider(value){
 	let oldVal;
 
 	provider.subscribe((val)=>oldVal = val)
 
 	if(value !== oldVal){
-		provider.save(value)
+		await provider.save(value)
 		// apikey.set("") // this is too inconvienient if this happens on accident
 		selectedGroup.clear()
 		selectedList.clear()

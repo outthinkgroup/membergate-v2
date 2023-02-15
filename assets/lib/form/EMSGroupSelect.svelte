@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte";
+	const dispatch = createEventDispatcher();
+
 	import LabelSelect from "./LabelSelect.svelte";
 	import { updateGroup } from "../../utils/formUtils";
 	import getGroups from "../../api/getGroups";
@@ -12,7 +15,12 @@
 		provider,
 	} from "../../store";
 
-	let isLoadng = false;
+	let isLoading = false;
+	$: isLoading,
+		dispatch("loadingStateChange", {
+			isLoading,
+		});
+
 
 	async function fetchAndSetGroups(listId:string) {
 		const res = await getGroups();
@@ -37,9 +45,9 @@
 			return
 		}
 		if($selectedList.length){
-			isLoadng = true;
+			isLoading = true;
 			await fetchAndSetGroups($selectedList);
-			isLoadng = false;
+			isLoading = false;
 		}
 	});
 	apikey.subscribe(async function (apikey) {
@@ -50,9 +58,9 @@
 			groups.set([]);
 			return;
 		}
-		isLoadng = true;
+		isLoading = true;
 		await fetchAndSetGroups($selectedList);
-		isLoadng = false;
+		isLoading = false;
 	});
 	selectedList.subscribe(async function (selectedList) {
 		//dont when initially set
@@ -64,9 +72,9 @@
 			groups.set([]);
 			return;
 		}
-		isLoadng = true;
+		isLoading = true;
 		await fetchAndSetGroups(selectedList);
-		isLoadng = false;
+		isLoading = false;
 	});
 </script>
 
@@ -80,6 +88,6 @@
 	label="choose a group"
 />
 
-{#if isLoadng}
+{#if isLoading}
 	loading...
 {/if}
