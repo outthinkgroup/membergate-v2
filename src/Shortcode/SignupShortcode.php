@@ -2,10 +2,9 @@
 
 namespace Membergate\Shortcode;
 
-use Membergate\Configuration\MembergateFormConfiguration;
 
 class SignupShortcode implements ShortcodeInterface {
-	private MembergateFormConfiguration $form_renderer;	
+	private MembergateFormRenderer $form_renderer;	
 	public function __construct($deps){
 		['form_renderer'=>$form_renderer] = $deps;
 		$this->form_renderer = $form_renderer;

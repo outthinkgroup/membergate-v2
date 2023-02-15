@@ -2,13 +2,13 @@
 namespace Membergate\Subscriber;
 
 use Membergate\Common\MemberCookie;
-use Membergate\Configuration\MembergateFormConfiguration;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\PostTypeSettings;
 use Membergate\Settings\ProtectedContentSettings;
+use Membergate\Shortcode\MembergateFormRenderer;
 
 class AddModalTemplateSubscriber implements SubscriberInterface {
-	private MembergateFormConfiguration $render_form;
+	private MembergateFormRenderer $render_form;
 	private ProtectedContentSettings $protect_content_settings;
 	private PostTypeSettings $post_type_settings;
 
@@ -23,7 +23,7 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
 		return $hooks;
 	}
 
-	public function __construct(MembergateFormConfiguration $render_form, ProtectedContentSettings $protect_content_settings, PostTypeSettings $post_type_settings){
+	public function __construct(MembergateFormRenderer $render_form, ProtectedContentSettings $protect_content_settings, PostTypeSettings $post_type_settings){
 		$this->render_form = $render_form;
 		$this->protect_content_settings = $protect_content_settings;
 		$this->post_type_settings = $post_type_settings;
@@ -37,7 +37,7 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
 	}
 	
 	public function mark_protected_with_queryparm($url){
-		if(is_admin())return;
+		if(is_admin())return $url;
 		if(!$this->can_use_modal()) return $url;
 
 		$id = url_to_postid($url);
