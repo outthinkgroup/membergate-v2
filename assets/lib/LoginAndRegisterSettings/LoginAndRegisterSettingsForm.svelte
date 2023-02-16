@@ -19,37 +19,6 @@
       }}
     >
       <div class="flex flex-col gap-3 items-start">
-        <LabelInput
-          name="form-title"
-          label="Default Form Title"
-          value={$formSettings.form_title}
-          on:inputChange={(e) => {
-            formSettings.updateSetting("form_title", e.detail.value);
-            unSavedChanges = true;
-          }}
-        />
-        <div class="w-full">
-          <LabelInput
-            name="form-details"
-            label="Default Form Details"
-            value={$formSettings.form_details}
-            on:inputChange={(e) => {
-              formSettings.updateSetting("form_details", e.detail.value);
-              unSavedChanges = true;
-            }}
-          />
-          <p>Some text to explain why and what the user needs to do.</p>
-        </div>
-
-        <LabelInput
-          name="form-button-label"
-          label="Default Form Button Label"
-          value={$formSettings.form_button_label}
-          on:inputChange={(e) => {
-            formSettings.updateSetting("form_button_label", e.detail.value);
-            unSavedChanges = true;
-          }}
-        />
 
         <button
           class="px-4 py-2 rounded bg-cyan-600 text-white font-medium tracking-wide"
