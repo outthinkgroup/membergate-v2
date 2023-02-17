@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import {formSettings as FormSettingsStore } from "../../store"
+    import ToolTip from "../ToolTip.svelte";
   import {
     fieldKinds,
     genId,
@@ -13,8 +14,12 @@
   export let isPrimary: boolean = false;
   export let formSettings: any;
   const title = isPrimary ? "Primary Form" : "Secondary From";
+
   let action:string
   $:action = formSettings.action == "LOGIN" ? "Login" : "Register and Login";
+
+  let isEnabled:boolean
+  $: isEnabled = isPrimary ? true : $FormSettingsStore.PrimaryForm.action == "LOGIN"
   let editorState:
     | "EDIT_TEXT"
     | "DEFAULT"
@@ -109,10 +114,16 @@
       <h4 class="text-cyan-800 text-xl">
         {title}
       </h4>
-      <button
-        class="bg-slate-200 p-2 rounded hover:bg-slate-300"
-        on:click={showEditor}>edit</button
-      >
+      {#if isEnabled}
+        <button
+          class="bg-slate-200 p-2 rounded hover:bg-slate-300"
+          on:click={showEditor}>edit</button
+        >
+      {:else}
+        <ToolTip>
+          Set the Primary forms action to Login to enable
+        </ToolTip>
+      {/if}
     </header>
 
     <div>
