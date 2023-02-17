@@ -3,13 +3,24 @@
   import { formSettings } from "../../store";
   import FormHeader from "../form/FormHeader.svelte";
   import LabelInput from "../form/LabelInput.svelte";
+    import FormCard from "./FormCard.svelte";
   let isLoading = false;
   let unSavedChanges = false;
+$:$formSettings, console.log($formSettings)
 </script>
 
 {#if $currentLocation == "form-settings"}
   <div class="shadow bg-white p-6">
-    <FormHeader {isLoading} {unSavedChanges}>Signup Form Settings</FormHeader>
+    <FormHeader {isLoading} {unSavedChanges}>Login and Register Settings</FormHeader>
+  <div>
+    <h3>Forms</h3>
+    <div>
+      <FormCard formSettings={$formSettings.PrimaryForm} isPrimary={true}/>
+      {#if $formSettings.SecondaryForm.isEnabled}
+        <FormCard formSettings={$formSettings.SecondaryForm} />
+      {/if}
+    </div>
+  </div>
     <form
       on:submit|preventDefault={async () => {
         isLoading = true;
@@ -19,6 +30,7 @@
       }}
     >
       <div class="flex flex-col gap-3 items-start">
+
 
         <button
           class="px-4 py-2 rounded bg-cyan-600 text-white font-medium tracking-wide"

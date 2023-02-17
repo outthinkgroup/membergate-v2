@@ -137,19 +137,90 @@ export const postTypes = createPostTypeStore();
 function createFormSettingsStore() {
 	console.log({ postTypes: window.membergate.settings.formSettings });
 	const { subscribe, update } = writable(
-		window.membergate.settings.formSettings
+		// window.membergate.settings.formSettings
+	{
+		PrimaryForm:{
+			headingText:"This Content is for Subscribers only",
+			descriptionText: "Please fill in the form below to get access to this content.",
+			fields:[
+				{
+					type:"name",
+					id:"wasdf23",
+					label:"Name",
+					name:"name",
+					isRequired:true,
+				},
+				{
+					type:"email",
+					id:"asdfase32",
+					name:"email",
+					label: "Email",
+				},
+			],
+			SecondaryFormLink:{
+				show:true,
+				text:"Not a member yet?",
+			},
+			submit:{
+				text:"Login",
+			},
+			action:"LOGIN",
+		},
+		SecondaryForm:{
+			isEnabled:true,
+			headingText:"Register to get access to VIP Content",
+			descriptionText:"Please fill in the form below to get access to this content.",
+			fields:[
+				{
+					type:"email",
+					name:"email",
+					id:"axca3",
+					label:"Email",
+				},
+				{
+					type:"name",
+					id:'23aass3',
+					label:"Name",
+					name:"name",
+					isRequired:true,
+				},
+				{
+					type:"checkbox",
+					id:"a233aaa",
+					label:"Subscribe to daily newsletter",
+					name:"daily_newsletter",
+				},
+				{
+					type:"text",
+					id:"oppase3",
+					label:"Some text field",
+					name:"MERGE_FIELD",
+					isRequired:false,
+				},
+			],
+			primaryFormLink:{
+				show:true,
+				text:"Already a member?",
+			},
+			submit:{
+				text:"Register",
+			},
+			action:"REGISTER",
+		}
+	}
 	);
 	return {
 		subscribe,
 		async save() {
-			let p: Record<string, string>;
+			let p: Record<string, any>;
 			subscribe((fs) => {
 				p = fs;
 			});
+			//TODO: update api method to send json
 			const res = await saveFormSettings(p);
 			return res;
 		},
-		updateSetting: (key: string, value: string) => {
+		updateSetting: (key: string, value: any) => {
 			update((formSettings) => {
 				formSettings[key] = value;
 				return formSettings;
