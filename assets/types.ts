@@ -2,7 +2,7 @@ export type FormSettingsType = {
 	headingText: string;
 	descriptionText: string;
 	fields: FieldType[];
-	SecondaryFormLink: {
+	altFormLink: {
 		show: false;
 		text: string;
 	};
@@ -19,6 +19,7 @@ export type EditorStatesUnion = "EDIT_TEXT"
     | "EDIT_HEADING"
     | "EDIT_BUTTON"
     | "EDIT_DESCRIPTION"
+		| "EDIT_LINK"
 export type FormActionUnion =  "LOGIN"| "REGISTER";
 
 export type FieldType = {

@@ -51,7 +51,7 @@ class FormSettings {
                         "label" => "Email"
                     ]
                 ],
-                "SecondaryFormLink" => [
+                "altFormLink" => [
                     "show" => true,
                     "text" => "Not a member yet?"
                 ],
@@ -92,7 +92,7 @@ class FormSettings {
                         "isRequired" => false
                     ]
                 ],
-                "primaryFormLink" => [
+                "altFormLink" => [
                     "show" => true,
                     "text" => "Already a member?"
                 ],
