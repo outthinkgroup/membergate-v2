@@ -4,9 +4,10 @@
     EditorStatesUnion,
     FieldType,
   } from "assets/types";
-    import { onMount } from "svelte";
+  import { onMount } from "svelte";
   import { formSettings as FormSettingsStore } from "../../store";
   import EditFieldInput from "./EditFieldInput.svelte";
+  import EditorStateTitle from "./EditorStateTitle.svelte";
   import FormPreview from "./FormPreview.svelte";
   import {
     fieldKinds,
@@ -21,9 +22,9 @@
   export let title: string;
   export let formSettings: any;
   let dialogEl: HTMLDialogElement;
-  export const showEditor = ()=>{
-    dialogEl.showModal()
-  }
+  export const showEditor = () => {
+    dialogEl.showModal();
+  };
 
   onMount(() => {
     dialogEl = document.querySelector(`[data-dialog-el="${title}"]`);
@@ -131,47 +132,56 @@
     <!-- Builder's Body -->
     <div class="flex h-full">
       <aside class="border-r border-slate-200 w-full max-w-[275px] h-full">
-        <header class="h-10 border-b border-slate-200">
-          <h3>{editorState}</h3>
+        <header class="p-4 py-3 border-b border-slate-200">
+          <h3 class="text-lg text-slate-900">
+            <EditorStateTitle {editorState} />
+          </h3>
         </header>
 
         {#if editorState == "DEFAULT"}
           {#each fieldKinds(isPrimary) as field}
             <button
-              class="h-10 text-left p-3 border-b border-slate-200 hover:bg-slate-200 w-full"
+              class="h-10 font-bold text-slate-500 capitalize text-left py-3 px-4 border-b border-slate-200 hover:bg-slate-100
+hover:text-cyan-600 w-full"
               on:click={() => {
                 addFieldFor(field);
               }}
             >
-              {field.kind}
+              {field.kind.toLowerCase()} Field
             </button>
           {/each}
         {:else if editorState == "EDIT_EMAIL"}
           {#each getEmailFieldsFor(editingFieldID, formSettings) as field, index}
-            <EditFieldInput bind:field bind:editingFieldID bind:formSettings  />
+            <EditFieldInput bind:field bind:editingFieldID bind:formSettings />
             <button on:click={doneEditField}>Done</button>
           {/each}
         {:else if editorState == "EDIT_NAME"}
           {#each getNameFieldsFor(editingFieldID, formSettings) as field}
-            <EditFieldInput bind:field bind:editingFieldID bind:formSettings  />
+            <EditFieldInput bind:field bind:editingFieldID bind:formSettings />
           {/each}
           <button on:click={deleteField}>Delete</button>
           <button on:click={doneEditField}>Done</button>
         {:else if editorState == "EDIT_CHECKBOX"}
           {#each getCheckboxFieldsFor(editingFieldID, formSettings) as field}
-            <EditFieldInput bind:field bind:editingFieldID bind:formSettings  />
+            <EditFieldInput bind:field bind:editingFieldID bind:formSettings />
           {/each}
           <button on:click={deleteField}>Delete</button>
           <button on:click={doneEditField}>Done</button>
         {:else if editorState == "EDIT_TEXT"}
           {#each getTextFieldsFor(editingFieldID, formSettings) as field}
-            <EditFieldInput bind:field bind:editingFieldID bind:formSettings  />
+            <EditFieldInput bind:field bind:editingFieldID bind:formSettings />
           {/each}
           <button on:click={deleteField}>Delete</button>
           <button on:click={doneEditField}>Done</button>
         {/if}
       </aside>
-      <FormPreview { editingFieldID } { formSettings } { editField } {title} bind:editorState />
+      <FormPreview
+        {editingFieldID}
+        {formSettings}
+        {editField}
+        {title}
+        bind:editorState
+      />
     </div>
   </div>
 </dialog>

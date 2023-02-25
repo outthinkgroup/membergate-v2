@@ -66,7 +66,7 @@ group-focus-within:block"
   </div>
   {#each formSettings.fields as field}
     <button
-      class={`flex flex-col border gap-2 mb-2 w-full p-1 hover:bg-slate-200 
+      class={`flex flex-col border gap-2 mb-2 w-full p-1 hover:bg-slate-200 rounded
         ${
           editingFieldID == field.id
             ? " border-cyan-400"
