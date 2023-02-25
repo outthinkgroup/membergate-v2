@@ -2,7 +2,6 @@
 
 namespace Membergate\FormHandlers;
 
-interface FormHandlerInterface
-{
+interface FormHandlerInterface {
     public function execute_action(array $submission);
 }

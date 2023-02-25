@@ -7,23 +7,20 @@ use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\PostTypeSettings;
 use Membergate\Settings\ProtectedContentSettings;
 
-class RedirectToProtectSubscriber implements SubscriberInterface
-{
+class RedirectToProtectSubscriber implements SubscriberInterface {
     private $post_type_settings;
 
     private $form_renderer;
 
     private ProtectedContentSettings $protected_content_settings;
 
-    public function __construct(PostTypeSettings $post_type_settings, $form_renderer, $protected_content_settings)
-    {
+    public function __construct(PostTypeSettings $post_type_settings, $form_renderer, $protected_content_settings) {
         $this->post_type_settings = $post_type_settings;
         $this->form_renderer = $form_renderer;
         $this->protected_content_settings = $protected_content_settings;
     }
 
-    public static function get_subscribed_events(): array
-    {
+    public static function get_subscribed_events(): array {
         return [
             'wp' => 'protect_protected_types_template',
             'the_content' => 'protect_protected_types_content',
@@ -31,15 +28,13 @@ class RedirectToProtectSubscriber implements SubscriberInterface
         ];
     }
 
-    public function remove_protect_content_for_excerpt($excerpt)
-    {
+    public function remove_protect_content_for_excerpt($excerpt) {
         remove_filter('the_content', [$this, 'protect_protected_types_content']);
 
         return $excerpt;
     }
 
-    public function protect_protected_types_template()
-    {
+    public function protect_protected_types_template() {
         if (is_user_logged_in()) {
             return;
         }
@@ -63,8 +58,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface
         }
     }
 
-    public function protect_protected_types_content($content)
-    {
+    public function protect_protected_types_content($content) {
         global $post;
         if (is_user_logged_in()) {
             return $content;

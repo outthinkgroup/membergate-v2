@@ -16,10 +16,8 @@ use Membergate\Subscriber\RedirectToProtectSubscriber;
 use Membergate\Subscriber\ServerRenderSettingsSubscriber;
 use Membergate\Subscriber\ShortcodeSubscriber;
 
-class EventManagementConfiguration implements ContainerConfigurationInterface
-{
-    public function modify(Container $container)
-    {
+class EventManagementConfiguration implements ContainerConfigurationInterface {
+    public function modify(Container $container) {
         $container['event_manager'] = $container->service(function (Container $container) {
             return new EventManager();
         });

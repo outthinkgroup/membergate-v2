@@ -8,5 +8,8 @@
     ],
     "require": {
         "myclabs/php-enum": "^1.8"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.6"
     }
 }

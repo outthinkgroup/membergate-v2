@@ -13,9 +13,8 @@ use Membergate\Common\PossibleError;
  *
  *	TODO: add merge fields
  **/
-class MailchimpSettings implements EMSSettingsInterface
-{
-    const PREFIX = 'membergate_mailchimp';
+class MailchimpSettings implements EMSSettingsInterface {
+    public const PREFIX = 'membergate_mailchimp';
 
     private string $apikey;
 
@@ -25,15 +24,13 @@ class MailchimpSettings implements EMSSettingsInterface
 
     private array $valid_options = ['apikey', 'list_id', 'group_id'];
 
-    public function __construct()
-    {
-        $this->apikey = get_option(self::PREFIX.'apikey', '');
-        $this->list_id = get_option(self::PREFIX.'list_id', '');
-        $this->group_id = get_option(self::PREFIX.'group_id', '');
+    public function __construct() {
+        $this->apikey = get_option(self::PREFIX . 'apikey', '');
+        $this->list_id = get_option(self::PREFIX . 'list_id', '');
+        $this->group_id = get_option(self::PREFIX . 'group_id', '');
     }
 
-    public function update_settings(array $post_arr): PossibleError
-    {
+    public function update_settings(array $post_arr): PossibleError {
         $errors = [];
         $data = [];
 
@@ -70,8 +67,7 @@ class MailchimpSettings implements EMSSettingsInterface
         return new PossibleError($data, $errors);
     }
 
-    public function update_setting(string $key, $value): PossibleError
-    {
+    public function update_setting(string $key, $value): PossibleError {
         $this->valid_options = ['apikey', 'list_id', 'group_id'];
         if (! in_array($key, $this->valid_options)) {
             $options_string = implode(',', $this->valid_options);
@@ -79,13 +75,12 @@ class MailchimpSettings implements EMSSettingsInterface
             return new PossibleError(null, "$key is not a valid option: use $options_string");
         }
         $this->{$key} = $value;
-        $res = update_option(self::PREFIX.$key, $value);
+        $res = update_option(self::PREFIX . $key, $value);
 
         return new PossibleError($res);
     }
 
-    public function get_settings(): PossibleError
-    {
+    public function get_settings(): PossibleError {
         $data = [
             'apikey' => $this->apikey,
             'list_id' => $this->list_id,
@@ -95,8 +90,7 @@ class MailchimpSettings implements EMSSettingsInterface
         return new PossibleError($data);
     }
 
-    public function get_setting(string $key): PossibleError
-    {
+    public function get_setting(string $key): PossibleError {
         if (! in_array($key, $this->valid_options)) {
             $options_string = implode(',', $this->valid_options);
 

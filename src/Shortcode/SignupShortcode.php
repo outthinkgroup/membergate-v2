@@ -2,23 +2,19 @@
 
 namespace Membergate\Shortcode;
 
-class SignupShortcode implements ShortcodeInterface
-{
+class SignupShortcode implements ShortcodeInterface {
     private MembergateFormRenderer $form_renderer;
 
-    public function __construct($deps)
-    {
+    public function __construct($deps) {
         ['form_renderer' => $form_renderer] = $deps;
         $this->form_renderer = $form_renderer;
     }
 
-    public static function get_dependencies(): array
-    {
+    public static function get_dependencies(): array {
         return ['form_renderer'];
     }
 
-    public function run($atts): string
-    {
+    public function run($atts): string {
         $form = '';
 
         if ($atts['title'] != false) {
@@ -46,8 +42,7 @@ class SignupShortcode implements ShortcodeInterface
         return $form;
     }
 
-    public function get_default_args(): array
-    {
+    public function get_default_args(): array {
         return [
             'title' => true,
             'details' => true,

@@ -1,7 +1,7 @@
 <div>
 <?php
     global $post;
-    get_header(); ?>
+get_header(); ?>
 <!-- -->
 <div>
 	<h1><?php the_title(); ?></h1>

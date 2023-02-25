@@ -2,17 +2,14 @@
 
 namespace Membergate\Common;
 
-class MemberCookie
-{
-    const cookie_name = 'membergate_member';
+class MemberCookie {
+    public const cookie_name = 'membergate_member';
 
-    public function user_has_cookie()
-    {
+    public function user_has_cookie() {
         return isset($_COOKIE[self::cookie_name]);
     }
 
-    public function set_member_cookie()
-    {
+    public function set_member_cookie() {
         setcookie(
             self::cookie_name,
             'true',

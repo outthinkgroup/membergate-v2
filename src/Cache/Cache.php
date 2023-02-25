@@ -8,8 +8,7 @@ use Membergate\Common\Time;
  * A wrapper around wp transient
  *
  **/
-class Cache
-{
+class Cache {
     /**
      * Sets the transient
      *
@@ -19,8 +18,7 @@ class Cache
      * @param  string  $prefix A label to namespace the transient
      *
      **/
-    public static function set(string $transient, array $value, Time $expiration = null, string $prefix = '')
-    {
+    public static function set(string $transient, array $value, Time $expiration = null, string $prefix = '') {
         if (is_null($expiration)) {
             $expiration = Time::Day();
         }
@@ -38,8 +36,7 @@ class Cache
      * @param  string  $prefix A label to namespace the transient
      * @return array
      **/
-    public static function get(string $transient, callable $update, array $params = [], Time $expiration = null, string $prefix = '')
-    {
+    public static function get(string $transient, callable $update, array $params = [], Time $expiration = null, string $prefix = '') {
         if (is_null($expiration)) {
             $expiration = Time::Day();
         }
@@ -65,8 +62,7 @@ class Cache
      * @param  string  $prefix A label to namespace the transient
      *
      **/
-    public static function delete($transient, string $prefix = '')
-    {
+    public static function delete($transient, string $prefix = '') {
         delete_transient("{$prefix}_{$transient}");
     }
 }

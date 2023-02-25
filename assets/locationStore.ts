@@ -28,7 +28,7 @@ export const locationKeys = Object.values(locations).map(l=>l.slug)
 export const currentLocation = createCurrentLocationStore()
 
 function createCurrentLocationStore(){
-	const {subscribe, update, set} = writable(locationKeys[0]);
+	const {subscribe, update, set} = writable(locationKeys[1]); //TODO: change back to index 0
 	return {
 		subscribe,
 		update,

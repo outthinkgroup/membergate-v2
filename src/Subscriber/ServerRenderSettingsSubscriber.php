@@ -6,8 +6,7 @@ use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\ListProviderSettings;
 use Membergate\Settings\PostTypeSettings;
 
-class ServerRenderSettingsSubscriber implements SubscriberInterface
-{
+class ServerRenderSettingsSubscriber implements SubscriberInterface {
     private ListProviderSettings $list_provider_settings;
 
     private PostTypeSettings $post_type_settings;
@@ -20,8 +19,7 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface
 
     private $protect_content_settings;
 
-    public function __construct($list_provider_settings, $list_providers, $account_settings, $post_type_settings, $form_settings, $protect_content_settings)
-    {
+    public function __construct($list_provider_settings, $list_providers, $account_settings, $post_type_settings, $form_settings, $protect_content_settings) {
         $this->list_provider_settings = $list_provider_settings;
         $this->protect_content_settings = $protect_content_settings;
         $this->list_providers = $list_providers;
@@ -30,16 +28,14 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface
         $this->form_settings = $form_settings;
     }
 
-    public static function get_subscribed_events(): array
-    {
+    public static function get_subscribed_events(): array {
         return [
             'admin_head' => 'add_global_vars',
             'wp_head' => 'add_public_vars',
         ];
     }
 
-    public function add_global_vars()
-    {
+    public function add_global_vars() {
         $provider_settings_class = $this->list_provider_settings->get_provider_settings_class();
         $provider_settings_class = new $provider_settings_class();
         $settings = $provider_settings_class->get_settings();
@@ -104,8 +100,7 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface
 		<?php
     }
 
-    public function add_public_vars()
-    {
+    public function add_public_vars() {
         ?>
 	<script>
 		window.publicMembergate = {

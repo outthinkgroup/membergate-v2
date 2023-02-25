@@ -4,9 +4,8 @@ namespace Membergate\AJAX;
 
 use Membergate\Settings\ListProviderSettings;
 
-class FetchListsFromProvider implements AjaxInterface
-{
-    const ACTION = 'get_lists';
+class FetchListsFromProvider implements AjaxInterface {
+    public const ACTION = 'get_lists';
 
     public $dependencies = ['list_settings', 'providers'];
 
@@ -14,30 +13,25 @@ class FetchListsFromProvider implements AjaxInterface
 
     private $providers;
 
-    public function __construct()
-    {
+    public function __construct() {
         // $this->list_settings = $list_settings;
         // $this->providers = $providers;
     }
 
-    public function set_dependencies($list_settings, $providers)
-    {
+    public function set_dependencies($list_settings, $providers) {
         $this->list_settings = $list_settings;
         $this->providers = $providers;
     }
 
-    public function get_action(): string
-    {
+    public function get_action(): string {
         return self::ACTION;
     }
 
-    public function get_name(): string
-    {
+    public function get_name(): string {
         return self::class;
     }
 
-    public function handle()
-    {
+    public function handle() {
         $provider_key = $this->list_settings->get_provider();
         $provider = $this->providers[$provider_key]['client'];
         $provider_settings = $this->providers[$provider_key]['settings'];

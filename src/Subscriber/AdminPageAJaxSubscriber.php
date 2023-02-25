@@ -11,8 +11,7 @@ use Membergate\AJAX\SaveMembergateFormSettings;
 use Membergate\AJAX\SaveProtectedPostTypes;
 use Membergate\EventManagement\SubscriberInterface;
 
-class AdminPageAJaxSubscriber implements SubscriberInterface
-{
+class AdminPageAJaxSubscriber implements SubscriberInterface {
     public $list_provider_settings;
 
     public $providers_list;
@@ -23,8 +22,7 @@ class AdminPageAJaxSubscriber implements SubscriberInterface
 
     public $protected_content_settings;
 
-    public function __construct($list_provider_settings, $providers, $post_type_settings, $form_settings, $protected_content_settings)
-    {
+    public function __construct($list_provider_settings, $providers, $post_type_settings, $form_settings, $protected_content_settings) {
         $this->list_provider_settings = $list_provider_settings;
         $this->providers_list = $providers;
         $this->post_type_settings = $post_type_settings;
@@ -32,15 +30,13 @@ class AdminPageAJaxSubscriber implements SubscriberInterface
         $this->protected_content_settings = $protected_content_settings;
     }
 
-    public static function get_subscribed_events(): array
-    {
+    public static function get_subscribed_events(): array {
         return [
             'wp_ajax_mg_admin_endpoint' => 'endpoints',
         ];
     }
 
-    public function endpoints()
-    {
+    public function endpoints() {
         $endpoints = [
             SaveGeneralListSettings::ACTION => SaveGeneralListSettings::class,
             FetchListsFromProvider::ACTION => FetchListsFromProvider::class,
@@ -55,7 +51,7 @@ class AdminPageAJaxSubscriber implements SubscriberInterface
         }
         $endpoint = $endpoints[$_POST['mg_action']];
         if (! $endpoint) {
-            error_log('no endpoint was found for: '.$_POST['mg_action']);
+            error_log('no endpoint was found for: ' . $_POST['mg_action']);
             exit;
         }
         $containers = [

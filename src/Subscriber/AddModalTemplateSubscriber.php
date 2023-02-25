@@ -8,45 +8,40 @@ use Membergate\Settings\PostTypeSettings;
 use Membergate\Settings\ProtectedContentSettings;
 use Membergate\Shortcode\MembergateFormRenderer;
 
-class AddModalTemplateSubscriber implements SubscriberInterface
-{
+class AddModalTemplateSubscriber implements SubscriberInterface {
     private MembergateFormRenderer $render_form;
 
     private ProtectedContentSettings $protect_content_settings;
 
     private PostTypeSettings $post_type_settings;
 
-    public static function get_subscribed_events(): array
-    {
+    public static function get_subscribed_events(): array {
         $hooks = [
             'wp_footer' => 'render_modal_template',
             'the_permalink' => ['mark_protected_with_queryparm', 10, 2],
         ];
         foreach (get_post_types() as $type) {
-            $hooks[$type.'_link'] = ['mark_protected_with_queryparm', 10, 2];
+            $hooks[$type . '_link'] = ['mark_protected_with_queryparm', 10, 2];
         }
 
         return $hooks;
     }
 
-    public function __construct(MembergateFormRenderer $render_form, ProtectedContentSettings $protect_content_settings, PostTypeSettings $post_type_settings)
-    {
+    public function __construct(MembergateFormRenderer $render_form, ProtectedContentSettings $protect_content_settings, PostTypeSettings $post_type_settings) {
         $this->render_form = $render_form;
         $this->protect_content_settings = $protect_content_settings;
         $this->post_type_settings = $post_type_settings;
     }
 
     //If user has opted out return;
-    private function can_use_modal()
-    {
+    private function can_use_modal() {
         $use_modal_setting = $this->protect_content_settings->get_setting('show_modal');
         $c = new MemberCookie();
 
         return ((! $use_modal_setting->has_error()) || $use_modal_setting->value == 'true') && ! ($c->user_has_cookie() || is_user_logged_in());
     }
 
-    public function mark_protected_with_queryparm($url)
-    {
+    public function mark_protected_with_queryparm($url) {
         if (is_admin()) {
             return $url;
         }
@@ -66,8 +61,7 @@ class AddModalTemplateSubscriber implements SubscriberInterface
         return $url;
     }
 
-    public function render_modal_template()
-    {
+    public function render_modal_template() {
         if (! $this->can_use_modal()) {
             return;
         }

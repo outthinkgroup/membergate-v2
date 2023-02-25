@@ -2,22 +2,18 @@
 
 namespace Membergate\AJAX;
 
-class AjaxResponse
-{
+class AjaxResponse {
     private array $data;
 
-    public function __construct($data)
-    {
+    public function __construct($data) {
         $this->data = $data;
     }
 
-    public function add_error($msg)
-    {
+    public function add_error($msg) {
         $this->data['errors'][] = $msg;
     }
 
-    public function send()
-    {
+    public function send() {
         echo json_encode($this->data);
         exit;
     }

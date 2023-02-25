@@ -4,8 +4,7 @@ namespace Membergate\Cache;
 
 use Membergate\Common\Time;
 
-class ListProviderCache
-{
+class ListProviderCache {
     private string $provider;
 
     private string $list_prefix;
@@ -16,8 +15,7 @@ class ListProviderCache
 
     public Time $group_expr;
 
-    public function __construct(string $provider)
-    {
+    public function __construct(string $provider) {
         $this->provider = $provider;
         $this->list_prefix = "{$this->provider}_lists_of";
         $this->group_prefix = "{$this->provider}_groups_of";
@@ -25,8 +23,7 @@ class ListProviderCache
         $this->group_expr = Time::Hour();
     }
 
-    public function get_lists($api_key, $update_fn)
-    {
+    public function get_lists($api_key, $update_fn) {
         return Cache::get(
             $api_key,
             $update_fn,
@@ -36,8 +33,7 @@ class ListProviderCache
         );
     }
 
-    public function get_groups($list_id, $update_fn)
-    {
+    public function get_groups($list_id, $update_fn) {
         return Cache::get(
             $list_id,
             $update_fn,

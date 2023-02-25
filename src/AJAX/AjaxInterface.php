@@ -2,8 +2,7 @@
 
 namespace Membergate\AJAX;
 
-interface AjaxInterface
-{
+interface AjaxInterface {
     public function get_action(): string;
 
     public function get_name(): string;

@@ -4,8 +4,7 @@ namespace Membergate\Settings\EMSSettings;
 
 use Membergate\Common\PossibleError;
 
-interface EMSSettingsInterface
-{
+interface EMSSettingsInterface {
     public function __construct();
 
     public function update_settings(array $post_arr): PossibleError;

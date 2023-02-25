@@ -2,7 +2,6 @@
 
 namespace Membergate\DependencyInjection;
 
-interface ContainerConfigurationInterface
-{
+interface ContainerConfigurationInterface {
     public function modify(Container $container);
 }

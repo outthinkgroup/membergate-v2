@@ -7,24 +7,20 @@ use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Shortcode\ShortcodeInterface;
 use Membergate\Shortcode\SignupShortcode;
 
-class ShortcodeSubscriber implements SubscriberInterface
-{
+class ShortcodeSubscriber implements SubscriberInterface {
     private Container $container;
 
-    public function __construct(Container $container)
-    {
+    public function __construct(Container $container) {
         $this->container = $container;
     }
 
-    public static function get_subscribed_events(): array
-    {
+    public static function get_subscribed_events(): array {
         return [
             'init' => 'load_shortcodes',
         ];
     }
 
-    public function load_shortcodes()
-    {
+    public function load_shortcodes() {
         $shortcodes = [
             'mg_signup_form' => SignupShortcode::class,
         ];

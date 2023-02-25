@@ -8,25 +8,22 @@ use Membergate\Cache\ListProviderCache;
 use Membergate\Common\PossibleError;
 use Membergate\ListProviders\EMSClients\MailChimpClient;
 
-class MailchimpProvider implements ListProvidersInterface
-{
+class MailchimpProvider implements ListProvidersInterface {
     private $api_key;
 
     private MailChimpClient $client;
 
     private $cache;
 
-    const provider_name = 'mailchimp';
+    public const provider_name = 'mailchimp';
 
-    public function __construct($api_key)
-    {
+    public function __construct($api_key) {
         $this->api_key = $api_key;
         $this->client = new MailChimpClient($this->api_key);
         $this->cache = new ListProviderCache(self::provider_name);
     }
 
-    public static function capabilities(): array
-    {
+    public static function capabilities(): array {
         return [
             'has_groups',
             'has_lists',
@@ -35,8 +32,7 @@ class MailchimpProvider implements ListProvidersInterface
         ];
     }
 
-    public function get_lists()
-    {
+    public function get_lists() {
         return $this->cache->get_lists($this->api_key, function () {
             $resp = $this->fetch_lists();
             if ($resp->has_error()) {
@@ -47,8 +43,7 @@ class MailchimpProvider implements ListProvidersInterface
         });
     }
 
-    public function get_groups($list_id)
-    {
+    public function get_groups($list_id) {
         return $this->cache->get_groups($list_id, function ($list_id) {
             $resp = $this->fetch_all_groups($list_id);
 
@@ -60,8 +55,7 @@ class MailchimpProvider implements ListProvidersInterface
         });
     }
 
-    public function fetch_lists(): PossibleError
-    {
+    public function fetch_lists(): PossibleError {
         $resp = new PossibleError();
         $lists = $this->client->get('lists', [], 200);
         if (! $this->client->success()) {
@@ -79,8 +73,7 @@ class MailchimpProvider implements ListProvidersInterface
     /**
      * Fetches groups with parent group as well
      */
-    public function fetch_all_groups($list_id): PossibleError
-    {
+    public function fetch_all_groups($list_id): PossibleError {
         $resp = new PossibleError();
         $interest_cats_resp = $this->fetch_group_categories($list_id);
         if ($interest_cats_resp->has_error()) {
@@ -111,8 +104,7 @@ class MailchimpProvider implements ListProvidersInterface
         return $resp;
     }
 
-    public function fetch_group_categories($list_id): PossibleError
-    {
+    public function fetch_group_categories($list_id): PossibleError {
         $resp = new PossibleError();
         $categories = [];
         $group_categories = $this->client->get("/lists/$list_id/interest-categories/");
@@ -133,8 +125,7 @@ class MailchimpProvider implements ListProvidersInterface
         return $resp;
     }
 
-    public function fetch_groups($list_id, $cat_group_id): PossibleError
-    {
+    public function fetch_groups($list_id, $cat_group_id): PossibleError {
         $resp = new PossibleError();
         $interests = $this->client->get("/lists/$list_id/interest-categories/$cat_group_id/interests");
         $groups = [];
@@ -156,8 +147,7 @@ class MailchimpProvider implements ListProvidersInterface
         return $resp;
     }
 
-    public function add_subscriber($email_address, $settings, $submission = null): PossibleError
-    {
+    public function add_subscriber($email_address, $settings, $submission = null): PossibleError {
         $list_id = $settings['list_id'];
         $hash = $this->client->subscriberHash($email_address);
         $groups = [$settings['group_id'] => true];
@@ -176,8 +166,7 @@ class MailchimpProvider implements ListProvidersInterface
         return new PossibleError($res);
     }
 
-    public function get_user($list_id, $email_address): PossibleError
-    {
+    public function get_user($list_id, $email_address): PossibleError {
         $hash = $this->client->subscriberHash($email_address);
         $res = $this->client->get("lists/$list_id/members/$hash");
         if (! $this->client->success()) {
@@ -192,8 +181,7 @@ class MailchimpProvider implements ListProvidersInterface
         return new PossibleError($res);
     }
 
-    public function is_user_subscribed($list_id, $email_address): PossibleError
-    {
+    public function is_user_subscribed($list_id, $email_address): PossibleError {
         $possible_error = $this->get_user($list_id, $email_address);
         if ($possible_error->has_error()) {
             return $possible_error;

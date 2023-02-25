@@ -15,8 +15,7 @@ use MyCLabs\Enum\Enum;
 // 	case Year = YEAR_IN_SECONDS;
 // }
 
-final class Time extends Enum
-{
+final class Time extends Enum {
     private const MINUTE = MINUTE_IN_SECONDS;
 
     private const QUARTERHR = 15 * MINUTE_IN_SECONDS;
@@ -33,43 +32,35 @@ final class Time extends Enum
 
     private const YEAR = YEAR_IN_SECONDS;
 
-    public static function Minute()
-    {
+    public static function Minute() {
         return new Time(self::MINUTE);
     }
 
-    public static function QuarterHr()
-    {
+    public static function QuarterHr() {
         return new Time(self::QUARTERHR);
     }
 
-    public static function HalfHr()
-    {
+    public static function HalfHr() {
         return new Time(self::HALFHR);
     }
 
-    public static function Hour()
-    {
+    public static function Hour() {
         return new Time(self::HOUR);
     }
 
-    public static function Day()
-    {
+    public static function Day() {
         return new Time(self::DAY);
     }
 
-    public static function Week()
-    {
+    public static function Week() {
         return new Time(self::WEEK);
     }
 
-    public static function Month()
-    {
+    public static function Month() {
         return new Time(self::MONTH);
     }
 
-    public static function Year()
-    {
+    public static function Year() {
         return new Time(self::YEAR);
     }
 }

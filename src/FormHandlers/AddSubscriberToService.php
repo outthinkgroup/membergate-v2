@@ -4,8 +4,7 @@ namespace Membergate\FormHandlers;
 
 use Membergate\Common\MemberCookie;
 
-class AddSubscriberToService implements FormHandlerInterface
-{
+class AddSubscriberToService implements FormHandlerInterface {
     private $list_client;
 
     private $list_settings;
@@ -14,8 +13,7 @@ class AddSubscriberToService implements FormHandlerInterface
 
     private $list_id;
 
-    public function __construct($list_provider_settings, $providers)
-    {
+    public function __construct($list_provider_settings, $providers) {
         $provider_key = $list_provider_settings->get_provider();
         $provider = $providers[$provider_key];
         $this->list_client = $provider['client'];
@@ -40,8 +38,7 @@ class AddSubscriberToService implements FormHandlerInterface
         }
     }
 
-    public function execute_action($submission)
-    {
+    public function execute_action($submission) {
         if (! $this->setup) {
             return;
         }

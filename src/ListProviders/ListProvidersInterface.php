@@ -4,8 +4,7 @@ namespace Membergate\ListProviders;
 
 use Membergate\Common\PossibleError;
 
-interface ListProvidersInterface
-{
+interface ListProvidersInterface {
     public function __construct($api_key);
 
     public static function capabilities(): array;

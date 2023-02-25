@@ -2,20 +2,17 @@
 
 namespace Membergate\Shortcode;
 
-class MembergateFormRenderer
-{
+class MembergateFormRenderer {
     private $form_settings;
 
     private $template_path;
 
-    public function __construct($form_settings, $template_path)
-    {
+    public function __construct($form_settings, $template_path) {
         $this->form_settings = $form_settings;
         $this->template_path = $template_path;
     }
 
-    public function get_form_title()
-    {
+    public function get_form_title() {
         global $post;
         $title = $this->form_settings->get_setting('form_title');
         if ($title->has_error()) {
@@ -32,8 +29,7 @@ class MembergateFormRenderer
         return $title;
     }
 
-    public function get_form_details()
-    {
+    public function get_form_details() {
         global $post;
 
         $details = $this->form_settings->get_setting('form_details');
@@ -47,8 +43,7 @@ class MembergateFormRenderer
         return $details;
     }
 
-    public function get_button_label()
-    {
+    public function get_button_label() {
         global $post;
 
         $label = $this->form_settings->get_setting('form_button_label');
@@ -63,37 +58,32 @@ class MembergateFormRenderer
         return $label;
     }
 
-    public function include_form($form_slug)
-    {
+    public function include_form($form_slug) {
         echo $this->return_form($form_slug);
     }
 
-    public function return_form($form_slug)
-    {
+    public function return_form($form_slug) {
         global $post;
         $redirect_to = isset($_GET['redirect_to']) ? $_GET['redirect_to'] : '';
         $redirect_to = apply_filters('membergate_redirect_to_form_value', $redirect_to, $post);
         ob_start();
-        include $this->template_path.$form_slug.'.php';
+        include $this->template_path . $form_slug . '.php';
 
         return ob_get_clean();
     }
 
-    public function include_form_details($form_slug)
-    {
+    public function include_form_details($form_slug) {
         echo $this->return_form_details($form_slug);
     }
 
-    public function return_form_details($form_slug)
-    {
+    public function return_form_details($form_slug) {
         ob_start();
-        include $this->template_path.$form_slug.'_details.php';
+        include $this->template_path . $form_slug . '_details.php';
 
         return ob_get_clean();
     }
 
-    public function wrap_in_wrapper(string $s)
-    {
+    public function wrap_in_wrapper(string $s) {
         $markup = "<div class='membergate-wrapper'>";
         $markup .= $s;
         $markup .= '</div>';
@@ -101,22 +91,19 @@ class MembergateFormRenderer
         return $markup;
     }
 
-    public function return_full_form_markup($form_slug)
-    {
+    public function return_full_form_markup($form_slug) {
         $details = $this->return_form_details($form_slug);
         $form = $this->return_form($form_slug);
-        $markup = $details.$form;
+        $markup = $details . $form;
 
         return $this->wrap_in_wrapper($markup);
     }
 
-    public function include_full_form_markup($form_slug)
-    {
+    public function include_full_form_markup($form_slug) {
         echo $this->return_full_form_markup($form_slug);
     }
 
-    private function _modal_markup()
-    {
+    private function _modal_markup() {
         ?>
 		<div class="membergate-modal__layer">
 			<div class="membergate-modal__modal">
@@ -130,16 +117,14 @@ class MembergateFormRenderer
 	<?php
     }
 
-    public function return_modal_markup()
-    {
+    public function return_modal_markup() {
         ob_start();
         $this->_modal_markup();
 
         return apply_filters('membergate_modal_markup', ob_get_clean());
     }
 
-    public function modal_markup()
-    {
+    public function modal_markup() {
         echo $this->return_modal_markup();
     }
 }

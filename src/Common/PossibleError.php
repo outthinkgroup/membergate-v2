@@ -2,14 +2,12 @@
 
 namespace Membergate\Common;
 
-class PossibleError
-{
+class PossibleError {
     public $error;
 
     public $value;
 
-    public function __construct($value = null, $error = null)
-    {
+    public function __construct($value = null, $error = null) {
         if ($value) {
             $this->value = $value;
         }
@@ -18,8 +16,7 @@ class PossibleError
         }
     }
 
-    public function has_error()
-    {
+    public function has_error() {
         if ($this->error) {
             return true;
         } else {
@@ -27,8 +24,7 @@ class PossibleError
         }
     }
 
-    public function get_value()
-    {
+    public function get_value() {
         return $this->value;
     }
 }

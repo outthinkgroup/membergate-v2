@@ -4,35 +4,29 @@ namespace Membergate\AJAX;
 
 use Membergate\Settings\ProtectedContentSettings;
 
-class SaveDisplayProtectedContent implements AjaxInterface
-{
-    const ACTION = 'save_blocked_content_settings';
+class SaveDisplayProtectedContent implements AjaxInterface {
+    public const ACTION = 'save_blocked_content_settings';
 
     private ProtectedContentSettings $protected_content_settings;
 
     public $dependencies = ['settings.protected_content'];
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
-    public function set_dependencies(ProtectedContentSettings $protected_content_settings)
-    {
+    public function set_dependencies(ProtectedContentSettings $protected_content_settings) {
         $this->protected_content_settings = $protected_content_settings;
     }
 
-    public function get_action(): string
-    {
+    public function get_action(): string {
         return self::ACTION;
     }
 
-    public function get_name(): string
-    {
+    public function get_name(): string {
         return self::class;
     }
 
-    public function handle()
-    {
+    public function handle() {
         $settings = $this->protected_content_settings->get_all();
         foreach ($settings	as $key => $val) {
             if (isset($_POST[$key])) {
