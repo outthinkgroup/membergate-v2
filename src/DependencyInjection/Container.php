@@ -2,68 +2,74 @@
 
 namespace Membergate\DependencyInjection;
 
-class Container implements \ArrayAccess {
-	private $locked;
+class Container implements \ArrayAccess
+{
+    private $locked;
 
-	private $values;
+    private $values;
 
-	public function __construct(array $values = []){
-		$this->locked = false;
-		$this->values = $values;	
-	}
+    public function __construct(array $values = [])
+    {
+        $this->locked = false;
+        $this->values = $values;
+    }
 
-	public function configure($configurations){
-		if(!is_array($configurations)){
-			$configurations = [$configurations];
-		}
+    public function configure($configurations)
+    {
+        if (! is_array($configurations)) {
+            $configurations = [$configurations];
+        }
 
-		foreach ($configurations as $configuration){
-			$this->modify($configuration);
-		}
-	}
+        foreach ($configurations as $configuration) {
+            $this->modify($configuration);
+        }
+    }
 
-	public function service($callable){
-		if(!is_object($callable)|| !method_exists($callable, '__invoke')){
-			throw new \InvalidArgumentException('Service definition is not a closure or invokable object');
-		}
+    public function service($callable)
+    {
+        if (! is_object($callable) || ! method_exists($callable, '__invoke')) {
+            throw new \InvalidArgumentException('Service definition is not a closure or invokable object');
+        }
 
-		return function(Container $container) use ($callable){
-			static $object;	
-			if(null == $object){
-				$object = $callable($container);
-			}
+        return function (Container $container) use ($callable) {
+            static $object;
+            if (null == $object) {
+                $object = $callable($container);
+            }
 
-			return $object;
-		};
-	}
+            return $object;
+        };
+    }
 
-	private function modify($config){
-		if(is_string($config)){
-			$config = new $config();	
-		}
+    private function modify($config)
+    {
+        if (is_string($config)) {
+            $config = new $config();
+        }
 
-		if(!$config instanceof ContainerConfigurationInterface){
-			throw new \InvalidArgumentException("Config object must implement interface ContainerConfigurationInterface");	
-		}
+        if (! $config instanceof ContainerConfigurationInterface) {
+            throw new \InvalidArgumentException('Config object must implement interface ContainerConfigurationInterface');
+        }
 
-		$config->modify($this);
-	}
-	
+        $config->modify($this);
+    }
 
-	/**
+    /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset):bool {
+    public function offsetExists($offset): bool
+    {
         return array_key_exists($offset, $this->values);
     }
 
-	/**
+    /**
      * {@inheritdoc}
      */
-    public function offsetGet($key) {
-        if (!array_key_exists($key, $this->values)) {
+    public function offsetGet($key)
+    {
+        if (! array_key_exists($key, $this->values)) {
             throw new \InvalidArgumentException(sprintf('Container doesn\'t have a value stored for the "%s" key.', $key));
-        } elseif (!$this->is_locked()) {
+        } elseif (! $this->is_locked()) {
             $this->lock();
         }
 
@@ -73,7 +79,8 @@ class Container implements \ArrayAccess {
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($key, $value): void {
+    public function offsetSet($key, $value): void
+    {
         if ($this->locked) {
             throw new \RuntimeException('Container is locked and cannot be modified.');
         }
@@ -84,7 +91,8 @@ class Container implements \ArrayAccess {
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($key): void {
+    public function offsetUnset($key): void
+    {
         if ($this->locked) {
             throw new \RuntimeException('Container is locked and cannot be modified.');
         }
@@ -92,11 +100,13 @@ class Container implements \ArrayAccess {
         unset($this->values[$key]);
     }
 
-	public function lock() {
-		$this->locked = true;	
-	}
+    public function lock()
+    {
+        $this->locked = true;
+    }
 
-	public function is_locked(){
-		return $this->locked;	
-	}
+    public function is_locked()
+    {
+        return $this->locked;
+    }
 }

@@ -1,2 +1,3 @@
 <?php
-define("APP_ENV", "development");
+
+define('APP_ENV', 'development');

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name:     Membergate
  * Plugin URI:      PLUGIN SITE HERE
@@ -8,23 +9,19 @@
  * Text Domain:     ot-gf-quiz
  * Domain Path:     /languages
  * Version:         0.1.0
- *
- * @package			membergate
- *
  */
 // this is used for asset loading for vite
 require __DIR__ . '/vendor/autoload.php';
 
-require_once  dirname(__FILE__) . "/env.php";		
-define('IS_DEVELOPMENT', APP_ENV==='development');
-require_once "utils.php";
+require_once dirname(__FILE__) . '/env.php';
+define('IS_DEVELOPMENT', APP_ENV === 'development');
+require_once 'utils.php';
 
 require_once dirname(__FILE__) . '/src/Autoloader.php';
 \Membergate\Autoloader::register();
 
 global $membergate;
 $membergate = new \Membergate\Plugin(__FILE__);
-add_action('after_setup_theme', [ $membergate, 'load']);
+add_action('after_setup_theme', [$membergate, 'load']);
 
-require_once "pluggable.php";
-
+require_once 'pluggable.php';

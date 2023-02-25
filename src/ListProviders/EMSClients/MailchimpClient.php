@@ -1,7 +1,9 @@
 <?php
+
 namespace Membergate\ListProviders\EMSClients;
 
-class MailChimpClient {
+class MailChimpClient
+{
     private $api_key;
 
     private $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';
@@ -27,7 +29,8 @@ class MailChimpClient {
      *
      * @throws \Exception
      */
-    public function __construct($api_key) {
+    public function __construct($api_key)
+    {
         $this->api_key = $api_key;
 
         if (strpos($this->api_key, '-') === false) {
@@ -46,7 +49,8 @@ class MailChimpClient {
      * @param  string  $batch_id Optional ID of an existing batch, if you need to check its status for example.
      * @return Batch            New Batch object.
      */
-    public function new_batch($batch_id = null) {
+    public function new_batch($batch_id = null)
+    {
         return new Batch($this, $batch_id);
     }
 
@@ -56,7 +60,8 @@ class MailChimpClient {
      * @param  string  $email The subscriber's email address
      * @return  string          Hashed version of the input
      */
-    public function subscriberHash($email) {
+    public function subscriberHash($email)
+    {
         return md5(strtolower($email));
     }
 
@@ -65,7 +70,8 @@ class MailChimpClient {
      *
      * @return bool  True for success, false for failure
      */
-    public function success() {
+    public function success()
+    {
         return $this->request_successful;
     }
 
@@ -75,7 +81,8 @@ class MailChimpClient {
      *
      * @return  array|false  describing the error
      */
-    public function getLastError() {
+    public function getLastError()
+    {
         return $this->last_error ?: false;
     }
 
@@ -84,7 +91,8 @@ class MailChimpClient {
      *
      * @return array  Assoc array with keys 'headers' and 'body'
      */
-    public function getLastResponse() {
+    public function getLastResponse()
+    {
         return $this->last_response;
     }
 
@@ -93,7 +101,8 @@ class MailChimpClient {
      *
      * @return array  Assoc array
      */
-    public function getLastRequest() {
+    public function getLastRequest()
+    {
         return $this->last_request;
     }
 
@@ -105,7 +114,8 @@ class MailChimpClient {
      * @param  int  $timeout Timeout limit for request in seconds
      * @return  array|false   Assoc array of API response, decoded from JSON
      */
-    public function delete($method, $args = [], $timeout = 10) {
+    public function delete($method, $args = [], $timeout = 10)
+    {
         return $this->makeRequest('delete', $method, $args, $timeout);
     }
 
@@ -117,8 +127,10 @@ class MailChimpClient {
      * @param  int  $timeout Timeout limit for request in seconds
      * @return  array|false   Assoc array of API response, decoded from JSON
      */
-    public function get($method, $args = [], $timeout = 10) {
-				error_log("making network request");
+    public function get($method, $args = [], $timeout = 10)
+    {
+        error_log('making network request');
+
         return $this->makeRequest('get', $method, $args, $timeout);
     }
 
@@ -130,7 +142,8 @@ class MailChimpClient {
      * @param  int  $timeout Timeout limit for request in seconds
      * @return  array|false   Assoc array of API response, decoded from JSON
      */
-    public function patch($method, $args = [], $timeout = 10) {
+    public function patch($method, $args = [], $timeout = 10)
+    {
         return $this->makeRequest('patch', $method, $args, $timeout);
     }
 
@@ -142,7 +155,8 @@ class MailChimpClient {
      * @param  int  $timeout Timeout limit for request in seconds
      * @return  array|false   Assoc array of API response, decoded from JSON
      */
-    public function post($method, $args = [], $timeout = 10) {
+    public function post($method, $args = [], $timeout = 10)
+    {
         return $this->makeRequest('post', $method, $args, $timeout);
     }
 
@@ -154,7 +168,8 @@ class MailChimpClient {
      * @param  int  $timeout Timeout limit for request in seconds
      * @return  array|false   Assoc array of API response, decoded from JSON
      */
-    public function put($method, $args = [], $timeout = 10) {
+    public function put($method, $args = [], $timeout = 10)
+    {
         return $this->makeRequest('put', $method, $args, $timeout);
     }
 
@@ -169,12 +184,13 @@ class MailChimpClient {
      *
      * @throws \Exception
      */
-    private function makeRequest($http_verb, $method, $args = [], $timeout = 10) {
+    private function makeRequest($http_verb, $method, $args = [], $timeout = 10)
+    {
         if (! function_exists('curl_init') || ! function_exists('curl_setopt')) {
             throw new \Exception("cURL support is required, but can't be found.");
         }
 
-        $url = $this->api_endpoint . '/' . $method;
+        $url = $this->api_endpoint.'/'.$method;
 
         $this->last_error = '';
         $this->request_successful = false;
@@ -194,7 +210,7 @@ class MailChimpClient {
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Accept: application/vnd.api+json',
             'Content-Type: application/vnd.api+json',
-            'Authorization: apikey ' . $this->api_key,
+            'Authorization: apikey '.$this->api_key,
         ]);
         curl_setopt($ch, CURLOPT_USERAGENT, 'DrewM/MailChimp-API/3.0 (github.com/drewm/mailchimp-api)');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -212,7 +228,7 @@ class MailChimpClient {
 
             case 'get':
                 $query = http_build_query($args, '', '&');
-                curl_setopt($ch, CURLOPT_URL, $url . '?' . $query);
+                curl_setopt($ch, CURLOPT_URL, $url.'?'.$query);
                 break;
 
             case 'delete':
@@ -256,7 +272,8 @@ class MailChimpClient {
      * @param  resource  $ch cURL session handle, used by reference
      * @param  array  $data Assoc array of data to attach
      */
-    private function attachRequestPayload(&$ch, $data) {
+    private function attachRequestPayload(&$ch, $data)
+    {
         $encoded = json_encode($data);
         $this->last_request['body'] = $encoded;
         curl_setopt($ch, CURLOPT_POSTFIELDS, $encoded);
@@ -268,7 +285,8 @@ class MailChimpClient {
      * @param  array  $response The response from the curl request
      * @return array|false    The JSON decoded into an array
      */
-    private function formatResponse($response) {
+    private function formatResponse($response)
+    {
         $this->last_response = $response;
 
         if (! empty($response['body'])) {
@@ -285,7 +303,8 @@ class MailChimpClient {
      * @param  array|false  $formattedResponse The response body payload from the curl request
      * @return bool     If the request was successful
      */
-    private function determineSuccess($response, $formattedResponse) {
+    private function determineSuccess($response, $formattedResponse)
+    {
         $status = $this->findHTTPStatus($response, $formattedResponse);
 
         if ($status >= 200 && $status <= 299) {
@@ -312,7 +331,8 @@ class MailChimpClient {
      * @param  array|false  $formattedResponse The response body payload from the curl request
      * @return int  HTTP status code
      */
-    private function findHTTPStatus($response, $formattedResponse) {
+    private function findHTTPStatus($response, $formattedResponse)
+    {
         if (! empty($response['headers']) && isset($response['headers']['http_code'])) {
             return (int) $response['headers']['http_code'];
         }
@@ -324,4 +344,3 @@ class MailChimpClient {
         return 418;
     }
 }
-

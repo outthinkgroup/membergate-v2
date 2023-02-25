@@ -45,9 +45,10 @@
     //listen to clicks outside of tooltip and button
     document.body.addEventListener('click', handleClickOutside)
   })
-onDestroy(()=>{
-  document.body.removeEventListener('click', handleClickOutside)
-})
+
+  onDestroy(()=>{
+    document.body.removeEventListener('click', handleClickOutside)
+  })
 </script>
 
 

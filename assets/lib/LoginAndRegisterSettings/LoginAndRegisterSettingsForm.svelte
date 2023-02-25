@@ -2,11 +2,10 @@
   import { currentLocation } from "../../locationStore";
   import { formSettings } from "../../store";
   import FormHeader from "../form/FormHeader.svelte";
-  import LabelInput from "../form/LabelInput.svelte";
-    import FormCard from "./FormCard.svelte";
+  import FormCard from "./FormCard.svelte";
+
   let isLoading = false;
   let unSavedChanges = false;
-$:$formSettings, console.log($formSettings)
 </script>
 
 {#if $currentLocation == "form-settings"}
