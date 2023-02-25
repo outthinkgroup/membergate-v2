@@ -1,3 +1,5 @@
+import type { FormSettingsType } from "./types";
+
 export { };
 declare global {
 	interface Window {
@@ -16,7 +18,7 @@ declare global {
 					groups: any[];
 				};
 				postTypes: Record<string,{name:string, slug:string, protected:"true"|"false"|false}>;
-				formSettings: Record<string, string>;
+				formSettings: Record<"PrimaryForm"|"SecondaryForm", FormSettingsType>;
 				blockedContent: Record<string, any>;
 			};
 		};

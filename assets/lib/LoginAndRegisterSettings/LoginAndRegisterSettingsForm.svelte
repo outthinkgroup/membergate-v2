@@ -11,13 +11,13 @@
 {#if $currentLocation == "form-settings"}
   <div class="shadow bg-white p-6">
     <FormHeader {isLoading} {unSavedChanges}>Login and Register Settings</FormHeader>
-  <div>
-    <h3>Forms</h3>
-    <div>
+  <div class="mb-8">
+    <h3 class="mb-2 font-bold text-cyan-700">Forms</h3>
+    <div class="flex gap-4">
       <FormCard formSettings={$formSettings.PrimaryForm} isPrimary={true}/>
-      {#if $formSettings.SecondaryForm.isEnabled}
+      <!-- {#if $formSettings.PrimaryForm.action == "LOGIN" } -->
         <FormCard formSettings={$formSettings.SecondaryForm} />
-      {/if}
+      <!-- {/if} -->
     </div>
   </div>
     <form

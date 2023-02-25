@@ -9,7 +9,7 @@ export type FormSettingsType = {
 	submit: {
 		text: string;
 	};
-	action: FormActionEnum;
+	action: FormActionUnion;
 };
 export type EditorStatesUnion = "EDIT_TEXT"
     | "DEFAULT"
@@ -19,10 +19,7 @@ export type EditorStatesUnion = "EDIT_TEXT"
     | "EDIT_HEADING"
     | "EDIT_BUTTON"
     | "EDIT_DESCRIPTION"
-export enum FormActionEnum {
-	LOGIN = "LOGIN",
-	REGISTER = "REGISTER",
-}
+export type FormActionUnion =  "LOGIN"| "REGISTER";
 
 export type FieldType = {
 	type: FieldTypeTypeUnion;
