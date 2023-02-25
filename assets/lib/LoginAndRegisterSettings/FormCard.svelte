@@ -6,7 +6,7 @@
 
   export let isPrimary: boolean = false;
   export let formSettings: any;
-  const title = isPrimary ? "Primary Form" : "Secondary From";
+  const title = isPrimary ? "Primary Form" : "Secondary Form";
 
   let action: string;
   $: action = formSettings.action == "LOGIN" ? "Login" : "Register and Login";
@@ -16,13 +16,7 @@
     ? true
     : $FormSettingsStore.PrimaryForm.action == "LOGIN";
 
-  let dialog: HTMLDialogElement;
-  onMount(() => {
-    dialog = document.querySelector(`[data-dialog-el="${title}"]`);
-  });
-  function showEditor() {
-    dialog.showModal();
-  }
+  let showEditor:()=>void;
 </script>
 
 <div
@@ -54,4 +48,4 @@
   </div>
 </div>
 
-<FormBuilder dialogEl={dialog} {title} {isPrimary} {formSettings} />
+<FormBuilder bind:showEditor {title} {isPrimary} {formSettings} />

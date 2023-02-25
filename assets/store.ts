@@ -144,14 +144,14 @@ function createFormSettingsStore() {
 			descriptionText: "Please fill in the form below to get access to this content.",
 			fields:[
 				{
-					type:"name",
+					type:"NAME",
 					id:"wasdf23",
 					label:"Name",
 					name:"name",
 					isRequired:true,
 				},
 				{
-					type:"email",
+					type:"EMAIL",
 					id:"asdfase32",
 					name:"email",
 					label: "Email",
@@ -172,26 +172,26 @@ function createFormSettingsStore() {
 			descriptionText:"Please fill in the form below to get access to this content.",
 			fields:[
 				{
-					type:"email",
+					type:"EMAIL",
 					name:"email",
 					id:"axca3",
 					label:"Email",
 				},
 				{
-					type:"name",
+					type:"NAME",
 					id:'23aass3',
 					label:"Name",
 					name:"name",
 					isRequired:true,
 				},
 				{
-					type:"checkbox",
+					type:"CHECKBOX",
 					id:"a233aaa",
 					label:"Subscribe to daily newsletter",
 					name:"daily_newsletter",
 				},
 				{
-					type:"text",
+					type:"TEXT",
 					id:"oppase3",
 					label:"Some text field",
 					name:"MERGE_FIELD",

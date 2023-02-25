@@ -1,4 +1,4 @@
-type ReturnFields = { type: "text" | "checkbox"; label: string; value: string|boolean, key:string }[]
+type ReturnFields = { type: "TEXT" | "CHECKBOX"; label: string; value: string|boolean, key:string }[]
 
 export function getEmailFieldsFor(
   id: string,
@@ -9,7 +9,7 @@ export function getEmailFieldsFor(
 
   return [
      {
-      type: "text",
+      type: "TEXT",
       label: "Label",
       value: field.label,
       key:"label",
@@ -27,13 +27,13 @@ export function getNameFieldsFor(
 
   return [
     {
-      type: "text",
+      type: "TEXT",
       label: "Label",
       value: field.label,
       key:"label"
     },
     {
-      type:"checkbox",
+      type:"CHECKBOX",
       label:"Is Required",
       value:field.isRequired,
       key:"isRequired",
@@ -51,19 +51,19 @@ export function getTextFieldsFor(
 
   return [
     {
-      type: "text",
+      type: "TEXT",
       label: "Label",
       value: field.label,
       key:"label"
     },
     {
-      type: "text",
+      type: "TEXT",
       label: "Name",
       value: field.name,
       key:"name",
     },
     {
-      type:"checkbox",
+      type:"CHECKBOX",
       label:"Is Required",
       value:field.isRequired,
       key:"isRequired",
@@ -81,13 +81,13 @@ export function getCheckboxFieldsFor(
 
   return [
     {
-      type: "text",
+      type: "TEXT",
       label: "Label",
       value: field.label,
       key:"label",
     },
     {
-      type: "text",
+      type: "TEXT",
       label: "Name",
       value: field.name,
       key:"name",
