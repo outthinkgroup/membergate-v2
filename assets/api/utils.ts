@@ -16,3 +16,17 @@ export async function ajax(action:string, data:Record<string,any>){
     }).then((res) => res.json());
 		return res;
 }
+export async function jsonAjax(action: string, data:Record<string,any>) {
+  const res = await fetch(
+    `${window.membergate.url}?action=mg_admin_endpoint&mg_action=${action}`,
+    {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  ).then((res) => res.json());
+  return res;
+}

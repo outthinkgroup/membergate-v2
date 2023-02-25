@@ -29,8 +29,6 @@
       }}
     >
       <div class="flex flex-col gap-3 items-start">
-
-
         <button
           class="px-4 py-2 rounded bg-cyan-600 text-white font-medium tracking-wide"
         >

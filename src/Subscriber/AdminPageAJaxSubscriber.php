@@ -46,12 +46,12 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
             SaveMembergateFormSettings::ACTION => SaveMembergateFormSettings::class,
             SaveDisplayProtectedContent::ACTION => SaveDisplayProtectedContent::class,
         ];
-        if (! isset($_POST['mg_action'])) {
+        if (! isset($_REQUEST['mg_action'])) {
             error_log('no action set');
         }
-        $endpoint = $endpoints[$_POST['mg_action']];
+        $endpoint = $endpoints[$_REQUEST['mg_action']];
         if (! $endpoint) {
-            error_log('no endpoint was found for: ' . $_POST['mg_action']);
+            error_log('no endpoint was found for: ' . $_REQUEST['mg_action']);
             exit;
         }
         $containers = [

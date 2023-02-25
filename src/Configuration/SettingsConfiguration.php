@@ -23,12 +23,10 @@ class SettingsConfiguration implements ContainerConfigurationInterface {
         });
         $container['settings.forms'] = $container->service(function (Container $container) {
             $settings = new FormSettings();
-
             return $settings;
         });
         $container['settings.protected_content'] = $container->service(function (Container $container) {
             $settings = new ProtectedContentSettings();
-
             return $settings;
         });
     }
