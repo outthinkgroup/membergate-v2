@@ -6,7 +6,7 @@ use Membergate\Common\MemberCookie;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\PostTypeSettings;
 use Membergate\Settings\ProtectedContentSettings;
-use Membergate\Shortcode\MembergateFormRenderer;
+use Membergate\RenderForm\MembergateFormRenderer;
 
 class AddModalTemplateSubscriber implements SubscriberInterface {
     private MembergateFormRenderer $render_form;

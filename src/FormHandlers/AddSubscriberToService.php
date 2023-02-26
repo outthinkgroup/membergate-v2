@@ -43,7 +43,7 @@ class AddSubscriberToService implements FormHandlerInterface {
             return;
         }
 
-        $name = isset($submission['user_name']) ? $submission['user_name'] : null;
+        $name = isset($submission['name']) ? $submission['name'] : null;
         $email = isset($submission['email']) ? $submission['email'] : null;
         if (is_null($name) || is_null($email)) {
             return;
@@ -67,7 +67,6 @@ class AddSubscriberToService implements FormHandlerInterface {
 
             return;
         }
-
         $cookie->set_member_cookie();
         if (! empty($_POST['redirect_to'])) {
             wp_redirect($_POST['redirect_to']);

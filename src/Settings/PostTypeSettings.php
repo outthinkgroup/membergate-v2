@@ -51,7 +51,7 @@ class PostTypeSettings {
         // first check if post has meta
 
         $post_meta = get_post_meta($post_id, self::POST_META_KEY, true);
-        debug([$post_id => $post_meta]);
+        // debug([$post_id => $post_meta]);
         if ($post_meta === 'always' || $post_meta === 'never') {
             return $post_meta === 'always' ? true : false;
         }
