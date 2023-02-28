@@ -1,6 +1,5 @@
 # Membergate
 
-
 ## Development
 
 This is how we will organize our projects
@@ -29,10 +28,10 @@ class AssetSubscriber implements SubscriberInterface {
 	public function use_esm_modules($tag, $handle, $src){}
 }
 ```
+
 This allows us a repeatable, and readable way to see what hooks are being used for each module.
 
-
-### Configuration 
+### Configuration
 
 Classes that deal with data or are dependencies of Subscribers should be placed in `src/Configuration`
 They should implement `ContainerConfigurationInterface` interface. Implement a modify method that adds what ever you
@@ -42,6 +41,7 @@ need to be available to subscribers to the container array. Add the configuraton
 #### example
 
 Example of A configuration class for settings
+
 ```php
 <?php
 class SiteSettingsConfiguration implements ContainerConfigurationInterface {
@@ -50,13 +50,14 @@ class SiteSettingsConfiguration implements ContainerConfigurationInterface {
 			return [
 				new SiteSettings(),
 			];
-			
+
 		});
 	}
 }
 ```
 
-adding configuration to plugin 
+adding configuration to plugin
+
 ```php
 <?php
 class Plugin {
@@ -67,11 +68,10 @@ class Plugin {
 			EventManagementConfiguration::class,
 			// your Configration Class here
 			SiteSettings::class, //example from above
-		]);	
+		]);
 		//...
 	}
 }
 ```
 
 This Classes will live through out the life cycle of our plugin and can be consumed by Subscriber classes.
-

@@ -60,7 +60,6 @@ class PostTypeSettings {
         $default = $this->get_type($ptype);
         if ($default->has_error()) {
             debug($default);
-
             return false;
         }
 

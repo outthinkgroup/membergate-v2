@@ -19,6 +19,9 @@ local todos = {
   },
 }
 
+vim.cmd[[set tabstop=4]]
+vim.cmd[[set shiftwidth=4]]
+
 source.new = function()
   local self = setmetatable({ cache = {} }, { __index = source })
 

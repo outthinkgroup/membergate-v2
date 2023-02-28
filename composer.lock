@@ -1,149 +1,133 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "f36209ca0c72fd11ce9d51b57a0d9628",
-    "packages": [
+  "_readme": [
+    "This file locks the dependencies of your project to a known state",
+    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+    "This file is @generated automatically"
+  ],
+  "content-hash": "f36209ca0c72fd11ce9d51b57a0d9628",
+  "packages": [
+    {
+      "name": "myclabs/php-enum",
+      "version": "1.8.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/myclabs/php-enum.git",
+        "reference": "a867478eae49c9f59ece437ae7f9506bfaa27483"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/myclabs/php-enum/zipball/a867478eae49c9f59ece437ae7f9506bfaa27483",
+        "reference": "a867478eae49c9f59ece437ae7f9506bfaa27483",
+        "shasum": ""
+      },
+      "require": {
+        "ext-json": "*",
+        "php": "^7.3 || ^8.0"
+      },
+      "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "1.*",
+        "vimeo/psalm": "^4.6.2"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "MyCLabs\\Enum\\": "src/"
+        },
+        "classmap": ["stubs/Stringable.php"]
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": ["MIT"],
+      "authors": [
         {
-            "name": "myclabs/php-enum",
-            "version": "1.8.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/myclabs/php-enum.git",
-                "reference": "a867478eae49c9f59ece437ae7f9506bfaa27483"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/php-enum/zipball/a867478eae49c9f59ece437ae7f9506bfaa27483",
-                "reference": "a867478eae49c9f59ece437ae7f9506bfaa27483",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": "^7.3 || ^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.5",
-                "squizlabs/php_codesniffer": "1.*",
-                "vimeo/psalm": "^4.6.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MyCLabs\\Enum\\": "src/"
-                },
-                "classmap": [
-                    "stubs/Stringable.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP Enum contributors",
-                    "homepage": "https://github.com/myclabs/php-enum/graphs/contributors"
-                }
-            ],
-            "description": "PHP Enum implementation",
-            "homepage": "http://github.com/myclabs/php-enum",
-            "keywords": [
-                "enum"
-            ],
-            "support": {
-                "issues": "https://github.com/myclabs/php-enum/issues",
-                "source": "https://github.com/myclabs/php-enum/tree/1.8.4"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/mnapoli",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/myclabs/php-enum",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2022-08-04T09:53:51+00:00"
+          "name": "PHP Enum contributors",
+          "homepage": "https://github.com/myclabs/php-enum/graphs/contributors"
         }
-    ],
-    "packages-dev": [
+      ],
+      "description": "PHP Enum implementation",
+      "homepage": "http://github.com/myclabs/php-enum",
+      "keywords": ["enum"],
+      "support": {
+        "issues": "https://github.com/myclabs/php-enum/issues",
+        "source": "https://github.com/myclabs/php-enum/tree/1.8.4"
+      },
+      "funding": [
         {
-            "name": "laravel/pint",
-            "version": "v1.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/pint.git",
-                "reference": "e48e3fadd7863d6b7d03464f5c4f211a828b890f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/pint/zipball/e48e3fadd7863d6b7d03464f5c4f211a828b890f",
-                "reference": "e48e3fadd7863d6b7d03464f5c4f211a828b890f",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "ext-mbstring": "*",
-                "ext-tokenizer": "*",
-                "ext-xml": "*",
-                "php": "^8.1.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.14.4",
-                "illuminate/view": "^10.0.0",
-                "laravel-zero/framework": "^10.0.0",
-                "mockery/mockery": "^1.5.1",
-                "nunomaduro/larastan": "^2.4.0",
-                "nunomaduro/termwind": "^1.15.1",
-                "pestphp/pest": "^1.22.4"
-            },
-            "bin": [
-                "builds/pint"
-            ],
-            "type": "project",
-            "autoload": {
-                "psr-4": {
-                    "App\\": "app/",
-                    "Database\\Seeders\\": "database/seeders/",
-                    "Database\\Factories\\": "database/factories/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nuno Maduro",
-                    "email": "enunomaduro@gmail.com"
-                }
-            ],
-            "description": "An opinionated code formatter for PHP.",
-            "homepage": "https://laravel.com",
-            "keywords": [
-                "format",
-                "formatter",
-                "lint",
-                "linter",
-                "php"
-            ],
-            "support": {
-                "issues": "https://github.com/laravel/pint/issues",
-                "source": "https://github.com/laravel/pint"
-            },
-            "time": "2023-02-21T15:44:57+00:00"
+          "url": "https://github.com/mnapoli",
+          "type": "github"
+        },
+        {
+          "url": "https://tidelift.com/funding/github/packagist/myclabs/php-enum",
+          "type": "tidelift"
         }
-    ],
-    "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
-    "prefer-stable": false,
-    "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+      ],
+      "time": "2022-08-04T09:53:51+00:00"
+    }
+  ],
+  "packages-dev": [
+    {
+      "name": "laravel/pint",
+      "version": "v1.6.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/laravel/pint.git",
+        "reference": "e48e3fadd7863d6b7d03464f5c4f211a828b890f"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/laravel/pint/zipball/e48e3fadd7863d6b7d03464f5c4f211a828b890f",
+        "reference": "e48e3fadd7863d6b7d03464f5c4f211a828b890f",
+        "shasum": ""
+      },
+      "require": {
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-tokenizer": "*",
+        "ext-xml": "*",
+        "php": "^8.1.0"
+      },
+      "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.14.4",
+        "illuminate/view": "^10.0.0",
+        "laravel-zero/framework": "^10.0.0",
+        "mockery/mockery": "^1.5.1",
+        "nunomaduro/larastan": "^2.4.0",
+        "nunomaduro/termwind": "^1.15.1",
+        "pestphp/pest": "^1.22.4"
+      },
+      "bin": ["builds/pint"],
+      "type": "project",
+      "autoload": {
+        "psr-4": {
+          "App\\": "app/",
+          "Database\\Seeders\\": "database/seeders/",
+          "Database\\Factories\\": "database/factories/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": ["MIT"],
+      "authors": [
+        {
+          "name": "Nuno Maduro",
+          "email": "enunomaduro@gmail.com"
+        }
+      ],
+      "description": "An opinionated code formatter for PHP.",
+      "homepage": "https://laravel.com",
+      "keywords": ["format", "formatter", "lint", "linter", "php"],
+      "support": {
+        "issues": "https://github.com/laravel/pint/issues",
+        "source": "https://github.com/laravel/pint"
+      },
+      "time": "2023-02-21T15:44:57+00:00"
+    }
+  ],
+  "aliases": [],
+  "minimum-stability": "stable",
+  "stability-flags": [],
+  "prefer-stable": false,
+  "prefer-lowest": false,
+  "platform": [],
+  "platform-dev": [],
+  "plugin-api-version": "2.3.0"
 }

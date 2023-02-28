@@ -14,11 +14,10 @@ export default defineConfig({
     manifest: true,
     outDir: path.resolve(__dirname, "assets/dist"),
     rollupOptions: {
-			input:{
-				frontend: "assets/frontend.ts",
-				main: "assets/main.ts",
-			},
-
+      input: {
+        frontend: "assets/frontend.ts",
+        main: "assets/main.ts",
+      },
     },
   },
   server: {

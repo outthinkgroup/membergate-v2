@@ -6,4 +6,3 @@ export default async function saveFormSettings(
   const res = await jsonAjax("save_membergate_form_settings", settings);
   return res;
 }
-

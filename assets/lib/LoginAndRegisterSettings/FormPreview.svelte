@@ -1,37 +1,45 @@
 <script lang="ts">
   import type { EditorStatesUnion, FormSettingsType } from "assets/types";
-  import {createEventDispatcher } from "svelte"
+  import { createEventDispatcher } from "svelte";
 
   export let editorState: EditorStatesUnion;
   export let formSettings: FormSettingsType;
   export let editField: (id: string) => void;
   export let title: string;
-  export let isPrimary: boolean
+  export let isPrimary: boolean;
   export let editingFieldID: undefined | string = undefined;
 
-  const dispatch = createEventDispatcher()
-  
-  let formName:"SecondaryForm"|"PrimaryForm"
-  $: formName = isPrimary ? "PrimaryForm":"SecondaryForm";
+  const dispatch = createEventDispatcher();
 
-  function editContentEditable(name:"heading"|"button"|"description"|"link") {
-    let formOption:"headingText"|"descriptionText"|"submit"|"altFormLink"
-    switch(name){
+  let formName: "SecondaryForm" | "PrimaryForm";
+  $: formName = isPrimary ? "PrimaryForm" : "SecondaryForm";
+
+  function editContentEditable(
+    name: "heading" | "button" | "description" | "link"
+  ) {
+    let formOption:
+      | "headingText"
+      | "descriptionText"
+      | "submit"
+      | "altFormLink";
+    switch (name) {
       case "heading":
-        editorState = editorState == "EDIT_HEADING" ? "DEFAULT" : "EDIT_HEADING";
-        formOption = "headingText"
+        editorState =
+          editorState == "EDIT_HEADING" ? "DEFAULT" : "EDIT_HEADING";
+        formOption = "headingText";
         break;
       case "description":
-        editorState = editorState == "EDIT_DESCRIPTION" ? "DEFAULT" : "EDIT_DESCRIPTION";
-        formOption = "descriptionText"
+        editorState =
+          editorState == "EDIT_DESCRIPTION" ? "DEFAULT" : "EDIT_DESCRIPTION";
+        formOption = "descriptionText";
         break;
       case "button":
         editorState = editorState == "EDIT_BUTTON" ? "DEFAULT" : "EDIT_BUTTON";
-        formOption = "submit"
+        formOption = "submit";
         break;
       case "link":
         editorState = editorState == "EDIT_LINK" ? "DEFAULT" : "EDIT_LINK";
-        formOption = "altFormLink"
+        formOption = "altFormLink";
         break;
     }
     const el = document.querySelector<HTMLElement>(
@@ -43,11 +51,11 @@
         window.getSelection().selectAllChildren(el);
       }, 0);
     } else {
-      const newContent = el.textContent
-      dispatch("contentEdited",{
+      const newContent = el.textContent;
+      dispatch("contentEdited", {
         content: newContent,
-        key:formOption,
-      })
+        key: formOption,
+      });
     }
   }
 </script>
@@ -81,7 +89,8 @@ group-focus-within:block"
       <button
         class="absolute left-0 top-0 p-2 rounded bg-transparent hover:bg-slate-200 hidden group-hover:block
 group-focus-within:block"
-        on:click={() => editContentEditable("description")}>{editorState == "EDIT_DESCRIPTION" ? "save" : "edit"}</button
+        on:click={() => editContentEditable("description")}
+        >{editorState == "EDIT_DESCRIPTION" ? "save" : "edit"}</button
       >
     </span>
   </div>
@@ -118,7 +127,7 @@ group-focus-within:block"
       <button
         class="absolute left-0 top-0 p-2 rounded bg-transparent hover:bg-slate-200 hidden group-hover:block
 group-focus-within:block"
-        on:click={() => editContentEditable('button')}
+        on:click={() => editContentEditable("button")}
       >
         {editorState == "EDIT_BUTTON" ? "save" : "edit"}
       </button>
@@ -137,7 +146,7 @@ group-focus-within:block"
       <button
         class="absolute left-0 top-0 p-2 rounded bg-transparent hover:bg-slate-200 hidden group-hover:block
 group-focus-within:block"
-        on:click={() => editContentEditable('link')}
+        on:click={() => editContentEditable("link")}
       >
         {editorState == "EDIT_LINK" ? "save" : "edit"}
       </button>

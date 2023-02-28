@@ -15,7 +15,7 @@
     ? true
     : $FormSettingsStore.PrimaryForm.action == "LOGIN";
 
-  let showEditor:()=>void;
+  let showEditor: () => void;
 </script>
 
 <div
@@ -38,13 +38,18 @@
     </header>
 
     <div>
-  <p class="text-xs flex items-center gap-1 uppercase text-slate-500 tracking-wide mb-1">Action
-  <ToolTip triggerSize="small">When the user submits the form what happens</ToolTip>
-  </p>
+      <p
+        class="text-xs flex items-center gap-1 uppercase text-slate-500 tracking-wide mb-1"
+      >
+        Action
+        <ToolTip triggerSize="small"
+          >When the user submits the form what happens</ToolTip
+        >
+      </p>
       <div
         class="inline-block p-4 py-1 text-md font-bold text-cyan-600 bg-slate-200 rounded-md"
       >
-  {action}
+        {action}
       </div>
     </div>
   </div>

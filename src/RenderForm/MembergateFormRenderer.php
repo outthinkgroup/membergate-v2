@@ -77,7 +77,7 @@ class MembergateFormRenderer {
         // $details = $this->return_form_details($form_slug);
         $form = $this->return_form($form_slug);
 
-        return $this->wrap_in_wrapper($form);
+        return $form;
     }
 
     public function include_full_form_markup($form_slug) {

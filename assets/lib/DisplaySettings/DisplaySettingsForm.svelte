@@ -1,15 +1,15 @@
 <script lang="ts">
   import { currentLocation, locations } from "../../locationStore";
   import { blockedContent, pageList } from "../../store";
-    import FormHeader from "../form/FormHeader.svelte";
+  import FormHeader from "../form/FormHeader.svelte";
   import LabelSelect from "../form/LabelSelect.svelte";
-  let isLoading = false
-  let unSavedChanges = false
+  let isLoading = false;
+  let unSavedChanges = false;
 </script>
 
 {#if $currentLocation == locations.displayBlockedContent.slug}
   <div class="shadow bg-white p-6">
-    <FormHeader { isLoading } { unSavedChanges }>
+    <FormHeader {isLoading} {unSavedChanges}>
       Blocked Content Display Settings
     </FormHeader>
     <p class="mb-4">
@@ -17,10 +17,10 @@
     </p>
     <form
       on:submit|preventDefault={async () => {
-        isLoading = true
+        isLoading = true;
         await blockedContent.save();
-        isLoading = false
-        unSavedChanges=false
+        isLoading = false;
+        unSavedChanges = false;
       }}
     >
       <div class="flex flex-col gap-3 items-start">
@@ -30,7 +30,7 @@
           value={"override_content"}
           on:inputChange={(e) => {
             blockedContent.updateSetting("protect_method", e.detail.value);
-            unSavedChanges = true
+            unSavedChanges = true;
           }}
           options={{
             override_content: "Replace the content with the signup form",
@@ -44,7 +44,7 @@
             value={$blockedContent.redirect_page}
             on:inputChange={(e) => {
               blockedContent.updateSetting("redirect_page", e.detail.value);
-              unSavedChanges = true
+              unSavedChanges = true;
             }}
             options={pageList}
             defaultOption={"select a page"}
@@ -67,7 +67,7 @@
                   //@ts-ignore
                   e.target.checked ? "true" : "false"
                 );
-                unSavedChanges = true
+                unSavedChanges = true;
               }}
             />
             <span>Yes, show a modal.</span>

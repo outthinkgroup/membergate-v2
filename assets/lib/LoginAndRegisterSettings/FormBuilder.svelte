@@ -101,20 +101,20 @@
     editingFieldID = undefined;
   }
 
-function handleContentEdited(e:CustomEvent){
-  const {content, key} = e.detail
-  if(!(key in formSettings)){
-    throw new Error("not a field thats editable")
-  }
-  if( typeof formSettings[key] == "string"){
-    formSettings[key] = content
-  }
-  if (typeof formSettings[key] == "object") {
-    formSettings[key].text = content
-  }
+  function handleContentEdited(e: CustomEvent) {
+    const { content, key } = e.detail;
+    if (!(key in formSettings)) {
+      throw new Error("not a field thats editable");
+    }
+    if (typeof formSettings[key] == "string") {
+      formSettings[key] = content;
+    }
+    if (typeof formSettings[key] == "object") {
+      formSettings[key].text = content;
+    }
 
-  formSettings = formSettings // odd but its a svelte thing
-}
+    formSettings = formSettings; // odd but its a svelte thing
+  }
 </script>
 
 <dialog
@@ -197,7 +197,7 @@ hover:text-cyan-600 w-full"
         {editField}
         {title}
         bind:editorState
-        on:contentEdited={handleContentEdited} 
+        on:contentEdited={handleContentEdited}
       />
     </div>
   </div>

@@ -21,6 +21,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
     }
 
     public static function get_subscribed_events(): array {
+		//TODO: conditionally return these based on setings
         return [
             'wp' => 'protect_protected_types_template',
             'the_content' => 'protect_protected_types_content',
@@ -30,7 +31,6 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 
     public function remove_protect_content_for_excerpt($excerpt) {
         remove_filter('the_content', [$this, 'protect_protected_types_content']);
-
         return $excerpt;
     }
 
@@ -60,7 +60,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 
     public function protect_protected_types_content($content) {
         global $post;
-        if (is_user_logged_in()) {
+        if (is_user_logged_in() || is_archive()) {
             return $content;
         }
         $is_protected = $this->post_type_settings->is_post_protected($post->ID);
@@ -68,12 +68,14 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
             return $content;
         }
 
+
+
         $cookie_handler = new MemberCookie();
         if ($cookie_handler->user_has_cookie()) {
             return $content;
         }
 
         // returning subscribe form
-        return $this->form_renderer->include_full_form_markup('signup_form');
+        return $this->form_renderer->include_full_form_markup('form_template');
     }
 }

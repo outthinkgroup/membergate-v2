@@ -1,15 +1,15 @@
 {
-    "name": "joshkennedy/membergate",
-    "authors": [
-        {
-            "name": "josh kennedy",
-            "email": "josh@outthinkgroup.com"
-        }
-    ],
-    "require": {
-        "myclabs/php-enum": "^1.8"
-    },
-    "require-dev": {
-        "laravel/pint": "^1.6"
+  "name": "joshkennedy/membergate",
+  "authors": [
+    {
+      "name": "josh kennedy",
+      "email": "josh@outthinkgroup.com"
     }
+  ],
+  "require": {
+    "myclabs/php-enum": "^1.8"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.6"
+  }
 }

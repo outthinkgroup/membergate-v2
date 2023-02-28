@@ -10,14 +10,16 @@
 
 {#if $currentLocation == "form-settings"}
   <div class="shadow bg-white p-6">
-    <FormHeader {isLoading} {unSavedChanges}>Login and Register Settings</FormHeader>
-  <div class="mb-4">
-    <h3 class="mb-2 font-bold text-cyan-700">Forms</h3>
-    <div class="flex gap-4">
-      <FormCard formSettings={$formSettings.PrimaryForm} isPrimary={true}/>
-      <FormCard formSettings={$formSettings.SecondaryForm} />
+    <FormHeader {isLoading} {unSavedChanges}
+      >Login and Register Settings</FormHeader
+    >
+    <div class="mb-4">
+      <h3 class="mb-2 font-bold text-cyan-700">Forms</h3>
+      <div class="flex gap-4">
+        <FormCard formSettings={$formSettings.PrimaryForm} isPrimary={true} />
+        <FormCard formSettings={$formSettings.SecondaryForm} />
+      </div>
     </div>
-  </div>
     <form
       on:submit|preventDefault={async () => {
         isLoading = true;

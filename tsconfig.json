@@ -16,8 +16,12 @@
     "checkJs": true,
     "isolatedModules": true
   },
-  "include": ["./assets/**/*.d.ts", "./assets/**/*.ts", "assets/**/*.js", "./assets/**/*.svelte"],
-	"exclude":["node_modules/**/*"],
+  "include": [
+    "./assets/**/*.d.ts",
+    "./assets/**/*.ts",
+    "assets/**/*.js",
+    "./assets/**/*.svelte"
+  ],
+  "exclude": ["node_modules/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
-

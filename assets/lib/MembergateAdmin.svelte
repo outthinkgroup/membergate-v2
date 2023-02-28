@@ -1,12 +1,11 @@
 <script lang="ts">
-	import MembergateSetupWizard from "./MembergateSetupWizard.svelte";
-	import MembergateSettings from "./MembergateSettings.svelte";
-	import {completedSetup} from "../store"
+  import MembergateSetupWizard from "./MembergateSetupWizard.svelte";
+  import MembergateSettings from "./MembergateSettings.svelte";
+  import { completedSetup } from "../store";
 </script>
 
-{#if !$completedSetup }
-	<MembergateSetupWizard/>
+{#if !$completedSetup}
+  <MembergateSetupWizard />
 {:else}
-	<MembergateSettings />
+  <MembergateSettings />
 {/if}
-
