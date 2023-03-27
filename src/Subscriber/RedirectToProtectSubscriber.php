@@ -35,7 +35,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
     }
 
     public function protect_protected_types_template() {
-        if (is_user_logged_in()) {
+        if (is_user_logged_in() && wp_get_environment_type() == "production") {
             return;
         }
         global $post;
@@ -67,8 +67,6 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         if (! $is_protected) {
             return $content;
         }
-
-
 
         $cookie_handler = new MemberCookie();
         if ($cookie_handler->user_has_cookie()) {
