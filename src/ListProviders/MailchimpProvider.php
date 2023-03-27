@@ -1,7 +1,5 @@
 <?php
 
-// TODO:
-
 namespace Membergate\ListProviders;
 
 use Membergate\Cache\ListProviderCache;
@@ -58,7 +56,7 @@ class MailchimpProvider implements ListProvidersInterface {
     public function fetch_lists(): PossibleError {
         $resp = new PossibleError();
         $lists = $this->client->get('lists', [], 200);
-        if (! $this->client->success()) {
+        if (!$this->client->success()) {
             //TODO: handle error better
             error_log(print_r([$this->client->getLastResponse(), $this->client->getLastRequest()], true));
             $resp->error = $this->client->getLastError();
@@ -108,7 +106,7 @@ class MailchimpProvider implements ListProvidersInterface {
         $resp = new PossibleError();
         $categories = [];
         $group_categories = $this->client->get("/lists/$list_id/interest-categories/");
-        if (! is_array($group_categories) || ! array_key_exists('categories', $group_categories) || ! is_array($group_categories['categories'])) {
+        if (!is_array($group_categories) || !array_key_exists('categories', $group_categories) || !is_array($group_categories['categories'])) {
             $resp->error = $this->client->getLastError();
 
             return $resp;
@@ -130,7 +128,7 @@ class MailchimpProvider implements ListProvidersInterface {
         $interests = $this->client->get("/lists/$list_id/interest-categories/$cat_group_id/interests");
         $groups = [];
 
-        if (! is_array($interests) || ! array_key_exists('interests', $interests) || ! is_array($interests['interests'])) {
+        if (!is_array($interests) || !array_key_exists('interests', $interests) || !is_array($interests['interests'])) {
             $resp->error = $this->client->getLastError();
 
             return $resp;
@@ -157,7 +155,7 @@ class MailchimpProvider implements ListProvidersInterface {
             'email_address' => $email_address,
             'interests' => $groups,
         ]);
-        if (! $this->client->success()) {
+        if (!$this->client->success()) {
             debug($this->client->getLastError());
 
             return new PossibleError(null, $this->client->getLastError());
@@ -169,7 +167,7 @@ class MailchimpProvider implements ListProvidersInterface {
     public function get_user($list_id, $email_address): PossibleError {
         $hash = $this->client->subscriberHash($email_address);
         $res = $this->client->get("lists/$list_id/members/$hash");
-        if (! $this->client->success()) {
+        if (!$this->client->success()) {
             $response = $this->client->getLastResponse();
             if ($response['headers']['http_code'] == 404) {
                 return new PossibleError(false);

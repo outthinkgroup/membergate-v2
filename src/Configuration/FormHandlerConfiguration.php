@@ -5,6 +5,7 @@ namespace Membergate\Configuration;
 use Membergate\DependencyInjection\Container;
 use Membergate\DependencyInjection\ContainerConfigurationInterface;
 use Membergate\FormHandlers\AddSubscriberToService;
+use Membergate\FormHandlers\CheckSubscriptionStatus;
 
 class FormHandlerConfiguration implements ContainerConfigurationInterface {
     public function modify(Container $container) {
@@ -12,6 +13,7 @@ class FormHandlerConfiguration implements ContainerConfigurationInterface {
             //action => form_handler
             return [
                 'add_subscriber_to_service' => new AddSubscriberToService($container['settings.list_provider'], $container['list_providers']),
+				'check_if_subscriber'=> new CheckSubscriptionStatus($container['settings.list_provider'], $container['list_providers'], $container['form_renderer']),
             ];
         });
     }

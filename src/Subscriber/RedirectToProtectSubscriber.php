@@ -60,7 +60,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 
     public function protect_protected_types_content($content) {
         global $post;
-        if (is_user_logged_in() || is_archive()) {
+        if ((is_user_logged_in() && wp_get_environment_type() =="production") || is_archive()) {
             return $content;
         }
         $is_protected = $this->post_type_settings->is_post_protected($post->ID);

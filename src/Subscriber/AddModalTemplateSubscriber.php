@@ -34,7 +34,7 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
     private function can_use_modal() {
         $use_modal_setting = $this->protect_content_settings->get_setting('show_modal');
         $c = new MemberCookie();
-        return ((!$use_modal_setting->has_error()) || $use_modal_setting->value == 'true') && !($c->user_has_cookie() || is_user_logged_in());
+        return ((!$use_modal_setting->has_error()) || $use_modal_setting->value == 'true') && !($c->user_has_cookie() || (is_user_logged_in() && wp_get_environment_type() == "production"));
     }
 
     public function mark_protected_with_queryparm($url, $post) {
@@ -48,7 +48,6 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
         $id = $post->ID;
 
         if ($this->post_type_settings->is_post_protected($id)) {
-            debug("HELERELKRJELRKEJLRKJELKJJKLJL");
             $url = add_query_arg('membergate_protect', 'true', $url);
         }
 
@@ -61,6 +60,9 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
         }
         ?>
 		<template id="membergate-modal-template">
+			<?php $this->render_form->modal_markup(); ?>
+		</template>
+		<template id="membergate-register-modal-template">
 			<?php $this->render_form->modal_markup(); ?>
 		</template>
 <?php

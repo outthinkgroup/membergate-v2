@@ -7,6 +7,7 @@ use Membergate\RenderForm\FieldRender;
 class MembergateFormRenderer {
     private $form_settings;
     private $template_path;
+	private $errors = [];
 
     public function __construct($form_settings, $template_path) {
         $this->form_settings = $form_settings->get_all();
@@ -19,6 +20,13 @@ class MembergateFormRenderer {
      * ? Why CamelCase: Template Helpers will be CamelCase to more closely match the key name
      *
      */
+	public function hasError(){
+		return count($this->errors) > 0;
+	}
+
+	public function errors(){
+		return $this->errors;
+	}
 
     public function headingText($form_key = "PrimaryForm"):string {
         global $post;
@@ -45,20 +53,30 @@ class MembergateFormRenderer {
 		return $link_text;
     }
 
+	public function get_form_action($form_key = "PrimaryForm"): string {
+		$action_in_settings = $this->form_settings[$form_key]['action'];
+		$action = $action_in_settings == "LOGIN" ? "check_if_subscriber" : "add_subscriber_to_service";
+		return $action;
+	}
+
 	public function redirect_to(){
 		global $post;
 		$redirect_to = isset($_GET['redirect_to']) ? $_GET['redirect_to'] : '';
 		return $this->modifiable("redirect_to", $redirect_to, $post);
 	}
 
-
 	private function modifiable($name, $initial, $post=null, $form=null){
 		return apply_filters("membergate_form_$name", $initial, $post, $form);
 	}
 
+	public function add_error($msg){
+		$this->errors[] = $msg;
+	}
 
-    //TODO: Refactor below here. Alot of these should be pulled out and this class should just be concerned with the
-    //form itself not modals or outputting the contents
+
+	//TODO: Refactor below here. Alot of these should be pulled out 
+	// and this class should just be concerned with the
+    // form itself not modals or outputting the contents
     public function include_form($form_slug) {
         echo $this->return_form($form_slug);
     }
@@ -101,7 +119,6 @@ class MembergateFormRenderer {
     public function return_modal_markup() {
         ob_start();
         $this->_modal_markup();
-
         return apply_filters('membergate_modal_markup', ob_get_clean());
     }
 

@@ -13,11 +13,11 @@ class PostTypeSettings {
 
     public function __construct() {
         $this->post_types = get_option(self::POST_TYPE_KEY, []);
-        $this->post_types = $this->ensure_contains_all_post_types();
+        $this->post_types = $this->ensure_contains_all_post_types(true); //display warning here
     }
 
     public function add_addtional_post_types() {
-        $this->post_types = $this->ensure_contains_all_post_types();
+        $this->post_types = $this->ensure_contains_all_post_types(false); // no warning here
         $this->save();
     }
 
@@ -70,8 +70,11 @@ class PostTypeSettings {
         $res = update_post_meta($post_id, self::POST_META_KEY, $value);
     }
 
-    private function ensure_contains_all_post_types() {
+    private function ensure_contains_all_post_types($show_warning) {
         $current_post_types = get_post_types(['public' => true], 'object');
+		if($show_warning){
+			error_log("used before init hook, may not have all post types");
+		}
         $default_settings = [];
         foreach ($current_post_types as $cur_ptype) {
             $default_settings[$cur_ptype->name] = $this->create_default_ptype_settings($cur_ptype);
