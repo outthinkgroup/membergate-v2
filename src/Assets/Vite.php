@@ -16,20 +16,20 @@ class Vite {
     }
 
     public static function register($entry) {
-        $url = IS_DEVELOPMENT
+        $url = MG_IS_DEVELOPMENT
           ? 'http://localhost:1234/' . $entry
           : self::assetUrl($entry);
 
         if (! $url) {
             return '';
         }
-        $in_footer = IS_DEVELOPMENT ? true : false; // Vite needs it to be in footer for dev
+        $in_footer = MG_IS_DEVELOPMENT ? true : false; // Vite needs it to be in footer for dev
         wp_register_script("module/sage/$entry", $url, false, $in_footer);
         wp_enqueue_script("module/sage/$entry");
     }
 
     private static function jsPreloadImports($entry) {
-        if (IS_DEVELOPMENT) {
+        if (MG_IS_DEVELOPMENT) {
             add_action('wp_head', function () {
                 echo '<script type="module">
           RefreshRuntime.injectIntoGlobalHook(window)
@@ -53,7 +53,7 @@ class Vite {
 
       private static function cssTag(string $entry): string {
           // not needed on dev, it's inject by Vite
-          if (IS_DEVELOPMENT) {
+          if (MG_IS_DEVELOPMENT) {
               return '';
           }
 
@@ -84,7 +84,7 @@ class Vite {
       }
 
       private static function getPublicURLBase() {
-          return IS_DEVELOPMENT ? '/assets/dist/' : self::base_path();
+          return MG_IS_DEVELOPMENT ? '/assets/dist/' : self::base_path();
       }
 
       private static function importsUrls(string $entry): array {

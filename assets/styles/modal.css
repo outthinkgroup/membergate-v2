@@ -16,7 +16,9 @@
   box-shadow: 0 0 20px #00000033;
   max-width: min(90%, 700px);
   margin-inline: auto;
+	position:relative;
 }
+
 .membergate-modal__modal header {
   padding: 20px 30px;
   display: flex;
@@ -30,3 +32,4 @@
   border: none;
   background: none;
 }
+

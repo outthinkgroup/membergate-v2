@@ -74,6 +74,11 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         }
 
         // returning subscribe form
-        return $this->form_renderer->include_full_form_markup('form_template');
+        ?>
+        <div class="in-content-form membergate-parent">
+            <?php $this->form_renderer->include_full_form_markup('form_template'); ?>
+        </div>
+        <?php
+        return;
     }
 }

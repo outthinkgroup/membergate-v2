@@ -1,13 +1,17 @@
 <?php
 /*
- * This template is called from the MembergateFormRender class
+ * This template is called from the MembergateFormRender class. 
+ *
+ * $this refers to MembergateFormRender becuase this file is included in 
+ * one of its methods giving the file access to its methods
  */
-$fields = $this->fields();
+
+$fields = $this->fields($form_key);
 ?>
 <div class='membergate-wrapper'>
 
-	<h3 class="membergate-form__heading"><?= $this->headingText(); ?></h3>
-	<p class="membergate-form__description"><?= $this->descriptionText(); ?></p>
+	<h3 class="membergate-form__heading"><?= $this->headingText($form_key); ?></h3>
+	<p class="membergate-form__description"><?= $this->descriptionText($form_key); ?></p>
 
 	<?php if ($this->hasError()) : ?>
 		<div class="errors">
@@ -26,8 +30,8 @@ $fields = $this->fields();
 				</div>
 			<?php endforeach; ?>
 		</div>
-		<button name="membergate_form" value="<?= $this->get_form_action(); ?>"><?= $this->submitText(); ?></button>
+		<button name="membergate_form" value="<?= $this->get_form_action($form_key); ?>"><?= $this->submitText($form_key); ?></button>
 		<input type="hidden" data-replace-value="linkHref" name="redirect_to" value="<?= $this->redirect_to(); ?>" />
 	</form>
-	<a><?= $this->altFormLinkText(); ?></a>
+    <button data-action="switch-form" type="button" data-current-form="<?=$form_key;?>" ><?= $this->altFormLinkText($form_key); ?></button>
 </div>

@@ -9,6 +9,9 @@ use Membergate\Configuration\ProvidersConfiguration;
 use Membergate\Configuration\SettingsConfiguration;
 use Membergate\DependencyInjection\Container;
 
+/*╭──────────────────────────╮*/
+/*│    [   The Plugin   ]    │*/
+/*╰──────────────────────────╯*/
 class Plugin {
     public const DOMAIN = 'membergate';
 

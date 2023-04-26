@@ -13,7 +13,12 @@ class AddSubscriberToService implements FormHandlerInterface {
 
     private $list_id;
 
+	// public function __call(){
+	//
+	// }
+
     public function __construct($list_provider_settings, $providers) {
+		$variable = "one";
         $provider_key = $list_provider_settings->get_provider();
         $provider = $providers[$provider_key];
         $this->list_client = $provider['client'];

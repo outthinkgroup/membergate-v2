@@ -81,7 +81,7 @@ class MembergateFormRenderer {
         echo $this->return_form($form_slug);
     }
 
-    public function return_form($form_slug) {
+    public function return_form($form_slug='form_template', $form_key='PrimaryForm') {
         global $post;
         $redirect_to = $this->redirect_to();
         ob_start();
@@ -105,7 +105,7 @@ class MembergateFormRenderer {
     private function _modal_markup() {
         ?>
 		<div class="membergate-modal__layer">
-			<div class="membergate-modal__modal">
+			<div class="membergate-modal__modal membergate-parent">
 				<header>
 					<h2 data-replace-text="linkTitle"></h2>
 					<button data-action="close">close</button>

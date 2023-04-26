@@ -62,9 +62,6 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
 		<template id="membergate-modal-template">
 			<?php $this->render_form->modal_markup(); ?>
 		</template>
-		<template id="membergate-register-modal-template">
-			<?php $this->render_form->modal_markup(); ?>
-		</template>
 <?php
     }
 }

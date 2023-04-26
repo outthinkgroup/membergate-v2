@@ -54,3 +54,14 @@
   flex-shrink: 0;
   max-width: 200px;
 }
+
+.membergate-parent[data-is-loading="true"] > *{
+	opacity:.2;
+}
+.membergate-parent[data-is-loading="true"]:after{
+	content:"Loading....";	
+	position:absolute;
+	left:50%;
+	top:50%;
+	transform:translate(-50%, -50%);
+}

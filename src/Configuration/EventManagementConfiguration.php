@@ -29,7 +29,7 @@ class EventManagementConfiguration implements ContainerConfigurationInterface {
                 new ShortcodeSubscriber($container),
                 new AssetSubscriber(),
                 new AdminSubscriber($container['plugin_path']),
-                new AdminPageAJaxSubscriber($container['settings.list_provider'], $container['list_providers'], $container['settings.post_types'], $container['settings.forms'], $container['settings.protected_content']),
+                new AdminPageAJaxSubscriber($container['settings.list_provider'], $container['list_providers'], $container['settings.post_types'], $container['settings.forms'], $container['settings.protected_content'], $container['form_renderer']),
                 new RedirectToProtectSubscriber($container['settings.post_types'], $container['form_renderer'], $container['settings.protected_content']),
                 new ServerRenderSettingsSubscriber($container['settings.list_provider'], $container['list_providers'], $container['settings.account'], $container['settings.post_types'], $container['settings.forms'], $container['settings.protected_content']),
                 new ProtectPostMetaBoxSubscriber($container['settings.post_types']),
