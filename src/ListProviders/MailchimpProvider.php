@@ -148,13 +148,15 @@ class MailchimpProvider implements ListProvidersInterface {
     public function add_subscriber($email_address, $settings, $submission = null): PossibleError {
         $list_id = $settings['list_id'];
         $hash = $this->client->subscriberHash($email_address);
-        $groups = [$settings['group_id'] => true];
-
-        $res = $this->client->put("/lists/$list_id/members/$hash", [
+        $args = [
             'status_if_new' => 'subscribed',
             'email_address' => $email_address,
-            'interests' => $groups,
-        ]);
+        ];
+        if(isset($settings['group_id']) && $settings['group_id']){
+            $groups = [$settings['group_id'] => true];
+            $args['interests'] = $groups;
+        }
+        $res = $this->client->put("/lists/$list_id/members/$hash", $args);
         if (!$this->client->success()) {
             debug($this->client->getLastError());
 
