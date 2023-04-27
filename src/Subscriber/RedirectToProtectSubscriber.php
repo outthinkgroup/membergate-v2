@@ -61,7 +61,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 
     public function protect_protected_types_content($content) {
         global $post;
-        if ((is_user_logged_in() && wp_get_environment_type() =="production") || is_archive()) {
+        if ((is_user_logged_in() && wp_get_environment_type() =="production") || is_archive() || is_home() || is_admin() ) {
             return $content;
         }
         $is_protected = $this->post_type_settings->is_post_protected($post->ID);
@@ -75,11 +75,12 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         }
 
         // returning subscribe form
+        ob_start();
         ?>
         <div class="in-content-form membergate-parent">
             <?php $this->form_renderer->include_full_form_markup('form_template'); ?>
         </div>
         <?php
-        return;
+        return ob_get_clean();
     }
 }
