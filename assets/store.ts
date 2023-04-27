@@ -146,7 +146,6 @@ function createFormSettingsStore() {
       subscribe((fs) => {
         p = fs;
       });
-      //TODO: update api method to send json
       const res = await saveFormSettings(p);
       return res;
     },

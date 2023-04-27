@@ -13,7 +13,7 @@ class FormHandlerConfiguration implements ContainerConfigurationInterface {
             //action => form_handler
             return [
                 //TODO: remove this if there is no register form
-                'add_subscriber_to_service' => new AddSubscriberToService($container['settings.list_provider'], $container['list_providers']),
+                'add_subscriber_to_service' => new AddSubscriberToService($container['settings.list_provider'], $container['list_providers'], $container['form_renderer']),
 				'check_if_subscriber'=> new CheckSubscriptionStatus($container['settings.list_provider'], $container['list_providers'], $container['form_renderer']),
             ];
         });

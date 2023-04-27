@@ -13,15 +13,12 @@ class AddSubscriberToService implements FormHandlerInterface {
 
     private $list_id;
 
-	// public function __call(){
-	//
-	// }
-
-    public function __construct($list_provider_settings, $providers) {
-		$variable = "one";
+    private $form_renderer;
+    public function __construct($list_provider_settings, $providers,$form_renderer) {
         $provider_key = $list_provider_settings->get_provider();
         $provider = $providers[$provider_key];
         $this->list_client = $provider['client'];
+        $this->form_renderer = $form_renderer;
         $settings_class = $list_provider_settings->get_provider_settings_class();
         $this->list_settings = new $settings_class();
 
@@ -45,30 +42,36 @@ class AddSubscriberToService implements FormHandlerInterface {
 
     public function execute_action($submission) {
         if (! $this->setup) {
+            unset($_POST);
             return;
         }
 
-        $name = isset($submission['name']) ? $submission['name'] : null;
         $email = isset($submission['email']) ? $submission['email'] : null;
-        if (is_null($name) || is_null($email)) {
+        // TODO: Check all Required form fields
+        if (is_null($email) || !$email) {
+            $this->form_renderer->add_error("Email is requred");
+            unset($_POST);
             return;
-        } //TODO: Error Reporting show USER
+        } 
 
         $cookie = new MemberCookie();
 
         $settings = $this->list_settings->get_settings();
         if ($settings->has_error()) {
             debug(['get_settings' => $settings->error]);
-
+            $this->form_renderer->add_error("An Error occured, " . $settings->error);
+            unset($_POST);
             return;	//TODO: Error Reporting show ADMIN
         }
         if (! $this->list_client) {
+            unset($_POST);
             return;
         }
         $subbed_res = $this->list_client->add_subscriber($email, $settings->value, $submission);
         if ($subbed_res->has_error()) {
-            //TODO: Error Reporting show USER
+            $this->form_renderer->add_error("An Error occured, " . $settings->error);
             debug(['add_subscriber' => $subbed_res->error]);
+            unset($_POST);
             return;
         }
         $cookie->set_member_cookie();
