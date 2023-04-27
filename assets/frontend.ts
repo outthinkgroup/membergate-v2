@@ -1,26 +1,32 @@
 import "./styles/forms.css";
 import "./styles/modal.css";
 
-let template:HTMLTemplateElement;
+let template: HTMLTemplateElement;
 document.addEventListener("DOMContentLoaded", function () {
   template = document.querySelector<HTMLTemplateElement>(
     "#membergate-modal-template"
   );
 
-	if(template && template.content.querySelector('.errors')){
-		const errorEl = template.content.querySelector<HTMLElement>('.errors');
-		const {linkHref, linkTitle} = errorEl.dataset
-		if(linkHref && linkTitle){
-			showModal({linkHref, linkTitle})
-		}else{
-			showModal({linkHref:"", linkTitle:"Protected Content"})
-		}
-	}
+  if (
+    template &&
+    template.content.querySelector(".errors") &&
+    !document.querySelector(".membergate-parent.in-content-form")
+  ) {
+    const errorEl = template.content.querySelector<HTMLElement>(".errors");
+    const { linkHref, linkTitle } = errorEl.dataset;
+    if (linkHref && linkTitle) {
+      showModal({ linkHref, linkTitle });
+    } else {
+      showModal({ linkHref: "", linkTitle: "Protected Content" });
+    }
+  }
 
-	const membergateWrapper = document.querySelector('.membergate-parent.in-content-form')
-	if(membergateWrapper){
-		membergateWrapper.addEventListener('click', handleMembergateClickEvents)
-	}
+  const membergateWrapper = document.querySelector(
+    ".membergate-parent.in-content-form"
+  );
+  if (membergateWrapper) {
+    membergateWrapper.addEventListener("click", handleMembergateClickEvents);
+  }
 });
 
 document.addEventListener("click", function (e: MouseEvent) {
@@ -51,7 +57,7 @@ document.addEventListener("click", function (e: MouseEvent) {
   }
 });
 
-function showModal(settings:{linkHref:string, linkTitle:string}) {
+function showModal(settings: { linkHref: string; linkTitle: string }) {
   removeModal();
   // if(!template) throw new Error("no template found");
   const replaceTextWithSettings = (el: HTMLElement) =>
@@ -115,34 +121,36 @@ function replaceValue(settings: Record<string, string>, el: HTMLInputElement) {
   el.value = settings[setting];
 }
 
-async function switchForm(el:HTMLElement) {
+async function switchForm(el: HTMLElement) {
   const { currentForm } = el.dataset;
 
   const currentWrapper = el.closest<HTMLElement>(".membergate-wrapper");
-	currentWrapper.parentElement.dataset.isLoading='true'
+  currentWrapper.parentElement.dataset.isLoading = "true";
   const res = await fetch(
     `${window.publicMembergate.url}?action=mg_public_endpoint&mg_public_action=fetch_alt_form&current_form=${currentForm}`,
     { method: "POST" }
   ).then((res) => res.text());
-	currentWrapper.parentElement.dataset.isLoading='false'
+  currentWrapper.parentElement.dataset.isLoading = "false";
   const parser = new DOMParser();
   const doc = parser.parseFromString(res, "text/html");
 
-	const allReplaceValueEls = Array.from(currentWrapper.querySelectorAll<HTMLInputElement>('[data-replace-value]'))
-	const settings = allReplaceValueEls.reduce((settings, el)=>{
-		const setting = el.dataset.replaceValue
-		const value  =	el.value
-		if(setting && value){
-			settings[setting] = value
-		}
-		return settings
-	}, {})
+  const allReplaceValueEls = Array.from(
+    currentWrapper.querySelectorAll<HTMLInputElement>("[data-replace-value]")
+  );
+  const settings = allReplaceValueEls.reduce((settings, el) => {
+    const setting = el.dataset.replaceValue;
+    const value = el.value;
+    if (setting && value) {
+      settings[setting] = value;
+    }
+    return settings;
+  }, {});
 
-	const replaceValueWithSettings = (el:HTMLInputElement)=>replaceValue(settings, el)
+  const replaceValueWithSettings = (el: HTMLInputElement) =>
+    replaceValue(settings, el);
   const newForm = doc.querySelector(".membergate-wrapper");
   newForm
     .querySelectorAll("[data-replace-value]")
     .forEach(replaceValueWithSettings);
   currentWrapper.replaceWith(newForm);
 }
-
