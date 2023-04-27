@@ -4,13 +4,14 @@ namespace Membergate\Subscriber;
 
 use Membergate\Common\MemberCookie;
 use Membergate\EventManagement\SubscriberInterface;
+use Membergate\RenderForm\MembergateFormRenderer;
 use Membergate\Settings\PostTypeSettings;
 use Membergate\Settings\ProtectedContentSettings;
 
 class RedirectToProtectSubscriber implements SubscriberInterface {
     private $post_type_settings;
 
-    private $form_renderer;
+    private MembergateFormRenderer $form_renderer;
 
     private ProtectedContentSettings $protected_content_settings;
 

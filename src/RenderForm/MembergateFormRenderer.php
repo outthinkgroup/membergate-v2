@@ -61,9 +61,13 @@ class MembergateFormRenderer {
 
 	public function redirect_to(){
 		global $post;
-		$redirect_to = isset($_GET['redirect_to']) ? $_GET['redirect_to'] : '';
+		$redirect_to = isset($_REQUEST['redirect_to']) ? $_REQUEST['redirect_to'] : '';
 		return $this->modifiable("redirect_to", $redirect_to, $post);
 	}
+
+    public function content_title(){
+        return isset($_REQUEST['content_title']) ? $_REQUEST['content_title'] : "";
+    }
 
 	private function modifiable($name, $initial, $post=null, $form=null){
 		return apply_filters("membergate_form_$name", $initial, $post, $form);

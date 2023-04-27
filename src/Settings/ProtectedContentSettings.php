@@ -23,8 +23,7 @@ class ProtectedContentSettings {
 
     public function save($settings): array {
         $this->settings = $settings;
-        $res = update_option(self::PROTECTED_CONTENT_KEY, $settings);
-
+        update_option(self::PROTECTED_CONTENT_KEY, $settings);
         return $this->settings;
     }
 

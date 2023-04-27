@@ -83,7 +83,14 @@ class CheckSubscriptionStatus implements FormHandlerInterface {
 			exit;
 		} 
 		// well we need to let the user know that they are not subscribed
-		$this->form_renderer->add_error("Oh no! You aren't a member yet!");
-		
+        $this->form_renderer->add_error(
+            "Oh no! You aren't a member yet! <button class='button-link' data-action='switch-form'>Become a member</button>", 
+            [
+                'linkHref'=>$submission['redirect_to'],
+                'linkTitle'=>$submission['resource_title'],
+            ],
+        );
+        unset($_POST);
+        return;
     }
 }

@@ -22,7 +22,7 @@ $fields = $this->fields($form_key);
 	<?php endif; ?>
 
 
-	<form class="membergate-form__form" method="POST">
+	<form class="membergate-form__form" method="POST" >
 		<div class="membergate-form__fields">
 			<?php foreach ($fields as ['type' => $f_type, 'markup' => $markup]) : ?>
 				<div class="membergate-form__field">
@@ -32,6 +32,7 @@ $fields = $this->fields($form_key);
 		</div>
 		<button name="membergate_form" value="<?= $this->get_form_action($form_key); ?>"><?= $this->submitText($form_key); ?></button>
 		<input type="hidden" data-replace-value="linkHref" name="redirect_to" value="<?= $this->redirect_to(); ?>" />
+        <input type="hidden" data-replace-value="linkTitle" name="content_title" value="<?= $this->content_title();?>" />
 	</form>
     <button data-action="switch-form" type="button" data-current-form="<?=$form_key;?>" ><?= $this->altFormLinkText($form_key); ?></button>
 </div>
