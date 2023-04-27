@@ -85,6 +85,9 @@
 	font-weight:bold;
 	border:1px solid red;
 }
+.membergate-wrapper .errors p:first-child{
+	margin-top: 0;
+}
 .membergate-wrapper .errors p:last-child{
 	margin-bottom: 0;
 }

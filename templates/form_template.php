@@ -34,5 +34,7 @@ $fields = $this->fields($form_key);
 		<input type="hidden" data-replace-value="linkHref" name="redirect_to" value="<?= $this->redirect_to(); ?>" />
         <input type="hidden" data-replace-value="linkTitle" name="content_title" value="<?= $this->content_title();?>" />
 	</form>
-    <button data-action="switch-form" type="button" data-current-form="<?=$form_key;?>" ><?= $this->altFormLinkText($form_key); ?></button>
+    <?php if($this->isAltFormEnabled()): ?>
+        <button data-action="switch-form" type="button" data-current-form="<?=$form_key;?>" ><?= $this->altFormLinkText($form_key); ?></button>
+    <?php endif; ?>
 </div>

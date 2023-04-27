@@ -51,6 +51,16 @@ class MembergateFormRenderer {
         return $link_text;
     }
 
+    public function isAltFormEnabled($form_key="PrimaryForm"){
+        if($form_key == "SecondaryForm") return true;//Primary Form is always enabled
+
+        $primary_action = $this->form_settings['PrimaryForm']['action'];
+        $is_secondary_enabled = $this->form_settings['SecondaryForm']['isEnabled'];
+        if($primary_action == 'REGISTER' || !$is_secondary_enabled) return false;
+
+        return true; //default behavior
+    }
+
     public function get_form_action($form_key = "PrimaryForm"): string {
         $action_in_settings = $this->form_settings[$form_key]['action'];
         $action = $action_in_settings == "LOGIN" ? "check_if_subscriber" : "add_subscriber_to_service";
@@ -98,14 +108,10 @@ class MembergateFormRenderer {
     public function return_full_form_markup($form_slug) {
         // $details = $this->return_form_details($form_slug);
         $form = $this->return_form($form_slug);
-
         return $form;
     }
 
     public function include_full_form_markup($form_slug) {
-        
-        error_log(__METHOD__);
-
         echo $this->return_full_form_markup($form_slug);
     }
 

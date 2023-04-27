@@ -131,16 +131,22 @@
         >
       </div>
       <div>
-        <p class="text-sm uppercase text-slate-500 tracking-wide mb-1">
-          Action
-        </p>
-        <select
-          class="bg-slate-100 border-0 text-md text-cyan-600 font-bold p-2 pr-8 rounded-md"
-          bind:value={formSettings.action}
-        >
-          <option value="LOGIN">Login</option>
-          <option value="REGISTER">Register and Login</option>
-        </select>
+				<div>
+					<p class="text-sm uppercase text-slate-500 tracking-wide mb-1">
+						Action
+					</p>
+					<select
+						class="bg-slate-100 border-0 text-md text-cyan-600 font-bold p-2 pr-8 rounded-md"
+						bind:value={formSettings.action}
+					>
+						<option value="LOGIN">Login</option>
+						<option value="REGISTER">Register and Login</option>
+					</select>
+				</div>
+				<div>
+					<label for="isEnabled">Is Enabled</label>
+					<input type="checkbox" id="isEnabled" bind:checked={formSettings.isEnabled} />
+				</div>
       </div>
     </header>
 

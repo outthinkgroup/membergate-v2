@@ -43,17 +43,18 @@ class CheckSubscriptionStatus implements FormHandlerInterface {
     }
     public function execute_action(array $submission) {
         if (! $this->setup) {
+            unset($_POST);
             return;
         }
 
-        $name = isset($submission['name']) ? $submission['name'] : null;
         $email = isset($submission['email']) ? $submission['email'] : null;
 		// this depends on the form settings provided
 		// TODO: update to reflect what is required by the settings
-        if (is_null($name) || is_null($email)) {
-			
+        if (is_null($email) || !$email) {
+		    $this->form_renderer->add_error("Email is Required");
+            unset($_POST);
             return;
-        } //TODO: Error Reporting show USER
+        }
 
         $cookie = new MemberCookie();
 
@@ -64,12 +65,13 @@ class CheckSubscriptionStatus implements FormHandlerInterface {
             return;	//TODO: Error Reporting show ADMIN
         }
         if (! $this->list_client) {
+            unset($_POST);
             return;
         }
         $subbed_res = $this->list_client->is_user_subscribed($this->list_id,$email);
 		if($subbed_res->has_error()){
-            //TODO: Error Reporting show USER
-            debug(['is_user_subscribed' => $subbed_res->error]);
+            $this->form_renderer->add_error($subbed_res->error);// Error From Mailchimp.
+            unset($_POST);
             return;
 		}
 		$status = $subbed_res->value; // true or false
@@ -83,14 +85,12 @@ class CheckSubscriptionStatus implements FormHandlerInterface {
 			exit;
 		} 
 		// well we need to let the user know that they are not subscribed
-        $this->form_renderer->add_error(
-            "Oh no! You aren't a member yet! <button class='button-link' data-action='switch-form'>Become a member</button>", 
-            [
-                'linkHref'=>$submission['redirect_to'],
-                'linkTitle'=>$submission['resource_title'],
-            ],
-        );
-        unset($_POST);
+        $error_msg = "Oh no! You aren't a member yet! ";
+        if($this->form_renderer->isAltFormEnabled()){
+            $error_msg .= "<button class='button-link' data-action='switch-form'>Become a member</button>";
+        }
+        $this->form_renderer->add_error( $error_msg  );
+        unset($_POST);// without this for some reason it 404s
         return;
     }
 }
