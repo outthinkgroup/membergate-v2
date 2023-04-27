@@ -19,6 +19,7 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
         $hooks = [
             'wp_footer' => 'render_modal_template',
             'post_type_link' => ['mark_protected_with_queryparm', 10, 2],
+            'post_link' => ['mark_protected_with_queryparm', 10, 2],
         ];
         return $hooks;
     }
@@ -38,6 +39,8 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
     }
 
     public function mark_protected_with_queryparm($url, $post) {
+        error_log(__METHOD__);
+
         if (is_admin()) {
             return $url;
         }
