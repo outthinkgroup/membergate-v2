@@ -25,6 +25,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 		//TODO: conditionally return these based on setings
         return [
             'wp' => 'protect_protected_types_template',
+            'wp' => 'remove_membergate_protect_arg',
             'the_content' => 'protect_protected_types_content',
             'the_excerpt' => 'remove_protect_content_for_excerpt',
         ];
@@ -54,6 +55,8 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         if ($use_page_redirect && $this->protected_content_settings->get_setting('redirect_page')->value !== '') {
             $url = get_permalink($this->protected_content_settings->get_setting('redirect_page')->value);
             $url = add_query_arg('redirect_to', get_permalink(), $url);
+            error_log(__METHOD__);
+            $url = remove_query_arg('membergate_protect', $url);
             wp_redirect($url);
             exit;
         }
@@ -83,4 +86,12 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         <?php
         return ob_get_clean();
     }
+    public function remove_membergate_protect_arg(){
+        error_log(__METHOD__);
+        if(isset( $_REQUEST['membergate_protect'] )){
+            wp_safe_redirect(remove_query_arg('membergate_protect',$_SERVER['REQUEST_URI']));
+            exit;
+        }
+    }
 }
+
