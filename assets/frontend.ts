@@ -113,12 +113,11 @@ function handleEscKey(e: KeyboardEvent) {
 
 function replaceText(settings: Record<string, string>, el: HTMLElement) {
   const setting = el.dataset.replaceText;
-  el.textContent = settings[setting];
+  if (settings[setting]) el.textContent = settings[setting];
 }
 function replaceValue(settings: Record<string, string>, el: HTMLInputElement) {
   const setting = el.dataset.replaceValue;
-  console.log(setting);
-  el.value = settings[setting];
+  if (settings[setting]) el.value = settings[setting];
 }
 
 async function switchForm(el: HTMLElement) {
