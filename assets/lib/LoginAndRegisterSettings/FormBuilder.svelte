@@ -143,10 +143,12 @@
 						<option value="REGISTER">Register and Login</option>
 					</select>
 				</div>
-				<div>
-					<label for="isEnabled">Is Enabled</label>
-					<input type="checkbox" id="isEnabled" bind:checked={formSettings.isEnabled} />
-				</div>
+				{#if !isPrimary}
+					<div>
+						<label for="isEnabled">Is Enabled</label>
+						<input type="checkbox" id="isEnabled" bind:checked={formSettings.isEnabled} />
+					</div>
+				{/if}
       </div>
     </header>
 

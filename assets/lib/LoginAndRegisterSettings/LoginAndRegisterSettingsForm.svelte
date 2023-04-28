@@ -17,7 +17,9 @@
       <h3 class="mb-2 font-bold text-cyan-700">Forms</h3>
       <div class="flex gap-4">
         <FormCard formSettings={$formSettings.PrimaryForm} isPrimary={true} />
-        <FormCard formSettings={$formSettings.SecondaryForm} />
+				{#if $formSettings.PrimaryForm.action == "LOGIN"}
+					<FormCard formSettings={$formSettings.SecondaryForm} />
+				{/if}
       </div>
     </div>
     <form
