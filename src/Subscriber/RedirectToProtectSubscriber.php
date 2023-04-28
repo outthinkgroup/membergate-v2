@@ -76,7 +76,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         if ($cookie_handler->user_has_cookie()) {
             return $content;
         }
-
+        
         // returning subscribe form
         ob_start();
         ?>

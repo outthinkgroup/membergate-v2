@@ -33,6 +33,7 @@ $fields = $this->fields($form_key);
 		<button name="membergate_form" value="<?= $this->get_form_action($form_key); ?>"><?= $this->submitText($form_key); ?></button>
 		<input type="hidden" data-replace-value="linkHref" name="redirect_to" value="<?= $this->redirect_to(); ?>" />
         <input type="hidden" data-replace-value="linkTitle" name="content_title" value="<?= $this->content_title();?>" />
+        <input type="hidden" value="<?= $form_key; ?>" name="mg_form_key" />
 	</form>
     <?php if($this->isAltFormEnabled()): ?>
         <button data-action="switch-form" type="button" data-current-form="<?=$form_key;?>" ><?= $this->altFormLinkText($form_key); ?></button>
