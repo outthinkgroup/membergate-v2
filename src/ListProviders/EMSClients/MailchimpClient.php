@@ -48,7 +48,7 @@ class MailChimpClient {
      * @return Batch            New Batch object.
      */
     public function new_batch($batch_id = null) {
-        return new Batch($this, $batch_id);
+        return new \Batch($this, $batch_id);
     }
 
     /**
