@@ -10,12 +10,15 @@
     "env:dev": "sed -i '' 's/production/development/g' env.php;",
     "build": "yarn env:build && vite build",
     "env:build": "sed -i '' 's/development/production/g' env.php",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+		"test":"cypress open"
+
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.9",
     "@tsconfig/svelte": "^3.0.0",
     "autoprefixer": "^10.4.13",
+    "cypress": "^12.11.0",
     "postcss": "^8.4.19",
     "postcss-nested": "^6.0.0",
     "prettier": "^2.8.0",
