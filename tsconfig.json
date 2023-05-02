@@ -14,14 +14,16 @@
      */
     "allowJs": true,
     "checkJs": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+		"types": ["cypress", "node", "@types/chai"]
   },
   "include": [
     "./assets/**/*.d.ts",
     "./assets/**/*.ts",
-    "assets/**/*.js",
-    "./assets/**/*.svelte"
+    "./assets/**/*.js",
+    "./assets/**/*.svelte",
+		"./cypress/**/*.ts",
   ],
-  "exclude": ["node_modules/**/*"],
+  "exclude": ["node_modules/**/*","assets/dist/**/*" ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

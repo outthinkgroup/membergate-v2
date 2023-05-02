@@ -26,6 +26,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
 //
+export{}
 Cypress.Commands.add("removeMemberCookie", () => {
   cy.clearCookie("membergate_member");
 });
@@ -34,7 +35,9 @@ Cypress.Commands.add("setMembergateCookie", () => {
   cy.setCookie("membergate_member", "true");
 	cy.reload()
 });
-Cypress.Commands.add("setMembergateSettings", () => {
-  console.log(cy.exec("cypress/scripts/membergateSettings"));
+
+Cypress.Commands.add("setMembergateSettings", (settings) => {
+	settings = JSON.stringify(settings).replace(/"/g, `\\"`).replace(/'/g, `\\'`)
+  console.log(cy.exec(`cypress/scripts/membergateSettings "`  + settings + '"'));
 });
 

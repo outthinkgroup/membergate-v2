@@ -8,7 +8,9 @@ declare global {
       // visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
       setMembergateCookie(): void;
       removeMemberCookie(): void;
-			setMembergateSettings():void;
+			setMembergateSettings(settings:any):void;
     }
+
   }
 }
+
