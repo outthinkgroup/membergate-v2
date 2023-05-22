@@ -5,6 +5,7 @@
   import LabelSelect from "../form/LabelSelect.svelte";
   let isLoading = false;
   let unSavedChanges = false;
+	$: $blockedContent, console.log("blockedContent:",$blockedContent)
 </script>
 
 {#if $currentLocation == locations.displayBlockedContent.slug}
@@ -27,7 +28,7 @@
         <LabelSelect
           name="protect_method"
           label="How should the protected content be hidden"
-          value={"override_content"}
+          value={$blockedContent.protect_method}
           on:inputChange={(e) => {
             blockedContent.updateSetting("protect_method", e.detail.value);
             unSavedChanges = true;

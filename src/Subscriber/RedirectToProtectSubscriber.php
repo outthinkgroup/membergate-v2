@@ -24,11 +24,15 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
     public static function get_subscribed_events(): array {
 		//TODO: conditionally return these based on setings
         return [
-            'wp' => 'protect_protected_types_template',
-            'wp' => 'remove_membergate_protect_arg',
+            'template_redirect' => 'on_wp',
             'the_content' => 'protect_protected_types_content',
             'the_excerpt' => 'remove_protect_content_for_excerpt',
         ];
+    }
+
+    public function on_wp(){
+        $this->protect_protected_types_template();
+        $this->remove_membergate_protect_arg();
     }
 
     public function remove_protect_content_for_excerpt($excerpt) {
@@ -42,7 +46,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         }
         global $post;
         $is_protected = $this->post_type_settings->is_post_protected($post->ID);
-        if (! $is_protected) {
+        if (! $is_protected || is_archive() || is_home()) {
             return;
         }
 
@@ -53,11 +57,11 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         $use_page_redirect = $this->protected_content_settings->get_setting('protect_method')->value == 'page_redirect';
         $use_page_redirect = apply_filters('use_page_redirect', $use_page_redirect, $post);
         if ($use_page_redirect && $this->protected_content_settings->get_setting('redirect_page')->value !== '') {
-            $url = get_permalink($this->protected_content_settings->get_setting('redirect_page')->value);
+            $id = (int)$this->protected_content_settings->get_setting('redirect_page')->value;
+            $url = get_permalink($id);
             $url = add_query_arg('redirect_to', get_permalink(), $url);
-            error_log(__METHOD__);
             $url = remove_query_arg('membergate_protect', $url);
-            wp_redirect($url);
+            wp_safe_redirect($url);
             exit;
         }
     }
