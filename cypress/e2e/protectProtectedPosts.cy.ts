@@ -1,11 +1,9 @@
 export { };
 
-describe("Non Logged in, with modals, on index page", () => {
-	beforeEach(() => {
-		cy.visit("http://consciousgrowthpartners.local/");
-	});
-	it("Is using modal, stops links and show modal instead", () => {
+describe("[DEFAULT SETTINGS]:Non Logged in, with modals, on index page", () => {
+	before(()=>{
 		cy.setMembergateSettings({
+			reset_non_essential:{},
 			post_types: {
 				post: {
 					protected: true,
@@ -13,7 +11,13 @@ describe("Non Logged in, with modals, on index page", () => {
 					name: "Post",
 				},
 			},
-		});
+
+		})
+	})
+	beforeEach(() => {
+		cy.visit("http://consciousgrowthpartners.local/");
+	});
+	it("Is using modal, stops links and show modal instead", () => {
 		//click the first post on index page
 		cy.get("h2 a").first().click();
 		cy.url().should("eq", "http://consciousgrowthpartners.local/");
@@ -32,15 +36,6 @@ describe("Non Logged in, with modals, on index page", () => {
 	});
 
 	it("do cookies work", () => {
-		cy.setMembergateSettings({
-			post_types: {
-				post: {
-					protected: false,
-					slug: "post",
-					name: "Post",
-				},
-			},
-		});
 		cy.setMembergateCookie();
 		cy.get("h2 a").first().click();
 		cy.url().should("contain", "hello-world");
@@ -50,6 +45,7 @@ describe("Non Logged in, with modals, on index page", () => {
 describe("More Non Logged in Users Flows", () => {
 	before(() => {
 		cy.setMembergateSettings({
+			reset_non_essential:{},
 			post_types: {
 				post: {
 					protected: true,
@@ -66,15 +62,16 @@ describe("More Non Logged in Users Flows", () => {
 		const content = cy.get(".entry-content").first();
 		content.should("not.contain.text", "Welcome to WordPress.");
 	});
-	it.only("is redirected from protected posts if (options allowed)", () => {
+	it("is redirected from protected posts if (options allowed)", () => {
+		const redirect_page_id = "2"
 		 cy.setMembergateSettings({
 			protected_content: {
 				protect_method: "page_redirect",
-				redirect_page:"2",
+				redirect_page:redirect_page_id,
 				show_modal: "",
 			}
 		});
 		cy.reload()
-		cy.url().should("eq","http://consciousgrowthpartners.local/" )
+		cy.get('body').should('have.class', `page-id-${redirect_page_id}`)
 	});
 });

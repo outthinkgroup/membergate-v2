@@ -1,6 +1,12 @@
 <?php
 
-global $membergate;
+use Membergate\Settings\AccountSettings;
+use Membergate\Settings\FormSettings;
+use Membergate\Settings\ListProviderSettings;
+use Membergate\Settings\PostTypeSettings;
+use Membergate\Settings\ProtectedContentSettings;
+
+global $membergate, $wpdb;
 
 $settings = json_decode($args[0], true);
 error_log($args[0]);
@@ -12,7 +18,22 @@ error_log(print_r($settings, true));
     'settings.forms'
     'settings.account'
  */
-
+// reset options to defaults
+if(isset($settings['reset'])){
+    delete_option(PostTypeSettings::POST_TYPE_KEY);
+    delete_option(ProtectedContentSettings::PROTECTED_CONTENT_KEY);
+    delete_option(AccountSettings::WIZARD_COMPLETE_KEY);
+    delete_option(FormSettings::FORM_KEY);
+    delete_option(ListProviderSettings::PROVIDER_NAME);
+    $wpdb->get_results($wpdb->prepare("DELETE * from wp_postmeta where meta_key=%s",PostTypeSettings::POST_META_KEY));
+    unset($settings['reset']);
+}
+if(isset($settings['reset_non_essential'])){
+    delete_option(PostTypeSettings::POST_TYPE_KEY);
+    delete_option(ProtectedContentSettings::PROTECTED_CONTENT_KEY);
+    delete_option(FormSettings::FORM_KEY);
+    unset($settings['reset_non_essential']);
+}
 foreach ($settings as $setting => $value) {
     $setting_conf = $membergate->get_container("settings.$setting");
     debug($setting_conf);
