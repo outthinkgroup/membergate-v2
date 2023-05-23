@@ -55,7 +55,7 @@ class MembergateFormRenderer {
         if($form_key == "SecondaryForm") return true;//Primary Form is always enabled
 
         $primary_action = $this->form_settings['PrimaryForm']['action'];
-        $is_secondary_enabled = $this->form_settings['SecondaryForm']['isEnabled'];
+        $is_secondary_enabled = isset($this->form_settings['SecondaryForm']['isEnabled']) && $this->form_settings['SecondaryForm']['isEnabled'];
         if($primary_action == 'REGISTER' || !$is_secondary_enabled) return false;
 
         return true; //default behavior

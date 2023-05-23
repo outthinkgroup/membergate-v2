@@ -7,9 +7,11 @@ use Membergate\Settings\PostTypeSettings;
 use Membergate\Settings\ProtectedContentSettings;
 
 global $membergate, $wpdb;
-
-$settings = json_decode($args[0], true);
-error_log($args[0]);
+if(!is_readable($args[0])){
+    throw new \RuntimeException("No valid file was given as input");
+}
+$json = file_get_contents($args[0]);
+$settings = json_decode($json, true);
 error_log(print_r($settings, true));
 /*
     'settings.list_provider'
@@ -34,6 +36,7 @@ if(isset($settings['reset_non_essential'])){
     delete_option(FormSettings::FORM_KEY);
     unset($settings['reset_non_essential']);
 }
+debug($settings);
 foreach ($settings as $setting => $value) {
     $setting_conf = $membergate->get_container("settings.$setting");
     debug($setting_conf);

@@ -102,6 +102,5 @@ class FormSettings {
                 "action" => "REGISTER"
             ]
         ];
-        ;
     }
 }

@@ -39,5 +39,6 @@ Cypress.Commands.add("setMembergateCookie", () => {
 Cypress.Commands.add("setMembergateSettings", (settings) => {
 	settings = JSON.stringify(settings).replace(/"/g, `\\"`).replace(/'/g, `\\'`)
   console.log(cy.exec(`cypress/scripts/membergateSettings "`  + settings + '"'));
+	cy.reload();
 });
 
