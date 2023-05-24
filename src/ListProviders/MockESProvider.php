@@ -31,7 +31,11 @@ class MockESProvider implements ListProvidersInterface {
 
     public function add_subscriber($email, $settings, $submission = null): PossibleError {
         $list_id = $settings['list_id'];
-        $res = $this->client->add_subscriber($list_id, $submission);
+        $res = $this->client->add_subscriber($list_id, [
+            'email'=>$submission['email'],
+            'status'=>'subscribed',
+            'tags'=>[$settings['group_id']],
+        ]);
         return $res;
     }
 
@@ -44,7 +48,7 @@ class MockESProvider implements ListProvidersInterface {
         if ($res->has_error()) {
             return $res;
         }
-        $res->value = $res->value['status'] == 'subscribed';
+        $res->value = $res->value->status == 'subscribed';
         return $res;
     }
 

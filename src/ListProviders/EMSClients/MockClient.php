@@ -36,9 +36,7 @@ class MockClient {
         return new PossibleError($data);
     }
     public function add_subscriber($list_id, $subscriber_data) {
-        $res = $this->post(self::URL . "/$list_id/subscribers", [
-            'body'=>$subscriber_data,
-        ]);
+        $res = $this->post(self::URL . "/$list_id/subscribers", $subscriber_data);
         if (is_wp_error($res)) {
             return new PossibleError(null, $res->get_error_message());
         }
@@ -46,9 +44,7 @@ class MockClient {
         return new PossibleError($data);
     }
     public function update_subscriber($list_id, $subscriber_id, $subscriber_data) {
-        $res = $this->post(self::URL . "/$list_id/subscribers/$subscriber_id", [
-            'body'=>$subscriber_data,
-        ]);
+        $res = $this->post(self::URL . "/$list_id/subscribers/$subscriber_id", $subscriber_data);
         if (is_wp_error($res)) {
             return new PossibleError(null, $res->get_error_message());
         }
@@ -88,12 +84,19 @@ class MockClient {
         return $res;
     }
     private function post($url, $body) {
-        return wp_remote_post($url, [
+        $body = json_encode($body);
+        $res = wp_remote_post($url, [
             'headers'=>[
                 'Content-Type'=>'application/json',
                 'x-api'=>$this->api_key,
             ],
-            'body'=>$body,
+            'body'=> $body,
         ]);
+        if($res['response']['code'] !== 200){
+            $err = new \WP_Error("BAD_REQUEST",$res['response']['message']);
+            return $err;
+        }
+
+        return $res;
     }
 }
