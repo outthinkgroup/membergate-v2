@@ -37,7 +37,7 @@ class SaveGeneralListSettings implements AjaxInterface {
             echo json_encode(['data' => 0, 'errors' => $result->errors]);
             exit;
         }
-        echo json_encode(['data' => $result->data, 'errors' => []]);
+        echo json_encode(['data' => $result->value, 'errors' => []]);
         exit;
     }
 }

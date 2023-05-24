@@ -48,8 +48,8 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
             $settings = $settings->value;
             $api_key = $settings['apikey'] ? $settings['apikey'] : '';
             $provider_name = $this->list_provider_settings->get_provider();
-            $list_id = $settings['list_id'] ? $settings['list_id'] : '';
-            $group_id = $settings['group_id'] ? $settings['group_id'] : '';
+            $list_id = !is_null($settings['list_id']) ? $settings['list_id'] : '';
+            $group_id = !is_null($settings['group_id']) ? $settings['group_id'] : '';
         }
 
         $lists = '';
@@ -57,13 +57,13 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
         if ($provider_name && $api_key) {
             $provider = new $this->list_providers[$provider_name]['client']($api_key);
             $lists = $provider->get_lists();
-            if ($list_id) {
+            if (!is_null($list_id)) {
                 $groups = $provider->get_groups($list_id);
             }
         }
 
         $providers = array_reduce($this->list_providers,function($acc, $provider){
-            $acc[$provider::provider_name] = $provider::label;
+            $acc[$provider['client']::provider_name] = $provider['client']::label;
             return $acc;
         },[]);
 

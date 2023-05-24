@@ -14,4 +14,6 @@ interface ListProvidersInterface {
     public function get_user($list_id, $email): PossibleError;
 
     public function is_user_subscribed($list_id, $email_address): PossibleError;
+
+    public function get_lists(); 
 }

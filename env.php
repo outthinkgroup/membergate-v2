@@ -1,3 +1,3 @@
 <?php
 
-define('MG_APP_ENV', 'development');
+define('MG_APP_ENV', 'test');

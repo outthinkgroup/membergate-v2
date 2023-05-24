@@ -45,7 +45,7 @@ class FetchGroupsFromProvider implements AjaxInterface {
             echo json_encode(['data' => [], 'errors' => ['Couldnt load List Id', $list_id->errors]]);
             exit;
         }
-        if (! $list_id->value) {
+        if (is_null($list_id->value)) {
             echo json_encode(['data' => [], 'errors' => ['No List Id is set yet']]);
             exit;
         }

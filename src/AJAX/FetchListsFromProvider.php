@@ -49,7 +49,6 @@ class FetchListsFromProvider implements AjaxInterface {
         }
         $provider = new $provider($apikey->value);
         $results = $provider->get_lists();
-
         if (! is_array($results)) {
             echo json_encode(['data' => [], 'errors' => ['Unexpected Data recieved ']]);
             exit;

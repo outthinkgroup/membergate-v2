@@ -3,13 +3,10 @@
 namespace Membergate\FormHandlers;
 
 use Membergate\Common\MemberCookie;
-use Membergate\Settings\ListProviderSettings;
 
 class CheckSubscriptionStatus implements FormHandlerInterface {
     private $list_client;
-    /**
-     * @var ListProviderSettings
-     */
+
     private  $list_settings;
 
     private $form_renderer;

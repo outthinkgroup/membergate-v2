@@ -44,7 +44,7 @@ class MockServerSettings implements EMSSettingsInterface {
             }
         }
         if (isset($post_arr['list_id'])) {
-            $res = $this->update_setting('list_id', $post_arr['list_id']);
+            $res = $this->update_setting('list_id', (string)$post_arr['list_id']);
             if ($res->has_error()) {
                 $errors[] = $res->error;
             }
@@ -63,7 +63,6 @@ class MockServerSettings implements EMSSettingsInterface {
         }
         $data = count($data) > 0 ? $data : null;
         $errors = count($errors) > 0 ? $errors : null;
-
         return new PossibleError($data, $errors);
     }
 
@@ -71,10 +70,12 @@ class MockServerSettings implements EMSSettingsInterface {
         $this->valid_options = ['apikey', 'list_id', 'group_id'];
         if (! in_array($key, $this->valid_options)) {
             $options_string = implode(',', $this->valid_options);
-
             return new PossibleError(null, "$key is not a valid option: use $options_string");
         }
         $this->{$key} = $value;
+        if($value===0){
+            $value='0';
+        }
         $res = update_option(self::PREFIX . $key, $value);
 
         return new PossibleError($res);
@@ -83,7 +84,7 @@ class MockServerSettings implements EMSSettingsInterface {
     public function get_settings(): PossibleError {
         $data = [
             'apikey' => $this->apikey,
-            'list_id' => $this->list_id,
+            'list_id' => (string)$this->list_id,
             'group_id' => $this->group_id,
         ];
 
@@ -96,8 +97,9 @@ class MockServerSettings implements EMSSettingsInterface {
 
             return new PossibleError(null, "$key is not a valid option: use $options_string");
         }
-        $option = $this->{$key};
-
-        return new PossibleError($option);
+        $option = (string)$this->{$key};
+        $res = new PossibleError();
+        $res->value = sprintf("%s",$option);
+        return $res;
     }
 }

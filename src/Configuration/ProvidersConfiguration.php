@@ -18,7 +18,7 @@ class ProvidersConfiguration implements ContainerConfigurationInterface {
                     'settings' => MailchimpSettings::class,
                 ],
             ];
-            if (MG_IS_TEST) {
+            if (MG_IS_DEVELOPMENT) {
                 $providers[MockESProvider::provider_name] = [
                     'client'=>MockESProvider::class,
                     'settings'=>MockServerSettings::class,

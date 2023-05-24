@@ -12,7 +12,7 @@ class MockClient {
     }
 
     public function get_lists() {
-        $res = $this->get(self::URL);
+        $res = $this->get(self::URL."/");
         if (is_wp_error($res)) {
             return new PossibleError(null, $res->get_error_message());
         }
