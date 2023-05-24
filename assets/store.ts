@@ -25,13 +25,21 @@ export const listsForSelectList = derived(lists, ($lists) => {
   );
 });
 
-export const groupsForSelectList = derived(groups, ($groups) => {
+export const groupsForSelectList = derived(groups, ($groups):Record<string,string> => {
   if (!$groups.length) return {};
+	//used if there is groups with in groups
+	if(Object.hasOwn($groups[0],'parentGroupName')){
+		return $groups.reduce((groups, group) => {
+			if (!Object.hasOwn(groups, group.parentGroupName)) {
+				groups[group.parentGroupName] = [];
+			}
+			groups[group.parentGroupName].push({ id: group.id, name: group.name });
+			return groups;
+		}, {});
+	}
+	//flat group list
   return $groups.reduce((groups, group) => {
-    if (!Object.hasOwn(groups, group.parentGroupName)) {
-      groups[group.parentGroupName] = [];
-    }
-    groups[group.parentGroupName].push({ id: group.id, name: group.name });
+		groups[group.id]=group.name
     return groups;
   }, {});
 });

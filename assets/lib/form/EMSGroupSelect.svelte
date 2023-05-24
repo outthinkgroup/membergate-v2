@@ -77,16 +77,18 @@
     isLoading = false;
   });
 </script>
-
+{#if $groups.length}
 <LabelSelect
+	debug={true}
   name="groups"
   value={$selectedGroup}
   on:inputChange={(e) => updateGroup(e.detail.value)}
   options={$groupsForSelectList}
-  useOptionGroups={true}
+  useOptionGroups={Object.hasOwn($groups[0], 'parentGroupName')}
   defaultOption="select a group"
   label="choose a group"
 />
+{/if}
 
 {#if isLoading}
   loading...

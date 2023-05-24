@@ -1,7 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { updateApiKey } from "../../utils/formUtils";
-  import { apikey } from "../../store";
+  import { apikey, provider } from "../../store";
   import LabelInput from "./LabelInput.svelte";
   import LoadingCircle from "../LoadingCircle.svelte";
 
@@ -14,6 +14,15 @@
     dispatch("loadingStateChange", {
       isLoading,
     });
+	// Resets apikey if provider changes	
+	// THIS IS BUGGY
+	// provider.subscribe((provider)=>{
+	// 	if(window.membergate.settings.emailService.providerName == provider){
+	// 		return
+	// 	}
+	// 	window.membergate.settings.emailService.providerName = null
+	// 	apikey.save("")
+	// })
 
   async function validateAndSetApiKey(e: { detail: { value: string } }) {
     const newKey = e.detail.value;
@@ -22,11 +31,11 @@
       return;
     }
 
-    if (!newKey.includes("-")) {
-      //TODO: api key validation for each provider
-      inputError = "This doesnt seem like a valid mailchimp apikey";
-      return;
-    }
+    // if (!newKey.includes("-")) {
+    //   //TODO: api key validation for each provider
+    //   inputError = "This doesnt seem like a valid mailchimp apikey";
+    //   return;
+    // }
     inputError = null;
     isLoading = true;
     await updateApiKey(newKey);

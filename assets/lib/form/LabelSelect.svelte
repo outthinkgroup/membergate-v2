@@ -13,7 +13,7 @@
 	$: value, dispatch("inputChange", { value });
 	$:{
 		if(debug){
-			console.log("blocked",value, options)
+			console.log("blocked",{value, options})
 		}
 	}
 </script>
@@ -27,7 +27,7 @@
 		bind:value
 	>
 		{#if defaultOption}
-			<option value="" selected={!value}>{defaultOption}</option>
+			<option value={null} selected={(value==null || value =="")}>{defaultOption}</option>
 		{/if}
 
 		{#if useOptionGroups}
@@ -42,7 +42,7 @@
 			{/each}
 		{:else}
 			{#each Object.keys(options) as option}
-				<option selected={Boolean(option.toString() == value.toString())} value={option}>
+				<option selected={Boolean(value && option.toString() == value.toString())} value={option}>
 					{options[option]}
 				</option>
 			{/each}

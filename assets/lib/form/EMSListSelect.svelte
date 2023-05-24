@@ -30,18 +30,18 @@
   }
 
   // Refectch options when dependency changes
-  provider.subscribe(async function (provider) {
+  provider.subscribe(async function ($provider) {
     //dont when initially set
-    if (provider === window.membergate.settings.emailService.providerName)
+    if ($provider === window.membergate.settings.emailService.providerName)
       return;
 
     window.membergate.settings.emailService.providerName = null; //only needed for stopping running on initial set
-    if (!provider.length) {
+    if ($provider.length) {
       lists.set([]);
       return;
     }
     isLoading = true;
-    await fetchAndSetLists($apikey, provider);
+    await fetchAndSetLists($apikey, $provider);
     isLoading = false;
   });
   apikey.subscribe(async function (apikey) {
@@ -57,8 +57,9 @@
     isLoading = false;
   });
 </script>
-
+{#if $lists.length}
 <LabelSelect
+	debug={true}
   name="lists"
   value={$selectedList}
   options={$listsForSelectList}
@@ -66,6 +67,7 @@
   on:inputChange={(e) => updateList(e.detail.value)}
   label="choose a list"
 />
+{/if}
 {#if isLoading}
   loading...
 {/if}
