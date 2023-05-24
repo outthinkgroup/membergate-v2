@@ -1,18 +1,10 @@
+import { TestBaseSettings } from "cypress/support/SettingConfigs";
+
 export { };
 
 describe("[DEFAULT SETTINGS]:Non Logged in, with modals, on index page", () => {
 	before(()=>{
-		cy.setMembergateSettings({
-			reset_non_essential:{},
-			post_types: {
-				post: {
-					protected: true,
-					slug: "post",
-					name: "Post",
-				},
-			},
-
-		})
+		cy.setMembergateSettings(TestBaseSettings)
 	})
 	beforeEach(() => {
 		cy.visit("http://consciousgrowthpartners.local/");
@@ -44,16 +36,7 @@ describe("[DEFAULT SETTINGS]:Non Logged in, with modals, on index page", () => {
 
 describe("More Non Logged in Users Flows", () => {
 	before(() => {
-		cy.setMembergateSettings({
-			reset_non_essential:{},
-			post_types: {
-				post: {
-					protected: true,
-					slug: "post",
-					name: "Post",
-				},
-			},
-		});
+		cy.setMembergateSettings(TestBaseSettings);
 	});
 	beforeEach(() => {
 		cy.visit("http://consciousgrowthpartners.local/2023/04/28/hello-world/");

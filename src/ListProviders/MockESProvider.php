@@ -48,7 +48,7 @@ class MockESProvider implements ListProvidersInterface {
         if ($res->has_error()) {
             return $res;
         }
-        $res->value = $res->value->status == 'subscribed';
+        $res->value = !is_null($res->value) ? ($res->value->status == 'subscribed') : false;
         return $res;
     }
 

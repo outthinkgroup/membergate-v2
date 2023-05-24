@@ -27,7 +27,7 @@
           <label for={ptype}>
             <input
               type="checkbox"
-              checked={$postTypes[ptype].protected == "true"}
+              checked={$postTypes[ptype].protected == "true" || $postTypes[ptype].protected == true}
               class=""
               on:change={(e) => updatePostType(e, ptype)}
             />

@@ -42,3 +42,7 @@ Cypress.Commands.add("setMembergateSettings", (settings) => {
 	cy.reload();
 });
 
+Cypress.Commands.add("RestartMockServer", async ()=>{
+	const res = await fetch("http://localhost:3000/reset-db/",{method:"POST",mode:"no-cors"})
+	console.log(res)	
+})

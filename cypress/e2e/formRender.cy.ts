@@ -1,17 +1,10 @@
 export { };
 	import { copyObj } from "cypress/support/utils";
-import {DefaultFormSettings} from "../support/SettingConfigs"
+import {DefaultFormSettings, TestBaseSettings} from "../support/SettingConfigs"
 describe("Login Form Render Output based on different settings", () => {
 	before(() => {
 		cy.setMembergateSettings({
-			reset_non_essential: {},
-			post_types: {
-				post: {
-					protected: 'true',
-					slug: "post",
-					name: "Post",
-				},
-			},
+			...TestBaseSettings,
 			protected_content: {
 				protect_method: "override_content",
 				show_modal: 'true',

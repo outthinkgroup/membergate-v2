@@ -9,6 +9,7 @@ declare global {
       setMembergateCookie(): void;
       removeMemberCookie(): void;
 			setMembergateSettings(settings:any):void;
+			RestartMockServer():void;
     }
 
   }
