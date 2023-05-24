@@ -1,8 +1,8 @@
 <?php
 /*
- * This template is called from the MembergateFormRender class. 
+ * This template is called from the MembergateFormRender class.
  *
- * $this refers to MembergateFormRender becuase this file is included in 
+ * $this refers to MembergateFormRender becuase this file is included in
  * one of its methods giving the file access to its methods
  */
 

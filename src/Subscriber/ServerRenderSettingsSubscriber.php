@@ -62,6 +62,11 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
             }
         }
 
+        $providers = array_reduce($this->list_providers,function($acc, $provider){
+            $acc[$provider::provider_name] = $provider::label;
+            return $acc;
+        },[]);
+
         $pages = get_posts([
             'post_type' => 'page',
             'posts_per_page' => -1,
@@ -79,7 +84,7 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 		<script>
 			window.membergate = {
 				url:"<?php echo admin_url('admin-ajax.php'); ?>",
-				providers: {"mailchimp":"Mailchimp"},
+                providers: <?= json_encode($providers); ?>,
 				pageList: <?= json_encode($page_list); ?>,
 				completedSetup: "<?=$this->account_settings->get_is_setup(); ?>",
 				settings: {

@@ -28,8 +28,8 @@ class SaveMembergateFormSettings implements AjaxInterface {
     }
 
     public function handle() {
-		$json = file_get_contents("php://input");
-		$settings = json_decode($json, true);
+        $json = file_get_contents("php://input");
+        $settings = json_decode($json, true);
         $updated = $this->form_settings->save($settings);
         echo json_encode(['data' => $updated, 'errors' => []]);
         exit;

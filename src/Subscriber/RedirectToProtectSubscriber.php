@@ -22,7 +22,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
     }
 
     public static function get_subscribed_events(): array {
-		//TODO: conditionally return these based on setings
+        //TODO: conditionally return these based on setings
         return [
             'template_redirect' => 'on_wp',
             'the_content' => 'protect_protected_types_content',
@@ -30,7 +30,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         ];
     }
 
-    public function on_wp(){
+    public function on_wp() {
         $this->protect_protected_types_template();
         $this->remove_membergate_protect_arg();
     }
@@ -68,7 +68,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 
     public function protect_protected_types_content($content) {
         global $post;
-        if ((is_user_logged_in() && wp_get_environment_type() =="production") || is_archive() || is_home() || is_admin() ) {
+        if ((is_user_logged_in() && wp_get_environment_type() =="production") || is_archive() || is_home() || is_admin()) {
             return $content;
         }
         $is_protected = $this->post_type_settings->is_post_protected($post->ID);
@@ -80,7 +80,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         if ($cookie_handler->user_has_cookie()) {
             return $content;
         }
-        
+
         // returning subscribe form
         ob_start();
         ?>
@@ -90,12 +90,11 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         <?php
         return ob_get_clean();
     }
-    public function remove_membergate_protect_arg(){
+    public function remove_membergate_protect_arg() {
         error_log(__METHOD__);
-        if(isset( $_REQUEST['membergate_protect'] )){
-            wp_safe_redirect(remove_query_arg('membergate_protect',$_SERVER['REQUEST_URI']));
+        if (isset($_REQUEST['membergate_protect'])) {
+            wp_safe_redirect(remove_query_arg('membergate_protect', $_SERVER['REQUEST_URI']));
             exit;
         }
     }
 }
-

@@ -51,12 +51,16 @@ class MembergateFormRenderer {
         return $link_text;
     }
 
-    public function isAltFormEnabled($form_key="PrimaryForm"){
-        if($form_key == "SecondaryForm") return true;//Primary Form is always enabled
+    public function isAltFormEnabled($form_key="PrimaryForm") {
+        if ($form_key == "SecondaryForm") {
+            return true;
+        }//Primary Form is always enabled
 
         $primary_action = $this->form_settings['PrimaryForm']['action'];
         $is_secondary_enabled = isset($this->form_settings['SecondaryForm']['isEnabled']) && $this->form_settings['SecondaryForm']['isEnabled'];
-        if($primary_action == 'REGISTER' || !$is_secondary_enabled) return false;
+        if ($primary_action == 'REGISTER' || !$is_secondary_enabled) {
+            return false;
+        }
 
         return true; //default behavior
     }
@@ -96,12 +100,12 @@ class MembergateFormRenderer {
 
     public function return_form($form_slug = 'form_template', $form_key=null) {
         error_log(__METHOD__);
-        
+
         //this will be used in the included template
-        if(!$form_key && isset($_REQUEST['mg_form_key']) && in_array($_REQUEST['mg_form_key'], ['SecondaryForm', 'PrimaryForm'])){
+        if (!$form_key && isset($_REQUEST['mg_form_key']) && in_array($_REQUEST['mg_form_key'], ['SecondaryForm', 'PrimaryForm'])) {
             $form_key = $_REQUEST['mg_form_key'];
         }
-        if(!$form_key){
+        if (!$form_key) {
             $form_key = 'PrimaryForm';
         }
 

@@ -9,7 +9,7 @@ class FieldRender {
         $this->fields = $fields;
     }
 
-    public function build_fields():array {
+    public function build_fields(): array {
         $fields = [];
         foreach ($this->fields as $field) {
             $field_markup = "";

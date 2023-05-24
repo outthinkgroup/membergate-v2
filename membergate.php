@@ -14,7 +14,8 @@
 require __DIR__ . '/vendor/autoload.php';
 
 require_once dirname(__FILE__) . '/env.php';
-define('MG_IS_DEVELOPMENT', MG_APP_ENV === 'development');
+define('MG_IS_DEVELOPMENT', (MG_APP_ENV === 'development') || (MG_APP_ENV === 'test'));
+define('MG_IS_TEST', MG_APP_ENV === 'test');
 require_once 'utils.php';
 
 require_once dirname(__FILE__) . '/src/Autoloader.php';

@@ -14,6 +14,7 @@ class MailchimpProvider implements ListProvidersInterface {
     private $cache;
 
     public const provider_name = 'mailchimp';
+    public const label = "Mailchimp";
 
     public function __construct($api_key) {
         $this->api_key = $api_key;
@@ -152,7 +153,7 @@ class MailchimpProvider implements ListProvidersInterface {
             'status_if_new' => 'subscribed',
             'email_address' => $email_address,
         ];
-        if(isset($settings['group_id']) && $settings['group_id']){
+        if (isset($settings['group_id']) && $settings['group_id']) {
             $groups = [$settings['group_id'] => true];
             $args['interests'] = $groups;
         }

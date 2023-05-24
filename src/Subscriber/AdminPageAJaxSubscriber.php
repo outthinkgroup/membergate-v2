@@ -23,9 +23,9 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
 
     public $protected_content_settings;
 
-	public $form_renderer;
+    public $form_renderer;
 
-	private $containers = [];
+    private $containers = [];
 
     public function __construct($list_provider_settings, $providers, $post_type_settings, $form_settings, $protected_content_settings, $form_renderer) {
         $this->list_provider_settings = $list_provider_settings;
@@ -41,15 +41,15 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
             'post_type_settings' => $this->post_type_settings,
             'settings.forms' => $this->form_settings,
             'settings.protected_content' => $this->protected_content_settings,
-			'form_renderer' =>$this->form_renderer,
+            'form_renderer' =>$this->form_renderer,
         ];
     }
 
     public static function get_subscribed_events(): array {
         return [
             'wp_ajax_mg_admin_endpoint' => 'admin_endpoints',
-			'wp_ajax_nopriv_mg_public_endpoint' => 'public_endpoints',
-			'wp_ajax_mg_public_endpoint' => 'public_endpoints',
+            'wp_ajax_nopriv_mg_public_endpoint' => 'public_endpoints',
+            'wp_ajax_mg_public_endpoint' => 'public_endpoints',
         ];
     }
 
@@ -72,7 +72,7 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
             exit;
         }
         $handlerClass = new $endpoint();
-		$containers = $this->containers;
+        $containers = $this->containers;
         $requires = array_map(function ($dep) use ($containers) {
             return $containers[$dep];
         }, $handlerClass->dependencies);
@@ -80,11 +80,11 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
         $handlerClass->handle();
     }
 
-	public function public_endpoints(){
-		$endpoints = [
-			FetchAltForm::ACTION => FetchAltForm::class,
-		];	
-		
+    public function public_endpoints() {
+        $endpoints = [
+            FetchAltForm::ACTION => FetchAltForm::class,
+        ];
+
         if (! isset($_REQUEST['mg_public_action'])) {
             error_log('no action set');
         }
@@ -95,11 +95,11 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
         }
 
         $handlerClass = new $endpoint();
-		$containers = $this->containers;
+        $containers = $this->containers;
         $requires = array_map(function ($dep) use ($containers) {
             return $containers[$dep];
         }, $handlerClass->dependencies);
         $handlerClass->set_dependencies(...$requires);
         $handlerClass->handle();
-	}
+    }
 }

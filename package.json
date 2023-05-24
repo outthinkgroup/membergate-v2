@@ -7,11 +7,14 @@
   "type": "module",
   "scripts": {
     "dev": "yarn env:dev && export APP_ENV=development && vite",
-    "env:dev": "sed -i '' 's/production/development/g' env.php;",
+    "env:dev": "sed -i '' 's/production|test/development/g' env.php;",
     "build": "yarn env:build && vite build",
-    "env:build": "sed -i '' 's/development/production/g' env.php",
+    "env:build": "sed -i '' 's/development|test/production/g' env.php",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "test": "cypress open"
+		"test:dev": "sed -i '' 's/production|development/test/g' env.php && vite",
+    "test": "./../esp-mock-server/esp-mock-server &&  sed -i '' 's/development|production/test/g' env.php && cypress open",
+		"start-test":"node ./../esp-mock-server/ . >./../esp-mock-server/logs.log 2>&1 &",
+		"end-test":"../esp-mock-server/req/kill"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.9",

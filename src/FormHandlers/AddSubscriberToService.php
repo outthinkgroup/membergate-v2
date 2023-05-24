@@ -14,7 +14,7 @@ class AddSubscriberToService implements FormHandlerInterface {
     private $list_id;
 
     private $form_renderer;
-    public function __construct($list_provider_settings, $providers,$form_renderer) {
+    public function __construct($list_provider_settings, $providers, $form_renderer) {
         $provider_key = $list_provider_settings->get_provider();
         $provider = $providers[$provider_key];
         $this->list_client = $provider['client'];
@@ -52,7 +52,7 @@ class AddSubscriberToService implements FormHandlerInterface {
             $this->form_renderer->add_error("Email is requred");
             unset($_POST);
             return;
-        } 
+        }
 
         $cookie = new MemberCookie();
 
@@ -69,7 +69,7 @@ class AddSubscriberToService implements FormHandlerInterface {
         }
         $subbed_res = $this->list_client->add_subscriber($email, $settings->value, $submission);
         if ($subbed_res->has_error()) {
-            $this->form_renderer->add_error("An Error occured, " . $settings->error);
+            $this->form_renderer->add_error("An Error occured, " . $subbed_res->error);
             debug(['add_subscriber' => $subbed_res->error]);
             unset($_POST);
             return;

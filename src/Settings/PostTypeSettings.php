@@ -72,9 +72,9 @@ class PostTypeSettings {
 
     private function ensure_contains_all_post_types($show_warning) {
         $current_post_types = get_post_types(['public' => true], 'object');
-		if($show_warning){
-			error_log("used before init hook, may not have all post types");
-		}
+        if ($show_warning) {
+            error_log("used before init hook, may not have all post types");
+        }
         $default_settings = [];
         foreach ($current_post_types as $cur_ptype) {
             $default_settings[$cur_ptype->name] = $this->create_default_ptype_settings($cur_ptype);

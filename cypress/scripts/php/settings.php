@@ -7,7 +7,7 @@ use Membergate\Settings\PostTypeSettings;
 use Membergate\Settings\ProtectedContentSettings;
 
 global $membergate, $wpdb;
-if(!is_readable($args[0])){
+if (!is_readable($args[0])) {
     throw new \RuntimeException("No valid file was given as input");
 }
 $json = file_get_contents($args[0]);
@@ -21,16 +21,16 @@ error_log(print_r($settings, true));
     'settings.account'
  */
 // reset options to defaults
-if(isset($settings['reset'])){
+if (isset($settings['reset'])) {
     delete_option(PostTypeSettings::POST_TYPE_KEY);
     delete_option(ProtectedContentSettings::PROTECTED_CONTENT_KEY);
     delete_option(AccountSettings::WIZARD_COMPLETE_KEY);
     delete_option(FormSettings::FORM_KEY);
     delete_option(ListProviderSettings::PROVIDER_NAME);
-    $wpdb->get_results($wpdb->prepare("DELETE * from wp_postmeta where meta_key=%s",PostTypeSettings::POST_META_KEY));
+    $wpdb->get_results($wpdb->prepare("DELETE * from wp_postmeta where meta_key=%s", PostTypeSettings::POST_META_KEY));
     unset($settings['reset']);
 }
-if(isset($settings['reset_non_essential'])){
+if (isset($settings['reset_non_essential'])) {
     delete_option(PostTypeSettings::POST_TYPE_KEY);
     delete_option(ProtectedContentSettings::PROTECTED_CONTENT_KEY);
     delete_option(FormSettings::FORM_KEY);

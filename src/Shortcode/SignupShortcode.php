@@ -18,7 +18,7 @@ class SignupShortcode implements ShortcodeInterface {
 
     public function run($atts): string {
         $form = '<div class="membergate-parent">';
-        $form .= $this->form_renderer->return_form('form_template','PrimaryForm');
+        $form .= $this->form_renderer->return_form('form_template', 'PrimaryForm');
         $form .= "</div>";
         return $form;
     }
