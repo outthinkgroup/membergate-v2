@@ -44,7 +44,7 @@ describe("Login Form Render Output based on different settings", () => {
 	})
 
 	it("renders customized form inputs",()=>{
-		const customizedFields = {...DefaultFormSettings}
+		const customizedFields = copyObj(DefaultFormSettings)
 		customizedFields.SecondaryForm.fields = [//{{{
     {
         "type": "EMAIL",
@@ -82,5 +82,6 @@ describe("Login Form Render Output based on different settings", () => {
 		form.get("[name='testname'][type='text']").should('exist')
 		form.get("button[name='membergate_form']").should("have.text","TEST BUTTON LABEL" )
 	})
+
 
 });

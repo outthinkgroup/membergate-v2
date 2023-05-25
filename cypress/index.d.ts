@@ -10,6 +10,7 @@ declare global {
       removeMemberCookie(): void;
 			setMembergateSettings(settings:any):void;
 			RestartMockServer():void;
+			setPostMeta(id:any,meta:any):void;
     }
 
   }

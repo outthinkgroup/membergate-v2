@@ -45,6 +45,9 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
             return;
         }
         global $post;
+        if(is_null($post) || !property_exists($post,'ID')){
+            return; 
+        }
         $is_protected = $this->post_type_settings->is_post_protected($post->ID);
         if (! $is_protected || is_archive() || is_home()) {
             return;

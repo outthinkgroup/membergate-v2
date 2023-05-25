@@ -46,3 +46,7 @@ Cypress.Commands.add("RestartMockServer", async ()=>{
 	const res = await fetch("http://localhost:3000/reset-db/",{method:"POST",mode:"no-cors"})
 	console.log(res)	
 })
+
+Cypress.Commands.add("setPostMeta", (url,meta)=>{
+  console.log(cy.exec(`cypress/scripts/membergatepostmeta ` + url + ' ' + meta ));
+})

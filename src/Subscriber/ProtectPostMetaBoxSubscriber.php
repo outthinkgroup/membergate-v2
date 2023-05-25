@@ -40,7 +40,7 @@ class ProtectPostMetaBoxSubscriber implements SubscriberInterface {
 				<select name="membergate_should_protect_post" id="membergate_should_protect_post">
 					<option value="default" <?= 'default' === $protect_status ? 'selected' : ''; ?>>Post Type Default</option>
 					<option value="always"	<?= 'always' === $protect_status ? 'selected' : ''; ?>>Always Protect</option>
-					<option value="never"		<?= 'never' === $protect_status ? 'selected' : ''; ?>>Never Protect</option>
+					<option value="never"	<?= 'never' === $protect_status ? 'selected' : ''; ?>>Never Protect</option>
 				</select>
 			</label>
 		</div>	

@@ -10,6 +10,7 @@ describe("[DEFAULT SETTINGS]:Non Logged in, with modals, on index page", () => {
 		cy.visit("http://consciousgrowthpartners.local/");
 	});
 	it("Is using modal, stops links and show modal instead", () => {
+		
 		//click the first post on index page
 		cy.get("h2 a").first().click();
 		cy.url().should("eq", "http://consciousgrowthpartners.local/");
@@ -17,6 +18,8 @@ describe("[DEFAULT SETTINGS]:Non Logged in, with modals, on index page", () => {
 	});
 	it("fillout form be redirected to link clicked", () => {
 		cy.get("h2 a").first().click();
+		cy.get("[data-current-form='PrimaryForm']").first().click()
+		cy.wait(200)// this should not be needed
 		cy.get(".membergate-modal__layer input[type='email']")
 			.first()
 			.type("josh@email.com");

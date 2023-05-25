@@ -14,12 +14,17 @@ describe("Form actions subscribe, or check subscriber status", () => {
 	it("New Subscribers cant subscribe on login only forms", () => {
 		cy.RestartMockServer();
 		//click the first post on index page
-		const form = cy.get('.membergate-form__form')
+		const form = cy.get('.membergate-form__form') 
 		form.get('[name="name"]').click().type("josh")
 		form.get('[name="email"]').first().click().type("josh@outthinkgroup.com")
 		form.get("button[name='membergate_form']").click()
 		form.should("exist")
 		cy.get(".membergate-wrapper .errors").first().should("contain.text","Oh no! You aren’t a member yet!")
+
+		//this is making sure only one form is rendererd to the page.
+		//At one point there was a bug where 2 forms were being shown if an error occured
+		//this makes sure it doesnt happen again
+		cy.get(".membergate-form__form").click().should("be.visible")
 	});
 	it("Can register with secondary form", () => {
 		//click the first post on index page

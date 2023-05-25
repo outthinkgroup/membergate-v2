@@ -1,0 +1,11 @@
+#! /usr/bin/env bash
+export PHPRC=/Users/joshkennedy/Library/Application\ Support/Local/run/TDvVZsQDD/conf/php
+export MYSQL_HOME=/Users/joshkennedy/Library/Application\ Support/Local/run/TDvVZsQDD/conf/mysql
+export WP_CLI_CONFIG_PATH=/Applications/Local.app/Contents/Resources/extraResources/bin/wp-cli/config.yaml
+export PATH=/Applications/Local.app/Contents/Resources/extraResources/lightning-services/mysql-8.0.16+6/bin/darwin/bin:/Applications/Local.app/Contents/Resources/extraResources/lightning-services/php-7.4.1+18/bin/darwin/bin:/Applications/Local.app/Contents/Resources/extraResources/bin/wp-cli/posix:/Applications/Local.app/Contents/Resources/extraResources/bin/composer/posix:$PATH
+export MAGICK_CODER_MODULE_PATH=/Applications/Local.app/Contents/Resources/extraResources/lightning-services/php-7.4.1+18/bin/darwin/ImageMagick/modules-Q16/coders
+export WP_CLI_DISABLE_AUTO_CHECK_UPDATE=1
+echo $1;
+echo $2;
+wp eval-file cypress/scripts/php/postmeta.php $1 $2 --path="../site/app/public";
+exit 0;
