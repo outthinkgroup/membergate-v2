@@ -50,3 +50,11 @@ Cypress.Commands.add("RestartMockServer", async ()=>{
 Cypress.Commands.add("setPostMeta", (url,meta)=>{
   console.log(cy.exec(`cypress/scripts/membergatepostmeta ` + url + ' ' + meta ));
 })
+
+Cypress.Commands.add("adminLogin",()=>{
+	cy.visit("http://consciousgrowthpartners.local/wp-admin")
+	cy.get("#user_login").click().click()
+	cy.get("#user_login").type("admin")
+	cy.get("#user_pass").click().type("password")
+	cy.get("#wp-submit").click()
+})

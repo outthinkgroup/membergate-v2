@@ -42,10 +42,11 @@
     kind: AddableFieldTypeUnion;
     onlyOne: boolean;
   }) {
+		console.log(fieldType, $FormSettingsStore.PrimaryForm.fields)
     if (
       fieldType.onlyOne &&
       formSettings.fields.find(
-        (field) => field.type == fieldType.kind.toLowerCase()
+        (field) => field.type.toLowerCase() == fieldType.kind.toLowerCase()
       )
     ) {
       window.alert("Only one of these can be added to the form");
@@ -146,14 +147,14 @@
 				{#if !isPrimary}
 					<div>
 						<label for="isEnabled">Is Enabled</label>
-						<input type="checkbox" id="isEnabled" bind:checked={formSettings.isEnabled} />
+						<input data-test-id="enable-secondary-form" type="checkbox" id="isEnabled" bind:checked={formSettings.isEnabled} />
 					</div>
 				{/if}
       </div>
     </header>
 
     <!-- Builder's Body -->
-    <div class="flex h-full">
+    <div class="flex h-full" data-test-id="builder">
       <aside class="border-r border-slate-200 w-full max-w-[275px] h-full">
         <header class="p-4 py-3 border-b border-slate-200">
           <h3 class="text-lg text-slate-900">
@@ -164,6 +165,7 @@
         {#if editorState == "DEFAULT"}
           {#each fieldKinds(isPrimary) as field}
             <button
+							data-test-id={`add-field-${field.kind}`}
               class="h-10 font-bold text-slate-500 capitalize text-left py-3 px-4 border-b border-slate-200 hover:bg-slate-100
 hover:text-cyan-600 w-full"
               on:click={() => {
@@ -176,26 +178,26 @@ hover:text-cyan-600 w-full"
         {:else if editorState == "EDIT_EMAIL"}
           {#each getEmailFieldsFor(editingFieldID, formSettings) as field, index}
             <EditFieldInput bind:field bind:editingFieldID bind:formSettings />
-            <button on:click={doneEditField}>Done</button>
+            <button data-test-id="done-email" on:click={doneEditField}>Done</button>
           {/each}
         {:else if editorState == "EDIT_NAME"}
           {#each getNameFieldsFor(editingFieldID, formSettings) as field}
             <EditFieldInput bind:field bind:editingFieldID bind:formSettings />
           {/each}
-          <button on:click={deleteField}>Delete</button>
-          <button on:click={doneEditField}>Done</button>
+          <button on:click={deleteField} data-test-id="delete-name">Delete</button>
+          <button on:click={doneEditField} data-test-id="done-name">Done</button>
         {:else if editorState == "EDIT_CHECKBOX"}
           {#each getCheckboxFieldsFor(editingFieldID, formSettings) as field}
             <EditFieldInput bind:field bind:editingFieldID bind:formSettings />
           {/each}
-          <button on:click={deleteField}>Delete</button>
-          <button on:click={doneEditField}>Done</button>
+          <button on:click={deleteField} data-test-id="delete-checkbox">Delete</button>
+          <button on:click={doneEditField} data-test-id="dont-checkbox">Done</button>
         {:else if editorState == "EDIT_TEXT"}
           {#each getTextFieldsFor(editingFieldID, formSettings) as field}
             <EditFieldInput bind:field bind:editingFieldID bind:formSettings />
           {/each}
-          <button on:click={deleteField}>Delete</button>
-          <button on:click={doneEditField}>Done</button>
+          <button on:click={deleteField} data-test-id="delete-text">Delete</button>
+          <button on:click={doneEditField} data-test-id="done-text">Done</button>
         {/if}
       </aside>
       <FormPreview

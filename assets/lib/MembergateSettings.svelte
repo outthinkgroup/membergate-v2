@@ -18,6 +18,7 @@
     <ul class="flex h-14 gap-[1px] ">
       <li class="w-full flex-1 m-0">
         <button
+					data-test-id="protected-content"
           class={`w-full bg-white h-full hover:bg-gray-100 font-bold
 					${
             isCurrentLocation(locations.protectePostTypeSettings.slug)
@@ -32,6 +33,7 @@
       </li>
       <li class="w-full flex-1 m-0">
         <button
+					data-test-id="forms"
           class={`w-full bg-white h-full hover:bg-gray-100 font-bold ${
             isCurrentLocation(locations.formSettings.slug)
               ? "text-cyan-600 font-extrabold"
@@ -44,6 +46,7 @@
       </li>
       <li class="w-full flex-1 m-0">
         <button
+					data-test-id="display"
           class={`w-full bg-white h-full hover:bg-gray-100 font-bold
 					${
             isCurrentLocation(locations.displayBlockedContent.slug)
@@ -58,6 +61,7 @@
       </li>
       <li class="w-full flex-1 m-0">
         <button
+					data-test-id="email-service"
           class={`w-full bg-white h-full hover:bg-gray-100 font-bold
 					${
             isCurrentLocation(locations.emailServiceSettings.slug)

@@ -20,6 +20,7 @@
 
 <div
   class="bg-slate-50 border border-slate-200 rounded-md p-2 inline-flex min-w-[225px]"
+	data-test-id={isPrimary ? "primary" : "secondary"}
 >
   <div class="w-full flex flex-col gap-3 justify-between">
     <header class="flex justify-between items-center gap-6">

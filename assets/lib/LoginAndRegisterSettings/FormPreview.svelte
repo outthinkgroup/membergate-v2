@@ -60,7 +60,7 @@
   }
 </script>
 
-<div class="mx-auto min-w-[400px] p-10 pt-8">
+<div data-test-id="form-builder-preview" class="mx-auto min-w-[400px] p-10 pt-8">
   <div class="mb-6 ml-[-50px]">
     <span class="relative group pl-[50px] block">
       <h3
@@ -96,6 +96,7 @@ group-focus-within:block"
   </div>
   {#each formSettings.fields as field}
     <button
+			data-test-id={field.name}
       class={`flex flex-col border gap-2 mb-2 w-full p-1 hover:bg-slate-200 rounded
         ${
           editingFieldID == field.id
@@ -110,6 +111,7 @@ group-focus-within:block"
           field.type == "CHECKBOX" ? "" : "w-full"
         } pointer-events-none`}
         type={field.type == "CHECKBOX" ? "checkbox" : "text"}
+				name={field.name}
         readonly
       />
     </button>
@@ -117,6 +119,7 @@ group-focus-within:block"
   <div class="ml-[-50px]">
     <span class="relative group pl-[50px] block">
       <div
+				data-test-id="submit-btn-field"
         data-el={`${formName}-button`}
         contenteditable={editorState == "EDIT_BUTTON"}
         tabindex="-1"
@@ -125,6 +128,7 @@ group-focus-within:block"
         {formSettings.submit.text}
       </div>
       <button
+				data-test-id="submit-btn-edit-btn"
         class="absolute left-0 top-0 p-2 rounded bg-transparent hover:bg-slate-200 hidden group-hover:block
 group-focus-within:block"
         on:click={() => editContentEditable("button")}

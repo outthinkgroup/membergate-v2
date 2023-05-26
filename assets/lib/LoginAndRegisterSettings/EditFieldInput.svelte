@@ -6,7 +6,7 @@
   export let editingFieldID: string;
 </script>
 
-<div>
+<div data-test-id={`${field.label}-${editingFieldID}`}>
   <label for={`${field.label}-${editingFieldID}`}>
     {field.label}
   </label>

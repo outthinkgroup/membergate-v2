@@ -11,6 +11,7 @@ declare global {
 			setMembergateSettings(settings:any):void;
 			RestartMockServer():void;
 			setPostMeta(id:any,meta:any):void;
+			adminLogin():void;
     }
 
   }
