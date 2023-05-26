@@ -24,7 +24,6 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
         return $hooks;
     }
 
-
     public function __construct(MembergateFormRenderer $render_form, ProtectedContentSettings $protect_content_settings, PostTypeSettings $post_type_settings) {
         $this->render_form = $render_form;
         $this->protect_content_settings = $protect_content_settings;
@@ -32,16 +31,24 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
     }
 
     //If user has opted out return;
-    private function can_use_modal() {
+    private function can_use_modal():bool {
         $use_modal_setting = $this->protect_content_settings->get_setting('show_modal');
         $c = new MemberCookie();
-        return ((!$use_modal_setting->has_error()) || $use_modal_setting->value == 'true') && !($c->user_has_cookie() || (is_user_logged_in() && wp_get_environment_type() == "production"));
+        return (
+            (!$use_modal_setting->has_error()) 
+            && $use_modal_setting->value == 'true'
+        ) && !(
+            $c->user_has_cookie() || 
+            (is_user_logged_in() && wp_get_environment_type() == "production")
+        );
     }
 
     public function mark_protected_with_queryparm($url, $post) {
         if (is_admin()) {
+            debug("Ran".__METHOD__."but its an admin url so bailing");
             return $url;
         }
+        debug("Should the Modal Render???????:" . (string)$this->can_use_modal());
         if (!$this->can_use_modal()) {
             return $url;
         }
@@ -60,9 +67,9 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
             return;
         }
         ?>
-		<template id="membergate-modal-template">
-			<?php $this->render_form->modal_markup(); ?>
-		</template>
+        <template id="membergate-modal-template">
+            <?php $this->render_form->modal_markup(); ?>
+        </template>
 <?php
     }
 }
