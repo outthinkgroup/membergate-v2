@@ -9,7 +9,7 @@
 </script>
 
 {#if $currentLocation == locations.displayBlockedContent.slug}
-  <div class="shadow bg-white p-6">
+  <div data-test-id="display" class="shadow bg-white p-6">
     <FormHeader {isLoading} {unSavedChanges}>
       Blocked Content Display Settings
     </FormHeader>
@@ -76,6 +76,7 @@
         </div>
 
         <button
+					data-test-id="save-display"
           class="px-4 py-2 rounded bg-cyan-600 text-white font-medium tracking-wide"
         >
           Save

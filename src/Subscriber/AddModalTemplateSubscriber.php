@@ -34,6 +34,10 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
     private function can_use_modal():bool {
         $use_modal_setting = $this->protect_content_settings->get_setting('show_modal');
         $c = new MemberCookie();
+
+        /**
+         * @todo this is BAD rewrite to be easier to understand
+        */
         return (
             (!$use_modal_setting->has_error()) 
             && $use_modal_setting->value == 'true'
