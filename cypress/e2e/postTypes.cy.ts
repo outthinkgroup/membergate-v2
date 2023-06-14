@@ -43,12 +43,17 @@ describe("Protect Posts types and posts set in admin",()=>{
 				}
 			}
 		})
+
 		cy.setPostMeta("http://consciousgrowthpartners.local/sample-page/","always")
+		cy.reload();
 		cy.get("nav a[href='http://consciousgrowthpartners.local/sample-page/']").click()
 		cy.url().should("contain","sample")
 		cy.get(".membergate-form__form").should("exist")
+
+		// testing that posts that are not specifically set will still allow it to be viewed	
 		cy.visit("http://consciousgrowthpartners.local/privacy-policy/")
-		cy.get(".membergate-form__form").should("exist")
+		cy.get(".membergate-form__form").should("not.exist")
+
 		cy.setPostMeta("http://consciousgrowthpartners.local/sample-page/","default") // resetting
 	})
 })
