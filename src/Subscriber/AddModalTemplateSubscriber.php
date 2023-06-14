@@ -31,7 +31,7 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
     }
 
     //If user has opted out return;
-    private function can_use_modal():bool {
+    private function can_use_modal(): bool {
         $use_modal_setting = $this->protect_content_settings->get_setting('show_modal');
         $c = new MemberCookie();
 
@@ -39,17 +39,17 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
          * @todo this is BAD rewrite to be easier to understand
         */
         return (
-            (!$use_modal_setting->has_error()) 
+            (!$use_modal_setting->has_error())
             && $use_modal_setting->value == 'true'
         ) && !(
-            $c->user_has_cookie() || 
+            $c->user_has_cookie() ||
             (is_user_logged_in() && wp_get_environment_type() == "production")
         );
     }
 
     public function mark_protected_with_queryparm($url, $post) {
         if (is_admin()) {
-            debug("Ran".__METHOD__."but its an admin url so bailing");
+            debug("Ran" . __METHOD__ . "but its an admin url so bailing");
             return $url;
         }
         debug("Should the Modal Render???????:" . (string)$this->can_use_modal());

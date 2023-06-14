@@ -7,7 +7,7 @@ use Membergate\Common\MemberCookie;
 class CheckSubscriptionStatus implements FormHandlerInterface {
     private $list_client;
 
-    private  $list_settings;
+    private $list_settings;
 
     private $form_renderer;
 
@@ -20,7 +20,12 @@ class CheckSubscriptionStatus implements FormHandlerInterface {
         $provider = $providers[$provider_key];
         $this->list_client = $provider['client'];
         $settings_class = $list_provider_settings->get_provider_settings_class();
-        $this->list_settings = new $settings_class();
+        if(class_exists($settings_class)){
+            $this->list_settings = new $settings_class();
+        } else{
+            $this->setup = false;
+            return;
+        }
 
         $this->form_renderer = $form_renderer;
 

@@ -73,7 +73,7 @@ class MockServerSettings implements EMSSettingsInterface {
             return new PossibleError(null, "$key is not a valid option: use $options_string");
         }
         $this->{$key} = $value;
-        if($value===0){
+        if ($value===0) {
             $value='0';
         }
         $res = update_option(self::PREFIX . $key, $value);
@@ -99,7 +99,7 @@ class MockServerSettings implements EMSSettingsInterface {
         }
         $option = (string)$this->{$key};
         $res = new PossibleError();
-        $res->value = sprintf("%s",$option);
+        $res->value = sprintf("%s", $option);
         return $res;
     }
 }

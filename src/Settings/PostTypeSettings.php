@@ -63,7 +63,8 @@ class PostTypeSettings {
             return false;
         }
 
-        return $default->value['protected'];
+        $is_protected = $default->value['protected'];
+        return $is_protected == 'true';
     }
 
     public function set_post_protected_meta($post_id, $value) {
@@ -80,14 +81,15 @@ class PostTypeSettings {
             $default_settings[$cur_ptype->name] = $this->create_default_ptype_settings($cur_ptype);
         }
 
-        return array_merge($default_settings, $this->post_types);
+        $ptypes = $this->post_types ?: [];
+        return array_merge($default_settings, $ptypes);
     }
 
     private function create_default_ptype_settings(\WP_Post_Type $ptype) {
         return [
             'slug' => $ptype->name,
             'name' => $ptype->label,
-            'protected' => false,
+            'protected' => 'false',
         ];
     }
 }

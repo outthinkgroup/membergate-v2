@@ -37,9 +37,16 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 
     public function add_global_vars() {
         $provider_settings_class = $this->list_provider_settings->get_provider_settings_class();
-        $provider_settings_class = new $provider_settings_class();
-        $settings = $provider_settings_class->get_settings();
-        if ($settings->has_error()) {
+
+        // In case the class no longer exists for some reason. 
+        // This can happen if the Mock server was selected, but the env is no longer in test mode
+        if(class_exists($provider_settings_class)){
+            $provider_settings_class = new $provider_settings_class();
+        } else {
+            $provider_settings_class = false;
+        }
+        $settings = $provider_settings_class ? $provider_settings_class->get_settings() : false;
+        if (!$provider_settings_class || !$settings || $settings->has_error()) {
             $api_key = '';
             $provider_name = '';
             $list_id = '';
@@ -47,7 +54,7 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
         } else {
             $settings = $settings->value;
             $api_key = $settings['apikey'] ? $settings['apikey'] : '';
-            $provider_name = $this->list_provider_settings->get_provider();
+            $provider_name = $this->list_provider_settings->get_provider() ?: '';
             $list_id = !is_null($settings['list_id']) ? $settings['list_id'] : '';
             $group_id = !is_null($settings['group_id']) ? $settings['group_id'] : '';
         }
@@ -62,18 +69,18 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
             }
         }
 
-        $providers = array_reduce($this->list_providers,function($acc, $provider){
+        $providers = array_reduce($this->list_providers, function ($acc, $provider) {
             $acc[$provider['client']::provider_name] = $provider['client']::label;
             return $acc;
-        },[]);
+        }, []);
 
         $pages = get_posts([
             'post_type' => 'page',
             'posts_per_page' => -1,
         ]);
+
         $page_list = array_reduce($pages, function ($list, $page) {
             $list[$page->ID] = $page->post_title;
-
             return $list;
         }, []);
 

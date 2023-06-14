@@ -53,7 +53,13 @@ class MailchimpSettings implements EMSSettingsInterface {
             }
         }
         if (isset($post_arr['group_id'])) {
-            $res = $this->update_setting('group_id', $post_arr['group_id']);
+
+            if($post_arr['group_id'] == 'null'){
+               $res = $this->update_setting('group_id', false);
+            } else {
+                $res = $this->update_setting('group_id', $post_arr['group_id']);
+            }
+
             if ($res->has_error()) {
                 $errors[] = $res->error;
             }

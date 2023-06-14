@@ -12,7 +12,7 @@ class MockClient {
     }
 
     public function get_lists() {
-        $res = $this->get(self::URL."/");
+        $res = $this->get(self::URL . "/");
         if (is_wp_error($res)) {
             return new PossibleError(null, $res->get_error_message());
         }
@@ -77,8 +77,8 @@ class MockClient {
             ],
         ]);
 
-        if($res['response']['code'] !== 200){
-            $err = new \WP_Error("BAD_REQUEST",$res['response']['message']);
+        if ($res['response']['code'] !== 200) {
+            $err = new \WP_Error("BAD_REQUEST", $res['response']['message']);
             return $err;
         }
         return $res;
@@ -92,8 +92,8 @@ class MockClient {
             ],
             'body'=> $body,
         ]);
-        if($res['response']['code'] !== 200){
-            $err = new \WP_Error("BAD_REQUEST",$res['response']['message']);
+        if ($res['response']['code'] !== 200) {
+            $err = new \WP_Error("BAD_REQUEST", $res['response']['message']);
             return $err;
         }
 

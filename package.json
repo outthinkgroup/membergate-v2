@@ -11,7 +11,7 @@
     "build": "yarn env:build && vite build",
     "env:build": "sed -i '' 's/development/production/g' env.php",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "test": "./../esp-mock-server/esp-mock-server &&  sed -i '' 's/production/development/g' env.php && cypress open",
+    "test": " sed -i '' 's/production/development/g' env.php && cypress open",
 	"start-test":"node ./../esp-mock-server/ . >./../esp-mock-server/logs.log 2>&1 &",
 	"end-test":"../esp-mock-server/req/kill"
   },

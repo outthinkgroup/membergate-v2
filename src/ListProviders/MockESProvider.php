@@ -52,20 +52,22 @@ class MockESProvider implements ListProvidersInterface {
         return $res;
     }
 
-    public function get_lists(){
+    public function get_lists() {
         $possible_err = $this->client->get_lists();
-        if($possible_err->has_error()){
+        if ($possible_err->has_error()) {
             return null;
         }
         return ['lists'=>$possible_err->value];
     }
 
-    public function get_groups( $list_id ) {
+    public function get_groups($list_id) {
         $possible_err = $this->client->get_tags((int)$list_id);
-        if($possible_err->has_error()){
+        if ($possible_err->has_error()) {
             return null;
         }
         debug(["hihihihhi",$possible_err]);
-        return array_map(function($tag){return ['id'=>$tag,'name'=>$tag];},$possible_err->value->tags);
+        return array_map(function ($tag) {
+            return ['id'=>$tag,'name'=>$tag];
+        }, $possible_err->value->tags);
     }
 }
