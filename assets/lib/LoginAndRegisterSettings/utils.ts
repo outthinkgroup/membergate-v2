@@ -19,6 +19,12 @@ export function getEmailFieldsFor(
       value: field.label,
       key: "label",
     },
+		{
+			type:"TEXT",
+			label:"Placeholder",
+			value:field.placeholder,
+			key:"placeholder",
+		},
   ];
 }
 
@@ -36,6 +42,12 @@ export function getNameFieldsFor(
       value: field.label,
       key: "label",
     },
+		{
+			type:"TEXT",
+			label:"Placeholder",
+			value:field.placeholder,
+			key:"placeholder",
+		},
     {
       type: "CHECKBOX",
       label: "Is Required",

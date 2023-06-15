@@ -130,7 +130,7 @@ class MembergateFormRenderer {
         ?>
         <div class="membergate-modal__layer">
             <div class="membergate-modal__modal membergate-parent">
-                    <button data-action="close">close</button>
+                <button data-action="close">close</button>
                 <?= $this->return_full_form_markup('form_template'); ?>
             </div>
         </div>

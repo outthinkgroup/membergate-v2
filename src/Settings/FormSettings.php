@@ -41,6 +41,7 @@ class FormSettings {
                         "type" => "NAME",
                         "id" => "wasdf23",
                         "label" => "Name",
+                        "placeholder"=>"your name",
                         "name" => "name",
                         "isRequired" => true
                     ],
@@ -48,7 +49,8 @@ class FormSettings {
                         "type" => "EMAIL",
                         "id" => "asdfase32",
                         "name" => "email",
-                        "label" => "Email"
+                        "label" => "Email",
+                        "placeholder"=>"email address",
                     ]
                 ],
                 "altFormLink" => [
@@ -69,12 +71,14 @@ class FormSettings {
                         "type" => "EMAIL",
                         "name" => "email",
                         "id" => "axca3",
-                        "label" => "Email"
+                        "label" => "Email",
+                        "placeholder"=> "email address",
                     ],
                     [
                         "type" => "NAME",
                         "id" => "23aass3",
                         "label" => "Name",
+                        "placeholder"=> "your name",
                         "name" => "name",
                         "isRequired" => true
                     ],
@@ -88,6 +92,7 @@ class FormSettings {
                         "type" => "TEXT",
                         "id" => "oppase3",
                         "label" => "Some text field",
+                        "placeholder"=>"",
                         "name" => "MERGE_FIELD",
                         "isRequired" => false
                     ]

@@ -40,21 +40,21 @@ class FieldRender {
     private function email_field($field) {
         ob_start(); ?>
 		<label for=<?= $field['id']; ?>><?= $field['label']; ?></label>
-		<input type="email" name="email" id=<?= $field['id']; ?> required />
+        <input type="email" placeholder="<?=$field['placeholder']?>" name="email" id=<?= $field['id']; ?> required />
 	<?php
         return ob_get_clean();
     }
     private function name_field($field) {
         ob_start(); ?>
 		<label for=<?= $field['id']; ?>><?= $field['label']; ?></label>
-		<input id=<?= $field['id']; ?> type="text" name="name" <?= $field['isRequired'] ? 'required' : '' ?> />
+		<input id="<?= $field['id']; ?>" type="text" placeholder="<?=$field['placeholder']?>" name="name" <?= $field['isRequired'] ? 'required' : '' ?> />
 	<?php
         return ob_get_clean();
     }
     private function text_field($field) {
         ob_start(); ?>
 		<label for=<?= $field['id']; ?>><?= $field['label']; ?></label>
-		<input id=<?= $field['id']; ?> type="text" name=<?= $field["name"] ?> <?= $field['isRequired'] ? 'required' : '' ?> />
+		<input id=<?= $field['id']; ?> type="text" name="<?= $field["name"] ?>" placeholder="<?=$field['placeholder']?>" <?= $field['isRequired'] ? 'required' : '' ?> />
 	<?php
         return ob_get_clean();
     }
