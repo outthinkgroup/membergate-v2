@@ -27,6 +27,7 @@ class ProtectPostMetaBoxSubscriber implements SubscriberInterface {
     }
 
     public function save_protect_metabox_meta($post_id) {
+        if(!isset($_POST[self::PROTECT_POST_KEY])) return;
         $this->post_type_settings->set_post_protected_meta($post_id, $_POST['membergate_should_protect_post']);
     }
 
