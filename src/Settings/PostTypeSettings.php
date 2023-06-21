@@ -64,7 +64,7 @@ class PostTypeSettings {
         }
 
         $is_protected = $default->value['protected'];
-        return $is_protected == 'true';
+        return $is_protected == 'true'; // converts it to boolean this is on purpose
     }
 
     public function set_post_protected_meta($post_id, $value) {

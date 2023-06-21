@@ -52,7 +52,6 @@ document.addEventListener("click", function (e: MouseEvent) {
       showModal(settings);
     } catch (e) {
       console.log("ERROR", e);
-      // window.location.href = anchorEl.href
     }
   }
 });

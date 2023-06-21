@@ -29,9 +29,9 @@ class SaveProtectedPostTypes implements AjaxInterface {
 
     public function handle() {
         $post_types = $this->post_type_settings->get_all();
-        foreach ($post_types	as $ptype => $data) {
+        foreach ($post_types as $ptype => $data) {
             if (isset($_POST[$ptype])) {
-                $data['protected'] = $_POST[$ptype];
+                $data['protected'] = $_POST[$ptype]; // this will be the string value of "true" or "false"
                 $post_types[$ptype] = $data;
             }
         }
@@ -41,7 +41,7 @@ class SaveProtectedPostTypes implements AjaxInterface {
             exit;
         }
 
-        $post_types = $this->post_type_settings->save($post_types);
+        $post_types = $this->post_type_settings->save($post_types); // this saves em all
         echo json_encode(['data' => $post_types, 'errors' => []]);
         exit;
     }

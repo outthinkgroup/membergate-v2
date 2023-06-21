@@ -3,7 +3,7 @@ import { ajax } from "./utils";
 /**
  * Gets all available lists / groups for the emsp
  */
-export default async function saveSettings(settings: {
+export default async function saveListSettings(settings: {
   apikey?: string;
   providerName?: string;
   list_id?: string;

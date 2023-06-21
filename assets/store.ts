@@ -1,10 +1,11 @@
 import { derived, readable, writable } from "svelte/store";
 import savePostTypes from "./api/savePostTypes";
-import saveSettings from "./api/saveSettings";
+import saveListSettings from "./api/saveSettings";
 import saveFormSettings from "./api/saveFormSettings";
 import saveBlockedContent from "./api/saveBlockedContent";
 
 export const completedSetup = writable(window.membergate.completedSetup);
+
 
 export const groups = writable(
   window.membergate.settings.emailService.groups ?? []
@@ -52,7 +53,7 @@ function createProviderStore() {
     subscribe,
     clear: () => set(null),
     save: async (updatedProvider: string) => {
-      const res = await saveSettings({ providerName: updatedProvider });
+      const res = await saveListSettings({ providerName: updatedProvider });
       if (res.errors.length) {
         console.log({ updatedProviderError: res.errors });
         return;
@@ -72,7 +73,7 @@ function createApikeyStore() {
     subscribe,
     clear: () => set(null),
     save: async (updatedApikey: string) => {
-      const res = await saveSettings({ apikey: updatedApikey });
+      const res = await saveListSettings({ apikey: updatedApikey });
       if (res.errors.length) {
         console.log({ updatedApikeyError: res.errors });
         return;
@@ -92,7 +93,7 @@ function createSelectedListStore() {
     subscribe,
     clear: () => set(null),
     save: async (updatedListId: string) => {
-      const res = await saveSettings({ list_id: updatedListId });
+      const res = await saveListSettings({ list_id: updatedListId });
       if (res.errors.length) {
         console.log({ updatedListIdError: res.errors });
         return;
@@ -112,7 +113,7 @@ function createSelectedGroupStore() {
     subscribe,
     clear: () => set(null),
     save: async (updatedGroupId: string) => {
-      const res = await saveSettings({ group_id: updatedGroupId });
+      const res = await saveListSettings({ group_id: updatedGroupId });
       if (res.errors.length) {
         console.log({ updatedGroupIdError: res.errors });
         return;
@@ -129,9 +130,9 @@ function createPostTypeStore() {
   const { subscribe, update } = writable(window.membergate.settings.postTypes);
   return {
     subscribe,
-    async save(slug: string, isProtected: boolean) {
+    async save(slug: string, isProtected: "false"|"true") {
       update((postTypes) => {
-        const value: "true" | "false" = isProtected ? "true" : "false";
+        const value: "true" | "false" = isProtected; 
         postTypes[slug].protected = value;
         return postTypes;
       });
@@ -143,7 +144,6 @@ function createPostTypeStore() {
 export const postTypes = createPostTypeStore();
 
 function createFormSettingsStore() {
-  console.log({ postTypes: window.membergate.settings.formSettings });
   const { subscribe, update } = writable(
     window.membergate.settings.formSettings
   );
@@ -190,3 +190,4 @@ function createBlockedContentStore() {
   };
 }
 export const blockedContent = createBlockedContentStore();
+

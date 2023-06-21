@@ -9,7 +9,7 @@
     "dev": "yarn env:dev && export APP_ENV=development && vite",
     "env:dev": "sed -i '' 's/production/development/g' env.php;",
     "build": "yarn env:build && vite build",
-    "env:build": "sed -i '' 's/development/production/g' env.php",
+    "env:build": "sed -i '' 's/development/production/g' env.php && sed -i '' 's/test/production/g' env.php",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "test": " sed -i '' 's/production/development/g' env.php && cypress open",
 	"start-test":"node ./../esp-mock-server/ . >./../esp-mock-server/logs.log 2>&1 &",

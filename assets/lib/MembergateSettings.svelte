@@ -8,6 +8,7 @@
   $: isCurrentLocation = function isCurrentLocation(location: string) {
     return $currentLocation == location;
   };
+
 </script>
 
 <h2 class="text-3xl mb-10">Your Settings</h2>

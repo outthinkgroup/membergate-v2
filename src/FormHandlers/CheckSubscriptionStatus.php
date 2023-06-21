@@ -34,7 +34,7 @@ class CheckSubscriptionStatus implements FormHandlerInterface {
             $this->setup = false;
         }
         $list_id = $this->list_settings->get_setting('list_id');
-        if ($list_id->has_error()) {
+        if ($list_id->has_error() || !$list_id->value) {
             $this->setup = false;
         }
         if ($this->setup) {

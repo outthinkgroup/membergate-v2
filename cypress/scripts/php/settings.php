@@ -36,7 +36,6 @@ if (isset($settings['reset_non_essential'])) {
     delete_option(FormSettings::FORM_KEY);
     unset($settings['reset_non_essential']);
 }
-debug($settings);
 foreach ($settings as $setting => $value) {
     $setting_conf = $membergate->get_container("settings.$setting");
     debug($setting_conf);

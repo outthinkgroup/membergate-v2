@@ -1,5 +1,5 @@
 <script lang="ts">
-  import saveSettings from "../../api/saveSettings";
+  import saveListSettings from "../../api/saveSettings";
   import { currentLocation } from "../../locationStore";
   import LabelSelect from "../form/LabelSelect.svelte";
   import EmsListSelect from "../form/EMSListSelect.svelte";
@@ -20,7 +20,7 @@
     <form
       on:submit|preventDefault={async () => {
         isLoading = true;
-        await saveSettings({
+        await saveListSettings({
           providerName: $provider,
           apikey: $apikey,
           group_id: $selectedGroup,
