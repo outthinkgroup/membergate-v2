@@ -27,7 +27,7 @@
 		bind:value
 	>
 		{#if defaultOption}
-			<option value={null} selected={(value==null || value =="")}>{defaultOption}</option>
+			<option selected={!value} value={''} >{defaultOption}</option>
 		{/if}
 
 		{#if useOptionGroups}
