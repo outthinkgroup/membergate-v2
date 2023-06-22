@@ -32,7 +32,7 @@ class AddSubscriberToService implements FormHandlerInterface {
             $this->setup = false;
         }
         $list_id = $this->list_settings->get_setting('list_id');
-        if ($list_id->has_error()|| !$list_id->value) { // cant do any thing if there is no list to subscribe to
+        if ($list_id->has_error()|| $list_id->value == "") { // cant do any thing if there is no list to subscribe to
             $this->setup = false;
         }
         if ($this->setup) {

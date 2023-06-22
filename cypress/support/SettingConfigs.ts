@@ -68,12 +68,14 @@ export const DefaultFormSettings = {
         action: "REGISTER"
     }
 };
+
 export const DefaultListProvider={
 	provider:"mockclient",
 	apikey:"TESTAPIKEY",
 	list_id:'0',
 	group_id:'tag 1',
 }
+
 export const DefaultPostTypes = {
 	post: {
 		protected: 'true',
@@ -86,5 +88,4 @@ export const TestBaseSettings = {
 	reset_non_essential:{},
 	list_provider:DefaultListProvider,
 	post_types: DefaultPostTypes,
-
 }

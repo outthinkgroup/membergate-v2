@@ -17,12 +17,12 @@ describe("[DEFAULT SETTINGS]:Non Logged in, with modals, on index page", () => {
 		cy.get(".membergate-modal__layer").should("be.visible");
 	});
 	it("fillout form be redirected to link clicked", () => {
-		cy.get("h2 a").first().click();
+		cy.get(".wp-block-post-template").contains("Hello world").click();
 		cy.get("[data-current-form='PrimaryForm']").first().click()
 		cy.wait(200)// this should not be needed
 		cy.get(".membergate-modal__layer input[type='email']")
 			.first()
-			.type("josh@email.com");
+			.type("test-subber-1@email.com");
 		cy.get(".membergate-modal__layer input[type='text']").first().type("josh");
 		cy.get(".membergate-modal__layer form button").click();
 		cy.url().should("contain", "hello-world");
