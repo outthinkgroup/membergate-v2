@@ -3,6 +3,7 @@
   import ToolTip from "../ToolTip.svelte";
   import FormBuilder from "./FormBuilder.svelte";
 
+	export let unSavedChanges:boolean = false;
   export let isPrimary: boolean = false;
   export let formSettings: any;
   const title = isPrimary ? "Primary Form" : "Secondary Form";
@@ -16,6 +17,9 @@
     : $FormSettingsStore.PrimaryForm.action == "LOGIN";
 
   let showEditor: () => void;
+
+	// if formSettings change this notifies user they need to save
+	$:formSettings,unSavedChanges = true 
 </script>
 
 <div
