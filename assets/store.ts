@@ -1,4 +1,4 @@
-import { derived, readable, writable } from "svelte/store";
+import { derived, readable, get, writable } from "svelte/store";
 import savePostTypes from "./api/savePostTypes";
 import saveListSettings from "./api/saveSettings";
 import saveFormSettings from "./api/saveFormSettings";
@@ -150,10 +150,7 @@ function createFormSettingsStore() {
   return {
     subscribe,
     async save() {
-      let p: Record<string, any>;
-      subscribe((fs) => {
-        p = fs;
-      });
+      let p: Record<string, any> = get(formSettings)
       const res = await saveFormSettings(p);
       return res;
     },
@@ -174,10 +171,7 @@ function createBlockedContentStore() {
   return {
     subscribe,
     async save() {
-      let p: Record<string, string>;
-      subscribe((fs) => {
-        p = fs;
-      });
+      let p: Record<string, string> = get(blockedContent);
       const res = await saveBlockedContent(p);
       return res;
     },
