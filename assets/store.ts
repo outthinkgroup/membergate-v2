@@ -1,4 +1,4 @@
-import { derived, readable, get, writable } from "svelte/store";
+import { derived, get, writable } from "svelte/store";
 import savePostTypes from "./api/savePostTypes";
 import saveListSettings from "./api/saveSettings";
 import saveFormSettings from "./api/saveFormSettings";

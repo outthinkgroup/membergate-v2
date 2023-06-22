@@ -1,3 +1,4 @@
+import { get } from "svelte/store";
 import {
   apikey,
   groups,
@@ -7,14 +8,13 @@ import {
   selectedList,
 } from "../store";
 // import {} from "../api"
+//
 export function selectValue(e: Event) {
   return [...e.target.childNodes].find((el) => el.selected).value;
 }
 
 export async function updateProvider(value) {
-  let oldVal;
-
-  provider.subscribe((val) => (oldVal = val));
+  let oldVal = get(provider)
 
   if (value !== oldVal) {
     await provider.save(value);
@@ -25,32 +25,26 @@ export async function updateProvider(value) {
 }
 
 export async function updateApiKey(value) {
-  let oldKey;
-  apikey.subscribe((val) => (oldKey = val));
-
+  let oldKey = get(apikey)
   if (oldKey !== value) {
     await apikey.save(value);
     selectedGroup.clear();
     selectedList.clear();
   }
-
   return 1;
 }
 
-export function updateList(value) {
-  let oldList;
-  selectedList.subscribe((val) => (oldList = val));
-
+export async function updateList(value) {
+  let oldList = get(selectedList)
   if (oldList !== value) {
-    selectedList.save(value);
+    await selectedList.save(value);
     selectedGroup.clear();
   }
 }
-export function updateGroup(value) {
-  let oldGroup;
-  selectedGroup.subscribe((val) => (oldGroup = val));
 
+export async function updateGroup(value) {
+  let oldGroup = get(selectedGroup)
   if (oldGroup !== value) {
-    selectedGroup.save(value);
+    await selectedGroup.save(value);
   }
 }
