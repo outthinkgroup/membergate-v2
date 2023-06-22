@@ -6,6 +6,7 @@ export const DefaultFormSettings = {
             {
                 type: "NAME",
                 id: "wasdf23",
+								placeholder:"text field",
                 label: "Name",
                 name: "name",
                 isRequired: true
@@ -14,6 +15,7 @@ export const DefaultFormSettings = {
                 type: "EMAIL",
                 id: "asdfase32",
                 name: "email",
+								placeholder:"text field",
                 label: "Email"
             }
         ],
@@ -35,11 +37,13 @@ export const DefaultFormSettings = {
                 type: "EMAIL",
                 name: "email",
                 id: "axca3",
+								placeholder:"text field",
                 label: "Email"
             },
             {
                 type: "NAME",
                 id: "23aass3",
+								placeholder:"text field",
                 label: "Name",
                 name: "name",
                 isRequired: true
@@ -54,6 +58,7 @@ export const DefaultFormSettings = {
                 type: "TEXT",
                 id: "oppase3",
                 label: "Some text field",
+								placeholder:"text field",
                 name: "MERGE_FIELD",
                 isRequired: false
             }

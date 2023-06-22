@@ -21,7 +21,7 @@
   <div class="shadow bg-white p-6">
     <FormHeader {isLoading}>Protected Content Settings</FormHeader>
     <p class="mb-4">Choose which post types by default will be protected</p>
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 mb-3">
       {#each Object.keys($postTypes) as ptype}
         <div class="">
           <label for={ptype}>
@@ -38,5 +38,8 @@
         </div>
       {/each}
     </div>
+		<div>
+			<p class="text-cyan-800">These settings save automatically when they are changed</p>
+		</div>
   </div>
 {/if}

@@ -6,6 +6,7 @@
 
 	let isLoading = false;
 	let unSavedChanges = false;
+
 </script>
 
 {#if $currentLocation == "form-settings"}
@@ -13,6 +14,7 @@
 		<FormHeader {isLoading} {unSavedChanges}>
 			Login and Register Settings
 		</FormHeader>
+		<p class="mb-4">Set up the forms for registering and logging in</p>
 		<div class="mb-4">
 			<h3 class="mb-2 font-bold text-cyan-700">Forms</h3>
 			<div class="flex gap-4">

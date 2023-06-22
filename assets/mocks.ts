@@ -7,6 +7,7 @@ export const mockFormSettings = {
       {
         type: "NAME",
         id: "wasdf23",
+				placeholder:"text field",
         label: "Name",
         name: "name",
         isRequired: true,
@@ -15,6 +16,7 @@ export const mockFormSettings = {
         type: "EMAIL",
         id: "asdfase32",
         name: "email",
+				placeholder:"text field",
         label: "Email",
       },
     ],
@@ -36,6 +38,7 @@ export const mockFormSettings = {
       {
         type: "EMAIL",
         name: "email",
+				placeholder:"text field",
         id: "axca3",
         label: "Email",
       },
@@ -44,6 +47,7 @@ export const mockFormSettings = {
         id: "23aass3",
         label: "Name",
         name: "name",
+				placeholder:"text field",
         isRequired: true,
       },
       {
@@ -54,6 +58,7 @@ export const mockFormSettings = {
       },
       {
         type: "TEXT",
+				placeholder:"text field",
         id: "oppase3",
         label: "Some text field",
         name: "MERGE_FIELD",

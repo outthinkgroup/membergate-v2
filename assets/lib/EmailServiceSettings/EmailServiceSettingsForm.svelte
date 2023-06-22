@@ -17,6 +17,7 @@
 {#if $currentLocation == "email-service-settings"}
   <div class="shadow bg-white p-6">
     <FormHeader {isLoading}>Email Service Settings</FormHeader>
+		<p class="mb-4">Where should we send your subscribers</p>
     <form
       on:submit|preventDefault={async () => {
         isLoading = true;
@@ -57,11 +58,7 @@
           }}
         />
         <div>
-          <button
-            class="px-4 py-2 rounded bg-cyan-600 text-white font-medium tracking-wide"
-          >
-            Save
-          </button>
+					<p class="text-cyan-800">These settings save automatically when they are changed</p>
         </div>
       </div>
     </form>
