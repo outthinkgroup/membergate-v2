@@ -7,8 +7,7 @@ use Membergate\RenderForm\MembergateFormRenderer;
 class SignupShortcode implements ShortcodeInterface {
     private MembergateFormRenderer $form_renderer;
 
-    public function __construct($deps) {
-        ['form_renderer' => $form_renderer] = $deps;
+    public function __construct(MembergateFormRenderer $form_renderer) {
         $this->form_renderer = $form_renderer;
     }
 

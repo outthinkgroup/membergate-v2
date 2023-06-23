@@ -3,6 +3,9 @@
 namespace Membergate\FormHandlers;
 
 use Membergate\Common\MemberCookie;
+use Membergate\Configuration\ProvidersConfiguration;
+use Membergate\RenderForm\MembergateFormRenderer;
+use Membergate\Settings\ListProviderSettings;
 
 class AddSubscriberToService implements FormHandlerInterface {
     private $list_client;
@@ -14,9 +17,10 @@ class AddSubscriberToService implements FormHandlerInterface {
     private $list_id;
 
     private $form_renderer;
-    public function __construct($list_provider_settings, $providers, $form_renderer) {
+
+    public function __construct(ListProviderSettings $list_provider_settings, ProvidersConfiguration $providers, MembergateFormRenderer $form_renderer) {
         $provider_key = $list_provider_settings->get_provider();
-        $provider = $providers[$provider_key];
+        $provider = $providers->providers()[$provider_key];
         $this->list_client = $provider['client'];
         $this->form_renderer = $form_renderer;
         $settings_class = $list_provider_settings->get_provider_settings_class();

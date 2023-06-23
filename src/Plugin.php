@@ -2,7 +2,8 @@
 
 namespace Membergate;
 
-use Illuminate\Container\Container; 
+use Illuminate\Container\Container;
+use Membergate\Admin\AdminPage;
 use Membergate\Configuration\EventManagementConfiguration;
 use Membergate\Configuration\FormHandlerConfiguration;
 use Membergate\Configuration\MembergateFormConfiguration;
@@ -12,6 +13,8 @@ use Membergate\EventManagement\EventManager;
 use Membergate\Settings\ListProviderSettings;
 use Membergate\FormHandlers\AddSubscriberToService;
 use Membergate\FormHandlers\CheckSubscriptionStatus;
+use Membergate\RenderForm\MembergateFormRenderer;
+use Membergate\Settings\FormSettings;
 
         //     'plugin_basename' => plugin_basename($file),
         //     'plugin_domain' => self::DOMAIN,
@@ -63,11 +66,16 @@ class Plugin {
         // });
         //
         $classes = [
-            // SettingsConfiguration::list(),
-            // ProvidersConfiguration::list(),
-            // MembergateFormConfiguration::list(),
-            // FormHandlerConfiguration::list(),
         ];
+
+        $this->container->bind(AdminPage::class, function(Container $container){
+                $vars = $container->make('Vars');
+                return new AdminPage($vars['template_path'], $vars['plugin_path']);
+            });
+        $this->container->bind(MembergateFormRenderer::class, function(Container $container){
+            $vars = $container->make('Vars');
+            return new MembergateFormRenderer($container->make(FormSettings::class), $vars['template_path']);
+        });
 
         //subscribers
         $emc = new EventManagementConfiguration;

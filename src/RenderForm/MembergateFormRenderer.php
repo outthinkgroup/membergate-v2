@@ -2,12 +2,14 @@
 
 namespace Membergate\RenderForm;
 
+use Membergate\Settings\FormSettings;
+
 class MembergateFormRenderer {
     private $form_settings;
     private $template_path;
     private $errors = [];
 
-    public function __construct($form_settings, $template_path) {
+    public function __construct(FormSettings $form_settings, $template_path) {
         $this->form_settings = $form_settings->get_all();
         $this->template_path = $template_path;
     }
