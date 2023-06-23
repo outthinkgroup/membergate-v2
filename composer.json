@@ -12,7 +12,8 @@
 		}
 	],
 	"require": {
-		"myclabs/php-enum": "^1.8"
+		"myclabs/php-enum": "^1.8",
+		"illuminate/container": "^8.83"
 	},
 	"require-dev": {
 		"laravel/pint": "^1.5"
