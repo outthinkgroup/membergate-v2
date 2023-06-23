@@ -17,7 +17,7 @@ class MemberCookie {
             '/',
             '',
             false,
-            true,
+            false, // due to modal needing to access the cookie we need to set HTTPOnly to false
         );
     }
 }

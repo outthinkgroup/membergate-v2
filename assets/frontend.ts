@@ -1,5 +1,6 @@
 import "./styles/forms.css";
 import "./styles/modal.css";
+import { getCookie } from "./utils/utils";
 
 let template: HTMLTemplateElement;
 document.addEventListener("DOMContentLoaded", function () {
@@ -37,7 +38,11 @@ document.addEventListener("click", function (e: MouseEvent) {
       "a[href*='membergate_protect'], a[href*='membergate_protect'] *"
     )
   ) {
+		if(getCookie("membergate_member")) {// if we have a cookie then stop the modal
+			return	
+		}; 
     e.preventDefault();
+
     const el = e.target as HTMLElement;
     const anchorEl =
       el.nodeName == "A"
