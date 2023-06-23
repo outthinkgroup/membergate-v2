@@ -2,6 +2,9 @@
 
 namespace Membergate\AJAX;
 
+use Membergate\RenderForm\MembergateFormRenderer;
+use Membergate\Settings\FormSettings;
+
 class FetchAltForm implements AjaxInterface {
     private $form_renderer;
     private $form_settings;
@@ -9,7 +12,7 @@ class FetchAltForm implements AjaxInterface {
     public $dependencies = [ 'settings.forms','form_renderer'];
     public const ACTION = 'fetch_alt_form';
 
-    public function set_dependencies($form_settings, $form_renderer) {
+    public function set_dependencies(FormSettings $form_settings, MembergateFormRenderer $form_renderer) {
         $this->form_renderer = $form_renderer;
         $this->form_settings = $form_settings;
     }

@@ -11,11 +11,8 @@ class SaveProtectedPostTypes implements AjaxInterface {
 
     public $dependencies = ['post_type_settings'];
 
-    public function __construct() {
-        // $this->post_type_settings = $post_type_settings;
-    }
 
-    public function set_dependencies(PostTypeSettings $post_type_settings) {
+    public function __construct(PostTypeSettings $post_type_settings) {
         $this->post_type_settings = $post_type_settings;
     }
 

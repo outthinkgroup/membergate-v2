@@ -2,6 +2,7 @@
 
 namespace Membergate\AJAX;
 
+use Membergate\Configuration\ProvidersConfiguration;
 use Membergate\Settings\ListProviderSettings;
 
 class FetchGroupsFromProvider implements AjaxInterface {
@@ -13,13 +14,11 @@ class FetchGroupsFromProvider implements AjaxInterface {
 
     private $providers;
 
-    public function __construct() {
+    public function __construct(ListProviderSettings $list_settings, ProvidersConfiguration $providers) {
+        $this->list_settings = $list_settings;
+        $this->providers = $providers->providers();
     }
 
-    public function set_dependencies($list_settings, $providers) {
-        $this->list_settings = $list_settings;
-        $this->providers = $providers;
-    }
 
     public function get_action(): string {
         return self::ACTION;

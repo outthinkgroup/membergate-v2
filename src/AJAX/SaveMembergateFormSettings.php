@@ -11,11 +11,8 @@ class SaveMembergateFormSettings implements AjaxInterface {
 
     public $dependencies = ['settings.forms'];
 
-    public function __construct() {
-        // $this->post_type_settings = $post_type_settings;
-    }
 
-    public function set_dependencies(FormSettings $form_settings) {
+    public function __construct(FormSettings $form_settings) {
         $this->form_settings = $form_settings;
     }
 

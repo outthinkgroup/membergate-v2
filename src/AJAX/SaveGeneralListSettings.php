@@ -11,10 +11,8 @@ class SaveGeneralListSettings implements AjaxInterface {
 
     private ListProviderSettings $list_settings;
 
-    public function __construct() {
-    }
 
-    public function set_dependencies($list_settings) {
+    public function __construct(ListProviderSettings $list_settings) {
         $this->list_settings = $list_settings;
     }
 
