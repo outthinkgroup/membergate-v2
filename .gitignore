@@ -2,3 +2,5 @@ node_modules
 vendor
 _dev
 assets/dist/
+
+init.lua
