@@ -50,7 +50,7 @@ class EventManagementConfiguration {
                 $class = $class_cfg;
             }
             
-            $container->get($class);
+            // $container->make($class);
             if($tag){
                 $container->tag($class,$tag);
             }

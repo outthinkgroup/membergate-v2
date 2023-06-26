@@ -2,9 +2,13 @@
 
 namespace Membergate\Subscriber;
 
+use Membergate\Configuration\ProvidersConfiguration;
 use Membergate\EventManagement\SubscriberInterface;
+use Membergate\Settings\AccountSettings;
+use Membergate\Settings\FormSettings;
 use Membergate\Settings\ListProviderSettings;
 use Membergate\Settings\PostTypeSettings;
+use Membergate\Settings\ProtectedContentSettings;
 
 class ServerRenderSettingsSubscriber implements SubscriberInterface {
     private ListProviderSettings $list_provider_settings;
@@ -19,10 +23,17 @@ class ServerRenderSettingsSubscriber implements SubscriberInterface {
 
     private $protect_content_settings;
 
-    public function __construct($list_provider_settings, $list_providers, $account_settings, $post_type_settings, $form_settings, $protect_content_settings) {
+    public function __construct(
+        ListProviderSettings $list_provider_settings,
+        ProvidersConfiguration $list_providers,
+        AccountSettings $account_settings,
+        PostTypeSettings $post_type_settings,
+        FormSettings $form_settings,
+        ProtectedContentSettings $protect_content_settings
+    ) {
         $this->list_provider_settings = $list_provider_settings;
         $this->protect_content_settings = $protect_content_settings;
-        $this->list_providers = $list_providers;
+        $this->list_providers = $list_providers->providers();
         $this->account_settings = $account_settings;
         $this->post_type_settings = $post_type_settings;
         $this->form_settings = $form_settings;

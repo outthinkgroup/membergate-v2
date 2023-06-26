@@ -10,7 +10,13 @@ use Membergate\AJAX\SaveDisplayProtectedContent;
 use Membergate\AJAX\SaveGeneralListSettings;
 use Membergate\AJAX\SaveMembergateFormSettings;
 use Membergate\AJAX\SaveProtectedPostTypes;
+use Membergate\Configuration\ProvidersConfiguration;
 use Membergate\EventManagement\SubscriberInterface;
+use Membergate\RenderForm\MembergateFormRenderer;
+use Membergate\Settings\FormSettings;
+use Membergate\Settings\ListProviderSettings;
+use Membergate\Settings\PostTypeSettings;
+use Membergate\Settings\ProtectedContentSettings;
 
 class AdminPageAJaxSubscriber implements SubscriberInterface {
     public $list_provider_settings;
@@ -25,9 +31,16 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
 
     public $form_renderer;
 
-    private $containers = [];
+    private $container;
 
-    public function __construct($list_provider_settings, $providers, $post_type_settings, $form_settings, $protected_content_settings, $form_renderer) {
+    public function __construct(
+        ListProviderSettings $list_provider_settings,
+        ProvidersConfiguration $providers,
+        PostTypeSettings $post_type_settings,
+        FormSettings $form_settings,
+        ProtectedContentSettings $protected_content_settings,
+        MembergateFormRenderer $form_renderer
+    ) {
         $this->list_provider_settings = $list_provider_settings;
         $this->providers_list = $providers;
         $this->post_type_settings = $post_type_settings;
@@ -35,14 +48,16 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
         $this->protected_content_settings = $protected_content_settings;
         $this->form_renderer = $form_renderer;
 
-        $this->containers = [
-            'list_settings' => $this->list_provider_settings,
-            'providers' => $this->providers_list,
-            'post_type_settings' => $this->post_type_settings,
-            'settings.forms' => $this->form_settings,
-            'settings.protected_content' => $this->protected_content_settings,
-            'form_renderer' =>$this->form_renderer,
-        ];
+        // $this->containers = [
+        //     'list_settings' => $this->list_provider_settings,
+        //     'providers' => $this->providers_list,
+        //     'post_type_settings' => $this->post_type_settings,
+        //     'settings.forms' => $this->form_settings,
+        //     'settings.protected_content' => $this->protected_content_settings,
+        //     'form_renderer' =>$this->form_renderer,
+        // ];
+        global $membergate;
+        $this->container = $membergate->get_container();
     }
 
     public static function get_subscribed_events(): array {
@@ -71,12 +86,8 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
             error_log('no endpoint was found for: ' . $_REQUEST['mg_action']);
             exit;
         }
-        $handlerClass = new $endpoint();
-        $containers = $this->containers;
-        $requires = array_map(function ($dep) use ($containers) {
-            return $containers[$dep];
-        }, $handlerClass->dependencies);
-        $handlerClass->set_dependencies(...$requires);
+        
+        $handlerClass = $this->container->make($endpoint);
         $handlerClass->handle();
     }
 
@@ -94,12 +105,7 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
             exit;
         }
 
-        $handlerClass = new $endpoint();
-        $containers = $this->containers;
-        $requires = array_map(function ($dep) use ($containers) {
-            return $containers[$dep];
-        }, $handlerClass->dependencies);
-        $handlerClass->set_dependencies(...$requires);
+        $handlerClass = $this->container->make($endpoint);
         $handlerClass->handle();
     }
 }

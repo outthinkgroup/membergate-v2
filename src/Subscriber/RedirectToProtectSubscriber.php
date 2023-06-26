@@ -15,7 +15,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
 
     private ProtectedContentSettings $protected_content_settings;
 
-    public function __construct(PostTypeSettings $post_type_settings, $form_renderer, $protected_content_settings) {
+    public function __construct(PostTypeSettings $post_type_settings, MembergateFormRenderer $form_renderer, ProtectedContentSettings $protected_content_settings) {
         $this->post_type_settings = $post_type_settings;
         $this->form_renderer = $form_renderer;
         $this->protected_content_settings = $protected_content_settings;

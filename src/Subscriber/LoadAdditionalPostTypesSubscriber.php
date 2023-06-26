@@ -8,7 +8,7 @@ use Membergate\Settings\PostTypeSettings;
 class LoadAdditionalPostTypesSubscriber implements SubscriberInterface {
     private PostTypeSettings $post_type_settings;
 
-    public function __construct($post_type_settings) {
+    public function __construct(PostTypeSettings $post_type_settings) {
         $this->post_type_settings = $post_type_settings;
     }
 

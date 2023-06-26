@@ -9,7 +9,7 @@ class MembergateFormRenderer {
     private $template_path;
     private $errors = [];
 
-    public function __construct(FormSettings $form_settings, $template_path) {
+    public function __construct(FormSettings $form_settings, string $template_path) {
         $this->form_settings = $form_settings->get_all();
         $this->template_path = $template_path;
     }

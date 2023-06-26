@@ -15,6 +15,7 @@ use Membergate\FormHandlers\AddSubscriberToService;
 use Membergate\FormHandlers\CheckSubscriptionStatus;
 use Membergate\RenderForm\MembergateFormRenderer;
 use Membergate\Settings\FormSettings;
+use Membergate\Subscriber\AdminSubscriber;
 
         //     'plugin_basename' => plugin_basename($file),
         //     'plugin_domain' => self::DOMAIN,
@@ -43,15 +44,15 @@ class Plugin {
     }
 
     public function get_plugin_path() {
-        return $this->container['plugin_path'];
+        return $this->container->make('Vars')['plugin_path'];
     }
 
     public function get_plugin_url() {
-        return $this->container['plugin_url'];
+        return $this->container->make('Vars')['plugin_url'];
     }
 
-    public function get_container($key) {
-        return $this->container[$key];
+    public function get_container() {
+        return $this->container;
     }
 
     private function make_services() {
@@ -69,14 +70,19 @@ class Plugin {
         ];
 
         $this->container->bind(AdminPage::class, function(Container $container){
-                $vars = $container->make('Vars');
-                return new AdminPage($vars['template_path'], $vars['plugin_path']);
-            });
-        $this->container->bind(MembergateFormRenderer::class, function(Container $container){
-            $template_path = "/templates";
+            $vars = $container->make('Vars');
+            return new AdminPage("/templates/", $vars['plugin_path']);
+        });
+        $this->container->singleton(MembergateFormRenderer::class, function(Container $container){
+            $template_path = $container->make('Vars')['plugin_path']."/templates/";
             $template_path = apply_filters('membergate_form_template_path',$template_path);
             return new MembergateFormRenderer($container->make(FormSettings::class), $template_path);
         });
+        $this->container->bind(AdminSubscriber::class, function (Container $container){
+            return new AdminSubscriber($container->get('Vars')['plugin_path']);
+        });
+
+
 
         //subscribers
         $emc = new EventManagementConfiguration;

@@ -3,7 +3,6 @@
 namespace Membergate\Shortcode;
 
 interface ShortcodeInterface {
-    public function __construct(array $deps);
 
     public function run(array $atts): string;
 
