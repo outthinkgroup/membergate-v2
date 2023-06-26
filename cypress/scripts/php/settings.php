@@ -13,6 +13,13 @@ if (!is_readable($args[0])) {
 $json = file_get_contents($args[0]);
 $settings = json_decode($json, true);
 error_log(print_r($settings, true));
+$setting_classes = [
+    'list_provider'=> ListProviderSettings::class,
+    'post_types'=>PostTypeSettings::class,
+    'protected_content'=>ProtectedContentSettings::class,
+    'forms'=>FormSettings::class,
+    'account'=>AccountSettings::class,
+];
 /*
     'settings.list_provider'
     'settings.post_types'
@@ -37,7 +44,7 @@ if (isset($settings['reset_non_essential'])) {
     unset($settings['reset_non_essential']);
 }
 foreach ($settings as $setting => $value) {
-    $setting_conf = $membergate->get_container("settings.$setting");
+    $setting_conf = $membergate->get_container()->make($setting_classes[$setting]);
     debug($setting_conf);
     if ($setting == 'list_provider') {
         if ($provider = $value['membergate_provider']) {

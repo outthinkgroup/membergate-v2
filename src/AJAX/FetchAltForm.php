@@ -8,14 +8,12 @@ use Membergate\Settings\FormSettings;
 class FetchAltForm implements AjaxInterface {
     private $form_renderer;
     private $form_settings;
-
-    public $dependencies = [ 'settings.forms','form_renderer'];
-    public const ACTION = 'fetch_alt_form';
-
-    public function set_dependencies(FormSettings $form_settings, MembergateFormRenderer $form_renderer) {
-        $this->form_renderer = $form_renderer;
+    public function __construct(MembergateFormRenderer $form_renderer, FormSettings $form_settings){
+        $this->form_renderer= $form_renderer;
         $this->form_settings = $form_settings;
     }
+
+    public const ACTION = 'fetch_alt_form';
 
     public function get_action(): string {
         return self::ACTION;
