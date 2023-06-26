@@ -26,6 +26,10 @@ declare global {
       };
     };
     publicMembergate: {
+			fns: {
+				showModal:(settings: { linkHref: string; linkTitle: string })=>void;
+				removeModal:()=>void;
+			}
       url: string;
     };
   }

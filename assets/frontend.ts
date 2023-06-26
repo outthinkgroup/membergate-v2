@@ -157,3 +157,5 @@ async function switchForm(el: HTMLElement) {
     .forEach(replaceValueWithSettings);
   currentWrapper.replaceWith(newForm);
 }
+
+window.publicMembergate.fns = {showModal, removeModal};
