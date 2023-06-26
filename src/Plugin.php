@@ -57,27 +57,12 @@ class Plugin {
 
     private function make_services() {
 
-        // $this->container->bind(ListProviderSettings::class, function(Container $container){
-        //     return new ListProviderSettings($container->make(ProvidersConfiguration::class));
-        // });
-        // $this->container->bind(AddSubscriberToService::class, function(Container $container){
-        //     return new AddSubscriberToService(
-        //         $container->make(ListProviderSettings::classj
-        //     );
-        // });
-        //
-        $classes = [
-        ];
-
-        $this->container->bind(AdminPage::class, function(Container $container){
-            $vars = $container->make('Vars');
-            return new AdminPage("/templates/", $vars['plugin_path']);
-        });
         $this->container->singleton(MembergateFormRenderer::class, function(Container $container){
             $template_path = $container->make('Vars')['plugin_path']."/templates/";
             $template_path = apply_filters('membergate_form_template_path',$template_path);
             return new MembergateFormRenderer($container->make(FormSettings::class), $template_path);
         });
+
         $this->container->bind(AdminSubscriber::class, function (Container $container){
             return new AdminSubscriber($container->get('Vars')['plugin_path']);
         });
