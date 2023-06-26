@@ -2,6 +2,8 @@
 
 namespace Membergate\Settings;
 
+use Membergate\Configuration\ProvidersConfiguration;
+
 class ListProviderSettings {
     public const PROVIDER_NAME = 'membergate_provider';
 
@@ -11,8 +13,8 @@ class ListProviderSettings {
 
     public $post_type_list_settings;
 
-    public function __construct($provider_list) {
-        $this->provider_list = $provider_list;
+    public function __construct(ProvidersConfiguration $provider_list) {
+        $this->provider_list = $provider_list->providers();
         $this->provider = get_option(self::PROVIDER_NAME, 'mailchimp');
     }
 

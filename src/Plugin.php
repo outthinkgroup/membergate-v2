@@ -73,29 +73,14 @@ class Plugin {
                 return new AdminPage($vars['template_path'], $vars['plugin_path']);
             });
         $this->container->bind(MembergateFormRenderer::class, function(Container $container){
-            $vars = $container->make('Vars');
-            return new MembergateFormRenderer($container->make(FormSettings::class), $vars['template_path']);
+            $template_path = "/templates";
+            $template_path = apply_filters('membergate_form_template_path',$template_path);
+            return new MembergateFormRenderer($container->make(FormSettings::class), $template_path);
         });
 
         //subscribers
         $emc = new EventManagementConfiguration;
-        foreach($emc->get_subscribers() as $subber){
-            $classes[] = [$subber, 'subscriber'];
-        } 
-        foreach ($classes as $class_cfg) {
-            $tag = null;
-            if(is_array($class_cfg)){
-                $tag = $class_cfg[1];
-                $class = $class_cfg[0];
-            } else {
-                $class = $class_cfg;
-            }
-            
-            $this->container->get($class);
-            if($tag){
-                $this->container->tag($class,$tag);
-            }
-        }
+        $emc->make_subscribers($this->container);
     }
 
     public function load() {

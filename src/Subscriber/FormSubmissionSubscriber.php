@@ -3,14 +3,19 @@
 namespace Membergate\Subscriber;
 
 use Membergate\EventManagement\SubscriberInterface;
+use Membergate\FormHandlers\AddSubscriberToService;
+use Membergate\FormHandlers\CheckSubscriptionStatus;
 
 class FormSubmissionSubscriber implements SubscriberInterface {
     protected $post_var = 'membergate_form';
 
     public $form_handlers;
 
-    public function __construct($form_handlers) {
-        $this->form_handlers = $form_handlers;
+    public function __construct(AddSubscriberToService $add_subscriber, CheckSubscriptionStatus $check_subscriber_status) {
+        $this->form_handlers = [
+            "add_subscriber_to_service" => $add_subscriber,
+            "check_if_subscriber" => $check_subscriber_status,
+        ];
     }
 
     public static function get_subscribed_events(): array {

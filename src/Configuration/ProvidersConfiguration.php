@@ -15,8 +15,8 @@ class ProvidersConfiguration {
                 'settings' => MailchimpSettings::class,
             ],
             MockESProvider::provider_name => [
-                MockESProvider::class,
-                MockServerSettings::class,
+                'client'=>MockESProvider::class,
+                'settings'=>MockServerSettings::class,
             ],
         ];
     }
