@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Settings\AccountSettings;
 use Membergate\Settings\FormSettings;
 use Membergate\Settings\ListProviderSettings;
@@ -14,11 +18,11 @@ $json = file_get_contents($args[0]);
 $settings = json_decode($json, true);
 error_log(print_r($settings, true));
 $setting_classes = [
-    'list_provider'=> ListProviderSettings::class,
-    'post_types'=>PostTypeSettings::class,
-    'protected_content'=>ProtectedContentSettings::class,
-    'forms'=>FormSettings::class,
-    'account'=>AccountSettings::class,
+    'list_provider' => ListProviderSettings::class,
+    'post_types' => PostTypeSettings::class,
+    'protected_content' => ProtectedContentSettings::class,
+    'forms' => FormSettings::class,
+    'account' => AccountSettings::class,
 ];
 /*
     'settings.list_provider'

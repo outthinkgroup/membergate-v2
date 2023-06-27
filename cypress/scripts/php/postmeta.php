@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Settings\PostTypeSettings;
 
 global $membergate, $wpdb;
@@ -15,7 +19,7 @@ if (!isset($args[1])) {
 }
 
 $meta = $args[1];
-if (!in_array($meta, ["default","always","never"])) {
+if (!in_array($meta, ["default", "always", "never"])) {
     throw new \Exception("Not valid meta");
 }
 $pts = new PostTypeSettings();
