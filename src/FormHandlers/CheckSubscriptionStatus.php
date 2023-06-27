@@ -2,6 +2,10 @@
 
 namespace Membergate\FormHandlers;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Common\MemberCookie;
 use Membergate\Configuration\ProvidersConfiguration;
 use Membergate\RenderForm\MembergateFormRenderer;
@@ -23,9 +27,9 @@ class CheckSubscriptionStatus implements FormHandlerInterface {
         $provider = $providers->providers()[$provider_key];
         $this->list_client = $provider['client'];
         $settings_class = $list_provider_settings->get_provider_settings_class();
-        if(class_exists($settings_class)){
+        if (class_exists($settings_class)) {
             $this->list_settings = new $settings_class();
-        } else{
+        } else {
             $this->setup = false;
             return;
         }

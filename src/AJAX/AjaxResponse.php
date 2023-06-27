@@ -2,6 +2,10 @@
 
 namespace Membergate\AJAX;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 class AjaxResponse {
     private array $data;
 

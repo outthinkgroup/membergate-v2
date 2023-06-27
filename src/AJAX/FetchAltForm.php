@@ -2,6 +2,10 @@
 
 namespace Membergate\AJAX;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\RenderForm\MembergateFormRenderer;
 
 class FetchAltForm implements AjaxInterface {

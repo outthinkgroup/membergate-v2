@@ -2,6 +2,10 @@
 
 namespace Membergate\Shortcode;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\RenderForm\MembergateFormRenderer;
 
 class SignupShortcode implements ShortcodeInterface {

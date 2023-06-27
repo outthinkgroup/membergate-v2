@@ -2,6 +2,10 @@
 
 namespace Membergate\ListProviders;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Cache\ListProviderCache;
 use Membergate\Common\PossibleError;
 use Membergate\ListProviders\EMSClients\MockClient;

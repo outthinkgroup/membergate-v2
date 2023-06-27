@@ -2,6 +2,10 @@
 
 namespace Membergate\Subscriber;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\AJAX\CompleteSetup;
 use Membergate\AJAX\FetchAltForm;
 use Membergate\AJAX\FetchGroupsFromProvider;
@@ -79,7 +83,7 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
             error_log('no endpoint was found for: ' . $_REQUEST['mg_action']);
             exit;
         }
-        
+
         $handlerClass = $this->container->make($endpoint);
         $handlerClass->handle();
     }

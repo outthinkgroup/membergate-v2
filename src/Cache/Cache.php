@@ -2,6 +2,10 @@
 
 namespace Membergate\Cache;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Common\Time;
 
 /**
@@ -16,6 +20,7 @@ class Cache {
      * @param  array  $value  value to be stored
      * @param  Time  $expiration time in seconds of how long it will be stored
      * @param  string  $prefix A label to namespace the transient
+if(!defined('ABSPATH')) exit;
      *
      **/
     public static function set(string $transient, array $value, Time $expiration = null, string $prefix = '') {
@@ -34,6 +39,7 @@ class Cache {
      * @param  array  $params array of parameters to be passed to $update function
      * @param  Time  $expiration time in seconds of how long it will be stored
      * @param  string  $prefix A label to namespace the transient
+if(!defined('ABSPATH')) exit;
      * @return array
      **/
     public static function get(string $transient, callable $update, array $params = [], Time $expiration = null, string $prefix = '') {
@@ -60,6 +66,7 @@ class Cache {
      *
      * @param  string  $transient key of the transient
      * @param  string  $prefix A label to namespace the transient
+if(!defined('ABSPATH')) exit;
      *
      **/
     public static function delete($transient, string $prefix = '') {

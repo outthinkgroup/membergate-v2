@@ -2,6 +2,10 @@
 
 namespace Membergate\Subscriber;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Assets\Vite;
 use Membergate\EventManagement\SubscriberInterface;
 

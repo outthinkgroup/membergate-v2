@@ -2,6 +2,10 @@
 
 namespace Membergate\Assets;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 class Vite {
     public static function base_path() {
         global $membergate;

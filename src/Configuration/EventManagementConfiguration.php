@@ -2,9 +2,11 @@
 
 namespace Membergate\Configuration;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Illuminate\Container\Container;
-use Membergate\DependencyInjection\ContainerConfigurationInterface;
-use Membergate\EventManagement\EventManager;
 use Membergate\Subscriber\AddModalTemplateSubscriber;
 use Membergate\Subscriber\AdminPageAJaxSubscriber;
 use Membergate\Subscriber\AdminSubscriber;
@@ -20,24 +22,24 @@ class EventManagementConfiguration {
     public function get_subscribers() {
         $subscribers = [
             //add Subscriber classes
-             FormSubmissionSubscriber::class,
-             ShortcodeSubscriber::class,
-             AssetSubscriber::class,
-             AdminSubscriber::class,
-             AdminPageAJaxSubscriber::class,
-             RedirectToProtectSubscriber::class,
-             ServerRenderSettingsSubscriber::class,
-             ProtectPostMetaBoxSubscriber::class,
-             LoadAdditionalPostTypesSubscriber::class,
-             AddModalTemplateSubscriber::class,
+            FormSubmissionSubscriber::class,
+            ShortcodeSubscriber::class,
+            AssetSubscriber::class,
+            AdminSubscriber::class,
+            AdminPageAJaxSubscriber::class,
+            RedirectToProtectSubscriber::class,
+            ServerRenderSettingsSubscriber::class,
+            ProtectPostMetaBoxSubscriber::class,
+            LoadAdditionalPostTypesSubscriber::class,
+            AddModalTemplateSubscriber::class,
         ];
 
         return $subscribers;
     }
 
-    public function make_subscribers(Container $container){
+    public function make_subscribers(Container $container) {
         foreach ($this->get_subscribers() as $class) {
-            $container->tag($class,'subscriber');
+            $container->tag($class, 'subscriber');
         }
     }
 }

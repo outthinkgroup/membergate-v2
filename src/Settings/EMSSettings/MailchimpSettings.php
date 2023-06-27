@@ -2,6 +2,10 @@
 
 namespace Membergate\Settings\EMSSettings;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Common\PossibleError;
 
 /**
@@ -53,9 +57,8 @@ class MailchimpSettings implements EMSSettingsInterface {
             }
         }
         if (isset($post_arr['group_id'])) {
-
-            if($post_arr['group_id'] == 'null'){
-               $res = $this->update_setting('group_id', false);
+            if ($post_arr['group_id'] == 'null') {
+                $res = $this->update_setting('group_id', false);
             } else {
                 $res = $this->update_setting('group_id', $post_arr['group_id']);
             }

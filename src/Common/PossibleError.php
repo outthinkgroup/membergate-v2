@@ -2,6 +2,10 @@
 
 namespace Membergate\Common;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 class PossibleError {
     public $error;
 

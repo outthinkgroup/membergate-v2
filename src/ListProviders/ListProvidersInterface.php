@@ -2,6 +2,10 @@
 
 namespace Membergate\ListProviders;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Common\PossibleError;
 
 interface ListProvidersInterface {

@@ -2,6 +2,10 @@
 
 namespace Membergate\ListProviders;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Cache\ListProviderCache;
 use Membergate\Common\PossibleError;
 use Membergate\ListProviders\EMSClients\MailChimpClient;
@@ -148,7 +152,9 @@ class MailchimpProvider implements ListProvidersInterface {
 
     public function add_subscriber($email_address, $settings, $submission = null): PossibleError {
         $list_id = $settings['list_id'];
-        if(!$list_id) return new PossibleError(null, "No List Id was set");
+        if (!$list_id) {
+            return new PossibleError(null, "No List Id was set");
+        }
         $hash = $this->client->subscriberHash($email_address);
         $args = [
             'status_if_new' => 'subscribed',

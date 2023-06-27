@@ -2,6 +2,10 @@
 
 namespace Membergate\Common;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use MyCLabs\Enum\Enum;
 
 // enum Time: int {

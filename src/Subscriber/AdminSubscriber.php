@@ -2,6 +2,10 @@
 
 namespace Membergate\Subscriber;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Admin\AdminPage;
 use Membergate\EventManagement\SubscriberInterface;
 

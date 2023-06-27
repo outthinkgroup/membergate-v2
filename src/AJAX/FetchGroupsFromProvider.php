@@ -2,6 +2,10 @@
 
 namespace Membergate\AJAX;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Configuration\ProvidersConfiguration;
 use Membergate\Settings\ListProviderSettings;
 

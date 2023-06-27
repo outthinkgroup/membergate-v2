@@ -2,6 +2,10 @@
 
 namespace Membergate\Admin;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 class AdminPage {
     private $template_path;
 

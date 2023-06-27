@@ -2,6 +2,10 @@
 
 namespace Membergate\Subscriber;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\EventManagement\EventManager;
 use Membergate\EventManagement\EventManagerAwareInterface;
 use Membergate\EventManagement\SubscriberInterface;

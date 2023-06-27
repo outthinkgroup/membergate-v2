@@ -2,6 +2,10 @@
 
 namespace Membergate;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Illuminate\Container\Container;
 use Membergate\Configuration\EventManagementConfiguration;
 use Membergate\EventManagement\EventManager;
@@ -23,7 +27,7 @@ class Plugin {
     private $file;
 
     public function __construct($file) {
-        $this->container = new Container;
+        $this->container = new Container();
         $this->file = $file;
         $this->loaded = false;
     }
@@ -39,22 +43,21 @@ class Plugin {
     public function get_container() {
         return $this->container;
     }
-    
-    private function make_services() {
 
+    private function make_services() {
         // Required to be singleton so we can store errors and then render them.
-        $this->container->singleton(MembergateFormRenderer::class, function(Container $container){
-            $template_path = $container->make('Vars')['plugin_path']."/templates/";
-            $template_path = apply_filters('membergate_form_template_path',$template_path);
+        $this->container->singleton(MembergateFormRenderer::class, function (Container $container) {
+            $template_path = $container->make('Vars')['plugin_path'] . "/templates/";
+            $template_path = apply_filters('membergate_form_template_path', $template_path);
             return new MembergateFormRenderer($container->make(FormSettings::class), $template_path);
         });
         // Needs Manual Binding to add the pluign path var
-        $this->container->bind(AdminSubscriber::class, function (Container $container){
+        $this->container->bind(AdminSubscriber::class, function (Container $container) {
             return new AdminSubscriber($container->get('Vars')['plugin_path']);
         });
 
         //subscribers
-        $emc = new EventManagementConfiguration;
+        $emc = new EventManagementConfiguration();
         $emc->make_subscribers($this->container);
     }
 
@@ -63,8 +66,8 @@ class Plugin {
             return;
         }
 
-        $this->container->singleton('Vars',function(){
-            return [            
+        $this->container->singleton('Vars', function () {
+            return [
                 'plugin_basename' => plugin_basename($this->file),
                 'plugin_domain' => self::DOMAIN,
                 'plugin_path' => plugin_dir_path($this->file),
@@ -73,21 +76,19 @@ class Plugin {
                 'plugin_version' => self::VERSION,
             ];
         });
-        
-        $this->container->singleton(EventManager::class, function(){
-            return new EventManager;
+
+        $this->container->singleton(EventManager::class, function () {
+            return new EventManager();
         });
 
         // pulls all dependencies into container.
         $this->make_services();
         // adds event listeners to wordpress hooks
         $subscribers = $this->container->tagged('subscriber');
-        foreach($subscribers as $subscriber){
+        foreach ($subscribers as $subscriber) {
             $this->container->make(EventManager::class)->add_subscriber($subscriber);
         }
 
         $this->loaded = true;
     }
 }
-
-

@@ -2,6 +2,10 @@
 
 namespace Membergate\Settings;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Configuration\ProvidersConfiguration;
 
 class ListProviderSettings {

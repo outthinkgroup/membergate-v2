@@ -2,6 +2,10 @@
 
 namespace Membergate\Configuration;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\ListProviders\MailchimpProvider;
 use Membergate\ListProviders\MockESProvider;
 use Membergate\Settings\EMSSettings\MailchimpSettings;

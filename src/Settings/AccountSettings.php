@@ -2,6 +2,10 @@
 
 namespace Membergate\Settings;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 class AccountSettings {
     private $is_setup;
 

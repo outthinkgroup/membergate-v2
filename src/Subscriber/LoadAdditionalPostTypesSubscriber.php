@@ -2,6 +2,10 @@
 
 namespace Membergate\Subscriber;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\PostTypeSettings;
 

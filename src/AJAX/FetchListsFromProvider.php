@@ -2,6 +2,10 @@
 
 namespace Membergate\AJAX;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Configuration\ProvidersConfiguration;
 use Membergate\Settings\ListProviderSettings;
 
@@ -12,7 +16,7 @@ class FetchListsFromProvider implements AjaxInterface {
 
     private $providers;
 
-    public function __construct(ListProviderSettings $list_settings, ProvidersConfiguration $providers ) {
+    public function __construct(ListProviderSettings $list_settings, ProvidersConfiguration $providers) {
         $this->list_settings = $list_settings;
         $this->providers = $providers->providers();
     }

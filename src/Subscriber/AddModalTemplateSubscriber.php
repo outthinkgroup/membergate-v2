@@ -2,6 +2,10 @@
 
 namespace Membergate\Subscriber;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Common\MemberCookie;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\PostTypeSettings;
@@ -38,11 +42,11 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
         // Is the modal setting turned on and was accessed without an error
         $can_use_modal_setting = (!$use_modal_setting->has_error()) && $use_modal_setting->value == 'true';
 
-        // is the user an logged-in, in an production environment 
+        // is the user an logged-in, in an production environment
         $is_admin_on_production = (is_user_logged_in() && wp_get_environment_type() == "production");
 
         // does the user have privilages to view content
-        $should_block_user = !( $c->user_has_cookie() || $is_admin_on_production);
+        $should_block_user = !($c->user_has_cookie() || $is_admin_on_production);
 
         return $can_use_modal_setting && $should_block_user;
     }

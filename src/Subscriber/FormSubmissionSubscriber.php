@@ -2,6 +2,10 @@
 
 namespace Membergate\Subscriber;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\FormHandlers\AddSubscriberToService;
 use Membergate\FormHandlers\CheckSubscriptionStatus;

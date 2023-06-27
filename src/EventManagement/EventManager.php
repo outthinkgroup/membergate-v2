@@ -2,6 +2,10 @@
 
 namespace Membergate\EventManagement;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 class EventManager {
     public function add_callback($hook_name, $callback, $priority = 10, $args_count = 1) {
         add_filter($hook_name, $callback, $priority, $args_count);

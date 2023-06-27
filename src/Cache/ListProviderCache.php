@@ -2,6 +2,10 @@
 
 namespace Membergate\Cache;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Common\Time;
 
 class ListProviderCache {

@@ -2,6 +2,10 @@
 
 namespace Membergate\ListProviders\EMSClients;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 class MailChimpClient {
     private $api_key;
 
@@ -172,7 +176,7 @@ class MailChimpClient {
      * @throws \Exception
      */
     private function makeRequest($http_verb, $method, $args = [], $timeout = 10) {
-        if (! function_exists('curl_init') || ! function_exists('curl_setopt')) {
+        if (!function_exists('curl_init') || !function_exists('curl_setopt')) {
             throw new \Exception("cURL support is required, but can't be found.");
         }
 
@@ -273,7 +277,7 @@ class MailChimpClient {
     private function formatResponse($response) {
         $this->last_response = $response;
 
-        if (! empty($response['body'])) {
+        if (!empty($response['body'])) {
             return json_decode($response['body'], true);
         }
 
@@ -315,11 +319,11 @@ class MailChimpClient {
      * @return int  HTTP status code
      */
     private function findHTTPStatus($response, $formattedResponse) {
-        if (! empty($response['headers']) && isset($response['headers']['http_code'])) {
+        if (!empty($response['headers']) && isset($response['headers']['http_code'])) {
             return (int) $response['headers']['http_code'];
         }
 
-        if (! empty($response['body']) && isset($formattedResponse['status'])) {
+        if (!empty($response['body']) && isset($formattedResponse['status'])) {
             return (int) $formattedResponse['status'];
         }
 

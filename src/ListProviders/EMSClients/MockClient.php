@@ -2,6 +2,10 @@
 
 namespace Membergate\ListProviders\EMSClients;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Common\PossibleError;
 
 class MockClient {

@@ -2,6 +2,10 @@
 
 namespace Membergate\RenderForm;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Settings\FormSettings;
 
 class MembergateFormRenderer {

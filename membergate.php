@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 /**
  * Plugin Name:     Membergate
  * Plugin URI:      PLUGIN SITE HERE
@@ -12,6 +16,9 @@
  * Version:         0.1.0
  */
 
+if (!defined('ABSPATH')) {
+    exit;
+}
 require __DIR__ . '/vendor/autoload.php';
 
 // this is used for asset loading for vite

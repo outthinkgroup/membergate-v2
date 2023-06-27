@@ -2,6 +2,10 @@
 
 namespace Membergate\Common;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 class MemberCookie {
     public const cookie_name = 'membergate_member';
 

@@ -2,6 +2,10 @@
 
 namespace Membergate;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 class Autoloader {
     public static function autoload($class) {
         if (0 != strpos($class, __NAMESPACE__)) {

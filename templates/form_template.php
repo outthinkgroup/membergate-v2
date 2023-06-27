@@ -1,4 +1,8 @@
 <?php
+if(!defined('ABSPATH')) {
+    exit;
+}
+
 /*
  * This template is called from the MembergateFormRender class.
  *

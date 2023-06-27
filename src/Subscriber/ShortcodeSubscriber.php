@@ -2,6 +2,10 @@
 
 namespace Membergate\Subscriber;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Illuminate\Container\Container;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Plugin;

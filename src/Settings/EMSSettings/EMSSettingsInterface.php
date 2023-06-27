@@ -2,6 +2,10 @@
 
 namespace Membergate\Settings\EMSSettings;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Common\PossibleError;
 
 interface EMSSettingsInterface {

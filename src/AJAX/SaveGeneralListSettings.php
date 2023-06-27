@@ -2,6 +2,10 @@
 
 namespace Membergate\AJAX;
 
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 use Membergate\Settings\ListProviderSettings;
 
 class SaveGeneralListSettings implements AjaxInterface {
