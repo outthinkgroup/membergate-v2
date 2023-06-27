@@ -35,16 +35,16 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
         $use_modal_setting = $this->protect_content_settings->get_setting('show_modal');
         $c = new MemberCookie();
 
-        /**
-         * @todo this is BAD rewrite to be easier to understand
-        */
-        return (
-            (!$use_modal_setting->has_error())
-            && $use_modal_setting->value == 'true'
-        ) && !(
-            $c->user_has_cookie() ||
-            (is_user_logged_in() && wp_get_environment_type() == "production")
-        );
+        // Is the modal setting turned on and was accessed without an error
+        $can_use_modal_setting = (!$use_modal_setting->has_error()) && $use_modal_setting->value == 'true';
+
+        // is the user an logged-in, in an production environment 
+        $is_admin_on_production = (is_user_logged_in() && wp_get_environment_type() == "production");
+
+        // does the user have privilages to view content
+        $should_block_user = !( $c->user_has_cookie() || $is_admin_on_production);
+
+        return $can_use_modal_setting && $should_block_user;
     }
 
     public function mark_protected_with_queryparm($url, $post) {
