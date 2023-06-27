@@ -49,10 +49,9 @@ class AddModalTemplateSubscriber implements SubscriberInterface {
 
     public function mark_protected_with_queryparm($url, $post) {
         if (is_admin()) {
-            debug("Ran" . __METHOD__ . "but its an admin url so bailing");
             return $url;
         }
-        debug("Should the Modal Render???????:" . (string)$this->can_use_modal());
+
         if (!$this->can_use_modal()) {
             return $url;
         }

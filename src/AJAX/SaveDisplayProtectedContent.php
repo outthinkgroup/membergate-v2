@@ -9,9 +9,6 @@ class SaveDisplayProtectedContent implements AjaxInterface {
 
     private ProtectedContentSettings $protected_content_settings;
 
-    public $dependencies = ['settings.protected_content'];
-
-
     public function __construct(ProtectedContentSettings $protected_content_settings) {
         $this->protected_content_settings = $protected_content_settings;
     }

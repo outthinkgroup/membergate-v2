@@ -7,10 +7,7 @@ use Membergate\Settings\ListProviderSettings;
 class SaveGeneralListSettings implements AjaxInterface {
     public const ACTION = 'save_list_settings';
 
-    public $dependencies = ['list_settings'];
-
     private ListProviderSettings $list_settings;
-
 
     public function __construct(ListProviderSettings $list_settings) {
         $this->list_settings = $list_settings;

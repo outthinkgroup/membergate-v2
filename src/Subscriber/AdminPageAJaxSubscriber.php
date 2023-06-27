@@ -48,14 +48,6 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
         $this->protected_content_settings = $protected_content_settings;
         $this->form_renderer = $form_renderer;
 
-        // $this->containers = [
-        //     'list_settings' => $this->list_provider_settings,
-        //     'providers' => $this->providers_list,
-        //     'post_type_settings' => $this->post_type_settings,
-        //     'settings.forms' => $this->form_settings,
-        //     'settings.protected_content' => $this->protected_content_settings,
-        //     'form_renderer' =>$this->form_renderer,
-        // ];
         global $membergate;
         $this->container = $membergate->get_container();
     }
@@ -70,10 +62,11 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
 
     public function admin_endpoints() {
         $endpoints = [
-            SaveGeneralListSettings::ACTION => SaveGeneralListSettings::class,
             FetchListsFromProvider::ACTION => FetchListsFromProvider::class,
             FetchGroupsFromProvider::ACTION => FetchGroupsFromProvider::class,
+
             CompleteSetup::ACTION => CompleteSetup::class,
+            SaveGeneralListSettings::ACTION => SaveGeneralListSettings::class,
             SaveProtectedPostTypes::ACTION => SaveProtectedPostTypes::class,
             SaveMembergateFormSettings::ACTION => SaveMembergateFormSettings::class,
             SaveDisplayProtectedContent::ACTION => SaveDisplayProtectedContent::class,

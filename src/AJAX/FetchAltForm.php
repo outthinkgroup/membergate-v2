@@ -3,14 +3,11 @@
 namespace Membergate\AJAX;
 
 use Membergate\RenderForm\MembergateFormRenderer;
-use Membergate\Settings\FormSettings;
 
 class FetchAltForm implements AjaxInterface {
     private $form_renderer;
-    private $form_settings;
-    public function __construct(MembergateFormRenderer $form_renderer, FormSettings $form_settings){
-        $this->form_renderer= $form_renderer;
-        $this->form_settings = $form_settings;
+    public function __construct(MembergateFormRenderer $form_renderer) {
+        $this->form_renderer = $form_renderer;
     }
 
     public const ACTION = 'fetch_alt_form';

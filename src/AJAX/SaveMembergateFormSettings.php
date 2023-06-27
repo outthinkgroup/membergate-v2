@@ -9,9 +9,6 @@ class SaveMembergateFormSettings implements AjaxInterface {
 
     private FormSettings $form_settings;
 
-    public $dependencies = ['settings.forms'];
-
-
     public function __construct(FormSettings $form_settings) {
         $this->form_settings = $form_settings;
     }

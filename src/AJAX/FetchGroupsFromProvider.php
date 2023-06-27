@@ -8,8 +8,6 @@ use Membergate\Settings\ListProviderSettings;
 class FetchGroupsFromProvider implements AjaxInterface {
     public const ACTION = 'get_groups';
 
-    public $dependencies = ['list_settings', 'providers'];
-
     private ListProviderSettings $list_settings;
 
     private $providers;

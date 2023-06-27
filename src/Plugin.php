@@ -3,27 +3,12 @@
 namespace Membergate;
 
 use Illuminate\Container\Container;
-use Membergate\Admin\AdminPage;
 use Membergate\Configuration\EventManagementConfiguration;
-use Membergate\Configuration\FormHandlerConfiguration;
-use Membergate\Configuration\MembergateFormConfiguration;
-use Membergate\Configuration\ProvidersConfiguration;
-use Membergate\Configuration\SettingsConfiguration;
 use Membergate\EventManagement\EventManager;
-use Membergate\Settings\ListProviderSettings;
-use Membergate\FormHandlers\AddSubscriberToService;
-use Membergate\FormHandlers\CheckSubscriptionStatus;
 use Membergate\RenderForm\MembergateFormRenderer;
 use Membergate\Settings\FormSettings;
 use Membergate\Subscriber\AdminSubscriber;
 
-        //     'plugin_basename' => plugin_basename($file),
-        //     'plugin_domain' => self::DOMAIN,
-        //     'plugin_path' => plugin_dir_path($file),
-        //     'plugin_relative_path' => basename(plugin_dir_path($file)),
-        //     'plugin_url' => plugin_dir_url($file),
-        //     'plugin_version' => self::VERSION,
-        // ]);
 /*╭──────────────────────────╮*/
 /*│    [   The Plugin   ]    │*/
 /*╰──────────────────────────╯*/
@@ -54,7 +39,7 @@ class Plugin {
     public function get_container() {
         return $this->container;
     }
-
+    
     private function make_services() {
 
         // Required to be singleton so we can store errors and then render them.
