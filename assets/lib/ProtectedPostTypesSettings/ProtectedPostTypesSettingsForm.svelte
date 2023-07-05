@@ -1,7 +1,7 @@
 <script lang="ts">
   import { currentLocation } from "../../locationStore";
   import { postTypes } from "../../store";
-  import FormHeader from "../form/FormHeader.svelte";
+  import FormHeader from "../elements/FormHeader.svelte";
   let isLoading = false;
 
   type Checkbox = Event & {

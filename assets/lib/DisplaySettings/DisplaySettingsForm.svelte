@@ -1,8 +1,8 @@
 <script lang="ts">
   import { currentLocation, locations } from "../../locationStore";
   import { blockedContent, pageList } from "../../store";
-  import FormHeader from "../form/FormHeader.svelte";
-  import LabelSelect from "../form/LabelSelect.svelte";
+  import FormHeader from "../elements/FormHeader.svelte";
+  import LabelSelect from "../elements/LabelSelect.svelte";
   let isLoading = false;
   let unSavedChanges = false;
 	$: $blockedContent, console.log("blockedContent:",$blockedContent)

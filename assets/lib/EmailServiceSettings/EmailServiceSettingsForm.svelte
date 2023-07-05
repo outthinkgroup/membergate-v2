@@ -1,14 +1,14 @@
 <script lang="ts">
   import saveListSettings from "../../api/saveSettings";
   import { currentLocation } from "../../locationStore";
-  import LabelSelect from "../form/LabelSelect.svelte";
-  import EmsListSelect from "../form/EMSListSelect.svelte";
-  import EmsGroupSelect from "../form/EMSGroupSelect.svelte";
+  import LabelSelect from "../elements/LabelSelect.svelte";
+  import EmsListSelect from "../elements/EMSListSelect.svelte";
+  import EmsGroupSelect from "../elements/EMSGroupSelect.svelte";
 
   import { apikey, selectedList, selectedGroup, provider } from "../../store";
   import { updateProvider } from "../../utils/formUtils";
-  import ApiKeyInput from "../form/ApiKeyInput.svelte";
-  import FormHeader from "../form/FormHeader.svelte";
+  import ApiKeyInput from "../elements/ApiKeyInput.svelte";
+  import FormHeader from "../elements/FormHeader.svelte";
 
   let { providers } = window.membergate;
   let isLoading = false;

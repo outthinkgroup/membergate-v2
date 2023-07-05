@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { currentLocation } from "../../locationStore";
 	import { formSettings } from "../../store";
-	import FormHeader from "../form/FormHeader.svelte";
+	import FormHeader from "../elements/FormHeader.svelte";
 	import FormCard from "./FormCard.svelte";
 
 	let isLoading = false;

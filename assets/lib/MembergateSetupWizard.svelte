@@ -11,10 +11,10 @@
     provider,
     selectedList,
   } from "../store";
-  import ApiKeyInput from "./form/ApiKeyInput.svelte";
-  import LabelSelect from "./form/LabelSelect.svelte";
-  import EmsListSelect from "./form/EMSListSelect.svelte";
-  import EmsGroupSelect from "./form/EMSGroupSelect.svelte";
+  import ApiKeyInput from "./elements/ApiKeyInput.svelte";
+  import LabelSelect from "./elements/LabelSelect.svelte";
+  import EmsListSelect from "./elements/EMSListSelect.svelte";
+  import EmsGroupSelect from "./elements/EMSGroupSelect.svelte";
   import { updateApiKey, updateProvider } from "../utils/formUtils";
 
   const providersList = window.membergate.providers;
