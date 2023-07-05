@@ -12,9 +12,9 @@
     "env:build": "sed -i '' 's/development/production/g' env.php && sed -i '' 's/test/production/g' env.php",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "test": " sed -i '' 's/production/development/g' env.php && cypress open",
-	"start-test":"node ./../esp-mock-server/ . >./../esp-mock-server/logs.log 2>&1 &",
-	"end-test":"../esp-mock-server/req/kill",
-	"test-all":"npx cypress run --record --key bd3d921a-f7d2-4711-9174-798eee03d9da"
+    "start-test": "node ./../esp-mock-server/ . >./../esp-mock-server/logs.log 2>&1 &",
+    "end-test": "../esp-mock-server/req/kill",
+    "test-all": "npx cypress run --record --key bd3d921a-f7d2-4711-9174-798eee03d9da"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.9",
@@ -35,6 +35,11 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.2.1",
-    "@types/chai": "^4.3.5"
+    "@types/chai": "^4.3.5",
+    "class-variance-authority": "^0.6.1",
+    "clsx": "^1.2.1",
+    "lucide-svelte": "^0.258.0",
+    "tailwind-merge": "^1.13.2",
+    "tailwindcss-animate": "^1.0.6"
   }
 }
