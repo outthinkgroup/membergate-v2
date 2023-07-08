@@ -1,4 +1,5 @@
 import path from "path";
+import {fileURLToPath, URL} from "node:url"
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 
@@ -31,5 +32,10 @@ export default defineConfig({
       protocol: "ws",
     },
   },
+	resolve:{
+		alias:{
+			"$el": fileURLToPath(new URL("./assets/lib/elements", import.meta.url) ),
+		}
+	},
   plugins: [svelte()],
 });
