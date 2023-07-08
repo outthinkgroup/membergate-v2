@@ -17,7 +17,6 @@ use Membergate\AJAX\SaveProtectedPostTypes;
 use Membergate\Configuration\ProvidersConfiguration;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\RenderForm\MembergateFormRenderer;
-use Membergate\Settings\FormSettings;
 use Membergate\Settings\ListProviderSettings;
 use Membergate\Settings\PostTypeSettings;
 use Membergate\Settings\ProtectedContentSettings;
@@ -38,19 +37,9 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
     private $container;
 
     public function __construct(
-        ListProviderSettings $list_provider_settings,
-        ProvidersConfiguration $providers,
         PostTypeSettings $post_type_settings,
-        FormSettings $form_settings,
-        ProtectedContentSettings $protected_content_settings,
-        MembergateFormRenderer $form_renderer
     ) {
-        $this->list_provider_settings = $list_provider_settings;
-        $this->providers_list = $providers;
         $this->post_type_settings = $post_type_settings;
-        $this->form_settings = $form_settings;
-        $this->protected_content_settings = $protected_content_settings;
-        $this->form_renderer = $form_renderer;
 
         global $membergate;
         $this->container = $membergate->get_container();
@@ -66,14 +55,8 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
 
     public function admin_endpoints() {
         $endpoints = [
-            FetchListsFromProvider::ACTION => FetchListsFromProvider::class,
-            FetchGroupsFromProvider::ACTION => FetchGroupsFromProvider::class,
-
             CompleteSetup::ACTION => CompleteSetup::class,
-            SaveGeneralListSettings::ACTION => SaveGeneralListSettings::class,
             SaveProtectedPostTypes::ACTION => SaveProtectedPostTypes::class,
-            SaveMembergateFormSettings::ACTION => SaveMembergateFormSettings::class,
-            SaveDisplayProtectedContent::ACTION => SaveDisplayProtectedContent::class,
         ];
         if (! isset($_REQUEST['mg_action'])) {
             error_log('no action set');
@@ -90,7 +73,6 @@ class AdminPageAJaxSubscriber implements SubscriberInterface {
 
     public function public_endpoints() {
         $endpoints = [
-            FetchAltForm::ACTION => FetchAltForm::class,
         ];
 
         if (! isset($_REQUEST['mg_public_action'])) {

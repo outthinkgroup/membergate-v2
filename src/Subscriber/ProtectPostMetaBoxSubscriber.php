@@ -12,7 +12,7 @@ use Membergate\Settings\PostTypeSettings;
 class ProtectPostMetaBoxSubscriber implements SubscriberInterface {
     public const PROTECT_POST_KEY = 'membergate_protect_post';
 
-    private PostTypeSettings $post_type_settings;
+    private $post_type_settings;
 
     public static function get_subscribed_events(): array {
         return [

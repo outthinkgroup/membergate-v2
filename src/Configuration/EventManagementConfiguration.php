@@ -7,12 +7,9 @@ if (!defined('ABSPATH')) {
 }
 
 use Illuminate\Container\Container;
-use Membergate\Subscriber\AddModalTemplateSubscriber;
 use Membergate\Subscriber\AdminPageAJaxSubscriber;
 use Membergate\Subscriber\AdminSubscriber;
 use Membergate\Subscriber\AssetSubscriber;
-use Membergate\Subscriber\FormSubmissionSubscriber;
-use Membergate\Subscriber\LoadAdditionalPostTypesSubscriber;
 use Membergate\Subscriber\ProtectPostMetaBoxSubscriber;
 use Membergate\Subscriber\RedirectToProtectSubscriber;
 use Membergate\Subscriber\ServerRenderSettingsSubscriber;
@@ -22,16 +19,13 @@ class EventManagementConfiguration {
     public function get_subscribers() {
         $subscribers = [
             //add Subscriber classes
-            FormSubmissionSubscriber::class,
             ShortcodeSubscriber::class,
             AssetSubscriber::class,
             AdminSubscriber::class,
             AdminPageAJaxSubscriber::class,
+            ProtectPostMetaBoxSubscriber::class,
             RedirectToProtectSubscriber::class,
             ServerRenderSettingsSubscriber::class,
-            ProtectPostMetaBoxSubscriber::class,
-            LoadAdditionalPostTypesSubscriber::class,
-            AddModalTemplateSubscriber::class,
         ];
 
         return $subscribers;

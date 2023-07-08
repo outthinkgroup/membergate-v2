@@ -9,8 +9,6 @@ if (!defined('ABSPATH')) {
 use Illuminate\Container\Container;
 use Membergate\Configuration\EventManagementConfiguration;
 use Membergate\EventManagement\EventManager;
-use Membergate\RenderForm\MembergateFormRenderer;
-use Membergate\Settings\FormSettings;
 use Membergate\Subscriber\AdminSubscriber;
 
 /*╭──────────────────────────╮*/
@@ -45,12 +43,6 @@ class Plugin {
     }
 
     private function make_services() {
-        // Required to be singleton so we can store errors and then render them.
-        $this->container->singleton(MembergateFormRenderer::class, function (Container $container) {
-            $template_path = $container->make('Vars')['plugin_path'] . "/templates/";
-            $template_path = apply_filters('membergate_form_template_path', $template_path);
-            return new MembergateFormRenderer($container->make(FormSettings::class), $template_path);
-        });
         // Needs Manual Binding to add the pluign path var
         $this->container->bind(AdminSubscriber::class, function (Container $container) {
             return new AdminSubscriber($container->get('Vars')['plugin_path']);

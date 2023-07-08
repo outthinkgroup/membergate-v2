@@ -8,21 +8,14 @@ if (!defined('ABSPATH')) {
 
 use Membergate\Common\MemberCookie;
 use Membergate\EventManagement\SubscriberInterface;
-use Membergate\RenderForm\MembergateFormRenderer;
 use Membergate\Settings\PostTypeSettings;
-use Membergate\Settings\ProtectedContentSettings;
 
 class RedirectToProtectSubscriber implements SubscriberInterface {
     private $post_type_settings;
 
-    private MembergateFormRenderer $form_renderer;
 
-    private ProtectedContentSettings $protected_content_settings;
-
-    public function __construct(PostTypeSettings $post_type_settings, MembergateFormRenderer $form_renderer, ProtectedContentSettings $protected_content_settings) {
+    public function __construct(PostTypeSettings $post_type_settings ) {
         $this->post_type_settings = $post_type_settings;
-        $this->form_renderer = $form_renderer;
-        $this->protected_content_settings = $protected_content_settings;
     }
 
     public static function get_subscribed_events(): array {
@@ -61,11 +54,10 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         if ($cookie_handler->user_has_cookie()) {
             return;
         }
-        $use_page_redirect = $this->protected_content_settings->get_setting('protect_method')->value == 'page_redirect';
-        $use_page_redirect = apply_filters('use_page_redirect', $use_page_redirect, $post);
-        if ($use_page_redirect && $this->protected_content_settings->get_setting('redirect_page')->value !== '') {
-            $id = (int)$this->protected_content_settings->get_setting('redirect_page')->value;
-            $url = get_permalink($id);
+
+        //TODO: do something here with settings
+        if (true) {
+            $url = site_url();
             $url = add_query_arg('redirect_to', get_permalink(), $url);
             $url = remove_query_arg('membergate_protect', $url);
             wp_safe_redirect($url);
@@ -92,7 +84,7 @@ class RedirectToProtectSubscriber implements SubscriberInterface {
         ob_start();
         ?>
         <div class="in-content-form membergate-parent">
-            <?php $this->form_renderer->include_full_form_markup('form_template'); ?>
+            <h1>Todo: do something here</h1>
         </div>
         <?php
         return ob_get_clean();
