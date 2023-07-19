@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\PostTypeSettings;
 
-class ProtectPostMetaBoxSubscriber implements SubscriberInterface {
+class MetaBoxes implements SubscriberInterface {
     public const PROTECT_POST_KEY = 'membergate_protect_post';
 
     private $post_type_settings;

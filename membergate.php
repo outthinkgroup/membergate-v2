@@ -35,3 +35,31 @@ $membergate = new \Membergate\Plugin(__FILE__);
 add_action('after_setup_theme', [$membergate, 'load']);
 
 require_once 'pluggable.php';
+
+// Please move re build this. Only intended as prototype
+add_action('init', function () {
+    register_post_type(
+        'membergate_rule',
+        [
+            'labels' => [
+                'name' => __('Membergate Rules'),
+                'singular_name' => __('Membergate Rule')
+            ],
+            'public' => true,
+            'show_in_menu' => false,
+        ]
+    );
+});
+
+add_action('admin_menu', function () {
+    add_submenu_page("membergate-settings", 'Rules', 'Rules', 'manage_options', 'edit.php?post_type=membergate_rule');
+});
+
+add_action('admin_head', function () {
+    if (get_current_screen()->id !== 'membergate_rule') {
+        return;
+    }
+    \Membergate\Assets\Vite::useVite("assets/rule-editor.ts");
+    ?>
+<?php
+});

@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 use Membergate\Assets\Vite;
 use Membergate\EventManagement\SubscriberInterface;
 
-class AssetSubscriber implements SubscriberInterface {
+class Assets implements SubscriberInterface {
     public static function get_subscribed_events(): array {
         return [
             'admin_enqueue_scripts' => 'enqueue_admin_assets',

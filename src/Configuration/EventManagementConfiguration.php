@@ -7,25 +7,25 @@ if (!defined('ABSPATH')) {
 }
 
 use Illuminate\Container\Container;
-use Membergate\Subscriber\AdminPageAJaxSubscriber;
-use Membergate\Subscriber\AdminSubscriber;
-use Membergate\Subscriber\AssetSubscriber;
-use Membergate\Subscriber\ProtectPostMetaBoxSubscriber;
-use Membergate\Subscriber\RedirectToProtectSubscriber;
-use Membergate\Subscriber\ServerRenderSettingsSubscriber;
-use Membergate\Subscriber\ShortcodeSubscriber;
+use Membergate\Subscriber\Admin;
+use Membergate\Subscriber\AjaxEndpoints;
+use Membergate\Subscriber\Assets;
+use Membergate\Subscriber\MetaBoxes;
+use Membergate\Subscriber\Redirects;
+use Membergate\Subscriber\SSRSettings;
+use Membergate\Subscriber\Shortcodes;
 
 class EventManagementConfiguration {
     public function get_subscribers() {
         $subscribers = [
             //add Subscriber classes
-            ShortcodeSubscriber::class,
-            AssetSubscriber::class,
-            AdminSubscriber::class,
-            AdminPageAJaxSubscriber::class,
-            ProtectPostMetaBoxSubscriber::class,
-            RedirectToProtectSubscriber::class,
-            ServerRenderSettingsSubscriber::class,
+            Shortcodes::class,
+            Assets::class,
+            Admin::class,
+            AjaxEndpoints::class,
+            MetaBoxes::class,
+            Redirects::class,
+            SSRSettings::class,
         ];
 
         return $subscribers;

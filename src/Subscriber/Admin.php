@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 use Membergate\Admin\AdminPage;
 use Membergate\EventManagement\SubscriberInterface;
 
-class AdminSubscriber implements SubscriberInterface {
+class Admin implements SubscriberInterface {
     private $plugin_path;
 
     public function __construct($plugin_path) {

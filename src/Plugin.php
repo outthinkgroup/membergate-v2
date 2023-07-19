@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 use Illuminate\Container\Container;
 use Membergate\Configuration\EventManagementConfiguration;
 use Membergate\EventManagement\EventManager;
-use Membergate\Subscriber\AdminSubscriber;
+use Membergate\Subscriber\Admin;
 
 /*╭──────────────────────────╮*/
 /*│    [   The Plugin   ]    │*/
@@ -44,8 +44,8 @@ class Plugin {
 
     private function make_services() {
         // Needs Manual Binding to add the pluign path var
-        $this->container->bind(AdminSubscriber::class, function (Container $container) {
-            return new AdminSubscriber($container->get('Vars')['plugin_path']);
+        $this->container->bind(Admin::class, function (Container $container) {
+            return new Admin($container->get('Vars')['plugin_path']);
         });
 
         //subscribers

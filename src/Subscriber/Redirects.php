@@ -10,11 +10,11 @@ use Membergate\Common\MemberCookie;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\PostTypeSettings;
 
-class RedirectToProtectSubscriber implements SubscriberInterface {
+class Redirects implements SubscriberInterface {
     private $post_type_settings;
 
 
-    public function __construct(PostTypeSettings $post_type_settings ) {
+    public function __construct(PostTypeSettings $post_type_settings) {
         $this->post_type_settings = $post_type_settings;
     }
 

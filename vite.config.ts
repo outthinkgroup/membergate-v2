@@ -18,6 +18,7 @@ export default defineConfig({
       input: {
         frontend: "assets/frontend.ts",
         main: "assets/main.ts",
+        ruleEditor: "assets/rule-editor.ts",
       },
     },
   },

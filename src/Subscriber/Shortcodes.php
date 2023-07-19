@@ -11,7 +11,7 @@ use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Plugin;
 use Membergate\Shortcode\ShortcodeInterface;
 
-class ShortcodeSubscriber implements SubscriberInterface {
+class Shortcodes implements SubscriberInterface {
     private Container $container;
 
     public function __construct() {

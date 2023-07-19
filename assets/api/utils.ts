@@ -15,9 +15,11 @@ export async function ajax(action: string, data: Record<string, any>) {
   }).then((res) => res.json());
   return res;
 }
+
 export async function jsonAjax(action: string, data: Record<string, any>) {
+	data.membergate_action = action
   const res = await fetch(
-    `${window.membergate.url}?action=mg_admin_endpoint&mg_action=${action}`,
+    `${window.membergate.url}?action=membergate_settings`,
     {
       method: "POST",
       credentials: "include",

@@ -6,3 +6,4 @@ vim.keymap.set("t", "<leader>w", "wpl-shell.sh TDvVZsQDD<CR>",{})
 
 
 
+

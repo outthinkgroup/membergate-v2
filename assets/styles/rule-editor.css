@@ -1,0 +1,16 @@
+.override {
+  position: absolute;
+  inset: 0;
+  z-index: 999990;
+  background: white;
+  padding-top: var(--topOffest);
+}
+
+#wpadminbar {
+  z-index: 9999999;
+}
+
+#wpcontent {
+  visibility: hidden;
+  position: relative;
+}
