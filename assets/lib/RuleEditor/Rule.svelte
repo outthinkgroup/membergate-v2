@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { FormEventHandler } from "svelte/elements";
 	import type { Rule } from "./ruleTypes";
-	import { operators, parameterOptions } from "./rulegroupOptions";
+	import { operators, parameterOptions } from "./ruleTypes";
 	import {ParamValues} from "./rulestore"
 
 	export let rule: Rule;

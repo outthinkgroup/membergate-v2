@@ -2,8 +2,8 @@
 
 namespace Membergate\Settings;
 
-class RuleEditor {
-    public function load_param_value($req) {
+class Rules {
+    public function load_rule_value_options($req) {
         switch($req->param) {
             case "post_type": return ['post_type'=>$this->load_post_types()];
             case "post": return ['post'=>$this->load_posts()];

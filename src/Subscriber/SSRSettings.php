@@ -7,31 +7,16 @@ if (!defined('ABSPATH')) {
 }
 
 use Membergate\EventManagement\SubscriberInterface;
-use Membergate\Settings\AccountSettings;
-use Membergate\Settings\PostTypeSettings;
-use Membergate\Settings\RuleEditor;
+use Membergate\Settings\Rules;
 
 class SSRSettings implements SubscriberInterface {
-    private PostTypeSettings $post_type_settings;
 
-    private $account_settings;
-
-    private $ruleEditor;
-
-    private $list_providers;
-
-    private $form_settings;
-
-    private $protect_content_settings;
+    private $rules;
 
     public function __construct(
-        AccountSettings $account_settings,
-        PostTypeSettings $post_type_settings,
-        RuleEditor $ruleEditor
+        Rules $rules
     ) {
-        $this->account_settings = $account_settings;
-        $this->post_type_settings = $post_type_settings;
-        $this->ruleEditor = $ruleEditor;
+        $this->rules = $rules;
     }
 
     public static function get_subscribed_events(): array {
@@ -42,30 +27,28 @@ class SSRSettings implements SubscriberInterface {
     }
 
     public function add_global_vars() {
-        $post_types=$this->ruleEditor->load_post_types();
-        ?>	
-		<script>
-			window.membergate = {
-				url:"<?php echo admin_url('admin-ajax.php'); ?>",
-				completedSetup: "<?=$this->account_settings->get_is_setup(); ?>",
-                initialParameterValueStore:{
-                    post_type: <?=json_encode($post_types); ?>,
+        $post_types = $this->rules->load_post_types();
+?>
+        <script>
+            window.membergate = {
+                url: "<?php echo admin_url('admin-ajax.php'); ?>",
+                Rules: {
+                    initialRuleValueOptionStore: {
+                        post_type: <?= json_encode($post_types); ?>,
+                    },
                 },
-				settings: {
-				},
-
-			}
-		</script>
-		<?php
+            }
+        </script>
+    <?php
     }
 
     public function add_public_vars() {
-        ?>
-	<script>
-		window.publicMembergate = {
-			url:"<?php echo admin_url('admin-ajax.php'); ?>",
-		}
-	</script>
-	<?php
+    ?>
+        <script>
+            window.publicMembergate = {
+                url: "<?php echo admin_url('admin-ajax.php'); ?>",
+            }
+        </script>
+    <?php
     }
 }

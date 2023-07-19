@@ -1,9 +1,29 @@
-import type {operators, parameterOptions} from "./rulegroupOptions"
+export const parameterOptions = {
+	post_type: "Post Type",
+
+	//Taxonomy
+	category: "Category",
+	tag:"Tag",
+
+	// Individuals
+	post: "Post",
+	page: "Page",
+	// Meta
+	page_template: "Page Template",
+	
+	// USER
+	user_role: "User Role",
+};
+
+export const operators = {
+	is:"is equal to",
+	not:"is not equal to",
+}
 
 export type ParameterOptionsT = keyof typeof parameterOptions;
 export type OperatorsOptionsT = keyof typeof operators;
 
-export type RuleValueOptionsStoreT = Partial<Record<ParameterOptionsT, Record<string,string>>>
+export type RuleValueOptionStoreT = Partial<Record<ParameterOptionsT, Record<string,string>>>
 
 export type Rule = {
 	parameter:ParameterOptionsT;

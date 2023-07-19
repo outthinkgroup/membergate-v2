@@ -2,6 +2,7 @@
 	import _ruleset from "./ruleset.json";
 	import type {RuleSet} from "./ruleTypes"
 	import Rule from "./Rule.svelte"
+
 	let ruleset = _ruleset as RuleSet
 
 	function addRule(groupIndex:number){

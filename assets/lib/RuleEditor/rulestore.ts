@@ -1,13 +1,13 @@
-import { jsonAjax } from "../../api/utils"
+import { jsonAjax } from "../../utils/api"
 import {get, writable} from "svelte/store"
-import type { ParameterOptionsT, RuleValueOptionsStoreT } from "./ruleTypes"
+import type { ParameterOptionsT, RuleValueOptionStoreT } from "./ruleTypes"
 
 export const ParamValues = createParamValueStore(
-window.membergate.initialParameterValueStore
+	window.membergate.Rules.initialRuleValueOptionStore
 )
 
-function createParamValueStore(initial:RuleValueOptionsStoreT){
-	const {subscribe, update} = writable<RuleValueOptionsStoreT>(initial)
+function createParamValueStore(initial:RuleValueOptionStoreT){
+	const {subscribe, update} = writable<RuleValueOptionStoreT>(initial)
 
 	return {
 		subscribe,
@@ -16,7 +16,7 @@ function createParamValueStore(initial:RuleValueOptionsStoreT){
 			if(Object.hasOwn($store, param)){
 				return $store[param]
 			}
-			const res = await jsonAjax('rule_editor__load_param_value', {param}) as RuleValueOptionsStoreT
+			const res = await jsonAjax('rule_editor__load_param_value', {param}) as RuleValueOptionStoreT
 			console.log(res)
 			update(s=> {
 				s[param] = res[param]
