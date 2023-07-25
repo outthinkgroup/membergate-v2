@@ -27,7 +27,7 @@ class SSRSettings implements SubscriberInterface {
     }
 
     public function add_global_vars() {
-        $post_types = $this->rules->load_post_types();
+        $post_types = $this->rules->editor->load_post_types();
 ?>
         <script>
             window.membergate = {
@@ -49,6 +49,6 @@ class SSRSettings implements SubscriberInterface {
                 url: "<?php echo admin_url('admin-ajax.php'); ?>",
             }
         </script>
-    <?php
+<?php
     }
 }

@@ -54,7 +54,7 @@ class AjaxEndpoints implements SubscriberInterface {
         switch ($body->membergate_action) {
             /* RULE EDITOR */
             case "rule_editor__load_param_value":
-                $data = new JsonResponse($this->rules->load_rule_value_options($body));
+                $data = new JsonResponse($this->rules->editor->load_rule_value_options($body));
                 $data->send();
                 die;
         }

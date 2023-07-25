@@ -41,10 +41,10 @@ class PostTypeSettings {
     }
 
     public function get_type($type): PossibleError {
-        if (! is_string($type)) {
+        if (!is_string($type)) {
             return new PossibleError(null, "Not a valid post type slug: $type");
         }
-        if (! array_key_exists($type, $this->post_types)) {
+        if (!array_key_exists($type, $this->post_types)) {
             return new PossibleError(null, "Not a valid post type slug: $type");
         }
 
