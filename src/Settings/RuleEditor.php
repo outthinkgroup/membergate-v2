@@ -25,6 +25,26 @@ class RuleEditor {
         }
     }
 
+    public function save_rules($req){
+        $rules = $req->rules;
+        $condition = $req->condition;
+        $protect_method = $req->protectMethod;
+        $pid = intval($req->id);
+        update_post_meta($pid, 'rules', $rules);
+        update_post_meta($pid, 'condition', $condition);
+
+        update_post_meta($pid, 'protect_method', $protect_method);
+
+        $res = wp_update_post([
+            'ID'=>$pid,
+            'post_title'=>$req->title,
+            'post_status'=>'publish',
+        ],true);
+        $link = get_edit_post_link($pid,'if you know, you know, you know?');
+        debug($link);
+        return ["message"=>"ok", "redirect"=>$link];
+    }
+
     public function load_post_types() {
         $ptypes = get_post_types(['public' => true], 'object');
         return $this->build_slug_label_map($ptypes, 'name', 'label');
@@ -79,4 +99,5 @@ class RuleEditor {
         }
         return $acc;
     }
+
 }

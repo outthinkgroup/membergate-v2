@@ -27,15 +27,24 @@ class SSRSettings implements SubscriberInterface {
     }
 
     public function add_global_vars() {
+        $id = get_the_ID();
         $post_types = $this->rules->editor->load_post_types();
+        $rules = $this->rules->get_rules($id);
+        $condition = $this->rules->get_conditions($id);
+        $protect_method = $this->rules->get_protect_method($id);
 ?>
         <script>
             window.membergate = {
                 url: "<?php echo admin_url('admin-ajax.php'); ?>",
+                postId:"<?= $id; ?>",
+                title: "<?= get_the_title($id); ?>",
                 Rules: {
                     initialRuleValueOptionStore: {
                         post_type: <?= json_encode($post_types); ?>,
                     },
+                    ruleList: <?= json_encode($rules); ?>,
+                    ruleCondition: <?= json_encode($condition); ?>,
+                    protectMethod: <?= json_encode($protect_method); ?>,
                 },
             }
         </script>

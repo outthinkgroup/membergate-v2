@@ -1,11 +1,17 @@
 .override {
   position: absolute;
   inset: 0;
-  z-index: 999990;
+  z-index: 999900;
   background: white;
   padding-top: var(--topOffest);
 }
+.auto-fold #adminmenumain{
 
+  z-index: 9999990;
+	position: relative;
+    
+}
+    
 #wpadminbar {
   z-index: 9999999;
 }

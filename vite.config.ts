@@ -17,7 +17,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         frontend: "assets/frontend.ts",
-        main: "assets/main.ts",
+        // main: "assets/main.ts",
         ruleEditor: "assets/rule-editor.ts",
       },
     },

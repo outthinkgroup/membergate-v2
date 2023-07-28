@@ -57,6 +57,10 @@ class AjaxEndpoints implements SubscriberInterface {
                 $data = new JsonResponse($this->rules->editor->load_rule_value_options($body));
                 $data->send();
                 die;
+            case "rule_editor__save_rules":
+                $data = new JsonResponse($this->rules->editor->save_rules($body));
+                $data->send();
+                die;
         }
     }
 }
