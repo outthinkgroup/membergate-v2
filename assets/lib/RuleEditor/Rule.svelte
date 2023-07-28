@@ -3,6 +3,7 @@
 	import type { RuleT } from "./ruleTypes";
 	import { operators, parameterOptions } from "./ruleTypes";
 	import {ParamValues} from "./rulestore"
+    import { onMount } from "svelte";
 
 	export let rule: RuleT;
 
@@ -15,8 +16,11 @@
 			isLoadingParamValues = true
 			const res = await ParamValues.load(value)
 			isLoadingParamValues = false
-			console.log(res)
 		};
+	onMount(()=>{
+		ParamValues.load(rule.parameter)
+		console.log(rule.parameter)
+	})
 	
 </script>
 

@@ -8,13 +8,13 @@
 	import GrayBox from "../elements/GrayBox.svelte";
   import type { RuleT } from "./ruleTypes";
 	import ProtectMethod from "./ProtectMethod.svelte";
+    import DevTool from "../DevTool/DevTool.svelte";
 
 	let title = window.membergate.title != "Auto Draft" ? window.membergate.title : "";
 	let ruleset = window.membergate.Rules.ruleList;
 	let condition = window.membergate.Rules.ruleCondition;
 	let protectMethod = window.membergate.Rules.protectMethod;
 
-	$: ruleset, console.log(ruleset);
 	function addRule(groupIndex: number, ruleIndex:number) {
 		const rule:RuleT = {
 			parameter: "post_type",
@@ -51,9 +51,6 @@
 			window.location.href = res.redirect	
 		}
 	}
-	onMount(() => {
-		ParamValues.load("page");
-	});
 </script>
 
 <div class="p-4 max-w-screen-xl mx-auto pt-10 flex flex-col gap-10">
@@ -114,6 +111,9 @@
 	</GrayBox>
 
 </div>
+{#if import.meta.env.DEV }
+	<DevTool {ruleset} {condition} {protectMethod}/>
+{/if}
 
 
 <!--

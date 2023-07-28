@@ -22,7 +22,6 @@
   async function fetchAndSetLists(apikey: string, provider: string) {
     const listData = await getLists();
     if (listData.errors.length) {
-      console.log(listData.errors);
     }
     if (listData.data.lists && listData.data.lists.length) {
       lists.set(listData.data.lists);

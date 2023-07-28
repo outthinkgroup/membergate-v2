@@ -2,7 +2,6 @@
 	import type { ConditionRuleT } from "./ruleTypes";
 	import { conditionOperatorOptions, conditionParamOptions } from "./ruleTypes";
 	export let condition: ConditionRuleT;
-	$:condition,console.log(condition);
 </script>
 
 <div class="flex gap-2 flex-1 w-full ">

@@ -6,17 +6,14 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-use Membergate\Common\MemberCookie;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\Rules;
 
-class Redirects implements SubscriberInterface {
+class Protect implements SubscriberInterface {
 
     private $rules;
-    private $member_cookie;
-    public function __construct(Rules $rules, MemberCookie $member_cookie ) {
+    public function __construct(Rules $rules ) {
         $this->rules = $rules;
-        $this->member_cookie = $member_cookie;
     }
 
     public static function get_subscribed_events(): array {
@@ -28,6 +25,7 @@ class Redirects implements SubscriberInterface {
 
     public function on_template_redirect() {
         global $post;
+        debug("hi");
         $conditions = $this->rules->get_conditions();
         $passes = true;
         foreach($conditions as $condition_id=>$condition){
@@ -69,25 +67,32 @@ class Redirects implements SubscriberInterface {
                     // must loop through all because its an "AND" clause
                     switch($rule->parameter){
                         case 'post_type':
+                            debug("inside posttype");
                             $is_protected = $this->post_type_rule($post, $rule);
+                            debug("post_type: $is_protected");//" . $is_protected ? "true":"false");
                             break;
                         case "post":
+                            debug("post: $is_protected" );
                             $is_protected = $this->post_rule($post, $rule);
                             break;
                         case "page":
                             $is_protected = $this->post_rule($post, $rule);
+                            debug("page: $is_protected" );
                             break;
                         case "category":
                             $is_protected = $this->term_rule($post, $rule, 'category');
+                            debug("category: $is_protected" );
                             break;
                         case "tag":
                             $is_protected = $this->term_rule($post, $rule, 'post_tag');
+                            debug("tag: $is_protected" );
                             break;
                         case "user_role":
                             $is_protected = $this->user_role_rule($rule);
                             break;
                         case "page_template":
                             $is_protected = $this->page_template_rule($post, $rule);
+                            debug("tag: $is_protected") ;
                             break;
                         default:
                             break;
@@ -102,13 +107,16 @@ class Redirects implements SubscriberInterface {
         $protect_method = $this->rules->get_protect_method($protect_method_id);
         if($protect_method->method = 'redirect'){
             $page = get_post(intval($protect_method->value));
+            // avoid redirect loops
+            if(get_the_ID() == $page->ID) return; 
+
             wp_safe_redirect(get_permalink($page));
             exit;
         }
     }
 
     private function post_type_rule(\WP_Post $post, $rule){
-        if(!is_single()) return false;
+        if(!is_singular()) return false;
         if($rule->operator == 'is'){
             return get_post_type($post) == $rule->value;
         }
@@ -130,6 +138,7 @@ class Redirects implements SubscriberInterface {
     private function term_rule($post, $rule, $tax){
         if(!is_single()) return false;
         if($rule->operator == 'is'){
+            debug([get_the_category($post->ID), $rule, $tax]);
             return has_term($rule->value, $tax, $post);
         }
         if($rule->operator == 'not'){

@@ -11,7 +11,7 @@ use Membergate\Subscriber\Admin;
 use Membergate\Subscriber\AjaxEndpoints;
 use Membergate\Subscriber\Assets;
 use Membergate\Subscriber\MetaBoxes;
-use Membergate\Subscriber\Redirects;
+use Membergate\Subscriber\Protect;
 use Membergate\Subscriber\SSRSettings;
 use Membergate\Subscriber\Shortcodes;
 
@@ -24,7 +24,7 @@ class EventManagementConfiguration {
             Admin::class,
             AjaxEndpoints::class,
             MetaBoxes::class,
-            Redirects::class,
+            Protect::class,
             SSRSettings::class,
         ];
 

@@ -4,7 +4,6 @@
 	import { protectMethodOptions } from "./ruleTypes";
 	import { ParamValues } from "./rulestore";
 	export let protectMethod: ProtectMethodT;
-	$: protectMethod, console.log($ParamValues, protectMethod);
 	onMount(() => {
 		ParamValues.load("page");
 	});

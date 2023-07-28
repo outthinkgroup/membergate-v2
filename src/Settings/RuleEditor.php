@@ -13,6 +13,8 @@ class RuleEditor {
             case "page":
                 return ['page' => $this->load_pages()];
             case "category":
+                debug("catsssss!");
+
                 return ['category' => $this->load_categories()];
             case "tag":
                 return ['tag' => $this->load_tags()];
