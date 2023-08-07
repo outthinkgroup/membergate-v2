@@ -78,8 +78,20 @@
 					<div class="flex gap-2 h-12">
 						<Rule bind:rule />
 						<div class="flex rounded border border-slate-300">
-							<button class="font-semibold py-1 px-3 hover:bg-red-100 hover:text-red-800" on:click={() => addRule(groupIndex, ruleIndex)}>&plus;</button>
-							<button class="font-semibold py-1 px-3 hover:bg-red-100 hover:text-red-800" on:click={() => removeRule(groupIndex, ruleIndex)}>&minus;</button>
+							<button
+								class="font-semibold py-1 px-3 hover:bg-blue-100 hover:text-blue-800"
+								title="add protect parameter"
+								on:click={() => addRule(groupIndex, ruleIndex)}
+							>
+								&plus;
+							</button>
+							<button 
+								class="font-semibold py-1 px-3 hover:bg-red-100 hover:text-red-800" 
+								title="remove this protect parameter" 
+								on:click={() => removeRule(groupIndex, ruleIndex)}
+							>
+									&minus;
+							</button>
 						</div>
 					</div>
 				{/each}
