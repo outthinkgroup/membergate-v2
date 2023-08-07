@@ -7,7 +7,7 @@
 </script>
 
 <h1>DevTools</h1>
-<CopyButton content={JSON.stringify({ruleset ,condition, protectMethod},null, 2)}/>
+<CopyButton content={JSON.stringify({rules:ruleset ,condition, protectMethod},null, 2)}/>
 <div>
 	<p>Rule:</p>
 	<pre>
