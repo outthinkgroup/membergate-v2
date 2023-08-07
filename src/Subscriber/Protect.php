@@ -87,9 +87,6 @@ class Protect implements SubscriberInterface {
                             $is_protected = $this->term_rule($post, $rule, 'post_tag');
                             debug("tag: $is_protected" );
                             break;
-                        case "user_role":
-                            $is_protected = $this->user_role_rule($rule);
-                            break;
                         case "page_template":
                             $is_protected = $this->page_template_rule($post, $rule);
                             debug("tag: $is_protected") ;
@@ -126,7 +123,7 @@ class Protect implements SubscriberInterface {
     }
 
     private  function post_rule($post, $rule){
-        if(!is_single()) return false;
+        if(!is_singular()) return false;
         if($rule->operator == 'is'){
             return $post->ID == (int)$rule->value;
         }
@@ -143,19 +140,6 @@ class Protect implements SubscriberInterface {
         }
         if($rule->operator == 'not'){
             return !has_term($rule->value, $tax, $post);
-        }
-    }
-
-    private function user_role_rule($rule){
-        $user = wp_get_current_user();
-        if(is_home()) return false;
-
-        if(!$user->ID) return true; // not logged in
-        if($rule->operator == 'is'){
-            return in_array($rule->value, $user->roles);
-        }
-        if($rule->operator == 'not'){
-            return !in_array($rule->value, $user->roles);
         }
     }
 

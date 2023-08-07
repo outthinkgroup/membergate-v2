@@ -13,13 +13,9 @@ class RuleEditor {
             case "page":
                 return ['page' => $this->load_pages()];
             case "category":
-                debug("catsssss!");
-
                 return ['category' => $this->load_categories()];
             case "tag":
                 return ['tag' => $this->load_tags()];
-            case "user_role":
-                return ['user_role' => $this->load_user_roles()];
             case "page_template":
                 return ["page_template" => $this->load_page_templates()];
             default:
@@ -53,7 +49,7 @@ class RuleEditor {
     }
 
     public function load_posts() {
-        $posts = get_posts(['post_type' => get_post_types(['public' => true], 'names'), 'post_per_page' => -1]);
+        $posts = get_posts(['post_type' => 'post', 'post_per_page' => -1]);
         return $this->build_slug_label_map($posts, 'ID', 'post_title');
     }
 
@@ -80,15 +76,6 @@ class RuleEditor {
             $templates[$slug] = $label;
         }
         return $templates;
-    }
-
-    public function load_user_roles() {
-        $roles = get_editable_roles();
-        $user_roles = [];
-        foreach ($roles as $slug => $role) {
-            $user_roles[$slug] = $role['name'];
-        }
-        return $user_roles;
     }
 
     private function build_slug_label_map($inputArr, $slug, $label) {

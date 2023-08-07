@@ -11,8 +11,6 @@ export const parameterOptions = {
 	// Meta
 	page_template: "Page Template",
 	
-	// USER
-	user_role: "User Role",
 };
 
 export const operators = {
