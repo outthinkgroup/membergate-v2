@@ -1,0 +1,38 @@
+{
+  "config": {
+		"title":"A Rule",
+    "rules": [
+      [
+        {
+          "parameter": "post",
+          "operator": "is",
+          "value": "1"
+        }
+      ]
+    ],
+    "condition": {
+      "parameter": "urlparam",
+      "key": "is_member",
+      "operator": "notset"
+    },
+    "protectMethod": {
+      "method": "redirect",
+      "value": "44"
+    },
+    "id": 63
+  },
+	"routes":[
+		{
+			"url":"http://consciousgrowthpartners.local/2023/04/28/hello-world/",
+			"expectedUrl":"http://consciousgrowthpartners.local/redirect/"
+		},
+		{
+			"url":"http://consciousgrowthpartners.local/privacy-policy/",
+			"expectedUrl":"http://consciousgrowthpartners.local/privacy-policy/"
+		},
+		{
+			"url":"http://consciousgrowthpartners.local/2023/04/28/hello-world/?is_member",
+			"expectedUrl":"http://consciousgrowthpartners.local/2023/04/28/hello-world/?is_member"
+		}
+	]
+}

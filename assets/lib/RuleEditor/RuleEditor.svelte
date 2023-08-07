@@ -2,8 +2,6 @@
 	import Rule from "./Rule.svelte";
 	import Condition from "./Condition.svelte";
 	import { jsonAjax } from "../../utils/api";
-	import { ParamValues } from "./rulestore";
-	import { onMount } from "svelte";
 	import SaveButton from "../elements/SaveButton.svelte";
 	import GrayBox from "../elements/GrayBox.svelte";
   import type { RuleT } from "./ruleTypes";
@@ -109,8 +107,8 @@
 			</div>
 		</div>
 	</GrayBox>
-
 </div>
+
 {#if import.meta.env.DEV }
 	<DevTool {ruleset} {condition} {protectMethod}/>
 {/if}

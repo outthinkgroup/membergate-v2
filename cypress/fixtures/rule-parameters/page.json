@@ -1,0 +1,38 @@
+{
+  "config": {
+		"title":"A Rule",
+    "rules": [
+      [
+        {
+          "parameter": "page",
+          "operator": "is",
+          "value": "2"
+        }
+      ]
+    ],
+    "condition": {
+      "parameter": "urlparam",
+      "key": "is_member",
+      "operator": "notset"
+    },
+    "protectMethod": {
+      "method": "redirect",
+      "value": "44"
+    },
+    "id": 63
+  },
+	"routes":[
+		{
+			"url":"http://consciousgrowthpartners.local/sample-page/",
+			"expectedUrl":"http://consciousgrowthpartners.local/redirect/"
+		},
+		{
+			"url":"http://consciousgrowthpartners.local/privacy-policy/",
+			"expectedUrl":"http://consciousgrowthpartners.local/privacy-policy/"
+		},
+		{
+			"url":"http://consciousgrowthpartners.local/sample-page/?is_member",
+			"expectedUrl":"http://consciousgrowthpartners.local/sample-page/?is_member"
+		}
+	]
+}
