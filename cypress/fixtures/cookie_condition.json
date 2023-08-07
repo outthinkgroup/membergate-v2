@@ -1,0 +1,24 @@
+{
+  "config": {
+		"title":"A Rule",
+    "rules": [
+      [
+        {
+          "parameter": "post_type",
+          "operator": "is",
+          "value": "post"
+        }
+      ]
+    ],
+    "condition": {
+      "parameter": "cookie",
+      "key": "is_member",
+      "operator": "notset"
+    },
+    "protectMethod": {
+      "method": "redirect",
+      "value": "44"
+    },
+    "id": 63
+  }
+}

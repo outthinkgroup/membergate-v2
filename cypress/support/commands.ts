@@ -32,24 +32,9 @@ Cypress.Commands.add("removeMemberCookie", () => {
 });
 
 Cypress.Commands.add("setMembergateCookie", () => {
-  cy.setCookie("membergate_member", "true");
+  cy.setCookie("is_member", "true");
 	cy.reload()
 });
-
-Cypress.Commands.add("setMembergateSettings", (settings) => {
-	settings = JSON.stringify(settings).replace(/"/g, `\\"`).replace(/'/g, `\\'`)
-  console.log(cy.exec(`cypress/scripts/membergateSettings "`  + settings + '"'));
-	cy.reload();
-});
-
-Cypress.Commands.add("RestartMockServer", async ()=>{
-	const res = await fetch("http://localhost:3000/reset-db/",{method:"POST",mode:"no-cors"})
-	console.log(res)	
-})
-
-Cypress.Commands.add("setPostMeta", (url,meta)=>{
-  console.log(cy.exec(`cypress/scripts/membergatepostmeta ` + url + ' ' + meta ));
-})
 
 Cypress.Commands.add("adminLogin",()=>{
 	cy.visit("http://consciousgrowthpartners.local/wp-admin")
