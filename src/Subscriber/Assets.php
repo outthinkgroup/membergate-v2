@@ -15,6 +15,7 @@ class Assets implements SubscriberInterface {
             'admin_enqueue_scripts' => 'enqueue_admin_assets',
             'script_loader_tag' => ['use_esm_modules', 10, 3],
             'wp_enqueue_scripts' => 'enqueue_form_syles',
+            'enqueue_block_editor_assets' => 'extend_block_editor',
         ];
     }
 
@@ -39,5 +40,18 @@ class Assets implements SubscriberInterface {
         } else {
             return $tag;
         }
+    }
+
+    public function extend_block_editor() {
+        global $membergate;
+        $vars = $membergate->get_container()->get('Vars');
+        $asset_file = include( $vars['plugin_path'] . 'extend-block-editor/build/index.asset.php');
+        wp_enqueue_script(
+            'membergate-extend-block-editor',
+            $vars['plugin_url'] . 'extend-block-editor/build/index.js',
+            $asset_file['dependencies'],
+            $asset_file['version'],
+            true
+        );
     }
 }

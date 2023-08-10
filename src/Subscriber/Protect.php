@@ -42,7 +42,7 @@ class Protect implements SubscriberInterface {
                 continue;
             }
 
-            if($this->is_post_protected($post, $condition_id)){
+            if($post && $this->is_post_protected($post, $condition_id)){
                 $this->protect($condition_id);
                 break;
             }

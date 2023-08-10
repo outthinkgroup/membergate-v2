@@ -14,7 +14,9 @@
     "test": " sed -i '' 's/production/development/g' env.php && cypress open",
     "start-test": "node ./../esp-mock-server/ . >./../esp-mock-server/logs.log 2>&1 &",
     "end-test": "../esp-mock-server/req/kill",
-    "test-all": "npx cypress run --record --key bd3d921a-f7d2-4711-9174-798eee03d9da"
+    "test-all": "npx cypress run --record --key bd3d921a-f7d2-4711-9174-798eee03d9da",
+		"block:dev":"wp-scripts start --webpack-src-dir=extend-block-editor/src --output-path=extend-block-editor/build",
+		"block:build":"wp-scripts build"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.9",
@@ -36,6 +38,7 @@
   "dependencies": {
     "@floating-ui/dom": "^1.2.1",
     "@types/chai": "^4.3.5",
+    "@wordpress/scripts": "^26.10.0",
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",
     "lucide-svelte": "^0.258.0",
