@@ -13,6 +13,7 @@ class PostTypeSettings {
 
     public const POST_META_KEY = 'membergate_post_is_protected';
 
+
     private $post_types;
 
     public function __construct() {

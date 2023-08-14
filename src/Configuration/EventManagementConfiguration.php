@@ -10,6 +10,7 @@ use Illuminate\Container\Container;
 use Membergate\Subscriber\Admin;
 use Membergate\Subscriber\AjaxEndpoints;
 use Membergate\Subscriber\Assets;
+use Membergate\Subscriber\BlockEditorPluginSidebar;
 use Membergate\Subscriber\MetaBoxes;
 use Membergate\Subscriber\Protect;
 use Membergate\Subscriber\SSRSettings;
@@ -23,7 +24,7 @@ class EventManagementConfiguration {
             Assets::class,
             Admin::class,
             AjaxEndpoints::class,
-            MetaBoxes::class,
+            BlockEditorPluginSidebar::class,
             Protect::class,
             SSRSettings::class,
         ];

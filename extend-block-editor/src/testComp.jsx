@@ -1,6 +1,15 @@
+import { compose } from '@wordpress/compose';
+import {SelectControl, ToggleControl, TextControl} from "@wordpress/components";
+import { withSelect, withDispatch } from '@wordpress/data';
 import { PluginSidebar, PluginSidebarMoreMenuItem } from "@wordpress/edit-post";
 
-export function TestComp() {
+const sidebarOptions = [
+	{
+		value:"setCookie"
+	},
+]
+
+function TestComp({meta, oldMeta, setMetaFieldValue}) {
 	return (
 		<>
 			<PluginSidebarMoreMenuItem target="test-meta-panel">
@@ -25,8 +34,41 @@ export function TestComp() {
 				name="test-meta-panel"
 				title={"TEST"}
 			>
-				hi
+				<div className="ast-sidebar-container components-panel__body is-opened" id="membergate_settings_metabox">
+
+					<div className="ast-meta-settings-title" >
+						<h4>Membergate Settings</h4>
+					</div>
+
+					
+					<div className="ast-sidebar-layout-meta-wrap components-base-control__field">
+						<ToggleControl checked={meta.membergate_should_set_cookie} label="Set Cookie on load?" onChange={(val)=>setMetaFieldValue(val, "membergate_should_set_cookie")} />
+						{meta.membergate_should_set_cookie &&
+							<>
+								<TextControl label="Cookie Name" value={meta.membergate_cookie_name} onChange={(val)=>setMetaFieldValue(val, "membergate_cookie_name")} />
+								<TextControl label="Cookie Value" value={meta.membergate_cookie_value} onChange={(val)=>setMetaFieldValue(val, "membergate_cookie_value")} />
+							</>
+						}
+					</div>
+
+				</div>
 			</PluginSidebar>
 		</>
 	);
 }
+
+export default compose(
+	withSelect( ( select ) => {
+		const postMeta = select( 'core/editor' ).getEditedPostAttribute( 'meta' );
+		const oldPostMeta = select( 'core/editor' ).getCurrentPostAttribute( 'meta' );
+		return {
+			meta: { ...oldPostMeta, ...postMeta },
+			oldMeta: oldPostMeta,
+		};
+	} ),
+	withDispatch( ( dispatch ) => ( {
+		setMetaFieldValue: ( value, field ) => dispatch( 'core/editor' ).editPost(
+			{ meta: { [ field ]: value } }
+		),
+	} ) ),
+)( TestComp );
