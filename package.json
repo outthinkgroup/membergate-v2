@@ -16,7 +16,7 @@
     "end-test": "../esp-mock-server/req/kill",
     "test-all": "npx cypress run --record --key bd3d921a-f7d2-4711-9174-798eee03d9da",
 		"block:dev":"wp-scripts start --webpack-src-dir=extend-block-editor/src --output-path=extend-block-editor/build",
-		"block:build":"wp-scripts build"
+		"block:build":"wp-scripts build --webpack-src-dir=extend-block-editor/src --output-path=extend-block-editor/build"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.9",

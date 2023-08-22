@@ -10,6 +10,7 @@ use Membergate\Common\JsonResponse;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\Rules;
 
+
 class AjaxEndpoints implements SubscriberInterface {
     private $container;
 
@@ -18,7 +19,7 @@ class AjaxEndpoints implements SubscriberInterface {
     public function __construct(
         Rules $rules
     ) {
-        $this->rules= $rules;
+        $this->rules = $rules;
         global $membergate;
         $this->container = $membergate->get_container();
     }
@@ -48,11 +49,17 @@ class AjaxEndpoints implements SubscriberInterface {
         $handlerClass->handle();
     }
 
-    public function membergate_settings_endpoint() {
+    private function get_request_body() {
         $body = file_get_contents("php://input");
         $body = json_decode($body);
+        return $body;
+    }
+
+    public function membergate_settings_endpoint() {
+        $body = $this->get_request_body();
+
         switch ($body->membergate_action) {
-            /* RULE EDITOR */
+                /* RULE EDITOR */
             case "rule_editor__load_param_value":
                 $data = new JsonResponse($this->rules->editor->load_rule_value_options($body));
                 $data->send();

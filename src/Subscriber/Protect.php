@@ -43,7 +43,7 @@ class Protect implements SubscriberInterface {
             }
 
             if($post && $this->is_post_protected($post, $condition_id)){
-                $this->protect($condition_id);
+                $this->protect($condition_id, $post->ID);
                 break;
             }
         }
@@ -100,14 +100,21 @@ class Protect implements SubscriberInterface {
         return $is_protected;
     }
 
-    private function protect(int $protect_method_id){
+    private function protect(int $protect_method_id, $protected_post_id = null){
         $protect_method = $this->rules->get_protect_method($protect_method_id);
         if($protect_method->method = 'redirect'){
             $page = get_post(intval($protect_method->value));
             // avoid redirect loops
             if(get_the_ID() == $page->ID) return; 
 
-            wp_safe_redirect(get_permalink($page));
+            $link = get_permalink($page);
+            if($protected_post_id){
+                $protected_link = get_permalink($protected_post_id);
+                if($protected_link){
+                    $link = add_query_arg('redirect_url', $protected_link, $link);
+                }
+            }
+            wp_safe_redirect($link);
             exit;
         }
     }

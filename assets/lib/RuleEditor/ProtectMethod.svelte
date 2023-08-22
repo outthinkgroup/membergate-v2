@@ -9,7 +9,7 @@
 	});
 </script>
 
-<div class="flex gap-2 flex-1 w-full ">
+<div class="flex gap-2 flex-1 w-full">
 	<select
 		bind:value={protectMethod.method}
 		class="w-full max-w-[25%] border border-slate-300"
@@ -25,7 +25,7 @@
 			bind:value={protectMethod.value}
 		>
 			{#each Object.entries($ParamValues.page) as [value, label]}
-				<option value={value}>{label}</option>
+				<option {value}>{label}</option>
 			{/each}
 		</select>
 	{/if}

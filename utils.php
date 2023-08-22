@@ -14,3 +14,4 @@ if (!function_exists('debug')) {
         error_log(print_r($val, true));
     }
 }
+

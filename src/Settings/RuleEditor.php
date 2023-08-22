@@ -49,12 +49,12 @@ class RuleEditor {
     }
 
     public function load_posts() {
-        $posts = get_posts(['post_type' => 'post', 'post_per_page' => -1]);
+        $posts = get_posts(['post_type' => 'post', 'posts_per_page' => -1]);
         return $this->build_slug_label_map($posts, 'ID', 'post_title');
     }
 
     public function load_pages() {
-        $pages = get_posts(['post_type' => 'page', 'post_per_page' => -1]);
+        $pages = get_posts(['post_type' => 'page', 'posts_per_page' => -1]);
         return $this->build_slug_label_map($pages, 'ID', 'post_title');
     }
 

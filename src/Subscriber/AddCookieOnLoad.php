@@ -5,7 +5,7 @@ namespace Membergate\Subscriber;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\PostSettings;
 
-class BlockEditorPluginSidebar implements SubscriberInterface {
+class AddCookieOnLoad implements SubscriberInterface {
     private $meta;
     public function __construct(PostSettings $meta) {
         $this->meta = $meta;
