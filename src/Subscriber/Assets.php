@@ -41,7 +41,7 @@ class Assets implements SubscriberInterface {
     public function use_esm_modules($tag, $handle, $src) {
         if (false !== stripos($handle, 'module')) {
             $str = "type='module'";
-            $str .= MG_IS_DEVELOPMENT ? ' crossorigin' : '';
+            $str .= $this->vite->in_dev ? ' crossorigin' : '';
             $tag = str_replace("type='text/javascript'", $str, $tag);
 
             return "<script type='module' src='$src' id='$handle' crossorigin></script>";
