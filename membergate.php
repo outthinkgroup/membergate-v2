@@ -55,11 +55,3 @@ add_action('admin_menu', function () {
     add_submenu_page("membergate-settings", 'Rules', 'Rules', 'manage_options', 'edit.php?post_type=membergate_rule');
 });
 
-add_action('admin_head', function () {
-    if (get_current_screen()->id !== 'membergate_rule') {
-        return;
-    }
-    \Membergate\Assets\Vite::useVite("assets/rule-editor.ts");
-    ?>
-<?php
-});

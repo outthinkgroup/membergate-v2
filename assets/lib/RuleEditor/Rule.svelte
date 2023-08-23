@@ -30,7 +30,6 @@
 			<option {value}>{label}</option>
 		{/each}
 	</select>
-
 	<select bind:value={rule.operator} class="w-full max-w-[25%] border border-slate-300">
 		{#each Object.entries(operators) as [value, label]}
 			<option {value}>{label}</option>

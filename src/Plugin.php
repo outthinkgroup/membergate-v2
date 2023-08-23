@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 use Illuminate\Container\Container;
+use Membergate\Assets\Vite;
 use Membergate\Configuration\EventManagementConfiguration;
 use Membergate\EventManagement\EventManager;
 use Membergate\Subscriber\Admin;
@@ -46,6 +47,11 @@ class Plugin {
         // Needs Manual Binding to add the pluign path var
         $this->container->bind(Admin::class, function (Container $container) {
             return new Admin($container->get('Vars')['plugin_path']);
+        });
+
+        $this->container->singleton(Vite::class, function (Container $container){
+            $vars = $container->get('Vars');
+            return new Vite($vars['plugin_url'], $vars['plugin_path']);
         });
 
         //subscribers

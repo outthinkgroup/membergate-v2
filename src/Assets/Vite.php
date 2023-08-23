@@ -2,118 +2,108 @@
 
 namespace Membergate\Assets;
 
-if (!defined('ABSPATH')) {
-    exit;
-}
-
 class Vite {
-    public static function base_path() {
-        global $membergate;
+    public string $plugin_url;
+    public string $plugin_path;
+    public string $module_name;
+    public bool $in_dev;
+    public string $base_url;
+    public array $manifest;
 
-        return $membergate->get_plugin_url() . '/assets/dist/';
+    public function __construct(string $plugin_url, string $plugin_path) {
+        $this->plugin_url = $plugin_url;
+        $this->plugin_path = $plugin_path;
+        $this->module_name = basename($plugin_path);
+        $asset_config = $this->asset_info();
+        $this->in_dev = $asset_config->env == "development";
+        $this->base_url = $this->in_dev ? $asset_config->url : $this->plugin_url . "/assets/dist/";
+
+        $this->manifest = $this->in_dev ? [] : $this->get_manifest();
     }
 
-    public static function useVite(string $script = 'assets/main.ts') {
-        self::jsPreloadImports($script);
-        self::cssTag($script);
-        self::register($script);
-    }
-
-    public static function register($entry) {
-        $url = MG_IS_DEVELOPMENT
-          ? 'http://localhost:1234/' . $entry
-          : self::assetUrl($entry);
-
-        if (! $url) {
-            return '';
+    public function use(string $script = "assets/main.ts") {
+        debug($script);
+        $this->preload_imports($script);
+        if (!$this->in_dev) {
+            $this->enqueue_css($script);
         }
-        $in_footer = MG_IS_DEVELOPMENT ? true : false; // Vite needs it to be in footer for dev
-        wp_register_script("module/sage/$entry", $url, false, $in_footer);
-        wp_enqueue_script("module/sage/$entry");
+        $this->enqueue_js($script);
     }
 
-    private static function jsPreloadImports($entry) {
-        if (MG_IS_DEVELOPMENT) {
+    private function preload_imports(string $script) {
+        if ($this->in_dev) {
             add_action('wp_head', function () {
                 echo '<script type="module">
-          RefreshRuntime.injectIntoGlobalHook(window)
-          window.$RefreshReg$ = () => {}
-          window.$RefreshSig$ = () => (type) => type
-        </script>';
+                    RefreshRuntime.injectIntoGlobalHook(window)
+                    window.$RefreshReg$ = () => {}
+                    window.$RefreshSig$ = () => (type) => type
+                </script>';
             });
-
             return;
         }
-
-        $res = '';
-        foreach (self::importsUrls($entry) as $url) {
-            $res .= '<link rel="modulepreload" href="' . $url . '">';
+        $links = "";
+        foreach ($this->imports($script) as $url) {
+            $links .= "<link rel='modulepreload' href='$url'>";
         }
-
-        add_action('wp_head', function () use (&$res) {
-            echo $res;
+        add_action("wp_head", function () use (&$links) {
+            echo $links;
         });
     }
 
-      private static function cssTag(string $entry): string {
-          // not needed on dev, it's inject by Vite
-          if (MG_IS_DEVELOPMENT) {
-              return '';
-          }
+    private function enqueue_css($script) {
+        foreach ($this->css_urls($script) as $url) {
+            $handle = sprintf("%s/%s", $this->module_name, $script);
+            wp_register_style($handle, $url);
+            wp_enqueue_style($handle, $url);
+        }
+    }
 
-          $tags = '';
-          foreach (self::cssUrls($entry) as $url) {
-              wp_register_style("sage/$entry", $url);
-              wp_enqueue_style("sage/$entry", $url);
-          }
+    private function enqueue_js($script) {
+        $handle = sprintf("module/%s/%s", $this->module_name, $script);
+        wp_register_script($handle, $this->asset_url($script), false, $this->in_dev);
+        wp_enqueue_script($handle);
+    }
 
-          return $tags;
-      }
+    private function imports($script) {
+        if (empty($this->manifest[$script]['imports'])) return [];
 
-      // Helpers to locate files
+        return array_map(
+            fn ($import) => $this->base_url . $this->manifest[$import]['file'],
+            $this->manifest[$script]['imports']
+        );
+    }
 
-      private static function getManifest(): array {
-          global $membergate;
-          $content = file_get_contents($membergate->get_plugin_path() . 'assets/dist/manifest.json');
+    private function css_urls(string $entry) {
+        $urls = [];
+        if (isset($this->manifest[$entry]['imports'])) {
+            foreach ($this->manifest[$entry]['imports'] as $import) {
+                $urls = array_merge($urls, $this->css_urls($import));
+            }
+        }
+        if (!empty($this->manifest[$entry]['css'])) {
+            foreach ($this->manifest[$entry]['css'] as $file) {
+                $urls[] = $this->base_url . $file;
+            }
+        }
+        return $urls;
+    }
 
-          return json_decode($content, true);
-      }
+    private function asset_url(string $entry) {
+        if ($this->in_dev) {
+            return $this->base_url . "/". $entry;
+        }
+        return isset($this->manifest[$entry])
+            ? $this->plugin_url . "assets/dist/" . $this->manifest[$entry]['file']
+            : $this->plugin_url . "assets/dist/" . $entry;
+    }
 
-      private static function assetUrl(string $entry): string {
-          $manifest = self::getManifest();
+    private function asset_info() {
+        $contents = file_get_contents($this->plugin_path . 'assets/asset-info.json');
+        return json_decode($contents);
+    }
 
-          return isset($manifest[$entry])
-      ? self::base_path() . $manifest[$entry]['file']
-      : self::base_path() . $entry;
-      }
-
-      private static function getPublicURLBase() {
-          return MG_IS_DEVELOPMENT ? '/assets/dist/' : self::base_path();
-      }
-
-      private static function importsUrls(string $entry): array {
-          $urls = [];
-          $manifest = self::getManifest();
-
-          if (! empty($manifest[$entry]['imports'])) {
-              foreach ($manifest[$entry]['imports'] as $imports) {
-                  $urls[] = self::getPublicURLBase() . $manifest[$imports]['file'];
-              }
-          }
-
-          return $urls;
-      }
-
-      private static function cssUrls(string $entry): array {
-          $urls = [];
-          $manifest = self::getManifest();
-
-          if (! empty($manifest[$entry]['css'])) {
-              foreach ($manifest[$entry]['css'] as $file) {
-                  $urls[] = self::getPublicURLBase() . $file;
-              }
-          }
-
-          return $urls;
-      }
+    private function get_manifest(): array {
+        $content = file_get_contents($this->plugin_path . 'assets/dist/manifest.json');
+        return json_decode($content, true);
+    }
 }

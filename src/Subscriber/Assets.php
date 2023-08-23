@@ -10,6 +10,10 @@ use Membergate\Assets\Vite;
 use Membergate\EventManagement\SubscriberInterface;
 
 class Assets implements SubscriberInterface {
+    public $vite;
+    public function __construct(Vite $vite){
+        $this->vite = $vite;
+    }
     public static function get_subscribed_events(): array {
         return [
             'admin_enqueue_scripts' => 'enqueue_admin_assets',
@@ -21,16 +25,21 @@ class Assets implements SubscriberInterface {
     public function enqueue_admin_assets($hook) {
         //check get_current_screen
         if ($hook == 'toplevel_page_membergate-settings') {
-            Vite::useVite('assets/main.ts');
+            $this->vite->use('assets/main.ts');
         }
+
+        if (get_current_screen()->id == 'membergate_rule') {
+            $this->vite->use("assets/rule-editor.ts");
+        }
+
     }
 
     public function enqueue_form_syles() {
-        Vite::useVite('assets/frontend.ts');
+        $this->vite->use('assets/frontend.ts');
     }
 
     public function use_esm_modules($tag, $handle, $src) {
-        if (false !== stripos($handle, 'sage')) {
+        if (false !== stripos($handle, 'module')) {
             $str = "type='module'";
             $str .= MG_IS_DEVELOPMENT ? ' crossorigin' : '';
             $tag = str_replace("type='text/javascript'", $str, $tag);
