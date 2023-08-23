@@ -9,7 +9,7 @@ import { writeFile, writeFileSync, writeSync } from "fs";
 export default defineConfig({
 	root: ".",
 	base:
-		process.env.APP_ENV === "development"
+		process.env.NODE_ENV !== "production"
 			? "/"
 			: resolve(__dirname, "/assets/dist/") + "/",
 

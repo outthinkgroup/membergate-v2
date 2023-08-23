@@ -2,5 +2,5 @@ node_modules
 vendor
 _dev
 assets/dist/
-
+assets/asset-info.json
 init.lua
