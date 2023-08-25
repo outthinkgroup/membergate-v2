@@ -40,13 +40,16 @@ add_action('init', function () {
                 'name' => __('Membergate Rules'),
                 'singular_name' => __('Membergate Rule')
             ],
-            'public' => true,
+            'public' => false,
             'show_in_menu' => false,
+            'show_in_rest'=>true,
         ]
     );
 });
 
 add_action('admin_menu', function () {
-    add_submenu_page("membergate-settings", 'Rules', 'Rules', 'manage_options', 'edit.php?post_type=membergate_rule');
-});
+    add_submenu_page("membergate-settings", 'Rules', 'Rules', 'manage_options', 'membergate-rules', function(){
+        include plugin_dir_path(__FILE__) . "/templates/rules.php";
+    });
+}, 10000000);
 

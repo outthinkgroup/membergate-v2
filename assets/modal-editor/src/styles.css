@@ -1,0 +1,89 @@
+.overlay-editor-wrapper{
+	display:none;
+}
+.overlay-editor-wrapper[data-active="true"]{
+	padding-top:35px;
+	display:block;
+	position:absolute;
+	inset:0;
+	z-index:9;
+	background:white;
+}
+
+#overlay-editor-root{
+	background:white;
+}
+
+/*-------*/
+
+
+.wp-modal-editor-layout{
+	box-sizing:border-box;
+	position:relative;
+	display:grid;
+	grid-template-rows:auto 1fr auto;
+	grid-template-columns:1fr 300px;
+}
+.wp-modal-editor-layout * {
+	box-sizing:inherit;
+}
+
+.wp-modal-editor-header{
+	border-bottom:1px solid #ccc;
+	grid-column:1/-1;
+	grid-row: 1/2;
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+}
+.wp-modal-editor-header button{
+	height:100%;
+	aspect-ratio:1;
+	line-height:0;
+	font-size:1.5rem;
+	background:transparent;
+	border:none;
+}
+.wp-modal-editor-header button:hover{
+	background:#f9f9f9;
+}
+
+.wp-modal-editor-sidebar{
+	border-left:1px solid #ccc;
+	grid-row:2/3;
+	grid-column:2/3;
+}
+.wp-modal-editor-sidebar .components-panel{
+	border-left-color:transparent;
+}
+.wp-modal-editor-sidebar .components-panel__body{
+	padding-block:20px;
+}
+.wp-modal-editor-sidebar .setting-field{
+	padding-inline:20px;
+}
+
+.wp-modal-editor-blocks{
+	grid-row:2/3;
+	grid-column:1/2;
+	background:var(--blocks-bg-color, white);
+}
+
+.wp-modal-editor-footer{
+	border-top:1px solid #ccc;
+	grid-row:3/4;
+	grid-column:1/-1;
+}
+.sidebar-tabs{
+	display:flex;
+	height:47px;
+}
+.sidebar-tabs button{
+	flex:1;
+	background:none;
+	border:2px solid transparent;
+}
+.sidebar-tabs button:hover, .sidebar-tabs button.is-active{
+	border-bottom:2px solid var(--wp-admin-theme-color);
+}
+

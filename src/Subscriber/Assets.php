@@ -8,30 +8,40 @@ if (!defined('ABSPATH')) {
 
 use Membergate\Assets\Vite;
 use Membergate\EventManagement\SubscriberInterface;
+use Membergate\Settings\OverlayEditor;
 
 class Assets implements SubscriberInterface {
     public $vite;
-    public function __construct(Vite $vite){
+    public $overlay_editor;
+    public function __construct(Vite $vite, OverlayEditor $overlay_editor) {
         $this->vite = $vite;
+        $this->overlay_editor = $overlay_editor;
     }
+
     public static function get_subscribed_events(): array {
         return [
             'admin_enqueue_scripts' => 'enqueue_admin_assets',
             'script_loader_tag' => ['use_esm_modules', 10, 3],
             'wp_enqueue_scripts' => 'enqueue_form_syles',
+            // 'use_block_editor_for_post_type' =>['prefix_disable_gutenberg', 10, 2]
         ];
     }
 
+    public function prefix_disable_gutenberg($current_status, $post_type) {
+        // Use your post type key instead of 'product'
+        if ($post_type === 'membergate_rule') return false;
+        return $current_status;
+    }
     public function enqueue_admin_assets($hook) {
         //check get_current_screen
         if ($hook == 'toplevel_page_membergate-settings') {
             $this->vite->use('assets/main.ts');
         }
 
-        if (get_current_screen()->id == 'membergate_rule') {
+        if ($hook = 'membergate_page_membergate-rules') {
             $this->vite->use("assets/rule-editor.ts");
+            $this->overlay_editor->enqueue();
         }
-
     }
 
     public function enqueue_form_syles() {
@@ -39,15 +49,6 @@ class Assets implements SubscriberInterface {
     }
 
     public function use_esm_modules($tag, $handle, $src) {
-        if (false !== stripos($handle, 'module')) {
-            $str = "type='module'";
-            $str .= $this->vite->in_dev ? ' crossorigin' : '';
-            $tag = str_replace("type='text/javascript'", $str, $tag);
-
-            return "<script type='module' src='$src' id='$handle' crossorigin></script>";
-        } else {
-            return $tag;
-        }
+        return $this->vite->use_esm_modules($tag, $handle, $src);
     }
-
 }

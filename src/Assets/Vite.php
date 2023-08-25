@@ -22,7 +22,6 @@ class Vite {
     }
 
     public function use(string $script = "assets/main.ts") {
-        debug($script);
         $this->preload_imports($script);
         if (!$this->in_dev) {
             $this->enqueue_css($script);
@@ -90,7 +89,7 @@ class Vite {
 
     private function asset_url(string $entry) {
         if ($this->in_dev) {
-            return $this->base_url . "/". $entry;
+            return $this->base_url . "/" . $entry;
         }
         return isset($this->manifest[$entry])
             ? $this->plugin_url . "assets/dist/" . $this->manifest[$entry]['file']
@@ -105,5 +104,17 @@ class Vite {
     private function get_manifest(): array {
         $content = file_get_contents($this->plugin_path . 'assets/dist/manifest.json');
         return json_decode($content, true);
+    }
+
+    public function use_esm_modules($tag, $handle, $src) {
+        if (false !== stripos($handle, 'module')) {
+            $str = "type='module'";
+            $str .= $this->in_dev ? ' crossorigin' : '';
+            $tag = str_replace("type='text/javascript'", $str, $tag);
+
+            return "<script type='module' src='$src' id='$handle' crossorigin></script>";
+        } else {
+            return $tag;
+        }
     }
 }

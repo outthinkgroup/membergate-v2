@@ -68,6 +68,17 @@ class AjaxEndpoints implements SubscriberInterface {
                 $data = new JsonResponse($this->rules->editor->save_rules($body));
                 $data->send();
                 die;
+            case "save_overlay":
+                $data = new JsonResponse($this->save_overlay($body));
+                $data->send();
+                die;
         }
+    }
+
+    public function save_overlay($body) {
+        $post_id = (int)$body->postId;
+        $content = $body->content;
+        $res = (bool)update_post_meta($post_id, "wp_overlay_content", $content);
+        return ['saved'=>$res];
     }
 }

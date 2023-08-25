@@ -77,16 +77,3 @@ class Rules {
     }
 }
 
-/**
-        return [ // RulesSets[]
-            [ // RuleSet
-                [ // RuleGroup
-                    [ // Rule
-                        'parameter' => 'page_template',
-                        'operator'  => 'is',
-                        'value'     => 'product-search-results',
-                    ]
-                ]
-            ],
-        ];
- */

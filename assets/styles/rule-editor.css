@@ -17,6 +17,6 @@
 }
 
 #wpcontent {
-  visibility: hidden;
-  position: relative;
+  /* visibility: hidden; */
+  /* position: relative; */
 }

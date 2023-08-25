@@ -1,0 +1,48 @@
+#membergate_overlay_root{
+	position:fixed;
+	bottom:0;
+	left:0;
+	right:0;
+	height:100dvh;
+	z-index:9999999;
+	padding-top:10dvh;
+	background:#00000044;
+	animation:blurin 300ms linear forwards;
+}
+@keyframes slidein {
+	from {
+		transform: translateY(100%);
+	}
+	to{
+		transform: translateY(0);
+	}
+}
+@keyframes blurin {
+	from {
+		background:transparent;
+		backdrop-filter:blur(0);
+	}
+	to{
+		backdrop-filter:blur(5px);
+	}
+}
+
+body:has(#membergate_overlay_root){
+	overflow:hidden!important;
+}
+.membergate-overlay-wrapper{
+	animation:slidein 400ms cubic-bezier(.5, 1,.5,1) forwards;
+	background:white;
+	height:100%;
+
+	padding:max(20px, 2vw);
+}
+
+.membergate-overlay-wrapper > *:not(figure) {
+	max-width:900px;
+	margin-left:auto;
+	margin-right:auto;
+}
+.membergate-overlay-wrapper > figure img {
+	width:100% !important;
+}

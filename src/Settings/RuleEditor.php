@@ -39,7 +39,6 @@ class RuleEditor {
             'post_status'=>'publish',
         ],true);
         $link = get_edit_post_link($pid,'if you know, you know, you know?');
-        debug($link);
         return ["message"=>"ok", "redirect"=>$link];
     }
 

@@ -9,7 +9,10 @@ if (!defined('ABSPATH')) {
 use Illuminate\Container\Container;
 use Membergate\Assets\Vite;
 use Membergate\Configuration\EventManagementConfiguration;
+use Membergate\Configuration\ProtectContent;
 use Membergate\EventManagement\EventManager;
+use Membergate\Settings\OverlayEditor;
+use Membergate\Settings\Rules;
 use Membergate\Subscriber\Admin;
 
 /*╭──────────────────────────╮*/
@@ -48,10 +51,16 @@ class Plugin {
         $this->container->bind(Admin::class, function (Container $container) {
             return new Admin($container->get('Vars')['plugin_path']);
         });
+        $this->container->bind(OverlayEditor::class, function (Container $container) {
+            return new OverlayEditor($container->get('Vars')['plugin_url'], $container->get('Vars')['plugin_path']);
+        });
 
         $this->container->singleton(Vite::class, function (Container $container){
             $vars = $container->get('Vars');
             return new Vite($vars['plugin_url'], $vars['plugin_path']);
+        });
+        $this->container->singleton(ProtectContent::class, function (Container $container){
+            return new ProtectContent($container->get(Rules::class));
         });
 
         //subscribers

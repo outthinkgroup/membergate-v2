@@ -42,7 +42,6 @@ class AddCookieOnLoad implements SubscriberInterface {
     }
 
     public function register_meta() {
-        debug("here");
         register_post_meta('', "membergate_should_set_cookie", [
             'type' => "boolean",
             'single' => true,

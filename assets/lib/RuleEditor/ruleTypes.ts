@@ -27,6 +27,7 @@ export const conditionOperatorOptions={
 }
 export const protectMethodOptions = {
 	redirect:"Redirect To",
+	overlay:"Use Overlay",
 }
 
 

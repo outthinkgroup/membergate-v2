@@ -1,9 +1,8 @@
 import { dirname, resolve } from "path";
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
-import { NormalizedInputOptions, PluginContext } from "rollup";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-import { writeFile, writeFileSync, writeSync } from "fs";
+import { writeFile} from "fs";
 
 // https://vitejs.dev/config/
 export default defineConfig({

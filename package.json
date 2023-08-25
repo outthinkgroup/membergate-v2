@@ -4,7 +4,6 @@
   "main": "index.js",
   "author": "josh kennedy <josh@outthinkgroup.com>",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,8 +12,10 @@
     "start-test": "node ./../esp-mock-server/ . >./../esp-mock-server/logs.log 2>&1 &",
     "end-test": "../esp-mock-server/req/kill",
     "test-all": "npx cypress run --record --key bd3d921a-f7d2-4711-9174-798eee03d9da",
-    "block:dev": "wp-scripts start --webpack-src-dir=extend-block-editor/src --output-path=extend-block-editor/build",
-    "block:build": "wp-scripts build --webpack-src-dir=extend-block-editor/src --output-path=extend-block-editor/build"
+    "pluginSidebar:dev": "wp-scripts start --webpack-src-dir=extend-block-editor/src --output-path=extend-block-editor/build",
+    "pluginSidebar:build": "wp-scripts build --webpack-src-dir=extend-block-editor/src --output-path=extend-block-editor/build",
+    "modalEditor:dev": "wp-scripts start --webpack-src-dir=assets/modal-editor/src --output-path=assets/modal-editor/build",
+    "modalEditor:build": "wp-scripts build --webpack-src-dir=assets/modal-editor/src --output-path=assets/modal-editor/build"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.9",
@@ -37,6 +38,7 @@
   "dependencies": {
     "@floating-ui/dom": "^1.2.1",
     "@types/chai": "^4.3.5",
+    "@wordpress/components": "^25.6.0",
     "@wordpress/scripts": "^26.10.0",
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",

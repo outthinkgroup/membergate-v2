@@ -19,7 +19,7 @@
 		{/each}
 	</select>
 
-	{#if $ParamValues.page}
+	{#if $ParamValues.page && protectMethod.method == "redirect"}
 		<select
 			class="w-full max-w-full flex-1 border border-slate-300"
 			bind:value={protectMethod.value}
@@ -29,4 +29,8 @@
 			{/each}
 		</select>
 	{/if}
+	{#if protectMethod.method == "overlay"}
+		<button id="show-modal-editor">Edit Overlay</button>
+	{/if}
+
 </div>

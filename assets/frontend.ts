@@ -1,5 +1,6 @@
 import "./styles/forms.css";
-import "./styles/modal.css";
+import "./styles/overlay.css";
+
 import { getCookie } from "./utils/utils";
 
 let template: HTMLTemplateElement;
