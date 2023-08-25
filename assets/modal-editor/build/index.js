@@ -95,7 +95,7 @@ __webpack_require__.r(__webpack_exports__);
 const {
   Slot: InspectorSlot,
   Fill: InspectorFill
-} = (0,_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.createSlotFill)("StandAloneBlockEditorSidebarInspector");
+} = (0,_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.createSlotFill)("MembergateOverlaySidbarInspector");
 function Sidebar({
   modalSettings,
   setModalSettings
@@ -110,7 +110,7 @@ function Sidebar({
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "overlay-editor-sidebar border-l",
     role: "region",
-    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Standalone Block Editor advanced settings."),
+    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)(" Overlay Editor advanced settings."),
     tabIndex: "-1"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "h-12 flex"
@@ -328,11 +328,11 @@ function Header({
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "overlay-editor-header flex justify-between items-center border-b ",
     role: "region",
-    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Standalone Editor top bar.', 'getdavesbe'),
+    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Overlay Editor top bar.', 'membergate'),
     tabIndex: "-1"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", {
-    className: "getdavesbe-header__title"
-  }, "Modal Editor"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    className: "text-lg"
+  }, "Overlay Editor"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     className: "h-full aspect-square leading-none text-2xl bg-transparent border-0 hover:bg-slate-100 w-12",
     onClick: closeAction
   }, "\xD7"));

@@ -5,7 +5,7 @@ import { __ } from "@wordpress/i18n";
 // import ModalSettings from "./ModalSettings"
 
 const { Slot: InspectorSlot, Fill: InspectorFill } = createSlotFill(
-  "StandAloneBlockEditorSidebarInspector",
+  "MembergateOverlaySidbarInspector",
 );
 
 function Sidebar({modalSettings, setModalSettings}) {
@@ -21,7 +21,7 @@ function Sidebar({modalSettings, setModalSettings}) {
     <div
       className="overlay-editor-sidebar border-l"
       role="region"
-      aria-label={__("Standalone Block Editor advanced settings.")}
+      aria-label={__(" Overlay Editor advanced settings.")}
       tabIndex="-1"
     >
       <div className="h-12 flex">
