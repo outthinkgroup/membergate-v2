@@ -56,7 +56,7 @@ function OverlayEditor({
     _setOverlaySettings(window.initialOverlaySettings);
   }, []);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.StrictMode, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_2__.ShortcutProvider, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SlotFillProvider, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    class: "wp-modal-editor-layout"
+    class: "overlay-editor-layout"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_header__WEBPACK_IMPORTED_MODULE_4__["default"], {
     closeAction: closeModal
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Sidebar__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -108,24 +108,25 @@ function Sidebar({
     setActiveTab("Inspector");
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wp-modal-editor-sidebar",
+    className: "overlay-editor-sidebar border-l",
     role: "region",
     "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Standalone Block Editor advanced settings."),
     tabIndex: "-1"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "sidebar-tabs"
+    className: "h-12 flex"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    className: `${activeTab == "Document" ? 'is-active' : ''}`,
+    className: `${activeTab == "Document" ? 'border-b-cyan-600' : 'border-b-transparent'} flex-1 border-b-2 hover:border-b-cyan-600 hover:bg-slate-50`,
     onClick: setDocumentTab
   }, "Document"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    className: `${activeTab == "Inspector" ? 'is-active' : ''}`,
+    className: `${activeTab == "Inspector" ? 'border-b-cyan-600' : 'border-b-transparent'} flex-1 border-b-2 hover:border-b-cyan-600 hover:bg-slate-50`,
     onClick: setInspectorTab
   }, "Inspector")), activeTab == "Inspector" ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Panel, {
     header: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("⭐ Inspector")
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(InspectorSlot, {
     bubblesVirtually: true
   })) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Panel, {
-    header: "Document"
+    header: "Document",
+    className: "border-0"
   }, "hi"));
 }
 Sidebar.InspectorFill = InspectorFill;
@@ -248,7 +249,10 @@ function BlockEditor({
     console.log(res);
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wp-modal-editor-blocks"
+    className: "overlay-editor-blocks",
+    style: {
+      background: "var(--blocks-bg-color, white)"
+    }
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.BlockEditorProvider, {
     value: blocks,
     onInput: handleUpdateBlocks,
@@ -292,7 +296,7 @@ const {
 } = (0,_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.createSlotFill)("WPModalFooter");
 function Footer() {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wp-modal-editor-footer"
+    className: "overlay-editor-footer border-t"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(InspectorSlot, {
     bubblesVirtually: true
   }));
@@ -322,13 +326,14 @@ function Header({
   closeAction
 }) {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wp-modal-editor-header",
+    className: "overlay-editor-header flex justify-between items-center border-b ",
     role: "region",
     "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Standalone Editor top bar.', 'getdavesbe'),
     tabIndex: "-1"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", {
     className: "getdavesbe-header__title"
   }, "Modal Editor"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    className: "h-full aspect-square leading-none text-2xl bg-transparent border-0 hover:bg-slate-100 w-12",
     onClick: closeAction
   }, "\xD7"));
 }
@@ -610,7 +615,7 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener("DOMContentLoaded", createDialogAndReactRoot);
 function createDialogAndReactRoot() {
   const rootWrapper = document.querySelector(".overlay-editor-wrapper");
-  document.querySelector("#show-modal-editor").addEventListener("click", function () {
+  document.querySelector("#show-overlay-editor").addEventListener("click", function () {
     rootWrapper.dataset.active = "true";
     mountEditor(() => {
       rootWrapper.dataset.active = "false";

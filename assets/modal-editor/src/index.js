@@ -9,7 +9,7 @@ registerCoreBlocks();
 window.addEventListener("DOMContentLoaded", createDialogAndReactRoot)
 function createDialogAndReactRoot(){
 	const rootWrapper = document.querySelector(".overlay-editor-wrapper");
-	document.querySelector("#show-modal-editor").addEventListener("click", function(){
+	document.querySelector("#show-overlay-editor").addEventListener("click", function(){
 		rootWrapper.dataset.active="true"
 		mountEditor(()=>{
 			rootWrapper.dataset.active="false"

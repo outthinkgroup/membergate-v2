@@ -37,7 +37,7 @@ function OverlayEditor({ settings, closeModal }) {
       <StrictMode>
         <ShortcutProvider>
           <SlotFillProvider>
-            <div class="wp-modal-editor-layout">
+            <div class="overlay-editor-layout">
               <Header closeAction={closeModal} />
               <Sidebar modalSettings={overlaySettings} setModalSettings={setOverlaySettings} />
               <Notices />

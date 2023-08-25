@@ -88,7 +88,7 @@ function BlockEditor({ settings: _settings }) {
   }
 
   return (
-    <div className="wp-modal-editor-blocks">
+    <div className="overlay-editor-blocks" style={{background:"var(--blocks-bg-color, white)"}}>
       <BlockEditorProvider
         value={blocks}
         onInput={handleUpdateBlocks}

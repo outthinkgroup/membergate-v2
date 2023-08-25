@@ -19,21 +19,21 @@ function Sidebar({modalSettings, setModalSettings}) {
 
   return (
     <div
-      className="wp-modal-editor-sidebar"
+      className="overlay-editor-sidebar border-l"
       role="region"
       aria-label={__("Standalone Block Editor advanced settings.")}
       tabIndex="-1"
     >
-      <div className="sidebar-tabs">
-        <button className={`${activeTab =="Document" ? 'is-active':''}`} onClick={setDocumentTab}>Document</button>
-        <button className={`${activeTab =="Inspector" ? 'is-active':''}`}onClick={setInspectorTab}>Inspector</button>
+      <div className="h-12 flex">
+        <button className={`${activeTab =="Document" ? 'border-b-cyan-600':'border-b-transparent'} flex-1 border-b-2 hover:border-b-cyan-600 hover:bg-slate-50`} onClick={setDocumentTab}>Document</button>
+        <button className={`${activeTab =="Inspector" ? 'border-b-cyan-600':'border-b-transparent'} flex-1 border-b-2 hover:border-b-cyan-600 hover:bg-slate-50`} onClick={setInspectorTab}>Inspector</button>
       </div>
       {activeTab == "Inspector" ? (
         <Panel header={__("⭐ Inspector")}>
           <InspectorSlot bubblesVirtually />
         </Panel>
       ) : (
-        <Panel header="Document">
+        <Panel header="Document" className="border-0">
 					hi
         </Panel>
       )}

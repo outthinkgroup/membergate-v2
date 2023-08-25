@@ -30,7 +30,7 @@
 		</select>
 	{/if}
 	{#if protectMethod.method == "overlay"}
-		<button id="show-modal-editor">Edit Overlay</button>
+		<button id="show-overlay-editor">Edit Overlay</button>
 	{/if}
 
 </div>
