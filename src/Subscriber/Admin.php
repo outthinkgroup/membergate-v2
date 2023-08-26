@@ -33,6 +33,12 @@ class Admin implements SubscriberInterface {
             [$admin_page, 'render_page'],
             $admin_page->get_icon_url(),
         );
+        add_submenu_page($admin_page->get_slug(), "Membergate Rules", "Rules", "manage_options", "edit.php?post_type=membergate_rule");
+
+        add_submenu_page(null, 'Rules', 'Rules', 'manage_options', 'membergate-rules', function(){
+            include $this->plugin_path . "/templates/rules.php";
+        });
+
     }
 
     public function add_admin_icon_styles() {

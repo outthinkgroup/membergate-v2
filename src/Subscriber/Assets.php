@@ -8,14 +8,14 @@ if (!defined('ABSPATH')) {
 
 use Membergate\Assets\Vite;
 use Membergate\EventManagement\SubscriberInterface;
-use Membergate\Settings\OverlayEditor;
+use Membergate\Settings\Rules;
 
 class Assets implements SubscriberInterface {
     public $vite;
-    public $overlay_editor;
-    public function __construct(Vite $vite, OverlayEditor $overlay_editor) {
+    private $rules;
+    public function __construct(Vite $vite, Rules $rules) {
         $this->vite = $vite;
-        $this->overlay_editor = $overlay_editor;
+        $this->rules = $rules;
     }
 
     public static function get_subscribed_events(): array {
@@ -38,9 +38,8 @@ class Assets implements SubscriberInterface {
             $this->vite->use('assets/main.ts');
         }
 
-        if ($hook = 'membergate_page_membergate-rules') {
-            $this->vite->use("assets/rule-editor.ts");
-            $this->overlay_editor->enqueue();
+        if ($hook == 'admin_page_membergate-rules') {
+            $this->rules->load_editor();
         }
     }
 

@@ -27,9 +27,9 @@ class SSRSettings implements SubscriberInterface {
     }
 
     public function add_global_vars() {
-        if (get_current_screen()->id == "membergate_page_membergate-rules") {
-            $post_types = $this->rules->editor->load_post_types();
-            $id = (int)isset($_GET['id']) ? $_GET['id'] : 1;
+        if (get_current_screen()->id == "admin_page_membergate-rules") {
+            $post_types = $this->rules->rule_editor->load_post_types();
+            $id = (int)isset($_GET['id']) ? $_GET['id'] : "new";
             $rules = $this->rules->get_rules($id);
             $condition = $this->rules->get_conditions($id);
             $protect_method = $this->rules->get_protect_method($id);

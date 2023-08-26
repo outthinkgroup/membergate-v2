@@ -2,8 +2,23 @@
 
 namespace Membergate\Settings;
 
+use Membergate\Assets\Vite;
 
 class RuleEditor {
+    private $vite;
+    public function __construct(Vite $vite) {
+        $this->vite = $vite;
+    }
+
+    public function enqueue_assets() {
+
+        $this->vite->use("assets/rule-editor.ts");
+    }
+
+    /*╭─────────────────────────────╮*/
+    /*│    [   Ajax Handlers   ]    │*/
+    /*╰─────────────────────────────╯*/
+
     public function load_rule_value_options($req) {
         switch ($req->param) {
             case "post_type":
@@ -23,23 +38,36 @@ class RuleEditor {
         }
     }
 
-    public function save_rules($req){
+    public function save_rules($req) {
         $rules = $req->rules;
         $condition = $req->condition;
         $protect_method = $req->protectMethod;
-        $pid = intval($req->id);
+
+        if ($req->id == "new") {
+            $pid = wp_insert_post([
+                'post_title' => $req->title,
+                'post_type' => 'membergate_rule',
+                'post_status' => 'publish',
+            ]);
+            if ($pid === 0) {
+                return ["message", "couldn't create the post"];
+            }
+        } else {
+            $pid = intval($req->id);
+            $res = wp_update_post([
+                'ID' => $pid,
+                'post_title' => $req->title,
+                'post_status' => 'publish',
+            ], true);
+        }
+
         update_post_meta($pid, 'rules', $rules);
         update_post_meta($pid, 'condition', $condition);
 
         update_post_meta($pid, 'protect_method', $protect_method);
 
-        $res = wp_update_post([
-            'ID'=>$pid,
-            'post_title'=>$req->title,
-            'post_status'=>'publish',
-        ],true);
-        $link = get_edit_post_link($pid,'if you know, you know, you know?');
-        return ["message"=>"ok", "redirect"=>$link];
+        $link = get_edit_post_link($pid, 'if you know, you know, you know?');
+        return ["message" => "ok", "redirect" => $link];
     }
 
     public function load_post_types() {
@@ -87,5 +115,4 @@ class RuleEditor {
         }
         return $acc;
     }
-
 }

@@ -61,24 +61,18 @@ class AjaxEndpoints implements SubscriberInterface {
         switch ($body->membergate_action) {
                 /* RULE EDITOR */
             case "rule_editor__load_param_value":
-                $data = new JsonResponse($this->rules->editor->load_rule_value_options($body));
+                $data = new JsonResponse($this->rules->rule_editor->load_rule_value_options($body));
                 $data->send();
                 die;
             case "rule_editor__save_rules":
-                $data = new JsonResponse($this->rules->editor->save_rules($body));
+                $data = new JsonResponse($this->rules->rule_editor->save_rules($body));
                 $data->send();
                 die;
             case "save_overlay":
-                $data = new JsonResponse($this->save_overlay($body));
+                $data = new JsonResponse($this->rules->overlay_editor->save_overlay($body));
                 $data->send();
                 die;
         }
     }
 
-    public function save_overlay($body) {
-        $post_id = (int)$body->postId;
-        $content = $body->content;
-        $res = (bool)update_post_meta($post_id, "wp_overlay_content", $content);
-        return ['saved'=>$res];
-    }
 }

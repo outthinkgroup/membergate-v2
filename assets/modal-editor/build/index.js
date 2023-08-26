@@ -615,7 +615,8 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener("DOMContentLoaded", createDialogAndReactRoot);
 function createDialogAndReactRoot() {
   const rootWrapper = document.querySelector(".overlay-editor-wrapper");
-  document.querySelector("#show-overlay-editor").addEventListener("click", function () {
+  document.body.addEventListener("click", function (e) {
+    if (!e.target.matches("#show-overlay-editor")) return;
     rootWrapper.dataset.active = "true";
     mountEditor(() => {
       rootWrapper.dataset.active = "false";

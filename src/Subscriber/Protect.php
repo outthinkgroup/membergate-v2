@@ -44,7 +44,6 @@ class Protect implements SubscriberInterface {
             $this->protect_content->condition_id
             && $this->uses_overlay_method($this->protect_content->condition_id)
         ) {
-            debug("adding Overlay template");
             $overlay_content = get_post_meta($this->protect_content->condition_id, "wp_overlay_content", true);
 ?>
             <div id="membergate_overlay_root">
@@ -61,9 +60,9 @@ class Protect implements SubscriberInterface {
         if (!$this->protect_content->is_protected) return;
 
         $protected_post_id = get_the_ID();
-        $protect_method_id = $this->protect_content->condition_id;
-        debug($protect_method_id);
-        $protect_method = $this->rules->get_protect_method($protect_method_id);
+        $protect_condition_id = $this->protect_content->condition_id;
+        $protect_method = $this->rules->get_protect_method($protect_condition_id);
+
         if ($protect_method->method == 'redirect') {
             $page = get_post(intval($protect_method->value));
             // avoid redirect loops

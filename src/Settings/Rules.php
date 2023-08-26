@@ -3,13 +3,23 @@
 namespace Membergate\Settings;
 
 class Rules {
-    public $editor;
-    public function __construct(RuleEditor $editor) {
-        $this->editor = $editor;
+    public $rule_editor;
+    public $overlay_editor;
+    public function __construct(RuleEditor $editor, OverlayEditor $overlay_editor) {
+        $this->rule_editor = $editor;
+        $this->overlay_editor = $overlay_editor;
     }
+
+    public function load_editor() {
+        $this->rule_editor->enqueue_assets();
+        $this->overlay_editor->enqueue_assets();
+    }
+
     public function get_rules($id = null) {
-        if ($id) {
+        if ($id && $id !== "new") {
             return get_post_meta($id, 'rules', true) ?: $this->default_ruleset();
+        } elseif ($id) {
+            return $this->default_ruleset();
         }
 
         $rules_post = get_posts([
@@ -24,9 +34,12 @@ class Rules {
     }
 
     public function get_conditions($id = null) {
-        if ($id) {
+        if ($id && $id !== "new") {
             return get_post_meta($id, 'condition', true) ?: $this->default_condition();
+        } elseif ($id) {
+            return $this->default_condition();
         }
+
         $rules_post = get_posts([
             'post_type' => "membergate_rule",
             'posts_per_page' => -1,
@@ -34,7 +47,7 @@ class Rules {
         $conditions = [];
         foreach ($rules_post as $p) {
             $condition = get_post_meta($p->ID, 'condition', true);
-            if($condition){
+            if ($condition) {
                 $conditions[$p->ID] = $condition;
             }
         }
@@ -42,8 +55,10 @@ class Rules {
     }
 
     public function get_protect_method($id) {
-        if ($id) {
+        if ($id && $id !== "new") {
             return get_post_meta($id, 'protect_method', true) ?: $this->default_protect_method();
+        } elseif ($id) {
+            return $this->default_protect_method();
         }
     }
 
@@ -68,12 +83,11 @@ class Rules {
         ];
     }
 
-    private function default_ruleset(){
+    private function default_ruleset() {
         return [[[
-            'parameter'=>"post_type",
+            'parameter' => "post_type",
             "operator" => 'is',
             'post',
         ]]];
     }
 }
-

@@ -30,26 +30,3 @@ $membergate = new \Membergate\Plugin(__FILE__);
 add_action('after_setup_theme', [$membergate, 'load']);
 
 require_once 'pluggable.php';
-
-// Please move re build this. Only intended as prototype
-add_action('init', function () {
-    register_post_type(
-        'membergate_rule',
-        [
-            'labels' => [
-                'name' => __('Membergate Rules'),
-                'singular_name' => __('Membergate Rule')
-            ],
-            'public' => false,
-            'show_in_menu' => false,
-            'show_in_rest'=>true,
-        ]
-    );
-});
-
-add_action('admin_menu', function () {
-    add_submenu_page("membergate-settings", 'Rules', 'Rules', 'manage_options', 'membergate-rules', function(){
-        include plugin_dir_path(__FILE__) . "/templates/rules.php";
-    });
-}, 10000000);
-

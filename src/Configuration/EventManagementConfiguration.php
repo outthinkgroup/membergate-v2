@@ -12,6 +12,7 @@ use Membergate\Subscriber\AjaxEndpoints;
 use Membergate\Subscriber\Assets;
 use Membergate\Subscriber\AddCookieOnLoad;
 use Membergate\Subscriber\Protect;
+use Membergate\Subscriber\RulePostType;
 use Membergate\Subscriber\SSRSettings;
 use Membergate\Subscriber\Shortcodes;
 
@@ -26,6 +27,7 @@ class EventManagementConfiguration {
             AddCookieOnLoad::class,
             Protect::class,
             SSRSettings::class,
+            RulePostType::class,
         ];
 
         return $subscribers;

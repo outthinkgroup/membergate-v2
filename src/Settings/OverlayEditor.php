@@ -6,16 +6,15 @@ class OverlayEditor {
     public $plugin_url;
     public $plugin_path;
     public function __construct($plugin_url, $plugin_path) {
-        // TODO:
         $this->plugin_url = $plugin_url;
         $this->plugin_path = $plugin_path;
     }
 
-    public function rule_id(){
+    public function rule_id() {
         return isset($_GET['id']) ? (int)$_GET['id'] : 1;
     }
 
-    public function enqueue() {
+    public function enqueue_assets() {
         global $current_screen;
         $current_screen->is_block_editor(true);
 
@@ -30,7 +29,7 @@ class OverlayEditor {
         $settings = $this->get_overlay_editor_settings();
         wp_enqueue_script("modal-scripts", $this->plugin_url . "/assets/modal-editor/build/index.js", $asset['dependencies'], $asset['version'], false);
 
-        wp_add_inline_script("modal-scripts", "window.initialBlocks = " . wp_json_encode(get_post_meta( $this->rule_id()  , "wp_overlay_content", true) ?: []));
+        wp_add_inline_script("modal-scripts", "window.initialBlocks = " . wp_json_encode(get_post_meta($this->rule_id(), "wp_overlay_content", true) ?: []));
         wp_add_inline_script("modal-scripts", 'window.overlayEditorSettings = ' . wp_json_encode($settings) . ';');
         wp_add_inline_script(
             'wp-blocks',
@@ -85,5 +84,16 @@ class OverlayEditor {
         }
 
         return $settings;
+    }
+
+    /*╭─────────────────────────────╮*/
+    /*│    [   Ajax Handlers   ]    │*/
+    /*╰─────────────────────────────╯*/
+
+    public function save_overlay($body) {
+        $post_id = (int)$body->postId;
+        $content = $body->content;
+        $res = (bool)update_post_meta($post_id, "wp_overlay_content", $content);
+        return ['saved' => $res];
     }
 }
