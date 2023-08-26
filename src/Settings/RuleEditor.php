@@ -11,7 +11,6 @@ class RuleEditor {
     }
 
     public function enqueue_assets() {
-
         $this->vite->use("assets/rule-editor.ts");
     }
 

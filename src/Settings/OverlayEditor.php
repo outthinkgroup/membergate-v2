@@ -17,7 +17,6 @@ class OverlayEditor {
     public function enqueue_assets() {
         global $current_screen;
         $current_screen->is_block_editor(true);
-
         $asset = include $this->plugin_path . "/assets/modal-editor/build/index.asset.php";
         wp_enqueue_style(
             "modal-styles",
@@ -25,25 +24,24 @@ class OverlayEditor {
             array('wp-edit-blocks'),
             filemtime($this->plugin_path . '/assets/modal-editor/build/index.css')
         );
-
-        $settings = $this->get_overlay_editor_settings();
         wp_enqueue_script("modal-scripts", $this->plugin_url . "/assets/modal-editor/build/index.js", $asset['dependencies'], $asset['version'], false);
+        wp_enqueue_script('wp-format-library');
+        wp_enqueue_style('wp-format-library');
+        // load editor assets
+        \do_action('enqueue_block_assets');
+    }
 
-        wp_add_inline_script("modal-scripts", "window.initialBlocks = " . wp_json_encode(get_post_meta($this->rule_id(), "wp_overlay_content", true) ?: []));
+    public function ssr_settings() {
+        $settings = $this->get_overlay_editor_settings();
+        wp_add_inline_script("modal-scripts", "window.initialBlocks = " . wp_json_encode($this->get_overlay($this->rule_id())['content']));
         wp_add_inline_script("modal-scripts", 'window.overlayEditorSettings = ' . wp_json_encode($settings) . ';');
         wp_add_inline_script(
             'wp-blocks',
             'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . wp_json_encode($this->get_overlay_editor_settings()) . ');'
         );
-
-        wp_enqueue_script('wp-format-library');
-        wp_enqueue_style('wp-format-library');
-
-        // load editor assets
-        \do_action('enqueue_block_assets');
     }
 
-    function get_overlay_editor_settings() {
+    public function get_overlay_editor_settings() {
         $instance =  \WP_Block_Type_Registry::get_instance();
         $blocks = (array) $instance->get_all_registered();
         $blocks_with_color = array_reduce(array_keys($blocks), function ($acc, $blockname) use ($blocks) {
@@ -87,13 +85,19 @@ class OverlayEditor {
     }
 
     /*╭─────────────────────────────╮*/
-    /*│    [   Ajax Handlers   ]    │*/
+    /*│    [   Data Handlers   ]    │*/
     /*╰─────────────────────────────╯*/
 
     public function save_overlay($body) {
         $post_id = (int)$body->postId;
         $content = $body->content;
-        $res = (bool)update_post_meta($post_id, "wp_overlay_content", $content);
+        $res = (bool)update_post_meta($post_id, "membergate_overlay_content", $content);
         return ['saved' => $res];
+    }
+
+    public function get_overlay($post_id) {
+        return [
+            'content' => get_post_meta($post_id, "membergate_overlay_content", true) ?: [],
+        ];
     }
 }

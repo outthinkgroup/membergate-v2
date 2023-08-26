@@ -28,28 +28,7 @@ class SSRSettings implements SubscriberInterface {
 
     public function add_global_vars() {
         if (get_current_screen()->id == "admin_page_membergate-rules") {
-            $post_types = $this->rules->rule_editor->load_post_types();
-            $id = (int)isset($_GET['id']) ? $_GET['id'] : "new";
-            $rules = $this->rules->get_rules($id);
-            $condition = $this->rules->get_conditions($id);
-            $protect_method = $this->rules->get_protect_method($id);
-?>
-            <script>
-                window.membergate = {
-                    url: "<?php echo admin_url('admin-ajax.php'); ?>",
-                    postId: "<?= $id; ?>",
-                    title: "<?= get_the_title($id); ?>",
-                    Rules: {
-                        initialRuleValueOptionStore: {
-                            post_type: <?= json_encode($post_types); ?>,
-                        },
-                        ruleList: <?= json_encode($rules); ?>,
-                        ruleCondition: <?= json_encode($condition); ?>,
-                        protectMethod: <?= json_encode($protect_method); ?>,
-                    },
-                }
-            </script>
-        <?php
+            $this->rules->render_editor_settings();
         }
     }
 

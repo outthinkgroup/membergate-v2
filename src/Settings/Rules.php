@@ -15,6 +15,33 @@ class Rules {
         $this->overlay_editor->enqueue_assets();
     }
 
+    public function render_editor_settings() {
+        $post_types = $this->rule_editor->load_post_types();
+        $id = (int)isset($_GET['id']) ? $_GET['id'] : "new";
+        $rules = $this->get_rules($id);
+        $condition = $this->get_conditions($id);
+        $protect_method = $this->get_protect_method($id);
+?>
+        <script>
+            window.membergate = <?= json_encode([
+                                    'url' =>  admin_url('admin-ajax.php'),
+                                    'postId' => $id,
+                                    'title' => get_the_title($id),
+                                    'Rules' => [
+                                        'initialRuleValueOptionStore' => [
+                                            'post_type' =>  $post_types,
+                                        ],
+                                        'ruleList' =>  $rules,
+                                        'ruleCondition' =>  $condition,
+                                        'protectMethod' =>  $protect_method,
+                                    ],
+                                ]); ?>
+        </script>
+<?php
+
+        $this->overlay_editor->ssr_settings();
+    }
+
     public function get_rules($id = null) {
         if ($id && $id !== "new") {
             return get_post_meta($id, 'rules', true) ?: $this->default_ruleset();

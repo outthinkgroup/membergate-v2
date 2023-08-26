@@ -37,14 +37,12 @@ class Protect implements SubscriberInterface {
 
     public function overlay_protect() {
         if (!$this->protect_content->is_protected) return;
-        debug(
-            $this->protect_content->condition_id
-        );
+
         if (
             $this->protect_content->condition_id
             && $this->uses_overlay_method($this->protect_content->condition_id)
         ) {
-            $overlay_content = get_post_meta($this->protect_content->condition_id, "wp_overlay_content", true);
+            $overlay_content = get_post_meta($this->protect_content->condition_id, "membergate_overlay_content", true);
 ?>
             <div id="membergate_overlay_root">
                 <div class="membergate-overlay-wrapper">
