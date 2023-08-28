@@ -4,23 +4,22 @@ namespace Membergate\Settings;
 
 class Rules {
     public $rule_editor;
-    public $overlay_editor;
-    public function __construct(RuleEditor $editor, OverlayEditor $overlay_editor) {
+    public function __construct(RuleEditor $editor) {
         $this->rule_editor = $editor;
-        $this->overlay_editor = $overlay_editor;
     }
 
     public function load_editor() {
         $this->rule_editor->enqueue_assets();
-        $this->overlay_editor->enqueue_assets();
     }
 
-    public function render_editor_settings() {
+    public function render_rule_settings() {
         $post_types = $this->rule_editor->load_post_types();
         $id = (int)isset($_GET['id']) ? $_GET['id'] : "new";
         $rules = $this->get_rules($id);
         $condition = $this->get_conditions($id);
         $protect_method = $this->get_protect_method($id);
+        $overlay_content = $this->rule_editor->overlay_editor->get_overlay($id)['content'];
+        $overlay_editor_settings = $this->rule_editor->overlay_editor->get_overlay_editor_settings();
 ?>
         <script>
             window.membergate = <?= json_encode([
@@ -35,11 +34,14 @@ class Rules {
                                         'ruleCondition' =>  $condition,
                                         'protectMethod' =>  $protect_method,
                                     ],
+                                    'OverlayEditor' => [
+                                        'blocks' => $overlay_content,
+                                        'editorSettings' => $overlay_editor_settings,
+                                    ],
                                 ]); ?>
         </script>
 <?php
 
-        $this->overlay_editor->ssr_settings();
     }
 
     public function get_rules($id = null) {

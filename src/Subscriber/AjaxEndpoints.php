@@ -68,10 +68,6 @@ class AjaxEndpoints implements SubscriberInterface {
                 $data = new JsonResponse($this->rules->rule_editor->save_rules($body));
                 $data->send();
                 die;
-            case "save_overlay":
-                $data = new JsonResponse($this->rules->overlay_editor->save_overlay($body));
-                $data->send();
-                die;
         }
     }
 

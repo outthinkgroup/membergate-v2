@@ -1,3 +1,7 @@
+body:has(#membergate_overlay_root){
+	overflow:hidden!important;
+}
+
 #membergate_overlay_root{
 	position:fixed;
 	bottom:0;
@@ -9,6 +13,14 @@
 	background:#00000044;
 	animation:blurin 300ms linear forwards;
 }
+
+.membergate-overlay-wrapper{
+	animation:slidein 400ms cubic-bezier(.5, 1,.5,1) forwards;
+	background:white;
+	height:100%;
+	padding:max(20px, 2vw);
+}
+
 @keyframes slidein {
 	from {
 		transform: translateY(100%);
@@ -27,22 +39,3 @@
 	}
 }
 
-body:has(#membergate_overlay_root){
-	overflow:hidden!important;
-}
-.membergate-overlay-wrapper{
-	animation:slidein 400ms cubic-bezier(.5, 1,.5,1) forwards;
-	background:white;
-	height:100%;
-
-	padding:max(20px, 2vw);
-}
-
-.membergate-overlay-wrapper > *:not(figure) {
-	max-width:900px;
-	margin-left:auto;
-	margin-right:auto;
-}
-.membergate-overlay-wrapper > figure img {
-	width:100% !important;
-}

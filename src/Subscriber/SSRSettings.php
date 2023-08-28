@@ -21,14 +21,19 @@ class SSRSettings implements SubscriberInterface {
 
     public static function get_subscribed_events(): array {
         return [
-            'admin_head' => 'add_global_vars',
+            'admin_enqueue_assets' => 'render_overlay_settings',
             'wp_head' => 'add_public_vars',
+            'admin_head'=>'render_rule_settings',
         ];
     }
 
-    public function add_global_vars() {
+    public function render_rule_settings() {
         if (get_current_screen()->id == "admin_page_membergate-rules") {
-            $this->rules->render_editor_settings();
+            $this->rules->render_rule_settings();
+        }
+    }
+    public function render_overlay_settings() {
+        if (get_current_screen()->id == "admin_page_membergate-rules") {
         }
     }
 

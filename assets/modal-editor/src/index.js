@@ -20,7 +20,7 @@ function createDialogAndReactRoot(){
 } 
 
 function mountEditor(closeFn){
-	const settings = window.overlayEditorSettings
+	const settings = window.membergate.OverlayEditor.editorSettings
 	render(
 		<OverlayEditor settings={settings} closeModal={closeFn} />,
 		document.querySelector("#overlay-editor-root")

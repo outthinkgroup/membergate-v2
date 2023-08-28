@@ -29,12 +29,6 @@ class OverlayEditor {
         wp_enqueue_style('wp-format-library');
         // load editor assets
         \do_action('enqueue_block_assets');
-    }
-
-    public function ssr_settings() {
-        $settings = $this->get_overlay_editor_settings();
-        wp_add_inline_script("modal-scripts", "window.initialBlocks = " . wp_json_encode($this->get_overlay($this->rule_id())['content']));
-        wp_add_inline_script("modal-scripts", 'window.overlayEditorSettings = ' . wp_json_encode($settings) . ';');
         wp_add_inline_script(
             'wp-blocks',
             'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . wp_json_encode($this->get_overlay_editor_settings()) . ');'
@@ -88,11 +82,8 @@ class OverlayEditor {
     /*│    [   Data Handlers   ]    │*/
     /*╰─────────────────────────────╯*/
 
-    public function save_overlay($body) {
-        $post_id = (int)$body->postId;
-        $content = $body->content;
-        $res = (bool)update_post_meta($post_id, "membergate_overlay_content", $content);
-        return ['saved' => $res];
+    public function save_overlay($id, $content) {
+        $res = (bool)update_post_meta($id, "membergate_overlay_content", $content);
     }
 
     public function get_overlay($post_id) {

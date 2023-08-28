@@ -42,6 +42,7 @@
 			condition,
 			protectMethod,
 			title,
+			overlayContent:wp.blocks.serialize(window.membergate.OverlayEditor.blockObjects),
 			id: window.membergate.postId,
 		});
 		if (res.message != "ok") throw new Error("Couldnt Save Rules");

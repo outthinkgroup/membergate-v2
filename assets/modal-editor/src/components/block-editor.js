@@ -57,7 +57,8 @@ function BlockEditor({ settings: _settings }) {
   }, [canUserCreateMedia, _settings]);
 
   useEffect(() => {
-    const storedBlocks = window.initialBlocks;
+    const storedBlocks = window.membergate.OverlayEditor.blocks;
+		console.log(storedBlocks)
 
     if (storedBlocks?.length) {
       handleUpdateBlocks(() => parse(storedBlocks));
@@ -79,12 +80,13 @@ function BlockEditor({ settings: _settings }) {
    */
   function handleUpdateBlocks(_blocks) {
     updateBlocks(_blocks);
+		
+		window.membergate.OverlayEditor.blockObjects = _blocks
   }
 
   async function handlePersistBlocks(newBlocks) {
+		// we'll rely on the svelte app to send the blockObjects to the server
     updateBlocks(newBlocks);
-    const res = await saveOverlay(serialize(newBlocks));
-    console.log(res);
   }
 
   return (

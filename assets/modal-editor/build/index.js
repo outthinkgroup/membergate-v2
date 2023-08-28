@@ -221,7 +221,8 @@ function BlockEditor({
     };
   }, [canUserCreateMedia, _settings]);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    const storedBlocks = window.initialBlocks;
+    const storedBlocks = window.membergate.OverlayEditor.blocks;
+    console.log(storedBlocks);
     if (storedBlocks?.length) {
       handleUpdateBlocks(() => (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__.parse)(storedBlocks));
       createInfoNotice("Blocks loaded", {
@@ -242,11 +243,11 @@ function BlockEditor({
    */
   function handleUpdateBlocks(_blocks) {
     updateBlocks(_blocks);
+    window.membergate.OverlayEditor.blockObjects = _blocks;
   }
   async function handlePersistBlocks(newBlocks) {
+    // we'll rely on the svelte app to send the blockObjects to the server
     updateBlocks(newBlocks);
-    const res = await (0,_saveOverlay__WEBPACK_IMPORTED_MODULE_7__.saveOverlay)((0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__.serialize)(newBlocks));
-    console.log(res);
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "overlay-editor-blocks",
@@ -624,7 +625,7 @@ function createDialogAndReactRoot() {
   });
 }
 function mountEditor(closeFn) {
-  const settings = window.overlayEditorSettings;
+  const settings = window.membergate.OverlayEditor.editorSettings;
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.render)((0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_OverlayEditor__WEBPACK_IMPORTED_MODULE_2__["default"], {
     settings: settings,
     closeModal: closeFn

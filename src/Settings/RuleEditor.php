@@ -6,13 +6,17 @@ use Membergate\Assets\Vite;
 
 class RuleEditor {
     private $vite;
-    public function __construct(Vite $vite) {
+    public $overlay_editor;
+    public function __construct(Vite $vite, OverlayEditor $overlay_editor) {
         $this->vite = $vite;
+        $this->overlay_editor = $overlay_editor;
     }
 
     public function enqueue_assets() {
         $this->vite->use("assets/rule-editor.ts");
+        $this->overlay_editor->enqueue_assets();
     }
+
 
     /*╭─────────────────────────────╮*/
     /*│    [   Ajax Handlers   ]    │*/
@@ -41,6 +45,7 @@ class RuleEditor {
         $rules = $req->rules;
         $condition = $req->condition;
         $protect_method = $req->protectMethod;
+        $overlay_content = $req->overlayContent;
 
         if ($req->id == "new") {
             $pid = wp_insert_post([
@@ -64,6 +69,7 @@ class RuleEditor {
         update_post_meta($pid, 'condition', $condition);
 
         update_post_meta($pid, 'protect_method', $protect_method);
+        $this->overlay_editor->save_overlay($pid, $overlay_content);
 
         $link = get_edit_post_link($pid, 'if you know, you know, you know?');
         return ["message" => "ok", "redirect" => $link];
