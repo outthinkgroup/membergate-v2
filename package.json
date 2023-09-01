@@ -4,6 +4,7 @@
   "main": "index.js",
   "author": "josh kennedy <josh@outthinkgroup.com>",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

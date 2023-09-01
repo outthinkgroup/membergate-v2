@@ -20,6 +20,7 @@ class Rules {
         $protect_method = $this->get_protect_method($id);
         $overlay_content = $this->rule_editor->overlay_editor->get_overlay($id)['content'];
         $overlay_editor_settings = $this->rule_editor->overlay_editor->get_overlay_editor_settings();
+        $overlay_settings = $this->rule_editor->overlay_editor->get_overlay_settings($id)['settings'];
 ?>
         <script>
             window.membergate = <?= json_encode([
@@ -37,6 +38,7 @@ class Rules {
                                     'OverlayEditor' => [
                                         'blocks' => $overlay_content,
                                         'editorSettings' => $overlay_editor_settings,
+                                        'overlaySettings' => $overlay_settings,
                                     ],
                                 ]); ?>
         </script>

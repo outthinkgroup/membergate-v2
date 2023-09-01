@@ -20,7 +20,7 @@ class Assets implements SubscriberInterface {
 
     public static function get_subscribed_events(): array {
         return [
-            'admin_enqueue_scripts' => 'enqueue_admin_assets',
+            'admin_enqueue_scripts' => ['enqueue_admin_assets',1],
             'script_loader_tag' => ['use_esm_modules', 10, 3],
             'wp_enqueue_scripts' => 'enqueue_form_syles',
             // 'use_block_editor_for_post_type' =>['prefix_disable_gutenberg', 10, 2]

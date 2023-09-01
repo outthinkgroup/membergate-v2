@@ -46,7 +46,8 @@ class RuleEditor {
         $condition = $req->condition;
         $protect_method = $req->protectMethod;
         $overlay_content = $req->overlayContent;
-
+        $overlay_settings = $req->overlaySettings;
+        
         if ($req->id == "new") {
             $pid = wp_insert_post([
                 'post_title' => $req->title,
@@ -70,6 +71,7 @@ class RuleEditor {
 
         update_post_meta($pid, 'protect_method', $protect_method);
         $this->overlay_editor->save_overlay($pid, $overlay_content);
+        $this->overlay_editor->save_overlay_settings($pid, $overlay_settings);
 
         $link = get_edit_post_link($pid, 'if you know, you know, you know?');
         return ["message" => "ok", "redirect" => $link];
@@ -119,5 +121,28 @@ class RuleEditor {
             $acc[$item->{$slug}] = $item->{$label};
         }
         return $acc;
+    }
+    public function as_css_vars($settings){
+        ob_start();
+        debug($settings);
+        foreach((array)$settings as $key=>$value){
+            if($key == "padding"){
+                $padding_value = "";
+                $padding_value.= $this->with_unit($value->top) . " ";
+                $padding_value.= $this->with_unit($value->right) . " ";
+                $padding_value.= $this->with_unit($value->bottom) . " ";
+                $padding_value.= $this->with_unit($value->left);
+                echo "--$key:$padding_value; ";
+            }else if($key == 'maxWidth'){
+                echo "--$key:{$this->with_unit($value)}; ";
+            } else{
+                echo "--$key:$value; ";
+            }
+        }
+        return ob_get_clean();
+    }
+
+    private function with_unit($value){
+        return "$value->value$value->unit";
     }
 }

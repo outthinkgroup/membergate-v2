@@ -6,7 +6,7 @@
 	import GrayBox from "../elements/GrayBox.svelte";
   import type { RuleT } from "./ruleTypes";
 	import ProtectMethod from "./ProtectMethod.svelte";
-    import DevTool from "../DevTool/DevTool.svelte";
+	import DevTool from "../DevTool/DevTool.svelte";
 
 	let title = window.membergate.title != "Auto Draft" ? window.membergate.title : "";
 	let ruleset = window.membergate.Rules.ruleList;
@@ -37,12 +37,15 @@
 	}
 
 	async function save() {
+		let blocks = window.membergate.OverlayEditor?.blockObjects
 		const res = await jsonAjax("rule_editor__save_rules", {
 			rules: ruleset,
 			condition,
-			protectMethod,
 			title,
-			overlayContent:wp.blocks.serialize(window.membergate.OverlayEditor.blockObjects),
+			protectMethod,
+			//@ts-ignore
+			overlaySettings: window.membergate.OverlayEditor.overlaySettings,
+			overlayContent:blocks ? window.wp.blocks.serialize(blocks) : window.membergate.OverlayEditor.blocks,
 			id: window.membergate.postId,
 		});
 		if (res.message != "ok") throw new Error("Couldnt Save Rules");
@@ -125,42 +128,3 @@
 {#if import.meta.env.DEV }
 	<DevTool {ruleset} {condition} {protectMethod}/>
 {/if}
-
-
-<!--
-	<h1 class="font-bold tracking-wide">Edit Rule</h1>
-
-	<div class="cookie-options">
-		<h3>When User</h3>
-		<select>
-			<option value="0">does not have</option>
-			<option value="1">does have</option>
-		</select>
-		cookie with name of:<input type="text" />
-	</div>
-	And
-	<div class="rule-set">
-		{#each ruleset as ruleGroup, groupIndex}
-			<div class="rule-group">
-				{#each ruleGroup as rule}
-					<Rule bind:rule />
-					<button on:click={() => addRule(groupIndex)}>AND</button>
-				{/each}
-			</div>
-			<p>or</p>
-		{/each}
-		<button on:click={addGroup}>Add Rule Group</button>
-	</div>
-
-	<div class="redirect-options">
-		<h3>Redirect them to:</h3>
-		<select>
-			{#if $ParamValues.page}
-				{#each Object.entries($ParamValues["page"]) as [value, label]}
-					<option {value}>{label}</option>
-				{/each}
-			{/if}
-		</select>
-	</div>
-	<button on:click={save}>Save</button>
--->

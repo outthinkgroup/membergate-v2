@@ -14,7 +14,7 @@
 		{/each}
 	</select>
 
-	<input bind:value={condition.key} class="w-full flex-1  border border-slate-300 px-2"
+	<input bind:value={condition.key} class="rounded w-full flex-1  border border-slate-300 px-2"
 	placeholder="{conditionParamOptions[condition.parameter]} Name" />
 
 	<select

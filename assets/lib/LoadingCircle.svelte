@@ -1,4 +1,4 @@
-<div />
+<div class="sr-only" />
 
 <style>
 	div {

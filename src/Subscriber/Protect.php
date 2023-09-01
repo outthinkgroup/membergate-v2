@@ -43,10 +43,11 @@ class Protect implements SubscriberInterface {
             && $this->uses_overlay_method($this->protect_content->condition_id)
         ) {
             $overlay_content = get_post_meta($this->protect_content->condition_id, "membergate_overlay_content", true);
+            $overlay_settings = get_post_meta($this->protect_content->condition_id, "membergate_overlay_settings", true);
 ?>
             <div id="membergate_overlay_root">
-                <div class="membergate-overlay-wrapper">
-                    <?= $overlay_content ?>
+            <div class="membergate-overlay-wrapper" style="<?= $this->rules->rule_editor->as_css_vars($overlay_settings); ?>">
+                    <?= apply_filters('the_content', $overlay_content); ?>
                 </div>
             </div>
 <?php
@@ -81,4 +82,5 @@ class Protect implements SubscriberInterface {
     private function uses_overlay_method($condition_id) {
         return $this->rules->get_protect_method($condition_id)->method == "overlay";
     }
+
 }

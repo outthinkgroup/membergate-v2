@@ -15,6 +15,7 @@ class OverlayEditor {
     }
 
     public function enqueue_assets() {
+        \do_action('enqueue_block_editor_assets');
         global $current_screen;
         $current_screen->is_block_editor(true);
         $asset = include $this->plugin_path . "/assets/modal-editor/build/index.asset.php";
@@ -27,8 +28,9 @@ class OverlayEditor {
         wp_enqueue_script("modal-scripts", $this->plugin_url . "/assets/modal-editor/build/index.js", $asset['dependencies'], $asset['version'], false);
         wp_enqueue_script('wp-format-library');
         wp_enqueue_style('wp-format-library');
+
         // load editor assets
-        \do_action('enqueue_block_assets');
+
         wp_add_inline_script(
             'wp-blocks',
             'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . wp_json_encode($this->get_overlay_editor_settings()) . ');'
@@ -89,6 +91,26 @@ class OverlayEditor {
     public function get_overlay($post_id) {
         return [
             'content' => get_post_meta($post_id, "membergate_overlay_content", true) ?: [],
+        ];
+    }
+    public function save_overlay_settings($post_id, $settings) {
+        $res = (bool)update_post_meta($post_id, "membergate_overlay_settings", $settings);
+    }
+
+    public function get_overlay_settings($post_id) {
+        $settings = get_post_meta($post_id, "membergate_overlay_settings", true) ?: [
+            'bgColor' => "#ffffff",
+            "textColor" => "#000000",
+            "maxWidth" => ["value" => 900, "unit" => 'px'],
+            "padding" => [
+                'top' => ["value" => 20, "unit" => 'px'],
+                'right' => ["value" => 20, "unit" => 'px'],
+                'bottom' => ["value" => 20, "unit" => 'px'],
+                'left' => ["value" => 20, "unit" => 'px'],
+            ],
+        ];
+        return [
+            'settings' => $settings,
         ];
     }
 }

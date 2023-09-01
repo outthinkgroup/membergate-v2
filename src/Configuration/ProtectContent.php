@@ -31,6 +31,7 @@ class ProtectContent {
                     break;
             }
 
+
             if ($passes) {
                 continue;
             }
@@ -144,8 +145,10 @@ class ProtectContent {
             if ($condition->operator == 'notequal') {
                 return $_COOKIE[$condition->key] == $condition->operator;
             }
+            debug("Passes Cookies");
             return true;
         }
+        debug([$condition, $_COOKIE]);
         return false;
     }
 

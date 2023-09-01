@@ -30,7 +30,11 @@
 		</select>
 	{/if}
 	{#if protectMethod.method == "overlay"}
-		<button id="show-overlay-editor">Edit Overlay</button>
+		<button
+			class="flex-1  border border-cyan-600 rounded text-cyan-600 px-5 font-semibold hover:bg-cyan-600 hover:bg-opacity-10"
+			id="show-overlay-editor"
+		>
+			Edit Overlay
+		</button>
 	{/if}
-
 </div>

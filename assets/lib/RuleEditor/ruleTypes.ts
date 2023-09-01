@@ -59,3 +59,15 @@ export type ProtectMethodT = {
 	method:keyof typeof protectMethodOptions;
 	value:string;
 }
+export type Size ={value:number, unit:'px'|'%'|'rem'}; 
+export type OverlaySettingsT = {
+	bgColor:string;
+	textColor:string;
+	maxWidth:Size;
+	padding:{
+		top:Size;
+		right:Size;
+		bottom:Size;
+		left:Size;
+	};
+}

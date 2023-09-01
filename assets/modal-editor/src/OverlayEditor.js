@@ -14,18 +14,16 @@ import { ShortcutProvider } from "@wordpress/keyboard-shortcuts";
 /**
  * Internal dependencies
  */
-import Notices from "./components/notices";
-import Header from "./components/header";
-import Sidebar from "./components/Sidebar";
-import BlockEditor from "./components/block-editor";
-import Footer from "./components/footer";
-import { saveOverlaySettings } from "./saveOverlay";
+import Notices from "./components/notices.js";
+import Header from "./components/header.js";
+import Sidebar from "./components/Sidebar.js";
+import BlockEditor from "./components/block-editor.js";
+import Footer from "./components/footer.js";
 
 function OverlayEditor({ settings, closeModal }) {
 	const [overlaySettings, _setOverlaySettings] = useState({})
 	async function setOverlaySettings(settings){
 		_setOverlaySettings(settings)
-		await saveOverlaySettings(settings)
 		window.initialOverlaySettings = settings
 	}
 	useEffect(()=>{
@@ -37,7 +35,7 @@ function OverlayEditor({ settings, closeModal }) {
       <StrictMode>
         <ShortcutProvider>
           <SlotFillProvider>
-            <div class="overlay-editor-layout">
+            <div class="overlay-editor-layout p-5">
               <Header closeAction={closeModal} />
               <Sidebar modalSettings={overlaySettings} setModalSettings={setOverlaySettings} />
               <Notices />

@@ -15,10 +15,24 @@ body:has(#membergate_overlay_root){
 }
 
 .membergate-overlay-wrapper{
+	position:absolute;
+	width:100%;
+	bottom:0;
+	left:0;
 	animation:slidein 400ms cubic-bezier(.5, 1,.5,1) forwards;
-	background:white;
-	height:100%;
-	padding:max(20px, 2vw);
+	background:var(--bgColor, white );
+	height:auto;
+	padding:var(--padding,max(20px, 2vw));
+}
+.membergate-overlay-wrapper * {
+	color:unset;
+}
+.membergate-overlay-wrapper > * {
+	max-width:var(--maxWidth, 900px);
+	margin-inline:auto;
+}
+.membergate-overlay-wrapper {
+	color:var(--textColor, inherit);
 }
 
 @keyframes slidein {

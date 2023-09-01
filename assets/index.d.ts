@@ -2,6 +2,7 @@ import type {
   RuleSet,
   ConditionRuleT,
   ProtectMethodT,
+  OverlaySettingsT,
 } from "./lib/RuleEditor/ruleTypes";
 import type { FormSettingsType } from "./types";
 
@@ -21,6 +22,8 @@ declare global {
       OverlayEditor: {
         blocks: string;
         editorSettings: any;
+        blockObjects?: any[];
+        overlaySettings: OverlaySettingsT;
       };
     };
     publicMembergate: {
