@@ -114,5 +114,40 @@ body:has(.overlay-editor-wrapper[data-active="true"]){
 	color:inherit;
 }
 
+.h-full select, .h-full .components-input-control__container {
+	height:100%!important;
+}
+.components-base-control__field:has(.h-full){
+	margin-bottom: 0;
+}
+.mg-input :is(select, input){
+	min-height:37px;
+	padding-left:0.75rem;
+	padding-right:0.75rem;
+	padding-top:0.5rem;
+	padding-bottom:0.5rem;
+	line-height:1;
+}
+.mg-input :is(.components-base-control__label,label){
+	text-transform:lowercase;
+text-transform:none !important;
+}
+.mg-input.with-light-border :is(.components-input-control__backdrop){
+	--tw-border-opacity:1 !important;
+	border-color:rgb(226 232 240 / var(--tw-border-opacity)) !important;
+}
+
+.hide-select-caret .components-input-control-suffix-wrapper svg{
+	display:none;
+}
+.hide-select-caret .components-input-control__suffix{
+	min-width:-moz-fit-content!important;
+	min-width:fit-content!important;
+}
+.hide-select-caret select{
+	padding-right:10px!important;
+
+}
+
 
 /*# sourceMappingURL=index.css.map*/

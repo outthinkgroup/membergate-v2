@@ -37,7 +37,7 @@ class Protect implements SubscriberInterface {
 
     public function overlay_protect() {
         if (!$this->protect_content->is_protected) return;
-
+        
         if (
             $this->protect_content->condition_id
             && $this->uses_overlay_method($this->protect_content->condition_id)

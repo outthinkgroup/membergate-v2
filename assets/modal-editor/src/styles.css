@@ -106,3 +106,31 @@ body:has(.overlay-editor-wrapper[data-active="true"]){
 .block-editor-block-list__block *{
 	color:inherit;
 }
+
+.h-full select, .h-full .components-input-control__container {
+	height:100%!important;
+}
+.components-base-control__field:has(.h-full){
+	margin-bottom: 0;
+}
+.mg-input :is(select, input){
+	@apply px-3 py-2 leading-none min-h-[37px];
+}
+.mg-input :is(.components-base-control__label,label){
+@apply lowercase;
+text-transform:none !important;
+}
+.mg-input.with-light-border :is(.components-input-control__backdrop){
+	@apply border-slate-200 !important;
+}
+
+.hide-select-caret .components-input-control-suffix-wrapper svg{
+	display:none;
+}
+.hide-select-caret .components-input-control__suffix{
+	min-width:fit-content!important;
+}
+.hide-select-caret select{
+	padding-right:10px!important;
+
+}

@@ -57,3 +57,18 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+
+
+
+.h-full select, .h-full .components-input-control__container {
+	height:100%!important;
+}
+.components-base-control__field:has(.h-full){
+	margin-bottom: 0;
+}
+.mg-input :is(select, input){
+	@apply px-3 py-2 leading-none min-h-[37px];
+}
+.mg-input.with-light-border :is(.components-input-control__backdrop){
+	@apply border-slate-200 !important;
+}

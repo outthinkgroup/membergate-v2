@@ -35,7 +35,7 @@ function OverlayEditor({ settings, closeModal }) {
       <StrictMode>
         <ShortcutProvider>
           <SlotFillProvider>
-            <div class="overlay-editor-layout p-5">
+            <div class="overlay-editor-layout ">
               <Header closeAction={closeModal} />
               <Sidebar modalSettings={overlaySettings} setModalSettings={setOverlaySettings} />
               <Notices />

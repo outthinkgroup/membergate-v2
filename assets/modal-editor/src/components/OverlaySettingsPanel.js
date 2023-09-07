@@ -3,6 +3,7 @@ import ColorPicker from "./ColorPicker.js";
 import {
   __experimentalBoxControl as BoxControl,
   __experimentalInputControl as InputControl,
+  SelectControl,
 } from "@wordpress/components";
 function size(value, unit) {
   return { value, unit };
@@ -75,11 +76,11 @@ function OverlaySettingsPanel({}) {
   }, [padding]);
 
   return (
-    <div class="components-panel__body">
-      <h3>Overlay Settings</h3>
-      <section>
-        <p>Colors</p>
-        <div class="flex flex-col gap-1">
+    <div className="components-panel__body px-1 bg-slate-100 flex flex-col gap-4">
+      <h3 className="px-4 text-slate-800 font-bold">Overlay Settings</h3>
+      <section className=" flex p-4 flex-col gap-3 bg-white border">
+        <p className="text-slate-600 font-medium">Colors</p>
+        <div className="flex flex-col gap-3">
           <div>
             <ColorPicker
               color={bgColor}
@@ -96,25 +97,41 @@ function OverlaySettingsPanel({}) {
           </div>
         </div>
       </section>
-      <section>
-        <InputControl
-          label={"Content Max Width"}
-          value={maxWidth.value}
-          suffix={maxWidth.unit}
-          type="number"
-          onChange={(v) => setMaxWidth((s) => ({ ...s, value: v }))}
-        />
-        <BoxControl
-          values={Object.keys(padding).reduce((acc, key) => {
-            acc[key] = padding[key].value;
-            return acc;
-          }, {})}
-          type={"number"}
-          label={"Overlay Padding"}
-          onChange={(v) =>
-            setPadding((s) => ({ ...s, ...parseBoxControlOutput(v) }))
-          }
-        />
+      <section className="mg-input with-light-border p-4 bg-white border flex flex-col gap-3 ">
+        <p className="text-slate-600 font-medium">Size</p>
+        <div class="flex flex-col gap-2">
+          <InputControl
+            label={"Content Max Width"}
+						className="hide-select-caret "
+            value={maxWidth.value}
+            suffix={
+              <SelectControl
+                value={maxWidth.unit}
+                onChange={(v) => setMaxWidth((s) => ({ ...s, unit: v }))}
+                className="h-full "
+                options={[
+                  { label: "px", value: "px" },
+                  { label: "rem", value: "rem" },
+                  { label: "em", value: "em" },
+                  { label: "%", value: "%" },
+                ]}
+              />
+            }
+            type="number"
+            onChange={(v) => setMaxWidth((s) => ({ ...s, value: v }))}
+          />
+          <BoxControl
+            values={Object.keys(padding).reduce((acc, key) => {
+              acc[key] = padding[key].value;
+              return acc;
+            }, {})}
+            type={"number"}
+            label={"Overlay Padding"}
+            onChange={(v) =>
+              setPadding((s) => ({ ...s, ...parseBoxControlOutput(v) }))
+            }
+          />
+        </div>
       </section>
     </div>
   );

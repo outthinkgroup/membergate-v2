@@ -172,7 +172,7 @@ function OverlayEditor({
     _setOverlaySettings(window.initialOverlaySettings);
   }, []);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.StrictMode, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_keyboard_shortcuts__WEBPACK_IMPORTED_MODULE_2__.ShortcutProvider, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SlotFillProvider, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    class: "overlay-editor-layout p-5"
+    class: "overlay-editor-layout "
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_header_js__WEBPACK_IMPORTED_MODULE_4__["default"], {
     closeAction: closeModal
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Sidebar_js__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -305,9 +305,15 @@ function OverlaySettingsPanel({}) {
     document.querySelector("#overlay-editor-root").style.setProperty("--overlayPadding", `${sizeToCss(padding.top)} ${sizeToCss(padding.right)} ${sizeToCss(padding.bottom)} ${sizeToCss(padding.left)}`);
   }, [padding]);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    class: "components-panel__body"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, "Overlay Settings"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Colors"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    class: "flex flex-col gap-1"
+    className: "components-panel__body px-1 bg-slate-100 flex flex-col gap-4"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
+    className: "px-4 text-slate-800 font-bold"
+  }, "Overlay Settings"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", {
+    className: " flex p-4 flex-col gap-3 bg-white border"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "text-slate-600 font-medium"
+  }, "Colors"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "flex flex-col gap-3"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_ColorPicker_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
     color: bgColor,
     onChange: setBgColor,
@@ -316,10 +322,37 @@ function OverlaySettingsPanel({}) {
     color: textColor,
     onChange: setTextColor,
     label: "Text Color"
-  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalInputControl, {
+  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", {
+    className: "mg-input with-light-border p-4 bg-white border flex flex-col gap-3 "
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "text-slate-600 font-medium"
+  }, "Size"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "flex flex-col gap-2"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalInputControl, {
     label: "Content Max Width",
+    className: "hide-select-caret ",
     value: maxWidth.value,
-    suffix: maxWidth.unit,
+    suffix: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+      value: maxWidth.unit,
+      onChange: v => setMaxWidth(s => ({
+        ...s,
+        unit: v
+      })),
+      className: "h-full ",
+      options: [{
+        label: "px",
+        value: "px"
+      }, {
+        label: "rem",
+        value: "rem"
+      }, {
+        label: "em",
+        value: "em"
+      }, {
+        label: "%",
+        value: "%"
+      }]
+    }),
     type: "number",
     onChange: v => setMaxWidth(s => ({
       ...s,
@@ -336,7 +369,7 @@ function OverlaySettingsPanel({}) {
       ...s,
       ...parseBoxControlOutput(v)
     }))
-  })));
+  }))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OverlaySettingsPanel);
 
