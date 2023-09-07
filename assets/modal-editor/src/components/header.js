@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 export default function Header({closeAction}) {
 	return (
 		<div
-			className="overlay-editor-header sticky top-[-1px] bg-white z-50 flex justify-between items-center border-b "
+			className="pl-4 overlay-editor-header sticky top-[-1px] bg-white z-50 flex justify-between items-center border-b "
 			role="region"
 			aria-label={ __( 'Overlay Editor top bar.', 'membergate' ) }
 			tabIndex="-1"

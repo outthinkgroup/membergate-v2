@@ -1,9 +1,16 @@
 <script lang="ts">
-	export let action:()=>void;
+	export let action:()=>Promise<void>;
+	let isLoading = false;
+	async function saveAction(){
+		isLoading = true	
+		await action().catch(e=>console.log(e))
+		isLoading=false
+	}
 </script>
 <button
-	on:click={action}
-	class="p-1 px-6 rounded text-lg font-semibold text-slate-800 border shadow-sm shadow-slate-100 border-slate-600"
+	on:click={saveAction}
+	class="p-1 px-6 rounded bg-cyan-600 text-cyan-50 text-lg font-semibold shadow-sm shadow-slate-100 hover:bg-cyan-700
+	min-w-[150px]"
 >
-	Save
+	Sav{isLoading ? "ing": "e"}
 </button>

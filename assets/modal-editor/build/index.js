@@ -625,7 +625,7 @@ function Header({
   closeAction
 }) {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "overlay-editor-header sticky top-[-1px] bg-white z-50 flex justify-between items-center border-b ",
+    className: "pl-4 overlay-editor-header sticky top-[-1px] bg-white z-50 flex justify-between items-center border-b ",
     role: "region",
     "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Overlay Editor top bar.', 'membergate'),
     tabIndex: "-1"
