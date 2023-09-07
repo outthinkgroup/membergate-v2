@@ -186,6 +186,53 @@ function OverlayEditor({
 
 /***/ }),
 
+/***/ "./assets/modal-editor/src/components/ColorPicker.js":
+/*!***********************************************************!*\
+  !*** ./assets/modal-editor/src/components/ColorPicker.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ColorPicker)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+
+
+
+function genId(label) {
+  return label.replaceAll(' ', '-').toLowerCase();
+}
+function ColorPicker({
+  color,
+  onChange,
+  label
+}) {
+  const [isPickerShown, setIsPickerShown] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: ""
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    className: "flex gap-2 border rounded px-3 py-2 w-full",
+    onClick: () => setIsPickerShown(s => !s)
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ColorIndicator, {
+    colorValue: color
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, label)), isPickerShown ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Popover, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "flex justify-between gap-1 items-center"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "px-1 font-bold"
+  }, label), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    className: "ml-auto block",
+    onClick: () => setIsPickerShown(false)
+  }, "Close")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ColorPicker, {
+    color: color,
+    onChange: onChange,
+    label: label
+  })) : null);
+}
+
+/***/ }),
+
 /***/ "./assets/modal-editor/src/components/OverlaySettingsPanel.js":
 /*!********************************************************************!*\
   !*** ./assets/modal-editor/src/components/OverlaySettingsPanel.js ***!
@@ -197,6 +244,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _ColorPicker_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ColorPicker.js */ "./assets/modal-editor/src/components/ColorPicker.js");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+
+
 
 
 function size(value, unit) {
@@ -207,6 +258,18 @@ function size(value, unit) {
 }
 function sizeToCss(size) {
   return `${size.value}${size.unit}`;
+}
+function parseBoxControlOutput(output) {
+  const regex = /(\d*)(.*)/;
+  return Object.entries(output).reduce((acc, [key, value]) => {
+    const results = regex.exec(value);
+    if (!results || results.length < 3) return acc;
+    acc[key] = {
+      value: results[1],
+      unit: results[2]
+    };
+    return acc;
+  }, {});
 }
 function OverlaySettingsPanel({}) {
   const [bgColor, setBgColor] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)("");
@@ -243,14 +306,36 @@ function OverlaySettingsPanel({}) {
   }, [padding]);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     class: "components-panel__body"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, "Overlay Settings"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, "Background Color"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "color",
-    value: bgColor,
-    onChange: e => setBgColor(e.target.value)
-  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, "Text Color"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "color",
-    value: textColor,
-    onChange: e => setTextColor(e.target.value)
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, "Overlay Settings"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Colors"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "flex flex-col gap-1"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_ColorPicker_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    color: bgColor,
+    onChange: setBgColor,
+    label: "Background Color"
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_ColorPicker_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    color: textColor,
+    onChange: setTextColor,
+    label: "Text Color"
+  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalInputControl, {
+    label: "Content Max Width",
+    value: maxWidth.value,
+    suffix: maxWidth.unit,
+    type: "number",
+    onChange: v => setMaxWidth(s => ({
+      ...s,
+      value: v
+    }))
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.__experimentalBoxControl, {
+    values: Object.keys(padding).reduce((acc, key) => {
+      acc[key] = padding[key].value;
+      return acc;
+    }, {}),
+    type: "number",
+    label: "Overlay Padding",
+    onChange: v => setPadding(s => ({
+      ...s,
+      ...parseBoxControlOutput(v)
+    }))
   })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OverlaySettingsPanel);
