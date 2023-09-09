@@ -37,7 +37,7 @@ class Protect implements SubscriberInterface {
 
     public function overlay_protect() {
         if (!$this->protect_content->is_protected) return;
-        
+
         if (
             $this->protect_content->condition_id
             && $this->uses_overlay_method($this->protect_content->condition_id)
@@ -46,7 +46,7 @@ class Protect implements SubscriberInterface {
             $overlay_settings = get_post_meta($this->protect_content->condition_id, "membergate_overlay_settings", true);
 ?>
             <div id="membergate_overlay_root">
-            <div class="membergate-overlay-wrapper" style="<?= $this->rules->rule_editor->as_css_vars($overlay_settings); ?>">
+                <div class="membergate-overlay-wrapper" style="<?= $this->rules->rule_editor->as_css_vars($overlay_settings); ?>">
                     <?= apply_filters('the_content', $overlay_content); ?>
                 </div>
             </div>
@@ -72,6 +72,7 @@ class Protect implements SubscriberInterface {
                 $protected_link = get_permalink($protected_post_id);
                 if ($protected_link) {
                     $link = add_query_arg('redirect_url', $protected_link, $link);
+                    $link = add_query_arg('condition_id', $protect_condition_id, $link);
                 }
             }
             wp_safe_redirect($link);
@@ -82,5 +83,4 @@ class Protect implements SubscriberInterface {
     private function uses_overlay_method($condition_id) {
         return $this->rules->get_protect_method($condition_id)->method == "overlay";
     }
-
 }

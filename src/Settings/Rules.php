@@ -94,7 +94,7 @@ class Rules {
     }
 
     public function default_condition() {
-        return [
+        return (object)[
             'parameter' => 'cookie',
             'key' => 'is_member',
             'operator' => 'notset',
@@ -107,15 +107,14 @@ class Rules {
             'posts_per_page' => 1,
             'order' => 'ASC',
         ]);
-        debug($page);
-        return [
+        return (object)[
             'method' => 'redirect',
             'value' => (string)$page->ID,
         ];
     }
 
     private function default_ruleset() {
-        return [[[
+        return [[(object)[
             'parameter' => "post_type",
             "operator" => 'is',
             'post',

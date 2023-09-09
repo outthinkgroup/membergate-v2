@@ -3,6 +3,7 @@
 namespace Membergate\Configuration;
 
 use Membergate\Settings\Rules;
+use Membergate\Configuration\RuleEntity;
 
 // add as a singleton
 class ProtectContent {
@@ -11,10 +12,12 @@ class ProtectContent {
     public $is_protected;
     public $condition_id;
     private $rules;
-    public function __construct(Rules $rules) {
+    private $ruleEntity;
+    public function __construct(Rules $rules, RuleEntity $ruleEntity) {
         $this->rules = $rules;
         $this->post = get_post(get_the_ID());
         $this->is_protected = false;
+        $this->ruleEntity = $ruleEntity;
     }
 
     public function configure_protection() {
@@ -39,6 +42,8 @@ class ProtectContent {
             if ($post && $this->is_post_protected($post, $condition_id)) {
                 $this->is_protected = true;
                 $this->condition_id = $condition_id;
+                $this->ruleEntity->init($condition_id);
+                do_action('membergate_condition_set', $this->ruleEntity, $condition_id);
                 break;
             }
         }
@@ -95,6 +100,13 @@ class ProtectContent {
             }
         }
         return $is_protected;
+    }
+
+    public function get_active_rule(){
+        if(!$this->ruleEntity->isSet) {
+            return null;
+        }
+        return $this->ruleEntity;
     }
 
     private function post_type_rule(\WP_Post $post, $rule) {

@@ -6,10 +6,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+use Exception;
 use Illuminate\Container\Container;
+use Illuminate\Container\EntryNotFoundException;
 use Membergate\Assets\Vite;
 use Membergate\Configuration\EventManagementConfiguration;
 use Membergate\Configuration\ProtectContent;
+use Membergate\Configuration\RuleEntity;
 use Membergate\EventManagement\EventManager;
 use Membergate\Settings\OverlayEditor;
 use Membergate\Settings\Rules;
@@ -18,6 +21,7 @@ use Membergate\Subscriber\Admin;
 /*╭──────────────────────────╮*/
 /*│    [   The Plugin   ]    │*/
 /*╰──────────────────────────╯*/
+
 class Plugin {
     public const DOMAIN = 'membergate';
 
@@ -46,6 +50,49 @@ class Plugin {
         return $this->container;
     }
 
+    private function maybe_get_protect_rule($id = null) {
+        if ($id) {
+            $rule_entity = $this->container->get(RuleEntity::class);
+            $rule_entity->init($id);
+            return $rule_entity;
+        }
+        $protect_content = $this->container->get(ProtectContent::class);
+        return $protect_content->get_active_rule();
+    }
+
+    /**
+     * Used By Extension Plugins to get the cookie_name and url to redirect to
+     * @return array 
+     * @throws Exception 
+     * @throws EntryNotFoundException 
+     */
+    public function extension_protect_data() {
+        $data = [];
+        global $wp;
+
+        $current_url = home_url(add_query_arg([], $wp->request));
+        $redirect_url = $_GET['redirect_url'] ?? $current_url;
+        $data['redirect_url'] = $redirect_url;
+
+        $condition = $this->getCondition();
+        $data['cookie_name'] = $condition->parameter === 'cookie' ? $condition->key : null;
+
+        return $data;
+    }
+
+    private function getCondition() {
+        $condition = null;
+
+        if (isset($_GET['condition_id'])) {
+            $rule_entity = $this->maybe_get_protect_rule(intval($_GET['condition_id']));
+            $condition = $rule_entity->condition() ?? null;
+        } elseif ($rule = $this->maybe_get_protect_rule()) {
+            $condition = $rule->condition() ?? null;
+        }
+
+        return $condition;
+    }
+
     private function make_services() {
         // Needs Manual Binding to add the pluign path var
         $this->container->bind(Admin::class, function (Container $container) {
@@ -55,18 +102,20 @@ class Plugin {
             return new OverlayEditor($container->get('Vars')['plugin_url'], $container->get('Vars')['plugin_path']);
         });
 
-        $this->container->singleton(Vite::class, function (Container $container){
+        $this->container->singleton(Vite::class, function (Container $container) {
             $vars = $container->get('Vars');
             return new Vite($vars['plugin_url'], $vars['plugin_path']);
         });
-        $this->container->singleton(ProtectContent::class, function (Container $container){
-            return new ProtectContent($container->get(Rules::class));
+
+        $this->container->singleton(ProtectContent::class, function (Container $container) {
+            return new ProtectContent($container->get(Rules::class), $container->get(RuleEntity::class));
         });
 
         //subscribers
         $emc = new EventManagementConfiguration();
         $emc->make_subscribers($this->container);
     }
+
 
     public function load() {
         if ($this->loaded) {
