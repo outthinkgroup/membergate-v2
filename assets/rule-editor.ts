@@ -4,7 +4,6 @@ import RuleEditor from "./lib/RuleEditor/RuleEditor.svelte";
 
 const el = document.createElement("div");
 el.classList.add("override", "tailwind");
-console.log({el})
 document.addEventListener("DOMContentLoaded", function () {
   // //insert Element
   // const parent = document.querySelector<HTMLDivElement>("#wpcontent");
