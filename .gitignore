@@ -4,3 +4,4 @@ _dev
 assets/dist/
 assets/asset-info.json
 init.lua
+DS_Store

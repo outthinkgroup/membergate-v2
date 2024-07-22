@@ -24,15 +24,9 @@ class Assets implements SubscriberInterface {
             'script_loader_tag' => ['use_esm_modules', 10, 3],
             'wp_enqueue_scripts' => 'enqueue_form_syles',
             'current_screen' => ['on_current_screen', 10, 1],
-            // 'use_block_editor_for_post_type' =>['prefix_disable_gutenberg', 10, 2]
         ];
     }
 
-    public function prefix_disable_gutenberg($current_status, $post_type) {
-        // Use your post type key instead of 'product'
-        if ($post_type === 'membergate_rule') return false;
-        return $current_status;
-    }
     public function enqueue_admin_assets($hook) {
         //check get_current_screen
         if ($hook == 'toplevel_page_membergate-settings') {
@@ -40,7 +34,8 @@ class Assets implements SubscriberInterface {
         }
 
         if ($hook == 'admin_page_membergate-rules') {
-            $this->rules->load_editor();
+            /*TODO Uncomment this when the rule editor is ready*/
+            //$this->rules->load_editor();
         }
     }
 
@@ -55,7 +50,8 @@ class Assets implements SubscriberInterface {
 
     public function on_current_screen($current_screen) {
         if($current_screen->id == "admin_page_membergate-rules"){
-            return $this->rules->rule_editor->overlay_editor->on_current_screen($current_screen);
+            /*TODO Uncomment this when the rule editor is ready*/
+            //return $this->rules->rule_editor->overlay_editor->on_current_screen($current_screen);
         }
         return $current_screen;
     }

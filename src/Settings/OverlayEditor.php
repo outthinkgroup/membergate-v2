@@ -74,9 +74,11 @@ class OverlayEditor {
         if (false !== $color_palette) {
             $settings['colors'] = $color_palette;
         }
+
         if (false !== $font_sizes) {
             $settings['fontSizes'] = $font_sizes;
         }
+
         include_once ABSPATH . 'wp-admin/wp-includes/block-editor.php';
         return get_block_editor_settings([], new \WP_Block_Editor_Context([]));
         // return $settings;

@@ -18,9 +18,11 @@ class Rules {
         $rules = $this->get_rules($id);
         $condition = $this->get_conditions($id);
         $protect_method = $this->get_protect_method($id);
-        $overlay_content = $this->rule_editor->overlay_editor->get_overlay($id)['content'];
-        $overlay_editor_settings = $this->rule_editor->overlay_editor->get_overlay_editor_settings();
-        $overlay_settings = $this->rule_editor->overlay_editor->get_overlay_settings($id)['settings'];
+
+        /*TODO Uncomment this when the rule editor is ready*/
+        // $overlay_content = $this->rule_editor->overlay_editor->get_overlay($id)['content'];
+        // $overlay_editor_settings = $this->rule_editor->overlay_editor->get_overlay_editor_settings();
+        // $overlay_settings = $this->rule_editor->overlay_editor->get_overlay_settings($id)['settings'];
 ?>
         <script>
             window.membergate = <?= json_encode([
@@ -35,11 +37,12 @@ class Rules {
                                         'ruleCondition' =>  $condition,
                                         'protectMethod' =>  $protect_method,
                                     ],
-                                    'OverlayEditor' => [
+                                    /*TODO Uncomment this when the rule editor is ready*/
+                                    /*                'OverlayEditor' => [
                                         'blocks' => $overlay_content,
                                         'editorSettings' => $overlay_editor_settings,
                                         'overlaySettings' => $overlay_settings,
-                                    ],
+                    ],*/
                                 ]); ?>
         </script>
 <?php
