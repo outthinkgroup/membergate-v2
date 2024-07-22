@@ -7,7 +7,7 @@ import OverlayEditor from "./OverlayEditor.js";
 import "./styles.css";
 registerCoreBlocks();
 // Build Dialog Mechanism
-window.addEventListener("DOMContentLoaded", createDialogAndReactRoot);
+// window.addEventListener("DOMContentLoaded", createDialogAndReactRoot);
 function createDialogAndReactRoot() {
   const rootWrapper = document.querySelector(".overlay-editor-wrapper");
   document.body.addEventListener("click", function (e) {

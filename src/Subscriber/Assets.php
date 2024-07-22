@@ -34,8 +34,7 @@ class Assets implements SubscriberInterface {
         }
 
         if ($hook == 'admin_page_membergate-rules') {
-            /*TODO Uncomment this when the rule editor is ready*/
-            //$this->rules->load_editor();
+            $this->rules->load_editor();
         }
     }
 
