@@ -30,3 +30,16 @@ $membergate = new \Membergate\Plugin(__FILE__);
 add_action('after_setup_theme', [$membergate, 'load']);
 
 require_once 'pluggable.php';
+
+add_filter( 'block_editor_settings_all', 'example_restrict_code_editor' );
+
+function example_restrict_code_editor( $settings ) {
+    $can_active_plugins = current_user_can( 'activate_plugins' );
+
+    // Disable the Code Editor for users that cannot activate plugins (Administrators).
+    if ( ! $can_active_plugins ) {
+        $settings[ 'codeEditingEnabled' ] = false;
+    }
+
+    return $settings;
+}

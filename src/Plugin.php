@@ -17,6 +17,7 @@ use Membergate\EventManagement\EventManager;
 use Membergate\Settings\OverlayEditor;
 use Membergate\Settings\Rules;
 use Membergate\Subscriber\Admin;
+use TypeError;
 
 /*╭──────────────────────────╮*/
 /*│    [   The Plugin   ]    │*/
@@ -50,6 +51,12 @@ class Plugin {
         return $this->container;
     }
 
+    /**
+     * @param int $id 
+     * @return mixed 
+     * @throws Exception 
+     * @throws EntryNotFoundException 
+     */
     private function maybe_get_protect_rule($id = null) {
         if ($id) {
             $rule_entity = $this->container->get(RuleEntity::class);
@@ -80,6 +87,11 @@ class Plugin {
         return $data;
     }
 
+    /**
+     * @return mixed 
+     * @throws Exception 
+     * @throws EntryNotFoundException 
+     */
     private function getCondition() {
         $condition = null;
 
@@ -93,6 +105,10 @@ class Plugin {
         return $condition;
     }
 
+    /**
+     * @return void 
+     * @throws TypeError 
+     */
     private function make_services() {
         // Needs Manual Binding to add the pluign path var
         $this->container->bind(Admin::class, function (Container $container) {

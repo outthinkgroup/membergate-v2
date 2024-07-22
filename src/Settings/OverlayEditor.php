@@ -16,18 +16,19 @@ class OverlayEditor {
 
     public function enqueue_assets() {
         \do_action('enqueue_block_editor_assets');
-        global $current_screen;
-        $current_screen->is_block_editor(true);
         $asset = include $this->plugin_path . "/assets/modal-editor/build/index.asset.php";
         wp_enqueue_style(
             "modal-styles",
             $this->plugin_url . "/assets/modal-editor/build/index.css",
-            array('wp-edit-blocks'),
+            [],
             filemtime($this->plugin_path . '/assets/modal-editor/build/index.css')
         );
         wp_enqueue_script("modal-scripts", $this->plugin_url . "/assets/modal-editor/build/index.js", $asset['dependencies'], $asset['version'], false);
         wp_enqueue_script('wp-format-library');
         wp_enqueue_style('wp-format-library');
+        wp_enqueue_registered_block_scripts_and_styles();
+        wp_enqueue_global_styles_custom_css();
+        wp_enqueue_editor_format_library_assets();
 
         // load editor assets
 
@@ -76,8 +77,14 @@ class OverlayEditor {
         if (false !== $font_sizes) {
             $settings['fontSizes'] = $font_sizes;
         }
+        include_once ABSPATH . 'wp-admin/wp-includes/block-editor.php';
+        return get_block_editor_settings([], new \WP_Block_Editor_Context([]));
+        // return $settings;
+    }
 
-        return $settings;
+    public function on_current_screen($current_screen) {
+        $current_screen->is_block_editor(true);
+        return $current_screen;
     }
 
     /*╭─────────────────────────────╮*/

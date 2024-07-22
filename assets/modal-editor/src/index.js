@@ -1,4 +1,5 @@
 import { render } from "@wordpress/element";
+import { doFilter } from '@wordpress/hooks';
 import { registerCoreBlocks } from "@wordpress/block-library";
 
 import OverlayEditor from "./OverlayEditor.js";
@@ -24,11 +25,13 @@ function createDialogAndReactRoot() {
   });
 }
 
+console.log()
 function mountEditor(closeFn) {
   const settings = window.membergate.OverlayEditor.editorSettings;
   render(
-    <OverlayEditor settings={settings} closeModal={closeFn} />,
+    <OverlayEditor  closeModal={closeFn} />,
     document.querySelector("#overlay-editor-root"),
   );
-  console.log("hi");
+  // console.log("hi");
+	
 }

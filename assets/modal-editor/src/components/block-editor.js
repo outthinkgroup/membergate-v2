@@ -34,8 +34,6 @@ function BlockEditor({ settings: _settings }) {
     return _canUserCreateMedia || _canUserCreateMedia !== false;
   }, []);
 
-
-
   const settings = useMemo(() => {
     if (!canUserCreateMedia) {
       return _settings;
@@ -65,7 +63,6 @@ function BlockEditor({ settings: _settings }) {
     }
   }, []);
 
-
   /**
    * Wrapper for updating blocks. Required as `onInput` callback passed to
    * `BlockEditorProvider` is now called with more than 1 argument. Therefore
@@ -88,7 +85,7 @@ function BlockEditor({ settings: _settings }) {
     updateBlocks(newBlocks);
 		window.membergate.OverlayEditor.blockObjects = newBlocks
   }
-
+	console.log(settings)
   return (
     <div className="overlay-editor-blocks z-50 border-r" style={{background:"var(--bgColor, white)", color:"var(--textColor,black)", padding:"var(--overlayPadding)"}}>
       <BlockEditorProvider

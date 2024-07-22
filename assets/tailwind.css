@@ -25,6 +25,7 @@
     --ring: 215 20.2% 65.1%;
     --radius: 0.5rem;
   }
+
   .dark {
     --background: 224 71% 4%;
     --foreground: 213 31% 91%;
@@ -48,27 +49,33 @@
     --radius: 0.5rem;
   }
 }
+
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
   }
 }
 
+.h-full select,
+.h-full .components-input-control__container {
+  height: 100% !important;
+}
 
+.components-base-control__field:has(.h-full) {
+  margin-bottom: 0;
+}
 
-.h-full select, .h-full .components-input-control__container {
-	height:100%!important;
+.mg-input :is(select, input) {
+  @apply px-3 py-2 leading-none min-h-[37px];
 }
-.components-base-control__field:has(.h-full){
-	margin-bottom: 0;
-}
-.mg-input :is(select, input){
-	@apply px-3 py-2 leading-none min-h-[37px];
-}
-.mg-input.with-light-border :is(.components-input-control__backdrop){
-	@apply border-slate-200 !important;
+
+.mg-input.with-light-border :is(.components-input-control__backdrop) {
+  @apply border-slate-200 !important;
 }

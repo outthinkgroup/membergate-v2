@@ -23,6 +23,7 @@ class Assets implements SubscriberInterface {
             'admin_enqueue_scripts' => ['enqueue_admin_assets',1],
             'script_loader_tag' => ['use_esm_modules', 10, 3],
             'wp_enqueue_scripts' => 'enqueue_form_syles',
+            'current_screen' => ['on_current_screen', 10, 1],
             // 'use_block_editor_for_post_type' =>['prefix_disable_gutenberg', 10, 2]
         ];
     }
@@ -43,11 +44,19 @@ class Assets implements SubscriberInterface {
         }
     }
 
+
     public function enqueue_form_syles() {
         $this->vite->use('assets/frontend.ts');
     }
 
     public function use_esm_modules($tag, $handle, $src) {
         return $this->vite->use_esm_modules($tag, $handle, $src);
+    }
+
+    public function on_current_screen($current_screen) {
+        if($current_screen->id == "admin_page_membergate-rules"){
+            return $this->rules->rule_editor->overlay_editor->on_current_screen($current_screen);
+        }
+        return $current_screen;
     }
 }
