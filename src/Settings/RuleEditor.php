@@ -47,11 +47,9 @@ class RuleEditor {
         $rules = $req->rules;
         $condition = $req->condition;
         $protect_method = $req->protectMethod;
-        /* TODO Uncomment this when the rule editor is ready
         $overlay_content = $req->overlayContent;
         $overlay_settings = $req->overlaySettings;
-         */
-        
+
         if ($req->id == "new") {
             $pid = wp_insert_post([
                 'post_title' => $req->title,
@@ -74,10 +72,6 @@ class RuleEditor {
         update_post_meta($pid, 'condition', $condition);
 
         update_post_meta($pid, 'protect_method', $protect_method);
-        /* TODO Uncomment this when the rule editor is ready
-        $this->overlay_editor->save_overlay($pid, $overlay_content);
-        $this->overlay_editor->save_overlay_settings($pid, $overlay_settings);
-         */
 
         $link = get_edit_post_link($pid, 'if you know, you know, you know?');
         return ["message" => "ok", "redirect" => $link];
@@ -128,27 +122,38 @@ class RuleEditor {
         }
         return $acc;
     }
-    public function as_css_vars($settings){
+    public function as_css_vars($settings) {
         ob_start();
         debug($settings);
-        foreach((array)$settings as $key=>$value){
-            if($key == "padding"){
+        foreach ((array)$settings as $key => $value) {
+            if ($key == "padding") {
                 $padding_value = "";
-                $padding_value.= $this->with_unit($value->top) . " ";
-                $padding_value.= $this->with_unit($value->right) . " ";
-                $padding_value.= $this->with_unit($value->bottom) . " ";
-                $padding_value.= $this->with_unit($value->left);
+                $padding_value .= $this->with_unit($value->top) . " ";
+                $padding_value .= $this->with_unit($value->right) . " ";
+                $padding_value .= $this->with_unit($value->bottom) . " ";
+                $padding_value .= $this->with_unit($value->left);
                 echo "--$key:$padding_value; ";
-            }else if($key == 'maxWidth'){
+            } else if ($key == 'maxWidth') {
                 echo "--$key:{$this->with_unit($value)}; ";
-            } else{
+            } else {
                 echo "--$key:$value; ";
             }
         }
         return ob_get_clean();
     }
 
-    private function with_unit($value){
+    private function with_unit($value) {
         return "$value->value$value->unit";
+    }
+
+    public function get_overlays() {
+        $overlays = get_posts(['post_type' => 'membergate_overlay', 'posts_per_page' => -1]);
+        return array_map(function (\WP_Post $overlay) {
+            return [
+                'id' => $overlay->ID,
+                'title' => $overlay->post_title,
+                'link' => get_edit_post_link($overlay->ID),
+            ];
+        }, $overlays);
     }
 }

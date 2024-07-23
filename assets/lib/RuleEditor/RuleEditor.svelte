@@ -13,6 +13,7 @@
 	let ruleset = window.membergate.Rules.ruleList;
 	let condition = window.membergate.Rules.ruleCondition;
 	let protectMethod = window.membergate.Rules.protectMethod;
+	let overlaySettings = window.membergate.Rules.overlaySettings;
 
 	function addRule(groupIndex: number, ruleIndex: number) {
 		const rule: RuleT = {
@@ -38,18 +39,18 @@
 	}
 
 	async function save() {
-		let blocks = window.membergate?.OverlayEditor?.blockObjects;
+		// TODO uncomment when we use the custom overlay editor
+		//let blocks = window.membergate?.OverlayEditor?.blockObjects;
 
 		const res = await jsonAjax("rule_editor__save_rules", {
 			rules: ruleset,
 			condition,
 			title,
 			protectMethod,
+			overlaySettings, 
 			//@ts-ignore
-			/* TODO Uncomment this when the rule editor is ready
-			overlaySettings: window.membergate.OverlayEditor?.overlaySettings,
-			overlayContent:blocks ? window.wp.blocks.serialize(blocks) : window.membergate.OverlayEditor.blocks,
-			*/
+			// TODO uncomment when we use the custom overlay editor
+			//overlayContent:blocks ? window.wp.blocks.serialize(blocks) : window.membergate.OverlayEditor.blocks,
 			id: window.membergate.postId,
 		});
 		if (res.message != "ok") throw new Error("Couldnt Save Rules");

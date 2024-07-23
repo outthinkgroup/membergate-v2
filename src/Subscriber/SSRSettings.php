@@ -41,4 +41,6 @@ class SSRSettings implements SubscriberInterface {
         </script>
 <?php
     }
+
+
 }

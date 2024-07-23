@@ -11,6 +11,7 @@ use Membergate\Subscriber\Admin;
 use Membergate\Subscriber\AjaxEndpoints;
 use Membergate\Subscriber\Assets;
 use Membergate\Subscriber\AddCookieOnLoad;
+use Membergate\Subscriber\OverlayPostType;
 use Membergate\Subscriber\Protect;
 use Membergate\Subscriber\RulePostType;
 use Membergate\Subscriber\SSRSettings;
@@ -28,6 +29,7 @@ class EventManagementConfiguration {
             Protect::class,
             SSRSettings::class,
             RulePostType::class,
+            OverlayPostType::class,
         ];
 
         return $subscribers;

@@ -19,10 +19,11 @@ class Rules {
         $condition = $this->get_conditions($id);
         $protect_method = $this->get_protect_method($id);
 
-        /*TODO Uncomment this when the rule editor is ready*/
+        // TODO uncomment when we use the custom overlay editor
         // $overlay_content = $this->rule_editor->overlay_editor->get_overlay($id)['content'];
         // $overlay_editor_settings = $this->rule_editor->overlay_editor->get_overlay_editor_settings();
-        // $overlay_settings = $this->rule_editor->overlay_editor->get_overlay_settings($id)['settings'];
+
+        $overlays = $this->rule_editor->get_overlays();
 ?>
         <script>
             window.membergate = <?= json_encode([
@@ -37,17 +38,15 @@ class Rules {
                                         'ruleCondition' =>  $condition,
                                         'protectMethod' =>  $protect_method,
                                     ],
-                                    /*TODO Uncomment this when the rule editor is ready*/
-                                    /*                'OverlayEditor' => [
-                                        'blocks' => $overlay_content,
-                                        'editorSettings' => $overlay_editor_settings,
-                                        'overlaySettings' => $overlay_settings,
-                    ],*/
+                                    'OverlayEditor' => [
+                                        'overlays' => $overlays,
+                                    ],
                                 ]); ?>
         </script>
 <?php
 
     }
+
 
     public function get_rules($id = null) {
         if ($id && $id !== "new") {

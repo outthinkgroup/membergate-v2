@@ -131,8 +131,9 @@ class ProtectContent {
 
     private function term_rule($post, $rule, $tax) {
         if (!is_single()) return false;
+        //TODO: check if post type has this taxonomy
+        // if(in_array(get_object_taxonomies())) return false;
         if ($rule->operator == 'is') {
-            debug([get_the_category($post->ID), $rule, $tax]);
             return has_term($rule->value, $tax, $post);
         }
         if ($rule->operator == 'not') {

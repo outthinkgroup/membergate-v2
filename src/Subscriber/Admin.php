@@ -39,6 +39,7 @@ class Admin implements SubscriberInterface {
             include $this->plugin_path . "/templates/rules.php";
         });
 
+        add_submenu_page($admin_page->get_slug(), 'Overlays ','Overlays', 'manage_options', 'edit.php?post_type=membergate_overlay');
     }
 
     public function add_admin_icon_styles() {

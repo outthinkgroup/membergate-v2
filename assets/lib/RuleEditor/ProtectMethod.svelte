@@ -7,6 +7,7 @@
 	onMount(() => {
 		ParamValues.load("page");
 	});
+	const overlays = window.membergate.OverlayEditor.overlays
 </script>
 
 <div class="flex gap-2 flex-1 w-full">
@@ -29,12 +30,14 @@
 			{/each}
 		</select>
 	{/if}
-	{#if protectMethod.method == "overlay"}
-		<button
-			class="flex-1  border border-cyan-600 rounded text-cyan-600 px-5 font-semibold hover:bg-cyan-600 hover:bg-opacity-10"
-			id="show-overlay-editor"
+	{#if overlays.length && protectMethod.method == "overlay"}
+		<select
+			class="w-full max-w-full flex-1 border border-slate-300"
+			bind:value={protectMethod.value}
 		>
-			Edit Overlay
-		</button>
+			{#each overlays as overlay}
+				<option value={overlay.id}>{overlay.title}</option>
+			{/each}
+		</select>
 	{/if}
 </div>

@@ -27,8 +27,7 @@ export const conditionOperatorOptions={
 }
 export const protectMethodOptions = {
 	redirect:"Redirect To",
-	/* TODO Uncomment this when the rule editor is ready
-		* overlay:"Use Overlay",*/
+	overlay:"Use Overlay",
 }
 
 
@@ -71,4 +70,10 @@ export type OverlaySettingsT = {
 		bottom:Size;
 		left:Size;
 	};
+}
+
+export type OverlayOptionT = {
+	id:number;
+	title:string;
+	link:string;
 }

@@ -22,7 +22,6 @@ class RulePostType implements SubscriberInterface {
     }
 
     public function change_post_editor($url, $post_id, $context) {
-        debug("herererererer in change_post_editor");
         if (get_post_type($post_id) !== "membergate_rule") return $url;
         return admin_url("admin.php?page=membergate-rules&id=$post_id");
     }

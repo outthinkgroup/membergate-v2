@@ -93,33 +93,10 @@ class OverlayEditor {
     /*│    [   Data Handlers   ]    │*/
     /*╰─────────────────────────────╯*/
 
-    public function save_overlay($id, $content) {
-        $res = (bool)update_post_meta($id, "membergate_overlay_content", $content);
-    }
-
     public function get_overlay($post_id) {
         return [
             'content' => get_post_meta($post_id, "membergate_overlay_content", true) ?: [],
         ];
     }
-    public function save_overlay_settings($post_id, $settings) {
-        $res = (bool)update_post_meta($post_id, "membergate_overlay_settings", $settings);
-    }
 
-    public function get_overlay_settings($post_id) {
-        $settings = get_post_meta($post_id, "membergate_overlay_settings", true) ?: [
-            'bgColor' => "#ffffff",
-            "textColor" => "#000000",
-            "maxWidth" => ["value" => 900, "unit" => 'px'],
-            "padding" => [
-                'top' => ["value" => 20, "unit" => 'px'],
-                'right' => ["value" => 20, "unit" => 'px'],
-                'bottom' => ["value" => 20, "unit" => 'px'],
-                'left' => ["value" => 20, "unit" => 'px'],
-            ],
-        ];
-        return [
-            'settings' => $settings,
-        ];
-    }
 }

@@ -42,8 +42,15 @@ class Protect implements SubscriberInterface {
             $this->protect_content->condition_id
             && $this->uses_overlay_method($this->protect_content->condition_id)
         ) {
-            $overlay_content = get_post_meta($this->protect_content->condition_id, "membergate_overlay_content", true);
-            $overlay_settings = get_post_meta($this->protect_content->condition_id, "membergate_overlay_settings", true);
+            $protect_condition_id = $this->protect_content->condition_id;
+            $protect_method = $this->rules->get_protect_method($protect_condition_id);
+            $overlay = get_post((int)$protect_method->value);
+            if(!$overlay){ 
+                error_log("Could not find overlay with id ".$protect_method->value);
+                return;
+            }
+            $overlay_content = $overlay->post_content;
+            $overlay_settings = get_post_meta($overlay->ID, "membergate_overlay_settings", true);
 ?>
             <div id="membergate_overlay_root">
                 <div class="membergate-overlay-wrapper" style="<?= $this->rules->rule_editor->as_css_vars($overlay_settings); ?>">
