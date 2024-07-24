@@ -1,0 +1,17 @@
+{
+  "apiVersion": 3,
+  "name": "membergate/backbutton",
+  "title": "Membergate Back Button",
+  "description": "Back button form Membergate Overlay",
+  "category": "widgets",
+  "icon": "admin-comments",
+  "keywords": [
+    "membergate",
+    "back",
+    "button"
+  ],
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}

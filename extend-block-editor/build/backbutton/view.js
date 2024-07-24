@@ -1,0 +1,1 @@
+(()=>{"use strict";window.addEventListener("DOMContentLoaded",(()=>{document.querySelectorAll(".wp-block-membergate-backbutton").forEach((e=>e.addEventListener("click",(()=>{window.history.back()}))))}))})();
