@@ -9,6 +9,7 @@ class OverlayPostType implements SubscriberInterface {
     public static function get_subscribed_events(): array {
         return [
             'init' => ['register', 100000000],
+
         ];
     }
 
@@ -28,6 +29,7 @@ class OverlayPostType implements SubscriberInterface {
                 'supports' => ['editor', 'title'],
             ]
         );
+        $this->register_post_meta();
     }
 
     public function register_post_meta() {
@@ -39,18 +41,8 @@ class OverlayPostType implements SubscriberInterface {
                 'schema' => [
                     'type' => 'object',
                     "properties" => [
-                        "bgColor" => ["type" => "string"],
-                        "textColor" => ["type" => "string"],
-                        "maxWidth" => ["type" => "number"],
-                        "padding" => [
-                            "type" => "object",
-                            "properties" => [
-                                "top" => ["type" => "number"],
-                                "right" => ["type" => "number"],
-                                "bottom" => ["type" => "number"],
-                                "left" => ["type" => "number"],
-                            ],
-                        ],
+                        "maxWidth" => ["type" => "string"],
+                        "position" =>["type" => "string"],
                     ],
                 ]
             ],
@@ -61,15 +53,8 @@ class OverlayPostType implements SubscriberInterface {
 
     function default_overlay_settings() {
         return [
-            'bgColor' => "#ffffff",
-            "textColor" => "#000000",
-            "maxWidth" => 20,
-            "padding" => [
-                'top' => 20,
-                'right' => 20,
-                'bottom' => 20,
-                'left' => 20,
-            ],
+            "maxWidth" => "600px",
+            "position" => "center",
         ];
     }
 }

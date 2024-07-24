@@ -18,6 +18,7 @@ use Membergate\Settings\OverlayEditor;
 use Membergate\Settings\Rules;
 use Membergate\Subscriber\Admin;
 use TypeError;
+use WP_Post;
 
 /*╭──────────────────────────╮*/
 /*│    [   The Plugin   ]    │*/
@@ -49,6 +50,18 @@ class Plugin {
 
     public function get_container() {
         return $this->container;
+    }
+
+    /**
+     * @return bool 
+     * @throws Exception 
+     * @throws EntryNotFoundException 
+     */
+    public function isProtected() {
+        /** @var ProtectContent $protector */
+        $protector =  $this->container->get(ProtectContent::class);
+
+        return $protector->is_protected;
     }
 
     /**

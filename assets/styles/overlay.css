@@ -9,38 +9,42 @@ body:has(#membergate_overlay_root){
 	right:0;
 	height:100dvh;
 	z-index:9999999;
-	padding-top:10dvh;
+	/*padding-top:10dvh;*/
 	background:#00000044;
 	animation:blurin 300ms linear forwards;
+	display:grid;
+	place-content:center;
 }
 
 .membergate-overlay-wrapper{
-	position:absolute;
 	width:100%;
-	bottom:0;
-	left:0;
+
+	background:transparent;
 	animation:slidein 400ms cubic-bezier(.5, 1,.5,1) forwards;
-	background:var(--bgColor, white );
 	height:auto;
-	padding:var(--padding,max(20px, 2vw));
 }
+
 .membergate-overlay-wrapper * {
 	color:unset;
 }
+
 .membergate-overlay-wrapper > * {
 	max-width:var(--maxWidth, 900px);
 	margin-inline:auto;
 }
+
 .membergate-overlay-wrapper {
 	color:var(--textColor, inherit);
 }
 
 @keyframes slidein {
 	from {
-		transform: translateY(100%);
+		transform: translateY(50%) translateX(0);
+		opacity:.45;
 	}
 	to{
-		transform: translateY(0);
+		transform: translateY(0) translateX(0);
+		opacity:1;
 	}
 }
 @keyframes blurin {

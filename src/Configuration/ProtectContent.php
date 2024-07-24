@@ -4,12 +4,13 @@ namespace Membergate\Configuration;
 
 use Membergate\Settings\Rules;
 use Membergate\Configuration\RuleEntity;
+use WP_Post;
 
 // add as a singleton
 class ProtectContent {
 
     public $post;
-    public $is_protected;
+    public bool $is_protected;
     public $condition_id;
     private $rules;
     private $ruleEntity;
@@ -51,7 +52,12 @@ class ProtectContent {
     }
 
 
-    public function is_post_protected(\WP_Post $post, $rule_id = null) {
+    /**
+     * @param WP_Post $post 
+     * @param mixed $rule_id 
+     * @return bool 
+     */
+    public function is_post_protected(\WP_Post $post, $rule_id = null):bool {
         $rule_sets = $this->rules->get_rules($rule_id);
         if ($rule_id) {
             // so the loops will work with both contexts
@@ -94,6 +100,7 @@ class ProtectContent {
                             debug("tag: $is_protected");
                             break;
                         default:
+                            $is_protected = false;
                             break;
                     }
                 }
@@ -102,8 +109,8 @@ class ProtectContent {
         return $is_protected;
     }
 
-    public function get_active_rule(){
-        if(!$this->ruleEntity->isSet) {
+    public function get_active_rule() {
+        if (!$this->ruleEntity->isSet) {
             return null;
         }
         return $this->ruleEntity;

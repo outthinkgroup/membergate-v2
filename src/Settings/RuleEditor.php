@@ -133,8 +133,6 @@ class RuleEditor {
                 $padding_value .= $this->with_unit($value->bottom) . " ";
                 $padding_value .= $this->with_unit($value->left);
                 echo "--$key:$padding_value; ";
-            } else if ($key == 'maxWidth') {
-                echo "--$key:{$this->with_unit($value)}; ";
             } else {
                 echo "--$key:$value; ";
             }

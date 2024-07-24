@@ -20,25 +20,26 @@ class AddCookieOnLoad implements SubscriberInterface {
     }
 
     public function editor_assets() {
-        global $membergate;
-        $vars = $membergate->get_container()->get('Vars');
-        $asset_file = include($vars['plugin_path'] . 'extend-block-editor/build/index.asset.php');
-        wp_enqueue_script(
-            'membergate-extend-block-editor',
-            $vars['plugin_url'] . 'extend-block-editor/build/index.js',
-            $asset_file['dependencies'],
-            $asset_file['version'],
-            true
-        );
-
-        wp_localize_script(
-            'membergate-extend-block-editor',
-            'membergatePostMeta',
-            array_reduce($this->meta->available_options(), function ($settings, $key) {
-                $settings[$key] = $this->meta->{$key}();
-                return $settings;
-            }, []),
-        );
+        /*TODO rebuild this if needed*/
+        // global $membergate;
+        // $vars = $membergate->get_container()->get('Vars');
+        // $asset_file = include($vars['plugin_path'] . 'extend-block-editor/build/index.asset.php');
+        // wp_enqueue_script(
+        //     'membergate-extend-block-editor',
+        //     $vars['plugin_url'] . 'extend-block-editor/build/index.js',
+        //     $asset_file['dependencies'],
+        //     $asset_file['version'],
+        //     true
+        // );
+        //
+        // wp_localize_script(
+        //     'membergate-extend-block-editor',
+        //     'membergatePostMeta',
+        //     array_reduce($this->meta->available_options(), function ($settings, $key) {
+        //         $settings[$key] = $this->meta->{$key}();
+        //         return $settings;
+        //     }, []),
+        // );
     }
 
     public function register_meta() {

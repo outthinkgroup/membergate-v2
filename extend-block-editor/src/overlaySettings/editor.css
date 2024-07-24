@@ -1,0 +1,5 @@
+:is(#important, .block-editor-block-list__layout){
+	max-width: var(--membergate-overlay-maxWidth, inherit);
+	margin-inline:auto;
+	width:100%;
+}
