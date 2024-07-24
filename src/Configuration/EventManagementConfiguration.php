@@ -10,7 +10,6 @@ use Illuminate\Container\Container;
 use Membergate\Subscriber\Admin;
 use Membergate\Subscriber\AjaxEndpoints;
 use Membergate\Subscriber\Assets;
-use Membergate\Subscriber\AddCookieOnLoad;
 use Membergate\Subscriber\OverlayPostType;
 use Membergate\Subscriber\Protect;
 use Membergate\Subscriber\RulePostType;
@@ -25,7 +24,6 @@ class EventManagementConfiguration {
             Assets::class,
             Admin::class,
             AjaxEndpoints::class,
-            AddCookieOnLoad::class,
             Protect::class,
             SSRSettings::class,
             RulePostType::class,
