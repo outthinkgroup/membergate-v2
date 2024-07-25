@@ -3,7 +3,6 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-
 /**
  * Plugin Name:     Membergate
  * Plugin URI:      PLUGIN SITE HERE

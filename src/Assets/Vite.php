@@ -21,7 +21,7 @@ class Vite {
         $this->manifest = $this->in_dev ? [] : $this->get_manifest();
     }
 
-    public function use(string $script = "assets/main.ts") {
+    public function use(string $script = "assets/main.ts"):void {
         $this->preload_imports($script);
         if (!$this->in_dev) {
             $this->enqueue_css($script);
@@ -29,9 +29,9 @@ class Vite {
         $this->enqueue_js($script);
     }
 
-    private function preload_imports(string $script) {
+    private function preload_imports(string $script):void {
         if ($this->in_dev) {
-            add_action('wp_head', function () {
+            \add_action('wp_head', function () {
                 echo '<script type="module">
                     RefreshRuntime.injectIntoGlobalHook(window)
                     window.$RefreshReg$ = () => {}
@@ -96,8 +96,9 @@ class Vite {
             : $this->plugin_url . "assets/dist/" . $entry;
     }
 
-    private function asset_info() {
+    private function asset_info(): array {
         $contents = file_get_contents($this->plugin_path . 'assets/asset-info.json');
+
         return json_decode($contents);
     }
 

@@ -8,6 +8,7 @@ class PostSettings {
         "membergate_cookie_key" => "is_member",
         "membergate_cookie_value"=> "true",
     ];
+
     public function __construct($id = null){
         if(is_null($id)){
             $id = get_the_ID();

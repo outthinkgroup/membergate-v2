@@ -18,7 +18,6 @@ use Membergate\Settings\OverlayEditor;
 use Membergate\Settings\Rules;
 use Membergate\Subscriber\Admin;
 use TypeError;
-use WP_Post;
 
 /*╭──────────────────────────╮*/
 /*│    [   The Plugin   ]    │*/
@@ -33,22 +32,21 @@ class Plugin {
 
     private $loaded;
     private $file;
-
-    public function __construct($file) {
+    public function __construct(string $file) {
         $this->container = new Container();
         $this->file = $file;
         $this->loaded = false;
     }
 
-    public function get_plugin_path() {
+    public function get_plugin_path(): string {
         return $this->container->make('Vars')['plugin_path'];
     }
 
-    public function get_plugin_url() {
+    public function get_plugin_url(): string {
         return $this->container->make('Vars')['plugin_url'];
     }
 
-    public function get_container() {
+    public function get_container(): Container {
         return $this->container;
     }
 
@@ -57,7 +55,7 @@ class Plugin {
      * @throws Exception 
      * @throws EntryNotFoundException 
      */
-    public function isProtected() {
+    public function isProtected(): bool {
         /** @var ProtectContent $protector */
         $protector =  $this->container->get(ProtectContent::class);
 
@@ -82,11 +80,11 @@ class Plugin {
 
     /**
      * Used By Extension Plugins to get the cookie_name and url to redirect to
-     * @return array 
-     * @throws Exception 
+     * @return array{redirect_url: string, cookie_name: string}
+     * @throws Exception
      * @throws EntryNotFoundException 
      */
-    public function extension_protect_data() {
+    public function extension_protect_data(): array {
         $data = [];
         global $wp;
 
@@ -122,7 +120,7 @@ class Plugin {
      * @return void 
      * @throws TypeError 
      */
-    private function make_services() {
+    private function make_services(): void {
         // Needs Manual Binding to add the pluign path var
         $this->container->bind(Admin::class, function (Container $container) {
             return new Admin($container->get('Vars')['plugin_path']);
@@ -144,9 +142,10 @@ class Plugin {
         $emc = new EventManagementConfiguration();
         $emc->make_subscribers($this->container);
     }
-
-
-    public function load() {
+    /**
+     * @return void
+     */
+    public function load(): void {
         if ($this->loaded) {
             return;
         }

@@ -8,11 +8,11 @@ class Rules {
         $this->rule_editor = $editor;
     }
 
-    public function load_editor() {
+    public function load_editor(): void {
         $this->rule_editor->enqueue_assets();
     }
 
-    public function render_rule_settings() {
+    public function render_rule_settings(): void {
         $post_types = $this->rule_editor->load_post_types();
         $id = (int)isset($_GET['id']) ? $_GET['id'] : "new";
         $rules = $this->get_rules($id);
@@ -46,9 +46,11 @@ class Rules {
 <?php
 
     }
-
-
-    public function get_rules($id = null) {
+    /**
+     * @param null|int $id
+     * @return array<object>
+     */
+    public function get_rules($id = null): array {
         if ($id && $id !== "new") {
             return get_post_meta($id, 'rules', true) ?: $this->default_ruleset();
         } elseif ($id) {
@@ -65,8 +67,11 @@ class Rules {
         }
         return $rules;
     }
-
-    public function get_conditions($id = null) {
+    /**
+     * @return array
+     * @param mixed $id
+     */
+    public function get_conditions($id = null):array {
         if ($id && $id !== "new") {
             return get_post_meta($id, 'condition', true) ?: $this->default_condition();
         } elseif ($id) {
@@ -86,24 +91,30 @@ class Rules {
         }
         return $conditions;
     }
-
-    public function get_protect_method($id) {
+    /**
+     * @param int|string|null $id
+     */
+    public function get_protect_method($id): object {
         if ($id && $id !== "new") {
             return get_post_meta($id, 'protect_method', true) ?: $this->default_protect_method();
         } elseif ($id) {
             return $this->default_protect_method();
         }
     }
-
-    public function default_condition() {
+    /**
+     * @return object{parameter:string,key:string,operator:string}
+     */
+    public function default_condition(): object {
         return (object)[
             'parameter' => 'cookie',
             'key' => 'is_member',
             'operator' => 'notset',
         ];
     }
-
-    public function default_protect_method() {
+    /**
+     * @return object{method:string,value:string}
+     */
+    public function default_protect_method(): object {
         list($page) = get_posts([
             'post_type' => "page",
             'posts_per_page' => 1,
@@ -114,8 +125,10 @@ class Rules {
             'value' => (string)$page->ID,
         ];
     }
-
-    private function default_ruleset() {
+    /**
+     * @return array<array<object{parameter:string,key:string,operator:string}>>
+     */
+    private function default_ruleset(): array {
         return [[(object)[
             'parameter' => "post_type",
             "operator" => 'is',

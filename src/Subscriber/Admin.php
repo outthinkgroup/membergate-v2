@@ -5,14 +5,13 @@ namespace Membergate\Subscriber;
 if (!defined('ABSPATH')) {
     exit;
 }
-
 use Membergate\Admin\AdminPage;
 use Membergate\EventManagement\SubscriberInterface;
 
 class Admin implements SubscriberInterface {
     private $plugin_path;
 
-    public function __construct($plugin_path) {
+    public function __construct(string $plugin_path) {
         $this->plugin_path = $plugin_path;
     }
 
@@ -22,8 +21,10 @@ class Admin implements SubscriberInterface {
             'admin_head' => 'add_admin_icon_styles',
         ];
     }
-
-    public function register_admin_pages() {
+    /**
+     * @return void
+     */
+    public function register_admin_pages():void {
         $admin_page = new AdminPage($this->plugin_path . '/templates', $this->plugin_path);
         add_menu_page(
             $admin_page->get_page_title(),
@@ -41,8 +42,10 @@ class Admin implements SubscriberInterface {
 
         add_submenu_page($admin_page->get_slug(), 'Overlays ','Overlays', 'manage_options', 'edit.php?post_type=membergate_overlay');
     }
-
-    public function add_admin_icon_styles() {
+    /**
+     * @return void
+     */
+    public function add_admin_icon_styles():void {
         $admin_page = new AdminPage($this->plugin_path . '/templates', $this->plugin_path);
         $admin_page->icons_styles();
     }

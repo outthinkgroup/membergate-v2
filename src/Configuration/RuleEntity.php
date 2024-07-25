@@ -3,6 +3,9 @@ namespace Membergate\Configuration;
 
 use Membergate\Settings\Rules;
 
+/** 
+ * 
+ **/
 class RuleEntity {
     private $rulesConfig;
     private $_rules;
