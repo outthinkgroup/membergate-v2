@@ -21,7 +21,7 @@ class Vite {
         $this->manifest = $this->in_dev ? [] : $this->get_manifest();
     }
 
-    public function use(string $script = "assets/main.ts"):void {
+    public function use(string $script = "assets/main.ts"): void {
         $this->preload_imports($script);
         if (!$this->in_dev) {
             $this->enqueue_css($script);
@@ -29,7 +29,7 @@ class Vite {
         $this->enqueue_js($script);
     }
 
-    private function preload_imports(string $script):void {
+    private function preload_imports(string $script): void {
         if ($this->in_dev) {
             \add_action('wp_head', function () {
                 echo '<script type="module">
@@ -49,7 +49,7 @@ class Vite {
         });
     }
 
-    private function enqueue_css($script) {
+    private function enqueue_css(string $script): void {
         foreach ($this->css_urls($script) as $url) {
             $handle = sprintf("%s/%s", $this->module_name, $script);
             wp_register_style($handle, $url);
@@ -57,22 +57,22 @@ class Vite {
         }
     }
 
-    private function enqueue_js($script) {
+    private function enqueue_js(string $script): void {
         $handle = sprintf("module/%s/%s", $this->module_name, $script);
         wp_register_script($handle, $this->asset_url($script), false, $this->in_dev);
         wp_enqueue_script($handle);
     }
 
-    private function imports($script) {
+    private function imports(string $script): array {
         if (empty($this->manifest[$script]['imports'])) return [];
 
         return array_map(
-            fn ($import) => $this->base_url . $this->manifest[$import]['file'],
+            fn($import) => $this->base_url . $this->manifest[$import]['file'],
             $this->manifest[$script]['imports']
         );
     }
 
-    private function css_urls(string $entry) {
+    private function css_urls(string $entry): array {
         $urls = [];
         if (isset($this->manifest[$entry]['imports'])) {
             foreach ($this->manifest[$entry]['imports'] as $import) {
@@ -87,7 +87,7 @@ class Vite {
         return $urls;
     }
 
-    private function asset_url(string $entry) {
+    private function asset_url(string $entry): string {
         if ($this->in_dev) {
             return $this->base_url . "/" . $entry;
         }
@@ -96,7 +96,8 @@ class Vite {
             : $this->plugin_url . "assets/dist/" . $entry;
     }
 
-    private function asset_info(): array {
+    /** @return mixed  */
+    private function asset_info() {
         $contents = file_get_contents($this->plugin_path . 'assets/asset-info.json');
 
         return json_decode($contents);
@@ -106,8 +107,10 @@ class Vite {
         $content = file_get_contents($this->plugin_path . 'assets/dist/manifest.json');
         return json_decode($content, true);
     }
-
-    public function use_esm_modules($tag, $handle, $src) {
+    /**
+     * @return string
+     */
+    public function use_esm_modules(string $tag, string $handle, string $src): string {
         if (false !== stripos($handle, 'module')) {
             $str = "type='module'";
             $str .= $this->in_dev ? ' crossorigin' : '';
