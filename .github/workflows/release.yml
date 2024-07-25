@@ -22,7 +22,7 @@ jobs:
       - name: Upload Release
         uses: softprops/action-gh-release@v2
         with:
-          files:
+          files: |
             membergate.php
             utils.php
             templates/*
