@@ -3,11 +3,11 @@
 namespace Membergate\Settings;
 
 use Membergate\Assets\Vite;
+use Membergate\DTO\Rules\ConditionDTO;
 
 class RuleEditor {
 
-    public function __construct(private Vite $vite, public OverlayEditor $overlay_editor) {
-    }
+    public function __construct(private Vite $vite, public OverlayEditor $overlay_editor) { }
 
     public function enqueue_assets(): void {
         $this->vite->use("assets/rule-editor.ts");
@@ -71,7 +71,8 @@ class RuleEditor {
         }
 
         update_post_meta($pid, 'rules', $rules);
-        update_post_meta($pid, 'condition', $condition);
+
+        update_post_meta($pid, 'condition', ConditionDTO::fromObject($condition));
 
         update_post_meta($pid, 'protect_method', $protect_method);
 
@@ -140,11 +141,7 @@ class RuleEditor {
         return $acc;
     }
 
-    /**
-     * @param mixed $settings
-     * @return string
-     */
-    public function as_css_vars($settings): string {
+    public function as_css_vars(string $settings): string {
         ob_start();
         foreach ((array)$settings as $key => $value) {
             echo "--$key:$value; ";
@@ -152,6 +149,9 @@ class RuleEditor {
         return ob_get_clean();
     }
 
+    /**
+     * @return array<array{id:int,title:string,link:string}>
+     **/
     public function get_overlays(): array {
         $overlays = get_posts(['post_type' => 'membergate_overlay', 'posts_per_page' => -1]);
         return array_map(function (\WP_Post $overlay) {

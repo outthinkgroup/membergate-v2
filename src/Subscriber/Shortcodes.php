@@ -8,7 +8,6 @@ if (!defined('ABSPATH')) {
 
 use Illuminate\Container\Container;
 use Membergate\EventManagement\SubscriberInterface;
-use Membergate\Plugin;
 use Membergate\Shortcode\ShortcodeInterface;
 
 class Shortcodes implements SubscriberInterface {

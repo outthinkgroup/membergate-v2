@@ -21,6 +21,7 @@ class Admin implements SubscriberInterface {
             'admin_head' => 'add_admin_icon_styles',
         ];
     }
+
     /**
      * @return void
      */

@@ -64,23 +64,25 @@ class Plugin {
 
     /**
      * @param int $id 
-     * @return mixed 
+     * @return RuleEntity | null
      * @throws Exception 
      * @throws EntryNotFoundException 
      */
-    private function maybe_get_protect_rule($id = null) {
+    private function maybe_get_protect_rule($id = null): RuleEntity|null {
         if ($id) {
+            /** @var RuleEntity $rule_entity */
             $rule_entity = $this->container->get(RuleEntity::class);
             $rule_entity->init($id);
             return $rule_entity;
         }
+        /** @var ProtectContent $protect_content */
         $protect_content = $this->container->get(ProtectContent::class);
         return $protect_content->get_active_rule();
     }
 
     /**
      * Used By Extension Plugins to get the cookie_name and url to redirect to
-     * @return array{redirect_url: string, cookie_name: string}
+     * @return array{redirect_url: string, ?ccookie_name: string, ?cookie_value: string}
      * @throws Exception
      * @throws EntryNotFoundException 
      */
@@ -90,16 +92,21 @@ class Plugin {
 
         $current_url = home_url(add_query_arg([], $wp->request));
         $redirect_url = $_GET['redirect_url'] ?? $current_url;
+
         $data['redirect_url'] = $redirect_url;
 
         $condition = $this->getCondition();
-        $data['cookie_name'] = $condition->parameter === 'cookie' ? $condition->key : null;
+        if ($condition) {
+            $data['name'] = $condition->parameter === 'cookie' ? $condition->key : null;
+
+            $data['value'] = property_exists($condition, 'value') && $condition->operator == "notequal" ? $condition->value : "true";
+        }
 
         return $data;
     }
 
     /**
-     * @return mixed 
+     * @return ConditionDTO|null
      * @throws Exception 
      * @throws EntryNotFoundException 
      */
@@ -108,9 +115,12 @@ class Plugin {
 
         if (isset($_GET['condition_id'])) {
             $rule_entity = $this->maybe_get_protect_rule(intval($_GET['condition_id']));
-            $condition = $rule_entity->condition() ?? null;
+            if (!$rule_entity) {
+                return null;
+            }
+            return $rule_entity->condition();
         } elseif ($rule = $this->maybe_get_protect_rule()) {
-            $condition = $rule->condition() ?? null;
+            return $rule->condition(); 
         }
 
         return $condition;

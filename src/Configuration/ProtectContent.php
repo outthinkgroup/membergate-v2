@@ -4,6 +4,7 @@ namespace Membergate\Configuration;
 
 use Membergate\Settings\Rules;
 use Membergate\Configuration\RuleEntity;
+use Membergate\DTO\Rules\ConditionDTO;
 use WP_Post;
 
 // add as a singleton
@@ -21,20 +22,12 @@ class ProtectContent {
         $this->ruleEntity = $ruleEntity;
     }
 
-    public function configure_protection() {
+    public function configure_protection(): bool {
         global $post;
         $conditions = $this->rules->get_conditions();
         $passes = true;
         foreach ($conditions as $condition_id => $condition) {
-            switch ($condition->parameter) {
-                case "cookie":
-                    $passes = $this->passes_cookie_condition($condition);
-                    break;
-                case "urlparam":
-                    $passes = $this->passes_urlparam_condition($condition);
-                    break;
-            }
-
+            $passes = $this->passes_condition($condition);
 
             if ($passes) {
                 continue;
@@ -57,7 +50,7 @@ class ProtectContent {
      * @param mixed $rule_id 
      * @return bool 
      */
-    public function is_post_protected(\WP_Post $post, $rule_id = null):bool {
+    public function is_post_protected(\WP_Post $post, $rule_id = null): bool {
         $rule_sets = $this->rules->get_rules($rule_id);
         if ($rule_id) {
             // so the loops will work with both contexts
@@ -109,7 +102,7 @@ class ProtectContent {
         return $is_protected;
     }
 
-    public function get_active_rule() {
+    public function get_active_rule(): null|RuleEntity {
         if (!$this->ruleEntity->isSet) {
             return null;
         }
@@ -148,7 +141,7 @@ class ProtectContent {
         }
     }
 
-    private function page_template_rule(\WP_Post $post, $rule) {
+    private function page_template_rule(\WP_Post $post, $rule): bool {
         $template = $post->page_template;
         debug($template);
         if ($rule->operator == 'is') {
@@ -160,22 +153,20 @@ class ProtectContent {
         }
     }
 
-    private function passes_cookie_condition($condition): bool {
+    
+    /**
+     * TODO: may need to have seperate methods for each condition type
+     *
+     * @param Membergate\Configuration\ConditionDTO $condition 
+     * @return bool 
+     */
+    private function passes_condition(ConditionDTO $condition): bool {
         if (isset($_COOKIE[$condition->key])) {
             if ($condition->operator == 'notequal') {
-                return $_COOKIE[$condition->key] == $condition->operator;
+                return $_COOKIE[$condition->key] == $condition->value;
             }
-            debug("Passes Cookies");
-            return true;
-        }
-        debug([$condition, $_COOKIE]);
-        return false;
-    }
-
-    private function passes_urlparam_condition($condition): bool {
-        if (isset($_GET[$condition->key])) {
-            if ($condition->operator == 'notequal') {
-                return $_GET[$condition->key] == $condition->operator;
+            if ($condition->operator == 'equals') {
+                return $_COOKIE[$condition->key] != $condition->value;
             }
             return true;
         }
