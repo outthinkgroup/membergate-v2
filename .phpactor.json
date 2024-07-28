@@ -2,6 +2,5 @@
 	"$schema": "/phpactor.schema.json",
 	"indexer.stub_paths": [
 		"/Users/joshkennedy/dotfiles/.config/php-stubs"
-	],
-	"language_server.enable_workspace": false
+	]
 }
