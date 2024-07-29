@@ -51,21 +51,20 @@ class Plugin {
     }
 
     /**
-     * @return bool 
-     * @throws Exception 
-     * @throws EntryNotFoundException 
+     * @return bool
+     * @throws Exception
+     * @throws EntryNotFoundException
      */
     public function isProtected(): bool {
         /** @var ProtectContent $protector */
         $protector =  $this->container->get(ProtectContent::class);
-
         return $protector->is_protected;
     }
 
     /**
      * @param int $id 
      * @return RuleEntity | null
-     * @throws Exception 
+     * @throws Exception
      * @throws EntryNotFoundException 
      */
     private function maybe_get_protect_rule($id = null): RuleEntity|null {
@@ -82,7 +81,7 @@ class Plugin {
 
     /**
      * Used By Extension Plugins to get the cookie_name and url to redirect to
-     * @return array{redirect_url: string, ?ccookie_name: string, ?cookie_value: string}
+     * @return array{redirect_url: string, ?cookie_name: string, ?cookie_value: string}
      * @throws Exception
      * @throws EntryNotFoundException 
      */
@@ -95,10 +94,10 @@ class Plugin {
 
         $data['redirect_url'] = $redirect_url;
 
-        $condition = $this->getCondition();
-        if ($condition) {
+        $rule = $this->getActiveRule();
+        if ($rule) {
+            $condition = $rule->condition();
             $data['name'] = $condition->parameter === 'cookie' ? $condition->key : null;
-
             $data['value'] = property_exists($condition, 'value') && $condition->operator == "notequal" ? $condition->value : "true";
         }
 
@@ -106,11 +105,11 @@ class Plugin {
     }
 
     /**
-     * @return ConditionDTO|null
-     * @throws Exception 
+     * @return RuleEntity|null
+     * @throws Exception
      * @throws EntryNotFoundException 
      */
-    private function getCondition() {
+    private function getActiveRule() {
         $condition = null;
 
         if (isset($_GET['condition_id'])) {
@@ -120,14 +119,14 @@ class Plugin {
             }
             return $rule_entity->condition();
         } elseif ($rule = $this->maybe_get_protect_rule()) {
-            return $rule->condition(); 
+            return $rule->condition();
         }
 
         return $condition;
     }
 
     /**
-     * @return void 
+     * @return void
      * @throws TypeError 
      */
     private function make_services(): void {

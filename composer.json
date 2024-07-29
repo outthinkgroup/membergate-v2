@@ -11,6 +11,11 @@
 			"email": "josh@outthinkgroup.com"
 		}
 	],
+	"autoload": {
+		"psr-4": {
+			"Membergate\\": "src/"
+		}
+	},
 	"require": {
 		"myclabs/php-enum": "^1.8",
 		"illuminate/container": "^8.83"
