@@ -11,7 +11,7 @@ use Membergate\Subscriber\Admin;
 use Membergate\Subscriber\AjaxEndpoints;
 use Membergate\Subscriber\Assets;
 use Membergate\Subscriber\OverlayPostType;
-use Membergate\Subscriber\Protect;
+use Membergate\Subscriber\ProtectSubscriber;
 use Membergate\Subscriber\RulePostType;
 use Membergate\Subscriber\SSRSettings;
 use Membergate\Subscriber\Shortcodes;
@@ -24,7 +24,7 @@ class EventManagementConfiguration {
             Assets::class,
             Admin::class,
             AjaxEndpoints::class,
-            Protect::class,
+            ProtectSubscriber::class,
             SSRSettings::class,
             RulePostType::class,
             OverlayPostType::class,

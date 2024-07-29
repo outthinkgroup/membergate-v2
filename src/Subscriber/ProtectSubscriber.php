@@ -8,16 +8,12 @@ if (!defined('ABSPATH')) {
 
 use Membergate\Configuration\ProtectContent;
 use Membergate\EventManagement\SubscriberInterface;
+use Membergate\Settings\RuleEditor;
 use Membergate\Settings\Rules;
 
-class Protect implements SubscriberInterface {
+class ProtectSubscriber implements SubscriberInterface {
 
-    private $rules;
-    private $protect_content;
-
-    public function __construct(Rules $rules, ProtectContent $protect_content) {
-        $this->rules = $rules;
-        $this->protect_content = $protect_content;
+    public function __construct(private Rules $rules, private ProtectContent $protect_content, private RuleEditor $ruleEditor) {
     }
 
     public static function get_subscribed_events(): array {
@@ -53,7 +49,7 @@ class Protect implements SubscriberInterface {
             $overlay_settings = get_post_meta($overlay->ID, "membergate_overlay_settings", true);
 ?>
             <div id="membergate_overlay_root">
-                <div class="membergate-overlay-wrapper" style="<?= $this->rules->rule_editor->as_css_vars($overlay_settings); ?>">
+                <div class="membergate-overlay-wrapper" style="<?= $this->ruleEditor->as_css_vars($overlay_settings); ?>">
                     <?= apply_filters('the_content', $overlay_content); ?>
                 </div>
             </div>
