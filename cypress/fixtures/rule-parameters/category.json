@@ -6,7 +6,7 @@
         {
           "parameter": "category",
           "operator": "is",
-          "value": "5" 
+          "value": "4" 
         }
       ]
     ],
@@ -17,22 +17,22 @@
     },
     "protectMethod": {
       "method": "redirect",
-      "value": "44"
+      "value": "38"
     },
-    "id": 63
+    "id":37 
   },
   "routes": [
     {
-      "url": "http://consciousgrowthpartners.local/2023/04/28/hello-world/",
-      "expectedUrl": "http://consciousgrowthpartners.local/redirect/"
+      "url": "https://membergate.test/2023/04/28/hello-world/",
+      "expectedUrl": "https://membergate.test/redirect/"
     },
     {
-      "url": "http://consciousgrowthpartners.local/privacy-policy/",
-      "expectedUrl": "http://consciousgrowthpartners.local/privacy-policy/"
+      "url": "https://membergate.test/privacy-policy/",
+      "expectedUrl": "https://membergate.test/privacy-policy/"
     },
     {
-      "url": "http://consciousgrowthpartners.local/2023/04/28/hello-world/?is_member",
-      "expectedUrl": "http://consciousgrowthpartners.local/2023/04/28/hello-world/?is_member"
+      "url": "https://membergate.test/2023/04/28/hello-world/?is_member",
+      "expectedUrl": "https://membergate.test/2023/04/28/hello-world/?is_member"
     }
   ]
 }

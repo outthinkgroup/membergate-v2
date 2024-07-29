@@ -4,8 +4,8 @@ describe("Rule Condition works", ()=>{
 		const configpath = "cypress/fixtures/cookie_condition.json"
 		cy.exec(`cypress/scripts/load_protect_rule_settings.sh ${configpath}`)
 
-		const redirectUrl = "http://consciousgrowthpartners.local/redirect/";
-		const protectedUrl = "http://consciousgrowthpartners.local/2023/04/28/hello-world/";
+		const protectedUrl = "https://membergate.test/let-me-in/";
+		const  redirectUrl = "https://membergate.test/sample-page/";
 
 		cy.removeMemberCookie();
 		cy.visit(protectedUrl)

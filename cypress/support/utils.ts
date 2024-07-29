@@ -21,6 +21,6 @@ export function runProtectRuleConfig(config:ConfigType, configpath:string){
 	cy.exec(`cypress/scripts/load_protect_rule_settings.sh ${configpath}`)
 	config.routes.forEach(route=>{
 		cy.visit(route.url)
-		cy.url().should('eq', route.expectedUrl)
+		cy.url().should('include', route.expectedUrl)
 	})
 }

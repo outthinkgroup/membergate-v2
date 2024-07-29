@@ -133,7 +133,7 @@ class Rules {
         return [[(object)[
             'parameter' => "post_type",
             "operator" => 'is',
-            'post',
+            "value"=>'post',
         ]]];
     }
 }

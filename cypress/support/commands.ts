@@ -28,7 +28,7 @@
 //
 export{}
 Cypress.Commands.add("removeMemberCookie", () => {
-  cy.clearCookie("membergate_member");
+  cy.clearCookie("is_member");
 });
 
 Cypress.Commands.add("setMembergateCookie", () => {
@@ -37,7 +37,7 @@ Cypress.Commands.add("setMembergateCookie", () => {
 });
 
 Cypress.Commands.add("adminLogin",()=>{
-	cy.visit("http://consciousgrowthpartners.local/wp-admin")
+	cy.visit("https://membergate.test/wp-admin")
 	cy.get("#user_login").click().click()
 	cy.get("#user_login").type("admin")
 	cy.get("#user_pass").click().type("password")

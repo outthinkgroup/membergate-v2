@@ -39,10 +39,10 @@ class Protect implements SubscriberInterface {
         if (!$this->protect_content->is_protected) return;
 
         if (
-            $this->protect_content->condition_id
-            && $this->uses_overlay_method($this->protect_content->condition_id)
+            $this->protect_content->activated_rule_id
+            && $this->uses_overlay_method($this->protect_content->activated_rule_id)
         ) {
-            $protect_condition_id = $this->protect_content->condition_id;
+            $protect_condition_id = $this->protect_content->activated_rule_id;
             $protect_method = $this->rules->get_protect_method($protect_condition_id);
             $overlay = get_post((int)$protect_method->value);
             if(!$overlay){ 
@@ -66,7 +66,7 @@ class Protect implements SubscriberInterface {
         if (!$this->protect_content->is_protected) return;
 
         $protected_post_id = get_the_ID();
-        $protect_condition_id = $this->protect_content->condition_id;
+        $protect_condition_id = $this->protect_content->activated_rule_id;
         $protect_method = $this->rules->get_protect_method($protect_condition_id);
 
         if ($protect_method->method == 'redirect') {

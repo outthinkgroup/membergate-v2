@@ -8,7 +8,8 @@ if (!is_readable($args[0])) {
 $json = file_get_contents($args[0]);
 $settings = json_decode($json);
 
-$rule_editor = new RuleEditor;
-error_log(print_r($settings, true));
-$rule_editor->save_rules($settings->config);
+global $membergate;
+$rule_editor = $membergate->get_container()->get(RuleEditor::class);
+/**@var RuleEditor $rule_editor */
+debug($rule_editor->save_rules($settings->config));
 

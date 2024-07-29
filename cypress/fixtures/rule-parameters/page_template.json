@@ -6,7 +6,7 @@
         {
           "parameter": "page_template",
           "operator": "is",
-          "value": "tasdfasdf-template.php"
+					"value": "is-member-template"
         }
       ]
     ],
@@ -17,22 +17,22 @@
     },
     "protectMethod": {
       "method": "redirect",
-      "value": "44"
+      "value": "38"
     },
-    "id": 63
+    "id": 37 
   },
   "routes": [
     {
-      "url": "http://consciousgrowthpartners.local/privacy-policy/",
-      "expectedUrl": "http://consciousgrowthpartners.local/redirect/"
+      "url": "https://membergate.test/privacy-policy/",
+      "expectedUrl": "https://membergate.test/redirect/"
     },
     {
-      "url": "http://consciousgrowthpartners.local/sample-page/",
-      "expectedUrl": "http://consciousgrowthpartners.local/sample-page/"
+      "url": "https://membergate.test/sample-page/",
+      "expectedUrl": "https://membergate.test/sample-page/"
     },
     {
-      "url": "http://consciousgrowthpartners.local/privacy-policy/?is_member",
-      "expectedUrl": "http://consciousgrowthpartners.local/privacy-policy/?is_member"
+      "url": "https://membergate.test/privacy-policy/?is_member",
+      "expectedUrl": "https://membergate.test/privacy-policy/?is_member"
     }
   ]
 }

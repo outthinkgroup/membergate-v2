@@ -12,8 +12,8 @@ class ProtectContent {
 
     public $post;
     public bool $is_protected;
-    public $condition_id;
-    private $rules;
+    public $activated_rule_id;
+    private Rules $rules;
     private $ruleEntity;
     public function __construct(Rules $rules, RuleEntity $ruleEntity) {
         $this->rules = $rules;
@@ -26,18 +26,22 @@ class ProtectContent {
         global $post;
         $conditions = $this->rules->get_conditions();
         $passes = true;
-        foreach ($conditions as $condition_id => $condition) {
-            $passes = $this->passes_condition($condition);
+        foreach ($conditions as $rule_id => $condition) {
+            if ($condition->parameter == 'cookie') {
+                $passes = $this->passes_condition($condition, $_COOKIE);
+            } else {
+                $passes = $this->passes_condition($condition, $_GET);
+            }
 
             if ($passes) {
                 continue;
             }
 
-            if ($post && $this->is_post_protected($post, $condition_id)) {
+            if ($post && $this->is_post_protected($post, $rule_id)) {
                 $this->is_protected = true;
-                $this->condition_id = $condition_id;
-                $this->ruleEntity->init($condition_id);
-                do_action('membergate_condition_set', $this->ruleEntity, $condition_id);
+                $this->activated_rule_id = $rule_id;
+                $this->ruleEntity->init($rule_id);
+                do_action('membergate_condition_set', $this->ruleEntity, $rule_id);
                 break;
             }
         }
@@ -46,12 +50,13 @@ class ProtectContent {
 
 
     /**
-     * @param WP_Post $post 
-     * @param mixed $rule_id 
+     * @param WP_Post $post post being checked
+     * @param mixed $rule_id id of the membergate rule post type
      * @return bool 
      */
     public function is_post_protected(\WP_Post $post, $rule_id = null): bool {
         $rule_sets = $this->rules->get_rules($rule_id);
+        debug($rule_sets);
         if ($rule_id) {
             // so the loops will work with both contexts
             $rule_sets = [$rule_sets];
@@ -60,6 +65,7 @@ class ProtectContent {
         $is_protected = false;
         foreach ($rule_sets as $rule_set) {
             // only loop through until we get a true since its a "OR" clause
+
             if ($is_protected) break;
             foreach ($rule_set as $rule_group) {
                 // only loop through until we get a true since its a "OR" clause
@@ -112,6 +118,7 @@ class ProtectContent {
     private function post_type_rule(\WP_Post $post, $rule) {
         if (!is_singular()) return false;
         if ($rule->operator == 'is') {
+            debug($rule);
             return get_post_type($post) == $rule->value;
         }
         if ($rule->operator == 'not') {
@@ -153,20 +160,21 @@ class ProtectContent {
         }
     }
 
-    
+
     /**
      * TODO: may need to have seperate methods for each condition type
      *
      * @param Membergate\Configuration\ConditionDTO $condition 
+     * @param array $mapToCheck
      * @return bool 
      */
-    private function passes_condition(ConditionDTO $condition): bool {
-        if (isset($_COOKIE[$condition->key])) {
+    private function passes_condition(ConditionDTO $condition, array $mapToCheck): bool {
+        if (isset($mapToCheck[$condition->key])) {
             if ($condition->operator == 'notequal') {
-                return $_COOKIE[$condition->key] == $condition->value;
+                return $mapToCheck[$condition->key] == $condition->value;
             }
             if ($condition->operator == 'equals') {
-                return $_COOKIE[$condition->key] != $condition->value;
+                return $mapToCheck[$condition->key] != $condition->value;
             }
             return true;
         }
