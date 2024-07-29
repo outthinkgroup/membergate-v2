@@ -7,7 +7,8 @@ use Membergate\DTO\Rules\ConditionDTO;
 
 class RuleEditor {
 
-    public function __construct(private Vite $vite, public OverlayEditor $overlay_editor) { }
+    public function __construct(private Vite $vite, public OverlayEditor $overlay_editor, private Rules $rules) {
+    }
 
     public function enqueue_assets(): void {
         $this->vite->use("assets/rule-editor.ts");
@@ -15,6 +16,38 @@ class RuleEditor {
         $this->overlay_editor->enqueue_assets();
          */
     }
+
+    public function render_rule_settings(): void {
+        $post_types = $this->load_post_types();
+        $id = (int)isset($_GET['id']) ? $_GET['id'] : "new";
+        $rules = $this->rules->get_rules($id);
+        $condition = $this->rules->get_condition_by_id($id);
+        $protect_method = $this->rules->get_protect_method($id);
+
+        $overlays = $this->get_overlays();
+?>
+        <script>
+            window.membergate = <?= json_encode([
+                                    'url' =>  admin_url('admin-ajax.php'),
+                                    'postId' => $id,
+                                    'title' => get_the_title($id),
+                                    'Rules' => [
+                                        'initialRuleValueOptionStore' => [
+                                            'post_type' =>  $post_types,
+                                        ],
+                                        'ruleList' =>  $rules,
+                                        'ruleCondition' =>  $condition,
+                                        'protectMethod' =>  $protect_method,
+                                    ],
+                                    'OverlayEditor' => [
+                                        'overlays' => $overlays,
+                                    ],
+                                ]); ?>
+        </script>
+<?php
+
+    }
+
 
 
     /*╭─────────────────────────────╮*/

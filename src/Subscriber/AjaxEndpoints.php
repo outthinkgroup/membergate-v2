@@ -8,18 +8,17 @@ if (!defined('ABSPATH')) {
 
 use Membergate\Common\JsonResponse;
 use Membergate\EventManagement\SubscriberInterface;
-use Membergate\Settings\Rules;
+use Membergate\Settings\RuleEditor;
 
 
+/** @package Membergate\Subscriber */
 class AjaxEndpoints implements SubscriberInterface {
     private $container;
 
-    private $rules;
 
     public function __construct(
-        Rules $rules
+        private RuleEditor $rule_editor
     ) {
-        $this->rules = $rules;
         global $membergate;
         $this->container = $membergate->get_container();
     }
@@ -61,11 +60,11 @@ class AjaxEndpoints implements SubscriberInterface {
         switch ($body->membergate_action) {
                 /* RULE EDITOR */
             case "rule_editor__load_param_value":
-                $data = new JsonResponse($this->rules->rule_editor->load_rule_value_options($body));
+                $data = new JsonResponse($this->rule_editor->load_rule_value_options($body));
                 $data->send();
                 die;
             case "rule_editor__save_rules":
-                $data = new JsonResponse($this->rules->rule_editor->save_rules($body));
+                $data = new JsonResponse($this->rule_editor->save_rules($body));
                 $data->send();
                 die;
         }

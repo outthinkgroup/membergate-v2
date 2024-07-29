@@ -7,16 +7,14 @@ if (!defined('ABSPATH')) {
 }
 
 use Membergate\EventManagement\SubscriberInterface;
+use Membergate\Settings\RuleEditor;
 use Membergate\Settings\Rules;
 
 class SSRSettings implements SubscriberInterface {
 
-    private $rules;
-
     public function __construct(
-        Rules $rules
+        private RuleEditor $ruleEditor
     ) {
-        $this->rules = $rules;
     }
 
     public static function get_subscribed_events(): array {
@@ -31,7 +29,7 @@ class SSRSettings implements SubscriberInterface {
      */
     public function render_rule_settings(): void {
         if (get_current_screen()->id == "admin_page_membergate-rules") {
-            $this->rules->render_rule_settings();
+            $this->ruleEditor->render_rule_settings();
         }
     }
     /**
