@@ -2,24 +2,25 @@
 
 namespace Membergate\Configuration;
 
+use Membergate\DTO\Rules\ConditionDTO;
 use Membergate\Settings\Rules;
 
 /** 
  * 
  **/
 class RuleEntity {
-    private $rulesConfig;
+    private Rules $rulesConfig;
+    public bool $isSet;
     private $_rules;
-    private $_condition;
+    private ConditionDTO $_condition;
     private $_protect_method;
-    public $isSet;
 
     public function __construct(Rules $rules) {
         $this->rulesConfig = $rules;
         $this->isSet = false;
     }
 
-    public function init(int $id) {
+    public function init(int $id):void {
         $this->isSet = true;
         $this->_condition = $this->rulesConfig->get_condition_by_id($id);
         $this->_rules = $this->rulesConfig->get_rules($id);

@@ -20,7 +20,7 @@ class Cache {
      * @param  array  $value  value to be stored
      * @param  Time  $expiration time in seconds of how long it will be stored
      * @param  string  $prefix A label to namespace the transient
-     *
+     * @return void
      **/
     public static function set(string $transient, array $value, Time $expiration = null, string $prefix = '') {
         if (is_null($expiration)) {
@@ -64,7 +64,7 @@ class Cache {
      *
      * @param  string  $transient key of the transient
      * @param  string  $prefix A label to namespace the transient
-     *
+     * @return void
      **/
     public static function delete($transient, string $prefix = '') {
         delete_transient("{$prefix}_{$transient}");

@@ -14,19 +14,19 @@ class RulePostType implements SubscriberInterface {
         ];
     }
 
-    public function change_new_post_editor($url, $path) {
+    public function change_new_post_editor(string $url, string $path): string {
         if ($path === 'post-new.php?post_type=membergate_rule') {
             $url = 'admin.php?page=membergate-rules';
         }
         return $url;
     }
 
-    public function change_post_editor($url, $post_id, $context) {
+    public function change_post_editor(string $url, int $post_id): string {
         if (get_post_type($post_id) !== "membergate_rule") return $url;
         return admin_url("admin.php?page=membergate-rules&id=$post_id");
     }
 
-    public function register() {
+    public function register(): void {
         register_post_type(
             'membergate_rule',
             [

@@ -9,16 +9,17 @@ class Rules {
     }
 
     /**
-     * @param null|int $id
+     * @param null|int|string $id
      * @return array<object>
      */
     public function get_rules($id = null): array {
-        if ($id && $id !== "new") {
+        if (!is_null($id) && $id !== "new") {
             return get_post_meta($id, 'rules', true) ?: $this->default_ruleset();
         } elseif ($id) {
             return $this->default_ruleset();
         }
 
+        /** @var \WP_Post[] $rules_post */
         $rules_post = get_posts([
             'post_type' => "membergate_rule",
             'posts_per_page' => -1,
@@ -32,12 +33,13 @@ class Rules {
 
     public function get_condition_by_id(int|string $id): ConditionDTO {
         if ($id && $id !== "new") {
-            return get_post_meta($id, 'condition', true)
-                ? ConditionDTO::fromObject(get_post_meta($id, 'condition', true))
+            return get_post_meta((int)$id, 'condition', true)
+                ? ConditionDTO::fromObject(get_post_meta((int)$id, 'condition', true))
                 : $this->use_default_condition();
         } elseif ($id) {
             return $this->use_default_condition();
         }
+        throw new \UnexpectedValueException("Bad Id was given");
     }
 
     /**
@@ -67,6 +69,7 @@ class Rules {
         } elseif ($id) {
             return $this->default_protect_method();
         }
+        throw new \UnexpectedValueException("Bad Id was given");
     }
 
     public function use_default_condition(): ConditionDTO {
@@ -76,6 +79,7 @@ class Rules {
      * @return object{method:string,value:string}
      */
     public function default_protect_method(): object {
+        /** @var \WP_Post $page */
         list($page) = get_posts([
             'post_type' => "page",
             'posts_per_page' => 1,
@@ -93,7 +97,7 @@ class Rules {
         return [[(object)[
             'parameter' => "post_type",
             "operator" => 'is',
-            "value"=>'post',
+            "value" => 'post',
         ]]];
     }
 }

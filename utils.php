@@ -5,12 +5,12 @@ if (!defined('ABSPATH')) {
 }
 
 if (!function_exists('check_and_return')) {
-    function check_and_return($var) {
+    function check_and_return($var):mixed {
         return isset($var) ? $var : null;
     }
 }
 if (!function_exists('debug')) {
-    function debug($val) {
+    function debug(mixed $val):void {
         error_log(print_r($val, true));
     }
 }

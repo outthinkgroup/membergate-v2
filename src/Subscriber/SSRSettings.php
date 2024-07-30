@@ -28,7 +28,10 @@ class SSRSettings implements SubscriberInterface {
      * @return void
      */
     public function render_rule_settings(): void {
-        if (get_current_screen()->id == "admin_page_membergate-rules") {
+        $screen = get_current_screen();
+        if(is_null($screen)) return;
+
+        if ($screen->id == "admin_page_membergate-rules") {
             $this->ruleEditor->render_rule_settings();
         }
     }

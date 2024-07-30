@@ -14,7 +14,9 @@ use Membergate\Settings\Rules;
 class Assets implements SubscriberInterface {
     public function __construct(public Vite $vite, private RuleEditor $ruleEditor) {}
 
+    /** @return array{'admin_enqueue_scripts':mixed, 'script_loader_tag':mixed, 'wp_enqueue_scripts':mixed, 'init':mixed, 'allowed_block_types':mixed} */
     public static function get_subscribed_events(): array {
+        /** @psalm-suppress InvalidReturnStatement */
         return [
             'admin_enqueue_scripts' => ['enqueue_admin_assets', 1],
             'script_loader_tag' => ['use_esm_modules', 10, 3],

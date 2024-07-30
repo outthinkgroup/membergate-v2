@@ -27,11 +27,11 @@ class ProtectSubscriber implements SubscriberInterface {
     }
 
 
-    public function get_protect_status() {
+    public function get_protect_status():void {
         $this->protect_content->configure_protection();
     }
 
-    public function overlay_protect() {
+    public function overlay_protect():void {
         if (!$this->protect_content->is_protected) return;
 
         if (
@@ -58,7 +58,7 @@ class ProtectSubscriber implements SubscriberInterface {
     }
 
 
-    public function redirect_protect() {
+    public function redirect_protect():void {
         if (!$this->protect_content->is_protected) return;
 
         $protected_post_id = get_the_ID();
@@ -70,10 +70,11 @@ class ProtectSubscriber implements SubscriberInterface {
             // avoid redirect loops
             if (get_the_ID() == $page->ID) return;
 
+            /** @var string $link */
             $link = get_permalink($page);
-            if ($protected_post_id) {
+            if ($protected_post_id != false) {
                 $protected_link = get_permalink($protected_post_id);
-                if ($protected_link) {
+                if ($protected_link != false && $protected_link != "") {
                     $link = add_query_arg('redirect_url', $protected_link, $link);
                     $link = add_query_arg('condition_id', $protect_condition_id, $link);
                 }
@@ -83,7 +84,7 @@ class ProtectSubscriber implements SubscriberInterface {
         }
     }
 
-    private function uses_overlay_method($condition_id) {
+    private function uses_overlay_method(int $condition_id): bool {
         return $this->rules->get_protect_method($condition_id)->method == "overlay";
     }
 }

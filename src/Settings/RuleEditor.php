@@ -78,7 +78,7 @@ class RuleEditor {
     }
     /**
      * @param mixed $req
-     * @return array{message:string,redirect:string}
+     * @return array{message:string,redirect:string|null}
      */
     public function save_rules($req): array {
         $rules = $req->rules;
@@ -96,7 +96,7 @@ class RuleEditor {
             }
         } else {
             $pid = intval($req->id);
-            $res = wp_update_post([
+            wp_update_post([
                 'ID' => $pid,
                 'post_title' => $req->title,
                 'post_status' => 'publish',
@@ -116,7 +116,7 @@ class RuleEditor {
      * @return array<int,string>|array
      */
     public function load_post_types(): array {
-        $ptypes = get_post_types(['public' => true], 'object');
+        $ptypes = get_post_types(['public' => true], 'objects');
         return $this->build_slug_label_map($ptypes, 'name', 'label');
     }
     /**
