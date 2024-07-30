@@ -117,9 +117,9 @@ class Plugin {
             if (!$rule_entity) {
                 return null;
             }
-            return $rule_entity->condition();
+            return $rule_entity;
         } elseif ($rule = $this->maybe_get_protect_rule()) {
-            return $rule->condition();
+            return $rule;
         }
 
         return $condition;

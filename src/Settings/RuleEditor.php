@@ -174,7 +174,7 @@ class RuleEditor {
         return $acc;
     }
 
-    public function as_css_vars(string $settings): string {
+    public function as_css_vars(array|object $settings): string {
         ob_start();
         foreach ((array)$settings as $key => $value) {
             echo "--$key:$value; ";
@@ -195,4 +195,5 @@ class RuleEditor {
             ];
         }, $overlays);
     }
+
 }
