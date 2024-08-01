@@ -11,17 +11,23 @@ use WP_Post;
 class ProtectContent {
 
     public \WP_Post|null $post;
+
     public bool $is_protected;
     public int $activated_rule_id;
+    public string $overlayContent;
+
     private Rules $rules;
     private RuleEntity $ruleEntity;
+
     public function __construct(Rules $rules, RuleEntity $ruleEntity) {
         $this->rules = $rules;
         /** @psalm-suppress PossiblyFalseArgument */
         $this->post = \get_post(get_the_ID());
         $this->is_protected = false;
         $this->ruleEntity = $ruleEntity;
+
         $this->activated_rule_id = -1;
+        $this->overlayContent = "";
     }
 
     public function configure_protection(): bool {
@@ -43,6 +49,9 @@ class ProtectContent {
                 $this->is_protected = true;
                 $this->activated_rule_id = $rule_id;
                 $this->ruleEntity->init($rule_id);
+
+                $this->prepare_protect_method();
+
                 do_action('membergate_condition_set', $this->ruleEntity, $rule_id);
                 break;
             }
@@ -193,5 +202,15 @@ class ProtectContent {
             return true;
         }
         return false;
+    }
+
+
+    private function prepare_protect_method(): void {
+        // logic for method preperation
+        if ($this->ruleEntity->protect_method()->method == 'overlay') {
+            $id = $this->ruleEntity->protect_method()->value;
+            $p = get_post((int)$id);
+            $this->overlayContent = apply_filters('the_content', $p->post_content);
+        }
     }
 }

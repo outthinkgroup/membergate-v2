@@ -9,11 +9,10 @@ if (!defined('ABSPATH')) {
 use Membergate\Configuration\ProtectContent;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\RuleEditor;
-use Membergate\Settings\Rules;
 
 class ProtectSubscriber implements SubscriberInterface {
 
-    public function __construct(private Rules $rules, private ProtectContent $protect_content, private RuleEditor $ruleEditor) {
+    public function __construct(private ProtectContent $protect_content, private RuleEditor $ruleEditor) {
     }
 
     public static function get_subscribed_events(): array {
@@ -22,37 +21,39 @@ class ProtectSubscriber implements SubscriberInterface {
             'wp' => 'get_protect_status',
             'template_redirect' => 'redirect_protect',
             // 'wp_enqueue_scripts' => 'add_overlay_assets',
-            'wp_enqueue_scripts' => 'overlay_protect',
+            'wp_footer' => 'overlay_protect',
         ];
     }
 
 
-    public function get_protect_status():void {
+    public function get_protect_status(): void {
         $this->protect_content->configure_protection();
     }
 
-    public function overlay_protect():void {
+    public function overlay_protect(): void {
         if (!$this->protect_content->is_protected) return;
 
         if (
             $this->protect_content->activated_rule_id
-            && $this->uses_overlay_method($this->protect_content->activated_rule_id)
+            && $this->uses_overlay_method()
         ) {
-            $protect_condition_id = $this->protect_content->activated_rule_id;
-            $protect_method = $this->rules->get_protect_method($protect_condition_id);
+            $overlayContent = $this->protect_content->overlayContent;
+            $protect_method = $this->protect_content->get_active_rule()?->protect_method();
+            if (is_null($protect_method)) {
+                return;
+            }
             $overlay = get_post((int)$protect_method->value);
-            if(!$overlay){ 
-                error_log("Could not find overlay with id ".$protect_method->value);
+            if (!$overlay) {
+                error_log("Could not find overlay with id " . $protect_method->value);
                 return;
             }
             $pid = get_the_ID();
-            if($pid==false)return;
-            $overlay_content = $overlay->post_content;
+            if ($pid == false) return;
             $overlay_settings = get_post_meta($overlay->ID, "membergate_overlay_settings", true);
 ?>
             <div id="membergate_overlay_root">
                 <div class="membergate-overlay-wrapper" style="<?= $this->ruleEditor->as_css_vars($overlay_settings); ?>">
-                    <?= apply_filters('the_content', $overlay_content); ?>
+                    <?= $overlayContent; ?>
                 </div>
             </div>
 <?php
@@ -60,12 +61,12 @@ class ProtectSubscriber implements SubscriberInterface {
     }
 
 
-    public function redirect_protect():void {
+    public function redirect_protect(): void {
         if (!$this->protect_content->is_protected) return;
 
         $protected_post_id = get_the_ID();
         $protect_condition_id = $this->protect_content->activated_rule_id;
-        $protect_method = $this->rules->get_protect_method($protect_condition_id);
+        $protect_method = $this->protect_content->get_active_rule()?->protect_method();
 
         if ($protect_method->method == 'redirect') {
             $page = get_post(intval($protect_method->value));
@@ -86,7 +87,7 @@ class ProtectSubscriber implements SubscriberInterface {
         }
     }
 
-    private function uses_overlay_method(int $condition_id): bool {
-        return $this->rules->get_protect_method($condition_id)->method == "overlay";
+    private function uses_overlay_method(): bool {
+        return $this->protect_content->get_active_rule()?->protect_method()?->method == "overlay";
     }
 }
