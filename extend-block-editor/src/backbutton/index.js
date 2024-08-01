@@ -1,3 +1,4 @@
+import "./index.css";
 import { registerBlockType } from "@wordpress/blocks";
 import { Edit, Save } from "./BackButton.js";
 import metadata from "./block.json";

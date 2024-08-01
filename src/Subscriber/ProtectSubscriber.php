@@ -22,7 +22,7 @@ class ProtectSubscriber implements SubscriberInterface {
             'wp' => 'get_protect_status',
             'template_redirect' => 'redirect_protect',
             // 'wp_enqueue_scripts' => 'add_overlay_assets',
-            'wp_footer' => 'overlay_protect',
+            'wp_enqueue_scripts' => 'overlay_protect',
         ];
     }
 
@@ -45,6 +45,8 @@ class ProtectSubscriber implements SubscriberInterface {
                 error_log("Could not find overlay with id ".$protect_method->value);
                 return;
             }
+            $pid = get_the_ID();
+            if($pid==false)return;
             $overlay_content = $overlay->post_content;
             $overlay_settings = get_post_meta($overlay->ID, "membergate_overlay_settings", true);
 ?>

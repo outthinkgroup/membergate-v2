@@ -66,6 +66,8 @@ class RuleEditor {
                 return ['post' => $this->load_posts()];
             case "page":
                 return ['page' => $this->load_pages()];
+            case "taxonomy":
+                return ['taxonomy' => $this->load_taxonomies()];
             case "category":
                 return ['category' => $this->load_categories()];
             case "tag":
@@ -157,6 +159,42 @@ class RuleEditor {
         }
         return $templates;
     }
+
+    /** @return array<array-key,array{label:string,terms:array<int,string>}>*/
+    public function load_taxonomies(): array {
+        $taxonomies = get_taxonomies(['public' => true]);
+        debug($taxonomies);
+        /** 
+        return array_reduce($taxonomies, function ($acc, $taxonomy) {
+            $terms = get_terms(['taxonomy' => $taxonomy->name, 'hide_empty' => false]);
+            if (is_wp_error($terms)) return $acc;
+            $acc[$taxonomy->name] = [
+                "label" => $taxonomy->label,
+                "terms" => $this->build_slug_label_map(
+                    $terms,
+                    'term_id',
+                    'name',
+                ),
+            ];
+            return $acc;
+        }, []);
+    **/
+        $options = [];
+        foreach ($taxonomies as $tax_slug=>$tax_label) {
+            $terms = get_terms(['taxonomy' => $tax_slug, 'hide_empty' => false]);
+            if (is_wp_error($terms)) continue;
+            $options[$tax_slug] = [
+                "label" => $tax_label,
+                "terms" => (object)$this->build_slug_label_map(
+                    $terms,
+                    "term_id",
+                    "name",
+                ),
+            ];
+        }
+        return $options;
+    }
+
     /**
      * @param array $inputArr
      * @param string $slug
@@ -166,7 +204,7 @@ class RuleEditor {
     private function build_slug_label_map(array $inputArr, string $slug, string $label): array {
         $acc = [];
         if (count($inputArr) == 0) {
-            return [0 => '--Empty--'];
+            return ['0' => '--Empty--'];
         }
         foreach ($inputArr as $item) {
             $acc[$item->{$slug}] = $item->{$label};
@@ -195,5 +233,4 @@ class RuleEditor {
             ];
         }, $overlays);
     }
-
 }

@@ -8,6 +8,7 @@ import { updateCSSVars } from "./utils.js";
 
 function OverlaySettings({ meta, setMeta }) {
   const { membergate_overlay_settings: settings } = meta;
+	console.log({meta})
 
   const setSettings = useCallback(
     (key, value) => {
@@ -21,9 +22,12 @@ function OverlaySettings({ meta, setMeta }) {
     },
     [settings],
   );
+	useEffect(()=>{
+		console.log({settings})
+	}, [settings])
 
   useEffect(() => {
-    updateCSSVars(settings);
+    updateCSSVars(settings||{});
   }, [settings]);
 
   return (
@@ -65,12 +69,17 @@ export default compose(
   withSelect((select) => {
     const postMeta = select("core/editor").getEditedPostAttribute("meta");
     const oldPostMeta = select("core/editor").getCurrentPostAttribute("meta");
+		console.log(select("core/editor").getCurrentPostAttribute("meta"))
     return {
-      meta: { ...oldPostMeta, ...postMeta },
+      meta: { ...oldPostMeta,...postMeta },
     };
   }),
   withDispatch((dispatch) => ({
-    setMeta: (value, field) =>
+    setMeta: (value, field) => 
       dispatch("core/editor").editPost({ meta: { [field]: value } }),
   })),
 )(OverlaySettings);
+
+setTimeout(()=>{
+console.log("hi",wp.data.select("core/editor").getCurrentPostAttribute("meta"))
+},10_000)

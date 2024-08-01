@@ -58,7 +58,7 @@ class ProtectContent {
      */
     public function is_post_protected(\WP_Post $post, $rule_id = null): bool {
         $rule_sets = $this->rules->get_rules($rule_id); //TODO will change when we output specific types
-        
+
         // If we are getting a specific rule set
         if (is_int($rule_id)) {
             // so the loops will work with both contexts
@@ -91,6 +91,9 @@ class ProtectContent {
                         case "tag":
                             $is_protected = $this->term_rule($post, $rule, 'post_tag');
                             break;
+                        case "taxonomy":
+                            $is_protected = $this->taxonomy_rule($post, $rule);
+                            break;
                         case "page_template":
                             $is_protected = $this->page_template_rule($post, $rule);
                             break;
@@ -109,9 +112,9 @@ class ProtectContent {
             return null;
         }
         return $this->ruleEntity;
-    } 
- 
-    private function post_type_rule(\WP_Post $post, object $rule):bool {
+    }
+
+    private function post_type_rule(\WP_Post $post, object $rule): bool {
         if (!is_singular()) return false;
         if ($rule->operator == 'is') {
             return get_post_type($post) == $rule->value;
@@ -120,9 +123,9 @@ class ProtectContent {
             return get_post_type($post) != $rule->value;
         }
         return false;
-    } 
- 
-    private  function post_rule(\WP_Post $post, object $rule):bool {
+    }
+
+    private  function post_rule(\WP_Post $post, object $rule): bool {
         if (!is_singular()) return false;
         if ($rule->operator == 'is') {
             return $post->ID == (int)$rule->value;
@@ -131,9 +134,9 @@ class ProtectContent {
             return $post->ID != (int)$rule->value;
         }
         return false;
-    } 
- 
-    private function term_rule(\WP_Post $post, object $rule, string $tax):bool {
+    }
+
+    private function term_rule(\WP_Post $post, object $rule, string $tax): bool {
         if (!is_single()) return false;
         //TODO: check if post type has this taxonomy
         // if(in_array(get_object_taxonomies())) return false;
@@ -142,6 +145,19 @@ class ProtectContent {
         }
         if ($rule->operator == 'not') {
             return !has_term($rule->value, $tax, $post);
+        }
+        return false;
+    }
+
+    private function taxonomy_rule(\WP_Post $post, object $rule): bool {
+        if (!is_singular() || !str_contains($rule->value, "::")) return false;
+        list($tax, $term_id) = explode("::", $rule->value);
+        // if (!taxonomy_exists($tax) || !is_numeric($term_id)) return false;
+        if ($rule->operator == 'is') {
+            return has_term((int)$term_id, $tax, $post);
+        }
+        if ($rule->operator == 'not') {
+            return !has_term((int)$term_id, $tax, $post);
         }
         return false;
     }
