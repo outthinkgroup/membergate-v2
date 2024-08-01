@@ -3,6 +3,9 @@
 namespace Membergate\Settings;
 
 use Membergate\DTO\Rules\ConditionDTO;
+use Membergate\DTO\Rules\ProtectMethodDTO;
+use Membergate\DTO\Rules\RuleDTO;
+use Membergate\DTO\Rules\RuleSetDTO;
 
 class Rules {
     public function __construct() {
@@ -10,12 +13,22 @@ class Rules {
 
     /**
      * @param null|int|string $id
-     * @return array<object>
+     * @return array<RuleSetDTO[]>|RuleSetDTO[]
      */
     public function get_rules($id = null): array {
-        if (!is_null($id) && $id !== "new") {
-            return get_post_meta($id, 'rules', true) ?: $this->default_ruleset();
-        } elseif ($id) {
+        $get_and_validate = function (int $id): array {
+            $sets = [];
+            $raw_set = get_post_meta($id, 'rules', true) ?: $this->default_ruleset();
+            foreach ($raw_set as $set) {
+                $sets[] = $set instanceof RuleSetDTO ? $set : RuleSetDTO::fromObject($set);
+            }
+            return $sets;
+        };
+
+        if (!is_null($id) && is_numeric($id)) {
+            /** @var RuleSetDTO[] $sets */
+            return $get_and_validate((int)$id);
+        } elseif (!is_null($id)) {
             return $this->default_ruleset();
         }
 
@@ -26,7 +39,7 @@ class Rules {
         ]);
         $rules = [];
         foreach ($rules_post as $p) {
-            $rules[] = get_post_meta($p->ID, 'rules', true);
+            $rules[] = $get_and_validate($p->ID);
         }
         return $rules;
     }
@@ -46,6 +59,7 @@ class Rules {
      * @return array<ConditionDTO>
      */
     public function get_conditions(): array {
+        /** @var \WP_Post[] $rules_post */
         $rules_post = get_posts([
             'post_type' => "membergate_rule",
             'posts_per_page' => -1,
@@ -63,10 +77,12 @@ class Rules {
     /**
      * @param int|string|null $id
      */
-    public function get_protect_method($id): object {
-        if ($id && $id !== "new") {
-            return get_post_meta($id, 'protect_method', true) ?: $this->default_protect_method();
-        } elseif ($id) {
+    public function get_protect_method($id): ProtectMethodDTO {
+        if (!is_null($id) && is_numeric($id)) {
+            $pm = get_post_meta((int)$id, 'protect_method', true) ?: $this->default_protect_method();
+            return $pm instanceof ProtectMethodDTO ? $pm : ProtectMethodDTO::fromObject($pm); // backwards compatibility
+
+        } elseif (!is_null($id)) {
             return $this->default_protect_method();
         }
         throw new \UnexpectedValueException("Bad Id was given");
@@ -76,28 +92,24 @@ class Rules {
         return new ConditionDTO(parameter: "cookie", key: "is_member", operator: "notset");
     }
     /**
-     * @return object{method:string,value:string}
+     * @return ProtectMethodDTO
      */
-    public function default_protect_method(): object {
+    public function default_protect_method(): ProtectMethodDTO {
         /** @var \WP_Post $page */
         list($page) = get_posts([
             'post_type' => "page",
             'posts_per_page' => 1,
             'order' => 'ASC',
         ]);
-        return (object)[
-            'method' => 'redirect',
-            'value' => (string)$page->ID,
-        ];
+        return new ProtectMethodDTO('redirect', $page->ID);
     }
+
     /**
-     * @return array<array<object{parameter:string,key:string,operator:string}>>
+     * @return RuleSetDTO[]
      */
     private function default_ruleset(): array {
-        return [[(object)[
-            'parameter' => "post_type",
-            "operator" => 'is',
-            "value" => 'post',
-        ]]];
+        return [new RuleSetDTO([
+            new RuleDTO()
+        ])];
     }
 }

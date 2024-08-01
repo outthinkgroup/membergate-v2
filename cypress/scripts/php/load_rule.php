@@ -10,6 +10,4 @@ $settings = json_decode($json);
 
 global $membergate;
 $rule_editor = $membergate->get_container()->get(RuleEditor::class);
-/**@var RuleEditor $rule_editor */
-debug($rule_editor->save_rules($settings->config));
 

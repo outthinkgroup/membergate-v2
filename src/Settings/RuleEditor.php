@@ -4,6 +4,8 @@ namespace Membergate\Settings;
 
 use Membergate\Assets\Vite;
 use Membergate\DTO\Rules\ConditionDTO;
+use Membergate\DTO\Rules\ProtectMethodDTO;
+use Membergate\DTO\Rules\RuleSetDTO;
 
 class RuleEditor {
 
@@ -19,10 +21,10 @@ class RuleEditor {
 
     public function render_rule_settings(): void {
         $post_types = $this->load_post_types();
-        $id = (int)isset($_GET['id']) ? $_GET['id'] : "new";
-        $rules = $this->rules->get_rules($id);
+        $id = isset($_GET['id']) ? $_GET['id'] : "new";
+        $rules = $this->prepare_rules($this->rules->get_rules($id));
         $condition = $this->rules->get_condition_by_id($id);
-        $protect_method = $this->rules->get_protect_method($id);
+        $protect_method = $this->prepare_protect_method($this->rules->get_protect_method($id));
 
         $overlays = $this->get_overlays();
 ?>
@@ -105,11 +107,11 @@ class RuleEditor {
             ], true);
         }
 
-        update_post_meta($pid, 'rules', $rules);
+        update_post_meta($pid, 'rules', array_map(fn(array $set) => RuleSetDTO::fromObject($set), $rules));
 
         update_post_meta($pid, 'condition', ConditionDTO::fromObject($condition));
 
-        update_post_meta($pid, 'protect_method', $protect_method);
+        update_post_meta($pid, 'protect_method', ProtectMethodDTO::fromObject($protect_method));
 
         $link = get_edit_post_link($pid, 'if you know, you know, you know?');
         return ["message" => "ok", "redirect" => $link];
@@ -163,22 +165,6 @@ class RuleEditor {
     /** @return array<array-key,array{label:string,terms:array<int,string>}>*/
     public function load_taxonomies(): array {
         $taxonomies = get_taxonomies(['public' => true]);
-        debug($taxonomies);
-        /** 
-        return array_reduce($taxonomies, function ($acc, $taxonomy) {
-            $terms = get_terms(['taxonomy' => $taxonomy->name, 'hide_empty' => false]);
-            if (is_wp_error($terms)) return $acc;
-            $acc[$taxonomy->name] = [
-                "label" => $taxonomy->label,
-                "terms" => $this->build_slug_label_map(
-                    $terms,
-                    'term_id',
-                    'name',
-                ),
-            ];
-            return $acc;
-        }, []);
-    **/
         $options = [];
         foreach ($taxonomies as $tax_slug=>$tax_label) {
             $terms = get_terms(['taxonomy' => $tax_slug, 'hide_empty' => false]);
@@ -232,5 +218,17 @@ class RuleEditor {
                 'link' => get_edit_post_link($overlay->ID),
             ];
         }, $overlays);
+    }
+
+    private function prepare_rules(array $rules): array {
+        return array_map(function (RuleSetDTO $ruleSet) {
+            return $ruleSet->sets;
+        }, $rules);
+    }
+    private function prepare_protect_method(ProtectMethodDTO $method): object {
+        return (object)[
+            'method' => $method->method,
+            'value' => (string)$method->value,
+        ];
     }
 }

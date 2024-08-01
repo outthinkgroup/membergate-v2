@@ -4,6 +4,7 @@ import type {
   ProtectMethodT,
   OverlaySettingsT,
 	OverlayOptionT,
+	RuleValueOptionsStoreT,
 } from "./lib/RuleEditor/ruleTypes";
 import type { FormSettingsType } from "./types";
 

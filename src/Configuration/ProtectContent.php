@@ -82,7 +82,7 @@ class ProtectContent {
             foreach ($rule_set as $rule_group) {
                 // only loop through until we get a true since its a "OR" clause
                 if ($is_protected) break;
-                foreach ($rule_group as $rule) {
+                foreach ($rule_group->sets as $rule) {
                     // must loop through all because its an "AND" clause
                     switch ($rule->parameter) {
                         case 'post_type':
