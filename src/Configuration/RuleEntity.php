@@ -2,8 +2,11 @@
 
 namespace Membergate\Configuration;
 
+use Exception;
 use Membergate\DTO\Rules\ConditionDTO;
+use Membergate\DTO\Rules\ProtectMethodDTO;
 use Membergate\Settings\Rules;
+use Membergate\DTO\Rules\RuleSetDTO;
 
 /** 
  * 
@@ -11,9 +14,12 @@ use Membergate\Settings\Rules;
 class RuleEntity {
     private Rules $rulesConfig;
     public bool $isSet;
-    private $_rules;
+    /** 
+     * @var array<array<RuleSetDTO>>|array<RuleSetDTO> $_rules
+     **/
+    private array $_rules;
     private ConditionDTO $_condition;
-    private $_protect_method;
+    private ProtectMethodDTO $_protect_method;
 
     public function __construct(Rules $rules) {
         $this->rulesConfig = $rules;
@@ -27,6 +33,10 @@ class RuleEntity {
         $this->_protect_method = $this->rulesConfig->get_protect_method($id);
     }
 
+    /**
+     * @return array<RuleSetDTO|array<RuleSetDTO>>
+     * @throws Exception
+     */
     public function rules() {
         if (!$this->isSet) {
             throw new \Exception("Need To Call init first");
@@ -39,6 +49,10 @@ class RuleEntity {
         }
         return $this->_condition;
     }
+    /**
+     * @return ProtectMethodDTO
+     * @throws Exception
+     */
     public function protect_method() {
         if (!$this->isSet) {
             throw new \Exception("Need To Call init first");

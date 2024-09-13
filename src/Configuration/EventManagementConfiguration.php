@@ -17,7 +17,8 @@ use Membergate\Subscriber\SSRSettings;
 use Membergate\Subscriber\Shortcodes;
 
 class EventManagementConfiguration {
-    public function get_subscribers() {
+    /** @return array<class-string>  */
+    public function get_subscribers():array {
         $subscribers = [
             //add Subscriber classes
             Shortcodes::class,
@@ -33,7 +34,7 @@ class EventManagementConfiguration {
         return $subscribers;
     }
 
-    public function make_subscribers(Container $container) {
+    public function make_subscribers(Container $container):void {
         foreach ($this->get_subscribers() as $class) {
             $container->tag($class, 'subscriber');
         }

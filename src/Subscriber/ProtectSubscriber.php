@@ -34,7 +34,7 @@ class ProtectSubscriber implements SubscriberInterface {
         if (!$this->protect_content->is_protected) return;
 
         if (
-            $this->protect_content->activated_rule_id
+            $this->protect_content->activated_rule_id > 0
             && $this->uses_overlay_method()
         ) {
             $overlayContent = $this->protect_content->overlayContent;
@@ -68,7 +68,7 @@ class ProtectSubscriber implements SubscriberInterface {
         $protect_condition_id = $this->protect_content->activated_rule_id;
         $protect_method = $this->protect_content->get_active_rule()?->protect_method();
 
-        if ($protect_method->method == 'redirect') {
+        if ($protect_method?->method == 'redirect') {
             $page = get_post(intval($protect_method->value));
             // avoid redirect loops
             if (get_the_ID() == $page->ID) return;

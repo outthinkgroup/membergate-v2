@@ -91,6 +91,7 @@ class Rules {
     public function use_default_condition(): ConditionDTO {
         return new ConditionDTO(parameter: "cookie", key: "is_member", operator: "notset");
     }
+
     /**
      * @return ProtectMethodDTO
      */

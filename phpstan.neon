@@ -1,0 +1,7 @@
+parameters:
+	scanFiles:
+		- /Users/joshkennedy/.config/php-stubs/wp-stubs.php
+	level: 6
+	paths:
+		- src
+

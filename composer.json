@@ -24,6 +24,7 @@
 		"laravel/pint": "^1.5",
 		"yoast/phpunit-polyfills": "^2.0",
 		"sebkay/wp-unit-test-stubs": "^1.0",
-		"php-mock/php-mock-phpunit": "^2.10"
+		"php-mock/php-mock-phpunit": "^2.10",
+		"phpstan/phpstan": "^1.12"
 	}
 }

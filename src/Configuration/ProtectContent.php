@@ -79,38 +79,42 @@ class ProtectContent {
         foreach ($rule_sets as $rule_set) {
             // only loop through until we get a true since its a "OR" clause
             if ($is_protected) break;
-            foreach ($rule_set as $rule_group) {
+            foreach ((array)$rule_set as $rule_group) {
                 // only loop through until we get a true since its a "OR" clause
                 if ($is_protected) break;
+
+                /**@var int[] $is_protected_set */
+                $is_protected_set = []; 
                 foreach ($rule_group->sets as $rule) {
                     // must loop through all because its an "AND" clause
                     switch ($rule->parameter) {
                         case 'post_type':
-                            $is_protected = $this->post_type_rule($post, $rule);
+                            $is_protected_set[] = (int)$this->post_type_rule($post, $rule);
                             break;
                         case "post":
-                            $is_protected = $this->post_rule($post, $rule);
+                            $is_protected_set[] = (int)$this->post_rule($post, $rule);
                             break;
                         case "page":
-                            $is_protected = $this->post_rule($post, $rule);
+                            $is_protected_set[] = (int)$this->post_rule($post, $rule);
                             break;
                         case "category":
-                            $is_protected = $this->term_rule($post, $rule, 'category');
+                            $is_protected_set[] = (int)$this->term_rule($post, $rule, 'category');
                             break;
                         case "tag":
-                            $is_protected = $this->term_rule($post, $rule, 'post_tag');
+                            $is_protected_set[] = (int)$this->term_rule($post, $rule, 'post_tag');
                             break;
                         case "taxonomy":
-                            $is_protected = $this->taxonomy_rule($post, $rule);
+                            $is_protected_set[] = (int)$this->taxonomy_rule($post, $rule);
                             break;
                         case "page_template":
-                            $is_protected = $this->page_template_rule($post, $rule);
+                            $is_protected_set[] = (int)$this->page_template_rule($post, $rule);
                             break;
                         default:
-                            $is_protected = false;
+                            $is_protected_set[] = 0;
                             break;
                     }
                 }
+                $is_protected = array_sum($is_protected_set) == count($is_protected_set);
             }
         }
         return $is_protected;
@@ -126,9 +130,11 @@ class ProtectContent {
     private function post_type_rule(\WP_Post $post, object $rule): bool {
         if (!is_singular()) return false;
         if ($rule->operator == 'is') {
+            do_action("qm/debug", "post id: {$post->ID} is {$rule->value}");
             return get_post_type($post) == $rule->value;
         }
         if ($rule->operator == 'not') {
+            do_action("qm/debug", "post id: {$post->ID} is not {$rule->value}");
             return get_post_type($post) != $rule->value;
         }
         return false;
@@ -162,10 +168,13 @@ class ProtectContent {
         if (!is_singular() || !str_contains($rule->value, "::")) return false;
         list($tax, $term_id) = explode("::", $rule->value);
         // if (!taxonomy_exists($tax) || !is_numeric($term_id)) return false;
+                    $checking  = has_term((int)$term_id, $tax, $post) ? 'has' : 'does not have';
         if ($rule->operator == 'is') {
+            do_action("qm/debug", "post id: {$post->ID} {$checking} term {$term_id } in taxonomy {$tax}");
             return has_term((int)$term_id, $tax, $post);
         }
         if ($rule->operator == 'not') {
+            do_action("qm/debug", "post id: {$post->ID} does not have term {$term_id } in taxonomy {$tax}");
             return !has_term((int)$term_id, $tax, $post);
         }
         return false;
@@ -188,7 +197,7 @@ class ProtectContent {
      * TODO: may need to have seperate methods for each condition type
      *
      * @param ConditionDTO $condition 
-     * @param array $mapToCheck
+     * @param array<string, string> $mapToCheck
      * @return bool 
      */
     private function passes_condition(ConditionDTO $condition, array $mapToCheck): bool {
