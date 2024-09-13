@@ -84,7 +84,10 @@
 	</header>
 
 	<GrayBox>
-		<h2 class="text-slate-600 text-sm font-bold">Protect</h2>
+		<header>
+			<h2 class="text-slate-600 text-sm font-bold">Protect</h2>
+			<p class="text-slate-900 text-xs tracking-wide">Choose the which content will be <i>protected</i> by this rule.</p>
+		</header>
 		{#each ruleset as ruleGroup, groupIndex}
 			<div class="rule-group bg-white border p-3 flex flex-col gap-3">
 				{#each ruleGroup as rule, ruleIndex}
@@ -119,7 +122,10 @@
 	</GrayBox>
 
 	<GrayBox>
-		<h2 class="text-slate-600 text-sm font-bold">When</h2>
+		<header>
+			<h2 class="text-slate-500 text-sm font-bold mb-1">When</h2>
+			<p class="text-slate-900 text-xs tracking-wide">Select the condition <i>when</i> the content is protected.</p>
+		</header>
 		<div class="rule-group bg-white border p-3 flex flex-col gap-3">
 			<div class="flex h-12">
 				<Condition bind:condition />
@@ -128,7 +134,10 @@
 	</GrayBox>
 
 	<GrayBox>
-		<h2 class="text-slate-600 text-sm font-bold">By</h2>
+		<header>
+			<h2 class="text-slate-500 text-sm font-bold mb-1">By</h2>
+			<p class="text-slate-900 text-xs tracking-wide">Choose the method the content is protected <i>by</i>.</p>
+		</header>
 		<div class="rule-group bg-white border p-3 flex flex-col gap-3">
 			<div class="flex h-12">
 				<ProtectMethod bind:protectMethod />
