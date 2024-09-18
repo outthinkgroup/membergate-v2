@@ -13,6 +13,8 @@ use Membergate\Assets\Vite;
 use Membergate\Configuration\EventManagementConfiguration;
 use Membergate\Configuration\ProtectContent;
 use Membergate\Configuration\RuleEntity;
+use Membergate\DTO\Rules\JobInfo;
+use Membergate\DTO\Rules\UserInfoDTO;
 use Membergate\EventManagement\EventManager;
 use Membergate\Settings\OverlayEditor;
 use Membergate\Settings\Rules;
@@ -28,10 +30,11 @@ class Plugin {
 
     public const VERSION = '0.0.1';
 
-    private $container;
+    private Container $container;
 
-    private $loaded;
-    private $file;
+    private bool $loaded;
+    private string $file;
+
     public function __construct(string $file) {
         $this->container = new Container();
         $this->file = $file;
@@ -81,15 +84,16 @@ class Plugin {
 
     /**
      * Used By Extension Plugins to get the cookie_name and url to redirect to
-     * @return array{redirect_url: string, ?cookie_name: string, ?cookie_value: string}
+     * @return array{redirect_url: string, cookie_name?: string, cookie_value?: string}
      * @throws Exception
      * @throws EntryNotFoundException 
-     */
+     **/
     public function extension_protect_data(): array {
         $data = [];
         global $wp;
 
         $current_url = home_url(add_query_arg([], $wp->request));
+        /** @var string $redirect_url**/
         $redirect_url = $_GET['redirect_url'] ?? $current_url;
 
         $data['redirect_url'] = $redirect_url;
@@ -183,5 +187,7 @@ class Plugin {
         }
 
         $this->loaded = true;
+
+        $user = new UserInfoDTO(name:"Josh", job:new JobInfo(title:"Dev", company:"Out:think"), age:30);
     }
 }

@@ -29,12 +29,14 @@ class Assets implements SubscriberInterface {
     public function enqueue_admin_assets(string $hook): void {
         //check get_current_screen
         if ($hook == 'toplevel_page_membergate-settings') {
-            $this->vite->use('assets/main.ts');
+            $this->vite->use('assets/dashboard.ts');
         }
 
         if ($hook == 'admin_page_membergate-rules') {
             $this->ruleEditor->enqueue_assets();
         }
+
+
 
         if (get_current_screen()->id == "membergate_overlay") {
             $asset_file = include($this->vite->plugin_path . '/extend-block-editor/build/overlaySettings.asset.php');

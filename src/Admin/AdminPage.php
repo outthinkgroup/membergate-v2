@@ -62,6 +62,53 @@ class AdminPage {
         $this->render_template('admin_settings');
     }
 
+    protected function ssrData():string{
+        return json_encode([
+            'urls'=>[
+                'newRule'=>admin_url('admin.php?page=membergate-rules'),
+                'newOverlay'=>admin_url("post-new.php?post_type=membergate_overlay"),
+            ],
+            'overlays'=>$this->listOverlays(),
+            'rules'=>$this->listRules(),
+        ]);
+    }
+
+    /** 
+     * @return array<array{title:string, link:string, ID:int, protectType:string, methodType:string}>  
+     **/
+    protected function listRules():array{
+        $rules = get_posts([
+            'post_type'=>'membergate_rule',
+            'posts_per_page'=> 6,
+        ]);
+        $rules = array_map(function(\WP_Post $rule){
+            return [
+                'title'=>$rule->post_title,
+                'link'=> get_permalink($rule->ID),
+                'ID'=>$rule->ID,
+                'protectType'=>"Has Cookie",
+                'methodType'=>"Overlay",
+            ];
+        },$rules);
+        return $rules;
+    }
+
+    /** @return array<array{title:string, link:string, ID:int}>  */
+    protected function listOverlays(){
+        $overlays = get_posts([
+            'post_type'=>'membergate_overlay',
+            'posts_per_page'=> 6,
+        ]);
+        $overlays = array_map(function(\WP_Post $overlay){
+            return [
+                'title'=>$overlay->post_title,
+                'link'=> get_permalink($overlay->ID),
+                'ID'=>$overlay->ID,
+            ];
+        },$overlays);
+        return $overlays;
+    }
+
     public function render_template(string $template): void {
         $template_path = $this->template_path . '/' . $template . '.php';
         if (! is_readable($template_path)) {

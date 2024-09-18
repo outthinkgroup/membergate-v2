@@ -9,12 +9,13 @@ use Membergate\Admin\AdminPage;
 use Membergate\EventManagement\SubscriberInterface;
 
 class Admin implements SubscriberInterface {
-    private $plugin_path;
+    private string $plugin_path;
 
     public function __construct(string $plugin_path) {
         $this->plugin_path = $plugin_path;
     }
 
+    /** @return array<string, string|mixed> **/
     public static function get_subscribed_events(): array {
         return [
             'admin_menu' => 'register_admin_pages',
@@ -35,12 +36,15 @@ class Admin implements SubscriberInterface {
             [$admin_page, 'render_page'],
             $admin_page->get_icon_url(),
         );
+
+        // Adds link for post type
         add_submenu_page($admin_page->get_slug(), "Membergate Rules", "Rules", "manage_options", "edit.php?post_type=membergate_rule");
 
+        // Rule Single
         add_submenu_page(null, 'Rules', 'Rules', 'manage_options', 'membergate-rules', function(){
             include $this->plugin_path . "/templates/rules.php";
         });
-
+        // Adds link for post type
         add_submenu_page($admin_page->get_slug(), 'Overlays ','Overlays', 'manage_options', 'edit.php?post_type=membergate_overlay');
     }
     /**
