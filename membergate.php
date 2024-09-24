@@ -16,6 +16,7 @@ if (!defined('ABSPATH')) {
  */
 
 require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/bootstrap.php';
 require_once 'utils.php';
 
 global $membergate;
