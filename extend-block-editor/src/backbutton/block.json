@@ -1,5 +1,6 @@
 {
 	"apiVersion":3,
+	"version":"2",
 	"name": "membergate/backbutton",
 	"title": "Membergate Back Button",
 	"description": "Back button form Membergate Overlay",

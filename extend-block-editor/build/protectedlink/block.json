@@ -1,17 +1,17 @@
 {
   "apiVersion": 3,
-  "version": "2",
-  "name": "membergate/backbutton",
-  "title": "Membergate Back Button",
-  "description": "Back button form Membergate Overlay",
+  "name": "membergate/protectedlink",
+  "title": "Protected Linked Content",
+  "description": "Protect Download or other links but allow the user to still view the landing page.",
   "category": "widgets",
   "icon": "admin-comments",
   "keywords": [
     "membergate",
-    "back",
-    "button"
+    "link",
+    "protect"
   ],
   "editorScript": "file:./index.js",
+  "render": "file:./render.php",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",
   "viewScript": "file:./view.js"

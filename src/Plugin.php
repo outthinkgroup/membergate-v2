@@ -12,9 +12,8 @@ use Illuminate\Container\EntryNotFoundException;
 use Membergate\Assets\Vite;
 use Membergate\Configuration\EventManagementConfiguration;
 use Membergate\Configuration\ProtectContent;
+use Membergate\Configuration\ProtectionModifier;
 use Membergate\Configuration\RuleEntity;
-use Membergate\DTO\Rules\JobInfo;
-use Membergate\DTO\Rules\UserInfoDTO;
 use Membergate\EventManagement\EventManager;
 use Membergate\Settings\OverlayEditor;
 use Membergate\Settings\Rules;
@@ -65,7 +64,7 @@ class Plugin {
     }
 
     /**
-     * @param int $id 
+     * @param int $id
      * @return RuleEntity | null
      * @throws Exception
      * @throws EntryNotFoundException 
@@ -148,7 +147,7 @@ class Plugin {
         });
 
         $this->container->singleton(ProtectContent::class, function (Container $container) {
-            return new ProtectContent($container->get(Rules::class), $container->get(RuleEntity::class));
+            return new ProtectContent($container->get(Rules::class), $container->get(RuleEntity::class), $container->get(ProtectionModifier::class));
         });
 
         //subscribers
@@ -187,7 +186,7 @@ class Plugin {
         }
 
         $this->loaded = true;
+        
 
-        $user = new UserInfoDTO(name:"Josh", job:new JobInfo(title:"Dev", company:"Out:think"), age:30);
     }
 }

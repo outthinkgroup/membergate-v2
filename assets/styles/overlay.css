@@ -1,8 +1,8 @@
-body:has(#membergate_overlay_root){
+body:has(#membergate_overlay_root[data-state="active"]){
 	overflow:hidden!important;
 }
 
-#membergate_overlay_root{
+#membergate_overlay_root[data-state="active"]{
 	position:fixed;
 	bottom:0;
 	left:0;
@@ -16,7 +16,7 @@ body:has(#membergate_overlay_root){
 	place-content:center;
 }
 
-.membergate-overlay-wrapper{
+[data-state="active"] .membergate-overlay-wrapper{
 	width:100%;
 
 	background:transparent;

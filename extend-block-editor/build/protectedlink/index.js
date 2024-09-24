@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./extend-block-editor/src/backbutton/index.css":
-/*!******************************************************!*\
-  !*** ./extend-block-editor/src/backbutton/index.css ***!
-  \******************************************************/
+/***/ "./extend-block-editor/src/protectedlink/index.css":
+/*!*********************************************************!*\
+  !*** ./extend-block-editor/src/protectedlink/index.css ***!
+  \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -44,10 +44,10 @@ module.exports = window["wp"]["element"];
 
 /***/ }),
 
-/***/ "./extend-block-editor/src/backbutton/BackButton.js":
-/*!**********************************************************!*\
-  !*** ./extend-block-editor/src/backbutton/BackButton.js ***!
-  \**********************************************************/
+/***/ "./extend-block-editor/src/protectedlink/ProtectedLink.js":
+/*!****************************************************************!*\
+  !*** ./extend-block-editor/src/protectedlink/ProtectedLink.js ***!
+  \****************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -59,58 +59,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 
 
-
-
-
-function _Edit({
-  attributes,
-  setAttributes,
-  backgroundColor,
-  textColor,
-  style
-}) {
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    console.log({
-      attributes
-    });
-  }, [attributes]);
-  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
-    ...style,
-    "--button-bg-color": backgroundColor.slug ? `var(--wp--preset--color--${backgroundColor.slug})` : attributes.background,
-    "--button-text-color": textColor.slug ? `var(--wp--preset--color--${textColor.slug})` : attributes.color
-  });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+const BUTTONS_TEMPLATE = [["core/buttons", {}, [["core/button", {
+  text: "Download"
+}]]]];
+function Edit() {
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
-    tagName: "span",
-    className: "",
-    onChange: content => setAttributes({
-      buttonText: content
-    }),
-    value: attributes.buttonText
-  })));
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks, {
+    template: BUTTONS_TEMPLATE,
+    templateLock: "all"
+  }));
 }
-const Edit = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.withColors)({
-  backgroundColor: "button-bg-color",
-  textColor: "button-text-color"
-})(_Edit);
-function Save({
-  attributes
-}) {
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, attributes.buttonText));
+function Save() {
+  const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save();
+  const {
+    children,
+    ...innerBlocksProps
+  } = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useInnerBlocksProps.save(blockProps);
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    ...innerBlocksProps
+  }, children);
 }
 
 /***/ }),
 
-/***/ "./extend-block-editor/src/backbutton/block.json":
-/*!*******************************************************!*\
-  !*** ./extend-block-editor/src/backbutton/block.json ***!
-  \*******************************************************/
+/***/ "./extend-block-editor/src/protectedlink/block.json":
+/*!**********************************************************!*\
+  !*** ./extend-block-editor/src/protectedlink/block.json ***!
+  \**********************************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"apiVersion":3,"version":"2","name":"membergate/backbutton","title":"Membergate Back Button","description":"Back button form Membergate Overlay","category":"widgets","icon":"admin-comments","keywords":["membergate","back","button"],"editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
+module.exports = JSON.parse('{"apiVersion":3,"name":"membergate/protectedlink","title":"Protected Linked Content","description":"Protect Download or other links but allow the user to still view the landing page.","category":"widgets","icon":"admin-comments","keywords":["membergate","link","protect"],"editorScript":"file:./index.js","render":"file:./render.php","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js"}');
 
 /***/ })
 
@@ -173,14 +153,14 @@ module.exports = JSON.parse('{"apiVersion":3,"version":"2","name":"membergate/ba
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!*****************************************************!*\
-  !*** ./extend-block-editor/src/backbutton/index.js ***!
-  \*****************************************************/
+/*!********************************************************!*\
+  !*** ./extend-block-editor/src/protectedlink/index.js ***!
+  \********************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.css */ "./extend-block-editor/src/backbutton/index.css");
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.css */ "./extend-block-editor/src/protectedlink/index.css");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _BackButton_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BackButton.js */ "./extend-block-editor/src/backbutton/BackButton.js");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./extend-block-editor/src/backbutton/block.json");
+/* harmony import */ var _ProtectedLink_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ProtectedLink.js */ "./extend-block-editor/src/protectedlink/ProtectedLink.js");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./extend-block-editor/src/protectedlink/block.json");
 
 
 
@@ -192,31 +172,21 @@ __webpack_require__.r(__webpack_exports__);
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_3__.name, {
-  attributes: {
-    buttonText: {
-      type: "string",
-      default: "&larr; Back"
-    },
-    style: {
-      default: {
-        color: {
-          background: "#ffffff",
-          text: "#000000"
-        }
-      }
-    }
-  },
-  supports: {
-    color: {
-      text: true,
-      gradients: true,
-      background: true
-    }
-  },
   category: _block_json__WEBPACK_IMPORTED_MODULE_3__.category,
   title: _block_json__WEBPACK_IMPORTED_MODULE_3__.title,
-  edit: _BackButton_js__WEBPACK_IMPORTED_MODULE_2__.Edit,
-  save: _BackButton_js__WEBPACK_IMPORTED_MODULE_2__.Save
+  edit: _ProtectedLink_js__WEBPACK_IMPORTED_MODULE_2__.Edit,
+  save: _ProtectedLink_js__WEBPACK_IMPORTED_MODULE_2__.Save
+});
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockVariation)("core/buttons", {
+  name: "membergate/protectedbutton",
+  title: "Membergate Protected Link",
+  attributes: {
+    className: "is-membergate-protect-link"
+  },
+  innerBlocks: [["core/button", {
+    text: "Download"
+  }]],
+  isActive: (blockAttributes, variationAttributes) => blockAttributes.className === variationAttributes.className
 });
 })();
 

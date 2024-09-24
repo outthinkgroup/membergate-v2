@@ -1,0 +1,16 @@
+{
+	"apiVersion":3,
+	"name": "membergate/protectedlink",
+	"title": "Protected Linked Content",
+	"description": "Protect Download or other links but allow the user to still view the landing page.",
+	"category": "widgets",
+	"icon": "admin-comments",
+	"keywords": [
+		"membergate","link","protect"
+	],
+	"editorScript": "file:./index.js",
+  "render": "file:./render.php",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

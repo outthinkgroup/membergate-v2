@@ -48,6 +48,7 @@ class Assets implements SubscriberInterface {
 
     public function register_blocks(): void{
         register_block_type_from_metadata($this->vite->plugin_path . "/extend-block-editor/build/backbutton");
+        register_block_type_from_metadata($this->vite->plugin_path . "/extend-block-editor/build/protectedlink");
     }
 
     public function overlay_only_blocks(bool|array $allowed_blocks): array|bool {

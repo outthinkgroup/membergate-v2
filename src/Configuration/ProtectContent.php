@@ -10,24 +10,37 @@ use WP_Post;
 // add as a singleton
 class ProtectContent {
 
+    const DEFAULT_PROTECT_EVENT = "PAGE_LOAD";
+
     public \WP_Post|null $post;
 
     public bool $is_protected;
     public int $activated_rule_id;
     public string $overlayContent;
+    public string $redirectUrl;
+
+    /**
+     * @var string $protectEvent
+     * Could be when to activate the protection in place
+     * or an condition that is needed that should be in place
+     **/
+    public string $protectEvent;
 
     private Rules $rules;
     private RuleEntity $ruleEntity;
 
-    public function __construct(Rules $rules, RuleEntity $ruleEntity) {
+
+    public function __construct(Rules $rules, RuleEntity $ruleEntity, public ProtectionModifier $protectionModifier) {
         $this->rules = $rules;
-        /** @psalm-suppress PossiblyFalseArgument */
+
         $this->post = \get_post(get_the_ID());
         $this->is_protected = false;
         $this->ruleEntity = $ruleEntity;
 
         $this->activated_rule_id = -1;
         $this->overlayContent = "";
+        $this->redirectUrl = "";
+        $this->protectEvent = self::DEFAULT_PROTECT_EVENT;
     }
 
     public function configure_protection(): bool {
@@ -52,6 +65,7 @@ class ProtectContent {
 
                 $this->prepare_protect_method();
 
+                //used in extensions
                 do_action('membergate_condition_set', $this->ruleEntity, $rule_id);
                 break;
             }
@@ -221,5 +235,21 @@ class ProtectContent {
             $p = get_post((int)$id);
             $this->overlayContent = apply_filters('the_content', $p->post_content);
         }
+
+        if( $this->ruleEntity->protect_method()->method == 'redirect') {
+            $id = $this->ruleEntity->protect_method()->value;
+            $this->redirectUrl = get_the_permalink((int)$id);
+        }
+
+        // this will be used in the subscriber to add additional information to the page
+        // that will be picked up with js to protect the content in some other way than 
+        // configure in the rule.
+        if($this->protectionModifier->hasMods()){
+            $this->protectEvent = $this->protectionModifier->protectEvent(); 
+        }
+    }
+
+    public function hasMods():bool {
+        return $this->protectEvent != self::DEFAULT_PROTECT_EVENT;
     }
 }
