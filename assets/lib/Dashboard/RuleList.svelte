@@ -41,7 +41,8 @@
 					>
 						Edit
 					</a>
-					<button class="text-red-600 hover:text-red-900 hover:underline" on:click={()=>DeleteEntity("membergate_rule", rule.ID)}>
+					<button class="text-red-600 hover:text-red-900 hover:underline" on:click={()=>DeleteEntity("membergate_rule",
+					parseInt(rule.ID))}>
 						Delete
 					</button>
 				</div>
