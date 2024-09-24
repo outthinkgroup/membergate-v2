@@ -3,7 +3,7 @@
 	import Condition from "./Condition.svelte";
 	import { jsonAjax } from "../../utils/api";
 	import SaveButton from "../elements/SaveButton.svelte";
-	import GrayBox from "../elements/GrayBox.svelte";
+	import { GrayBox, GrayBoxHeader } from "../elements/GrayBox";
 	import type { RuleT } from "./ruleTypes";
 	import ProtectMethod from "./ProtectMethod.svelte";
 	import DevTool from "../DevTool/DevTool.svelte";
@@ -47,7 +47,7 @@
 			condition,
 			title,
 			protectMethod,
-			overlaySettings, 
+			overlaySettings,
 			//@ts-ignore
 			// TODO uncomment when we use the custom overlay editor
 			//overlayContent:blocks ? window.wp.blocks.serialize(blocks) : window.membergate.OverlayEditor.blocks,
@@ -84,10 +84,12 @@
 	</header>
 
 	<GrayBox>
-		<header>
-			<h2 class="text-slate-600 text-sm font-bold">Protect</h2>
-			<p class="text-slate-900 text-xs tracking-wide">Choose the which content will be <i>protected</i> by this rule.</p>
-		</header>
+		<GrayBoxHeader>
+			<span slot="header">Protect</span>
+			<span slot="description"
+				>Choose the which content will be <i>protected</i> by this rule.</span
+			>
+		</GrayBoxHeader>
 		{#each ruleset as ruleGroup, groupIndex}
 			<div class="rule-group bg-white border p-3 flex flex-col gap-3">
 				{#each ruleGroup as rule, ruleIndex}
@@ -122,10 +124,12 @@
 	</GrayBox>
 
 	<GrayBox>
-		<header>
-			<h2 class="text-slate-500 text-sm font-bold mb-1">When</h2>
-			<p class="text-slate-900 text-xs tracking-wide">Select the condition <i>when</i> the content is protected.</p>
-		</header>
+		<GrayBoxHeader>
+			<span slot="header">When</span>
+			<span slot="description">
+				Select the condition <i>when</i> the content is protected.
+			</span>
+		</GrayBoxHeader>
 		<div class="rule-group bg-white border p-3 flex flex-col gap-3">
 			<div class="flex h-12">
 				<Condition bind:condition />
@@ -134,10 +138,12 @@
 	</GrayBox>
 
 	<GrayBox>
-		<header>
-			<h2 class="text-slate-500 text-sm font-bold mb-1">By</h2>
-			<p class="text-slate-900 text-xs tracking-wide">Choose the method the content is protected <i>by</i>.</p>
-		</header>
+		<GrayBoxHeader>
+			<span slot="header">By</span>
+			<span slot="description">
+				Choose the method the content is protected <i>by</i>.
+			</span>
+		</GrayBoxHeader>
 		<div class="rule-group bg-white border p-3 flex flex-col gap-3">
 			<div class="flex h-12">
 				<ProtectMethod bind:protectMethod />
