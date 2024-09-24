@@ -21,12 +21,12 @@ class Vite {
         $this->manifest = $this->in_dev ? [] : $this->get_manifest();
     }
 
-    public function use(string $script = "assets/main.ts"): void {
+    public function use(string $script = "assets/main.ts", $deps=[]): void {
         $this->preload_imports($script);
         if (!$this->in_dev) {
             $this->enqueue_css($script);
         }
-        $this->enqueue_js($script);
+        $this->enqueue_js($script, $deps);
     }
 
     private function preload_imports(string $script): void {
@@ -57,9 +57,9 @@ class Vite {
         }
     }
 
-    private function enqueue_js(string $script): void {
+    private function enqueue_js(string $script, $deps): void {
         $handle = sprintf("module/%s/%s", $this->module_name, $script);
-        wp_register_script($handle, $this->asset_url($script), false, $this->in_dev);
+        wp_register_script($handle, $this->asset_url($script), $deps,  $this->in_dev);
         wp_enqueue_script($handle);
     }
 

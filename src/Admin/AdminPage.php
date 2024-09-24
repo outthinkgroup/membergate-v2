@@ -84,7 +84,7 @@ class AdminPage {
         $rules = array_map(function(\WP_Post $rule){
             return [
                 'title'=>$rule->post_title,
-                'link'=> get_permalink($rule->ID),
+                'link'=> get_edit_post_link($rule->ID),
                 'ID'=>$rule->ID,
                 'protectType'=>"Has Cookie",
                 'methodType'=>"Overlay",
@@ -102,7 +102,7 @@ class AdminPage {
         $overlays = array_map(function(\WP_Post $overlay){
             return [
                 'title'=>$overlay->post_title,
-                'link'=> get_permalink($overlay->ID),
+                'link'=> get_edit_post_link($overlay->ID),
                 'ID'=>$overlay->ID,
             ];
         },$overlays);
