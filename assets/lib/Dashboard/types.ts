@@ -1,6 +1,6 @@
 export type ListItemT = {
 	title:string;
-	ID:string;
+	ID:number;
 	link:string;
 }
 

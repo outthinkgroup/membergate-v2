@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) {
 }
 
 class AdminPage {
+    const showHelpFlagMetaKey = 'membergate_shouldShowHelp';
     private string $template_path;
 
     private string $plugin_path;
@@ -62,50 +63,51 @@ class AdminPage {
         $this->render_template('admin_settings');
     }
 
-    protected function ssrData():string{
+    protected function ssrData(): string {
         return json_encode([
-            'urls'=>[
-                'newRule'=>admin_url('admin.php?page=membergate-rules'),
-                'newOverlay'=>admin_url("post-new.php?post_type=membergate_overlay"),
+            'urls' => [
+                'newRule' => admin_url('admin.php?page=membergate-rules'),
+                'newOverlay' => admin_url("post-new.php?post_type=membergate_overlay"),
             ],
-            'overlays'=>$this->listOverlays(),
-            'rules'=>$this->listRules(),
+            'overlays' => $this->listOverlays(),
+            'rules' => $this->listRules(),
+            'showHelp' => $this->shouldShowHelp(),
         ]);
     }
 
     /** 
      * @return array<array{title:string, link:string, ID:int, protectType:string, methodType:string}>  
      **/
-    protected function listRules():array{
+    protected function listRules(): array {
         $rules = get_posts([
-            'post_type'=>'membergate_rule',
-            'posts_per_page'=> 6,
+            'post_type' => 'membergate_rule',
+            'posts_per_page' => 6,
         ]);
-        $rules = array_map(function(\WP_Post $rule){
+        $rules = array_map(function (\WP_Post $rule) {
             return [
-                'title'=>$rule->post_title,
-                'link'=> get_edit_post_link($rule->ID),
-                'ID'=>$rule->ID,
-                'protectType'=>"Has Cookie",
-                'methodType'=>"Overlay",
+                'title' => $rule->post_title,
+                'link' => get_edit_post_link($rule->ID),
+                'ID' => $rule->ID,
+                'protectType' => "Has Cookie",
+                'methodType' => "Overlay",
             ];
-        },$rules);
+        }, $rules);
         return $rules;
     }
 
     /** @return array<array{title:string, link:string, ID:int}>  */
-    protected function listOverlays(){
+    protected function listOverlays() {
         $overlays = get_posts([
-            'post_type'=>'membergate_overlay',
-            'posts_per_page'=> 6,
+            'post_type' => 'membergate_overlay',
+            'posts_per_page' => 6,
         ]);
-        $overlays = array_map(function(\WP_Post $overlay){
+        $overlays = array_map(function (\WP_Post $overlay) {
             return [
-                'title'=>$overlay->post_title,
-                'link'=> get_edit_post_link($overlay->ID),
-                'ID'=>$overlay->ID,
+                'title' => $overlay->post_title,
+                'link' => get_edit_post_link($overlay->ID),
+                'ID' => $overlay->ID,
             ];
-        },$overlays);
+        }, $overlays);
         return $overlays;
     }
 
@@ -120,4 +122,23 @@ class AdminPage {
         /** @psalm-suppress UnresolvableInclude */
         include $template_path;
     }
+
+    public function shouldShowHelp(): bool {
+        $user = wp_get_current_user();
+        $meta = get_user_meta($user->ID, self::showHelpFlagMetaKey, true);
+        return ($meta === '' || $meta === 1 || $meta === true);
+    }
+
+    /**
+     * @return array{success:bool}
+     **/
+    public function dissmiss_help():array{
+        $user = wp_get_current_user();
+        $meta = update_user_meta($user->ID, self::showHelpFlagMetaKey, 0);
+        if($meta === false){
+            return ['success'=>false];
+        }
+        return ['success'=>true];
+    }
+
 }

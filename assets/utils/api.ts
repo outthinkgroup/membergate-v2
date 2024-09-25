@@ -1,4 +1,3 @@
-
 export async function jsonAjax(action: string, data: Record<string, any>) {
 	data.membergate_action = action
   const res = await fetch(

@@ -8,11 +8,15 @@
 	};
 	export let rules: (ListItemT & RuleMeta)[] = [];
 
-	async function DeleteEntity(postType:string, id:number){
-		// const promise = await window.wp.data.dispatch( 'core/data' ).deleteEntityRecord( 'postType', postType, id );
-		// console.log({promise})
+	//DELETE Button
+	const _deleteEntity = window.wp.data.dispatch("core").deleteEntityRecord;
+	let is_deleting = null;
+	async function DeleteEntity(postType: string, id: number) {
+		is_deleting = id;
+		const promise = await _deleteEntity("postType", postType, id);
+		is_deleting = null;
+		rules = rules.filter((rule) => rule.ID != id);
 	}
-
 </script>
 
 <div>
@@ -41,9 +45,11 @@
 					>
 						Edit
 					</a>
-					<button class="text-red-600 hover:text-red-900 hover:underline" on:click={()=>DeleteEntity("membergate_rule",
-					parseInt(rule.ID))}>
-						Delete
+					<button
+						class="text-red-600 hover:text-red-900 hover:underline"
+						on:click={() => DeleteEntity("membergate_rule", rule.ID)}
+					>
+						Delet{is_deleting === rule.ID ? "ing" : "e"}
 					</button>
 				</div>
 			</ListItem>

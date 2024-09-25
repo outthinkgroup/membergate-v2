@@ -6,6 +6,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+use Membergate\Admin\AdminPage;
 use Membergate\Common\JsonResponse;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\RuleEditor;
@@ -16,11 +17,15 @@ class AjaxEndpoints implements SubscriberInterface {
     private $container;
 
 
+    private AdminPage $adminPage;
     public function __construct(
-        private RuleEditor $rule_editor
+        private RuleEditor $rule_editor,
     ) {
         global $membergate;
         $this->container = $membergate->get_container();
+        $vars = $this->container->get("Vars");
+        $plugins_path = $vars['plugin_path'];
+        $this->adminPage = new AdminPage($plugins_path."/templates", $plugins_path);
     }
 
     public static function get_subscribed_events(): array {
@@ -65,6 +70,10 @@ class AjaxEndpoints implements SubscriberInterface {
                 die;
             case "rule_editor__save_rules":
                 $data = new JsonResponse($this->rule_editor->save_rules($body));
+                $data->send();
+                die;
+            case "dissmiss_help":
+                $data  =new JsonResponse($this->adminPage->dissmiss_help());
                 $data->send();
                 die;
         }

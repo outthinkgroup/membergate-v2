@@ -29,7 +29,10 @@ class Assets implements SubscriberInterface {
     public function enqueue_admin_assets(string $hook): void {
         //check get_current_screen
         if ($hook == 'toplevel_page_membergate-settings') {
-            $this->vite->use('assets/dashboard.ts', ["wp-data"]);
+            $this->vite->use('assets/dashboard.ts', ["wp-data", "wp-core-data"]);
+            $admin_ajax_url = admin_url("admin-ajax.php");
+
+            echo "<script>(function(){if(!window.membergate){window.membergate = {}} window.membergate.url = \"$admin_ajax_url\"})()</script>";
         }
 
         if ($hook == 'admin_page_membergate-rules') {
