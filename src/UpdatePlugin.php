@@ -49,6 +49,8 @@ class UpdatePlugin {
             $res->new_version = $remote->version;
             $res->tested = $remote->tested;
             $res->package = $remote->download_url;
+            $res->download_link = $remote->download_url;
+
 
             $transient->response[$res->plugin] = $res;
 
@@ -102,6 +104,7 @@ class UpdatePlugin {
             'changelog' => $remote->sections->changelog
             // you can add your custom sections (tabs) here
         );
+        $res->download_link = $remote->download_url;
         // in case you want the screenshots tab, use the following HTML format for its content:
         // <ol><li><a href="IMG_URL" target="_blank"><img src="IMG_URL" alt="CAPTION" /></a><p>CAPTION</p></li></ol>
         if (! empty($remote->sections->screenshots)) {
