@@ -150,6 +150,15 @@ class Plugin {
             return new ProtectContent($container->get(Rules::class), $container->get(RuleEntity::class), $container->get(ProtectionModifier::class));
         });
 
+        $this->container->bind(UpdatePlugin::class, function (Container $container){
+            $config = new \stdClass;
+            $config->infoUrl = "https://membergate.test/wp-json/ot-update/v1/plugin-info/membergate";
+            $config->pluginBasename = plugin_basename($this->file);
+            $config->pluginSlug = basename(dirname($this->file));
+            $config->version = self::VERSION;
+            return new UpdatePlugin($config);
+        } );
+
         //subscribers
         $emc = new EventManagementConfiguration();
         $emc->make_subscribers($this->container);
@@ -170,6 +179,8 @@ class Plugin {
                 'plugin_relative_path' => basename(plugin_dir_path($this->file)),
                 'plugin_url' => plugin_dir_url($this->file),
                 'plugin_version' => self::VERSION,
+
+
             ];
         });
 

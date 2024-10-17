@@ -15,6 +15,7 @@ use Membergate\Subscriber\ProtectSubscriber;
 use Membergate\Subscriber\RulePostType;
 use Membergate\Subscriber\SSRSettings;
 use Membergate\Subscriber\Shortcodes;
+use Membergate\Subscriber\UpdatePluginsSubscriber;
 
 class EventManagementConfiguration {
     /** @return array<class-string>  */
@@ -29,6 +30,7 @@ class EventManagementConfiguration {
             SSRSettings::class,
             RulePostType::class,
             OverlayPostType::class,
+            UpdatePluginsSubscriber::class,
         ];
 
         return $subscribers;
