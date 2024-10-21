@@ -18,7 +18,7 @@ class UpdatePluginsSubscriber implements SubscriberInterface {
         return [
             'site_transient_update_plugins' => ['on_transient_update', 10, 2],
             'plugins_api' => ['plugins_information', 10, 3],
-            'http_request_args' => ['modify_update_requests', 10, 2],
+            'http_request_args' => ['modify_update_requests', 999, 2],
         ];
     }
 
@@ -33,6 +33,7 @@ class UpdatePluginsSubscriber implements SubscriberInterface {
     public function modify_update_requests($args, $url) {
         if (wp_get_environment_type() == "development") {
             $args["sslverify"] = false;
+             $args['reject_unsafe_urls'] = false;
         }
         if (strpos($url, "wp-json/ot-update") !== false) {
             $args["headers"]["Authorization"] = $this->updater->getAuth();

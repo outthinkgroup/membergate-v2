@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
  * Text Domain:     membergate
  * Requires PHP:    7.3
  * Domain Path:     /languages
- * Version:         0.1.0
+ * Version:         0.0.0
  */
 
 require __DIR__ . '/vendor/autoload.php';
