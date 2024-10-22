@@ -3,11 +3,23 @@
 	import OverlayList from "./OverlayList.svelte";
 	import RuleList from "./RuleList.svelte";
 	import HelpInfo from "./HelpInfo.svelte";
+    import { jsonAjax } from "../../utils/api";
 
 	export let urls;
 	export let rules;
 	export let overlays;
 	export let showHelp: boolean;
+	export let license:string;
+
+	let isSavingLicense = false;
+	async function saveKey(e:SubmitEvent){
+		e.preventDefault();
+		const data = new FormData(e.currentTarget as HTMLFormElement)
+		const key = data.get("license_key").toString();
+		isSavingLicense = true
+		await jsonAjax("save_license_key", {key})
+		isSavingLicense = false;
+	}
 </script>
 
 <main class="">
@@ -51,6 +63,23 @@
 				</span>
 			</GrayBoxHeader>
 			<OverlayList {overlays} />
+		</GrayBox>
+		<GrayBox>
+			<GrayBoxHeader>
+				<span slot="header">License</span>
+				<div slot="action"></div>
+				<span slot="description">
+					Add your License key to get updates to the plugin.
+				</span>
+			</GrayBoxHeader>
+			<div>
+				<form on:submit={saveKey}>
+					<input type="password" name="license_key" value={license} id="license_key" />
+					<button
+						class="text-blue-600 hover:text-blue-900 rounded-md bg-slate-100 hover:bg-slate-200 border border-blue-600
+						hover:border-blue-900">Sav{isSavingLicense ? "ing" : "e"}</button>
+				</form>
+			</div>
 		</GrayBox>
 	</div>
 </main>

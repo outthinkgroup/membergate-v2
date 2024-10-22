@@ -10,7 +10,7 @@ use Membergate\Admin\AdminPage;
 use Membergate\Common\JsonResponse;
 use Membergate\EventManagement\SubscriberInterface;
 use Membergate\Settings\RuleEditor;
-
+use Membergate\UpdatePlugin;
 
 /** @package Membergate\Subscriber */
 class AjaxEndpoints implements SubscriberInterface {
@@ -25,7 +25,7 @@ class AjaxEndpoints implements SubscriberInterface {
         $this->container = $membergate->get_container();
         $vars = $this->container->get("Vars");
         $plugins_path = $vars['plugin_path'];
-        $this->adminPage = new AdminPage($plugins_path."/templates", $plugins_path);
+        $this->adminPage = new AdminPage($plugins_path."/templates", $plugins_path, $this->container->get(UpdatePlugin::class));
     }
 
     public static function get_subscribed_events(): array {
@@ -74,6 +74,10 @@ class AjaxEndpoints implements SubscriberInterface {
                 die;
             case "dissmiss_help":
                 $data  =new JsonResponse($this->adminPage->dissmiss_help());
+                $data->send();
+                die;
+            case "save_license_key":
+                $data = new JsonResponse(['success'=>$this->adminPage->saveLicenseKey($body->key)]);
                 $data->send();
                 die;
         }

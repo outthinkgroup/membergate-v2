@@ -2,6 +2,8 @@
 
 namespace Membergate\Admin;
 
+use Membergate\UpdatePlugin;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -9,12 +11,13 @@ if (!defined('ABSPATH')) {
 class AdminPage {
     const showHelpFlagMetaKey = 'membergate_shouldShowHelp';
     private string $template_path;
-
+    public UpdatePlugin $updater; 
     private string $plugin_path;
 
-    public function __construct(string $template_path, string $plugin_path) {
+    public function __construct(string $template_path, string $plugin_path, UpdatePlugin $updater) {
         $this->template_path = $template_path;
         $this->plugin_path = $plugin_path;
+        $this->updater = $updater;
     }
 
     public function get_page_title(): string {
@@ -72,6 +75,7 @@ class AdminPage {
             'overlays' => $this->listOverlays(),
             'rules' => $this->listRules(),
             'showHelp' => $this->shouldShowHelp(),
+            'license' => $this->getLicenseKey(),
         ]);
     }
 
@@ -119,7 +123,6 @@ class AdminPage {
             return;
         }
 
-        /** @psalm-suppress UnresolvableInclude */
         include $template_path;
     }
 
@@ -141,4 +144,12 @@ class AdminPage {
         return ['success'=>true];
     }
 
+    public function saveLicenseKey(string $key):bool{
+        return update_option($this->updater::LICENSE_KEY, $key);
+    }
+
+
+    function getLicenseKey():string {
+        return get_option($this->updater::LICENSE_KEY);
+    }
 }

@@ -7,6 +7,7 @@ class UpdatePlugin {
         public object $config,
     ) {
     }
+    const LICENSE_KEY = "OTU_token";
 
     public function transientUpdate(mixed $transient) {
 
@@ -34,7 +35,6 @@ class UpdatePlugin {
         }
 
         $remote = json_decode(wp_remote_retrieve_body($remote));
-
         // your installed plugin version should be on the line below! You can obtain it dynamically of course 
         if (
             $remote
@@ -114,7 +114,7 @@ class UpdatePlugin {
         return $res;
     }
 
-    public function getAuth(){
-        return "Basic ". base64_encode("admin:".get_option("OTU_token", "VYaPlVa18V292MGOv7uMrkX8"));
+    public function getAuth():string{
+        return "Basic ". get_option(self::LICENSE_KEY);
     }
 }

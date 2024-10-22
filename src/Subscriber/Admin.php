@@ -7,11 +7,14 @@ if (!defined('ABSPATH')) {
 }
 use Membergate\Admin\AdminPage;
 use Membergate\EventManagement\SubscriberInterface;
+use Membergate\UpdatePlugin;
 
 class Admin implements SubscriberInterface {
     private string $plugin_path;
+    private UpdatePlugin $updater;
 
-    public function __construct(string $plugin_path) {
+    public function __construct(string $plugin_path, UpdatePlugin $updater) {
+        $this->updater = $updater;
         $this->plugin_path = $plugin_path;
     }
 
@@ -27,7 +30,7 @@ class Admin implements SubscriberInterface {
      * @return void
      */
     public function register_admin_pages():void {
-        $admin_page = new AdminPage($this->plugin_path . '/templates', $this->plugin_path);
+        $admin_page = new AdminPage($this->plugin_path . '/templates', $this->plugin_path, $this->updater);
         add_menu_page(
             $admin_page->get_page_title(),
             $admin_page->get_menu_title(),
@@ -51,7 +54,7 @@ class Admin implements SubscriberInterface {
      * @return void
      */
     public function add_admin_icon_styles():void {
-        $admin_page = new AdminPage($this->plugin_path . '/templates', $this->plugin_path);
+        $admin_page = new AdminPage($this->plugin_path . '/templates', $this->plugin_path, $this->updater);
         $admin_page->icons_styles();
     }
 }

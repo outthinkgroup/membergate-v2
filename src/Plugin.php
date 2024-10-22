@@ -135,7 +135,7 @@ class Plugin {
     private function make_services(): void {
         // Needs Manual Binding to add the pluign path var
         $this->container->bind(Admin::class, function (Container $container) {
-            return new Admin($container->get('Vars')['plugin_path']);
+            return new Admin($container->get('Vars')['plugin_path'], $container->get(UpdatePlugin::class));
         });
         $this->container->bind(OverlayEditor::class, function (Container $container) {
             return new OverlayEditor($container->get('Vars')['plugin_url'], $container->get('Vars')['plugin_path']);
@@ -152,7 +152,7 @@ class Plugin {
 
         $this->container->bind(UpdatePlugin::class, function (Container $container){
             $config = new \stdClass;
-            $config->infoUrl = "https://membergate.test/wp-json/ot-update/v1/plugin-info/membergate";
+            $config->infoUrl = "https://outthinkplugins.kinsta.cloud/wp-json/ot-update/v1/plugin-info/membergate";
             $config->pluginBasename = plugin_basename($this->file);
             $config->pluginSlug = basename(dirname($this->file));
             $config->version = self::VERSION;
