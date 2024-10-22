@@ -64,6 +64,7 @@
 			</GrayBoxHeader>
 			<OverlayList {overlays} />
 		</GrayBox>
+	</div>
 		<GrayBox>
 			<GrayBoxHeader>
 				<span slot="header">License</span>
@@ -76,10 +77,8 @@
 				<form on:submit={saveKey}>
 					<input type="password" name="license_key" value={license} id="license_key" />
 					<button
-						class="text-blue-600 hover:text-blue-900 rounded-md bg-slate-100 hover:bg-slate-200 border border-blue-600
-						hover:border-blue-900">Sav{isSavingLicense ? "ing" : "e"}</button>
+						class="py-1 px-3 text-blue-600 hover:text-blue-900 rounded-md bg-slate-100 hover:bg-slate-200 border border-blue-600 hover:border-blue-900">Sav{isSavingLicense ? "ing" : "e"}</button>
 				</form>
 			</div>
 		</GrayBox>
-	</div>
 </main>
