@@ -53,7 +53,6 @@ class UpdatePlugin {
 
 
             $transient->response[$res->plugin] = $res;
-
         }
         return $transient;
     }
@@ -63,7 +62,7 @@ class UpdatePlugin {
         if ('plugin_information' !== $action) {
             return $res;
         }
-        
+
         // do nothing if it is not our plugin
         if ($this->config->pluginSlug !== $args->slug) {
             return $res;
@@ -114,7 +113,26 @@ class UpdatePlugin {
         return $res;
     }
 
-    public function getAuth():string{
-        return "Basic ". get_option(self::LICENSE_KEY);
+    public function getAuth(): string {
+        return "Basic " . get_option(self::LICENSE_KEY);
+    }
+
+    /** 
+     * Adds auth and some settings for testing in dev
+     *
+     * @param array<string,mixed> $args
+     * @param string $url
+     * @return array<string, false>|mixed  
+     **/
+    public function modifyRequests(array $args, string $url) {
+        if (wp_get_environment_type() == "development") {
+            $args["sslverify"] = false;
+            $args['reject_unsafe_urls'] = false;
+        }
+        if (strpos($url, "wp-json/ot-update") !== false) {
+            $args["headers"]["Authorization"] = $this->getAuth();
+        }
+
+        return $args;
     }
 }
