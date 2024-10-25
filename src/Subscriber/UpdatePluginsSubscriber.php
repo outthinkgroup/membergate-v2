@@ -31,14 +31,6 @@ class UpdatePluginsSubscriber implements SubscriberInterface {
     }
 
     public function modify_update_requests($args, $url) {
-        if (wp_get_environment_type() == "development") {
-            $args["sslverify"] = false;
-             $args['reject_unsafe_urls'] = false;
-        }
-        if (strpos($url, "wp-json/ot-update") !== false) {
-            $args["headers"]["Authorization"] = $this->updater->getAuth();
-        }
-
-        return $args;
+        return $this->updater->modifyRequests($args, $url);
     }
 }
