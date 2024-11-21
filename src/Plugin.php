@@ -27,7 +27,7 @@ use TypeError;
 class Plugin {
     public const DOMAIN = 'membergate';
 
-    public const VERSION = '0.0.1';
+    public const VERSION = '0.1.0';
 
     private Container $container;
 
