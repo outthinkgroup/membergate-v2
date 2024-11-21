@@ -1,1 +1,29 @@
-.wp-block-membergate-backbutton.isAbsolute{position:absolute}.block-editor-block-list__layout:has(>.wp-block-membergate-backbutton.isAbsolute){position:static}.wp-block-membergate-backbutton.isLeft{left:20px}.wp-block-membergate-backbutton.isRight{right:20px}.wp-block-membergate-backbutton.isTop{top:20px}.wp-block-membergate-backbutton.isBottom{bottom:20px}
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/.pnpm/css-loader@6.8.1_webpack@5.88.2/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/.pnpm/postcss-loader@6.2.1_postcss@8.4.27_webpack@5.88.2/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./extend-block-editor/src/backbutton/index.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.wp-block-membergate-backbutton.isAbsolute {
+	position: absolute;
+}
+
+.block-editor-block-list__layout:has(> .wp-block-membergate-backbutton.isAbsolute) {
+ position:static;
+}
+
+.wp-block-membergate-backbutton.isLeft {
+	left: 20px;
+}
+
+.wp-block-membergate-backbutton.isRight {
+	right: 20px;
+}
+
+.wp-block-membergate-backbutton.isTop {
+	top: 20px;
+}
+
+.wp-block-membergate-backbutton.isBottom {
+	bottom: 20px;
+}
+
+
+/*# sourceMappingURL=index.css.map*/

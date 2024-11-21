@@ -1,1 +1,11 @@
-:is(#important,.block-editor-block-list__layout){margin-inline:auto;max-width:var(--membergate-overlay-maxWidth,inherit);width:100%}
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/.pnpm/css-loader@6.8.1_webpack@5.88.2/node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/.pnpm/postcss-loader@6.2.1_postcss@8.4.27_webpack@5.88.2/node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./extend-block-editor/src/overlaySettings/editor.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+:is(#important, .block-editor-block-list__layout){
+	max-width: var(--membergate-overlay-maxWidth, inherit);
+	margin-inline:auto;
+	width:100%;
+}
+
+
+/*# sourceMappingURL=overlaySettings.css.map*/
