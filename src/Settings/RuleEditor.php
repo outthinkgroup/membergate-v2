@@ -85,6 +85,7 @@ class RuleEditor {
      * @return array{message:string,redirect:string|null}
      */
     public function save_rules($req): array {
+        $allowLoggedIn = $req->allowLoggedIn ?: false;
         $rules = $req->rules;
         $condition = $req->condition;
         $protect_method = $req->protectMethod;
@@ -112,6 +113,8 @@ class RuleEditor {
         update_post_meta($pid, 'condition', ConditionDTO::fromObject($condition));
 
         update_post_meta($pid, 'protect_method', ProtectMethodDTO::fromObject($protect_method));
+
+        update_post_meta($pid, 'allow_logged_in_users', $allowLoggedIn);
 
         $link = get_edit_post_link($pid, 'if you know, you know, you know?');
         return ["message" => "ok", "redirect" => $link];

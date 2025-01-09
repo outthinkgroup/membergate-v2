@@ -45,13 +45,21 @@ class ProtectContent {
 
     public function configure_protection(): bool {
         global $post;
+        $isAdminUser = current_user_can('edit_posts');// not exactly an admin but will work for our case. make configurable later
         $conditions = $this->rules->get_conditions();
         $passes = true;
         foreach ($conditions as $rule_id => $condition) {
+
             if ($condition->parameter == 'cookie') {
                 $passes = $this->passes_condition($condition, $_COOKIE);
             } else {
                 $passes = $this->passes_condition($condition, $_GET);
+            }
+
+            // allow admin users if the condtion has been set up
+            // for that.
+            if($isAdminUser && $this->rules->get_allow_logged_in_users($rule_id)){
+                $passes = true;
             }
 
             if ($passes) {

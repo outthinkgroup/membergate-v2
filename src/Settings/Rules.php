@@ -88,6 +88,16 @@ class Rules {
         throw new \UnexpectedValueException("Bad Id was given");
     }
 
+    /**
+     * @param int|string|null $id
+     */
+    public function get_allow_logged_in_users($id): bool {
+        if (!is_null($id) && is_numeric($id)) {
+            return get_post_meta((int)$id, 'allow_logged_in_users', true) ?: $this->default_allow_logged_in_users();
+        }
+        return $this->default_allow_logged_in_users();
+    }
+
     public function use_default_condition(): ConditionDTO {
         return new ConditionDTO(parameter: "cookie", key: "is_member", operator: "notset");
     }
@@ -112,5 +122,9 @@ class Rules {
         return [new RuleSetDTO([
             new RuleDTO()
         ])];
+    }
+
+    private function default_allow_logged_in_users(): bool {
+        return false;
     }
 }

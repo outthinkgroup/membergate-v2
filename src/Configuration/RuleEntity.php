@@ -20,6 +20,7 @@ class RuleEntity {
     private array $_rules;
     private ConditionDTO $_condition;
     private ProtectMethodDTO $_protect_method;
+    private bool $_allowLoggedIn;
 
     public function __construct(Rules $rules) {
         $this->rulesConfig = $rules;
@@ -31,6 +32,7 @@ class RuleEntity {
         $this->_condition = $this->rulesConfig->get_condition_by_id($id);
         $this->_rules = $this->rulesConfig->get_rules($id);
         $this->_protect_method = $this->rulesConfig->get_protect_method($id);
+        $this->_allowLoggedIn = $this->rulesConfig->get_allow_logged_in_users($id);
     }
 
     /**
@@ -49,6 +51,7 @@ class RuleEntity {
         }
         return $this->_condition;
     }
+
     /**
      * @return ProtectMethodDTO
      * @throws Exception
@@ -58,5 +61,16 @@ class RuleEntity {
             throw new \Exception("Need To Call init first");
         }
         return $this->_protect_method;
+    }
+
+    /**
+     * @return bool
+     * @throws Exception 
+     */
+    public function allowLoggedInUsers():bool{
+        if (!$this->isSet) {
+            throw new \Exception("Need To Call init first");
+        }
+        return $this->_allowLoggedIn;
     }
 }

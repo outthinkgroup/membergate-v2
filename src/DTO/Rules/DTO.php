@@ -8,6 +8,10 @@ class ConditionDTO {
     public function __construct(public string $parameter = "cookie", public string $key = "is_member", public string $operator = "notset", public ?string $value = null) {
     }
 
+    /**
+     * @param array{parameter:string, key:string, operator:string, value?:string} $arr 
+     * @return ConditionDTO 
+     */
     static function fromArray(array $arr): ConditionDTO {
         if (isset($arr['value'])) {
             return new ConditionDTO($arr['parameter'], $arr['key'], $arr['operator'], $arr['value']);
@@ -26,7 +30,7 @@ class ConditionDTO {
 class ProtectMethodDTO {
     public function __construct(
         public string $method = "redirect",
-        public int $value,
+        public int $value=0,
     ) {
     }
 
@@ -59,11 +63,15 @@ class RuleDTO {
 
 
 class RuleSetDTO {
+    /**
+     * @param array<RuleDTO> $sets 
+     * @return void 
+     */
     public function __construct(public array $sets = []) {
     }
 
     /**
-     * @param array<array> $set 
+     * @param array<array{parameter:string, operator:string, value:string}> $set an array of RuleDTO configurations
      * @return RuleSetDTO
      */
     static function fromArray(array $set = []): RuleSetDTO {
